@@ -4,6 +4,7 @@ extern crate serde_derive;
 extern crate reqwest;
 extern crate serde_json;
 
+pub mod exchange;
 pub mod user;
 
 use self::user::APIKey;
