@@ -1,7 +1,6 @@
 pub struct APIKey(String);
-pub mod exchange;
 
-use self::exchange::Exchange;
+use crate::exchange::Exchange;
 use reqwest::{get, Url};
 
 const LINK: &str = "https://www.alphavantage.co/query?function=";
