@@ -29,14 +29,27 @@ struct RealtimeExchangeRate {
 impl Exchange {
     pub fn get_rate(&self) -> Result<f64, String> {
         if let Some(real) = self.real_time.clone() {
-            return Ok(real.rate.trim().parse::<f64>().unwrap());
+            Ok(real.rate.trim().parse::<f64>().unwrap())
         } else if let Some(error) = self.error_message.clone() {
-            return Err(format!("Error Message : {}", error));
+            Err(format!("Error Message : {}", error))
         } else {
-            return Err(format!(
+            Err(format!(
                 "Information : {}",
                 self.information.clone().unwrap()
-            ));
+            ))
+        }
+    }
+
+    pub fn get_refreshed_time(&self) -> Result<String, String> {
+        if let Some(real) = self.real_time.clone() {
+            Ok(format!("{} {}", real.last_refreshed, real.time_zone))
+        } else if let Some(error) = self.error_message.clone() {
+            Err(format!("Error Message : {}", error))
+        } else {
+            Err(format!(
+                "Information : {}",
+                self.information.clone().unwrap()
+            ))
         }
     }
 }
