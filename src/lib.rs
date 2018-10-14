@@ -6,7 +6,9 @@ extern crate serde_json;
 
 pub mod exchange;
 pub mod quote;
+pub mod time_series;
 pub mod user;
+pub mod util;
 
 use self::user::APIKey;
 

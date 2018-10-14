@@ -2,7 +2,10 @@ pub struct APIKey(String);
 
 use crate::exchange::Exchange;
 use crate::quote::Quote;
+use crate::time_series::*;
+use crate::util::*;
 use reqwest::{get, Url};
+use serde_json::Value;
 
 const LINK: &str = "https://www.alphavantage.co/query?function=";
 
@@ -41,5 +44,16 @@ impl APIKey {
 
         let body = get(data).unwrap().text().unwrap();
         serde_json::from_str(&body).unwrap()
+    }
+
+    pub fn stock_time(
+        &self,
+        function: Function,
+        symbol: &str,
+        interval: Option<Interval>,
+        output_size: Option<OutputSize>,
+    ) -> Value {
+        let data: Url = create_url(function, symbol, interval, output_size, self.0.clone());
+        serde_json::from_str(&get(data).unwrap().text().unwrap()).unwrap()
     }
 }
