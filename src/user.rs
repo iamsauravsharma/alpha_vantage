@@ -5,7 +5,6 @@ use crate::quote::Quote;
 use crate::time_series::*;
 use crate::util::*;
 use reqwest::{get, Url};
-use serde_json::Value;
 
 const LINK: &str = "https://www.alphavantage.co/query?function=";
 
@@ -32,6 +31,7 @@ impl APIKey {
         let body = get(data).unwrap().text().unwrap();
         serde_json::from_str(&body).unwrap()
     }
+
     pub fn quote(&self, symbol: &str) -> Quote {
         let data: Url = format!(
             "{}GLOBAL_QUOTE&symbol={}&apikey={}",
@@ -52,7 +52,7 @@ impl APIKey {
         symbol: &str,
         interval: Option<Interval>,
         output_size: Option<OutputSize>,
-    ) -> Value {
+    ) -> TimeSeriesHelper {
         let data: Url = create_url(function, symbol, interval, output_size, self.0.clone());
         serde_json::from_str(&get(data).unwrap().text().unwrap()).unwrap()
     }

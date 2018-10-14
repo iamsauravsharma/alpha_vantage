@@ -1,7 +1,56 @@
 use crate::util::*;
 use reqwest::Url;
+use std::collections::HashMap;
 
 const LINK: &str = "https://www.alphavantage.co/query?function=";
+
+#[derive(Debug, Deserialize)]
+pub struct TimeSeriesHelper {
+    #[serde(rename = "Error Message")]
+    error_message: Option<String>,
+    #[serde(rename = "Information")]
+    information: Option<String>,
+    #[serde(rename = "Meta Data")]
+    meta_data: Option<HashMap<String, String>>,
+    #[serde(flatten)]
+    time_series: Option<HashMap<String, HashMap<String, EntryHelper>>>,
+    #[serde(flatten)]
+    adjusted_series: Option<HashMap<String, HashMap<String, AdjustedHelper>>>,
+}
+
+#[derive(Debug, Deserialize)]
+struct EntryHelper {
+    #[serde(rename = "1. open")]
+    open: String,
+    #[serde(rename = "2. high")]
+    high: String,
+    #[serde(rename = "3. low")]
+    low: String,
+    #[serde(rename = "4. close")]
+    close: String,
+    #[serde(rename = "5. volume")]
+    volume: String,
+}
+
+#[derive(Debug, Deserialize)]
+struct AdjustedHelper {
+    #[serde(rename = "1. open")]
+    open: String,
+    #[serde(rename = "2. high")]
+    high: String,
+    #[serde(rename = "3. low")]
+    low: String,
+    #[serde(rename = "4. close")]
+    close: String,
+    #[serde(rename = "5. adjusted close")]
+    adjusted_close: String,
+    #[serde(rename = "6. volume")]
+    volume: String,
+    #[serde(rename = "7. dividend amount")]
+    dividend_amount: String,
+    #[serde(rename = "8. split coefficient")]
+    split_coefficient: Option<String>,
+}
 
 pub fn create_url(
     function: Function,
