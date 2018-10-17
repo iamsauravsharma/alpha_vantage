@@ -4,6 +4,7 @@ use crate::exchange::Exchange;
 use crate::quote::Quote;
 use crate::time_series::*;
 use crate::util::*;
+use crate::search::*;
 use reqwest::{get, Url};
 
 const LINK: &str = "https://www.alphavantage.co/query?function=";
@@ -56,5 +57,11 @@ impl APIKey {
         let data: Url = create_url(function, symbol, interval, output_size, self.0.clone());
         let time_series_helper  : TimeSeriesHelper = serde_json::from_str(&get(data).unwrap().text().unwrap()).unwrap();
         time_series_helper.convert()
+    }
+
+    pub fn search(&self,keywords : &str) -> Search{
+        let data :Url  = format!("{}SYMBOL_SEARCH&keywords={}&apikey={}",LINK,keywords,self.0.clone()).parse().unwrap();
+        let body = get(data).unwrap().text().unwrap();
+        serde_json::from_str(&body).unwrap()
     }
 }

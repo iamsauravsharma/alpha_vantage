@@ -49,7 +49,7 @@ struct Entry{
 }
 
 #[derive(Debug, Deserialize)]
-pub struct TimeSeriesHelper {
+pub(crate) struct TimeSeriesHelper {
     #[serde(rename = "Error Message")]
     error_message: Option<String>,
     #[serde(rename = "Information")]
@@ -63,7 +63,7 @@ pub struct TimeSeriesHelper {
 }
 
 impl TimeSeriesHelper{
-    pub fn convert(self) -> TimeSeries{
+    pub(crate) fn convert(self) -> TimeSeries{
         let mut time_series = TimeSeries::new();
         time_series.error_message = self.error_message;
         time_series.information = self.information;

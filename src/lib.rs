@@ -9,6 +9,7 @@ pub mod quote;
 pub mod time_series;
 pub mod user;
 pub mod util;
+pub mod search;
 
 use self::user::APIKey;
 
