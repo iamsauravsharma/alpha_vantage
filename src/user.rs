@@ -50,8 +50,8 @@ impl APIKey {
         &self,
         function: Function,
         symbol: &str,
-        interval: Option<Interval>,
-        output_size: Option<OutputSize>,
+        interval: Interval,
+        output_size: OutputSize,
     ) -> TimeSeries {
         let data: Url = create_url(function, symbol, interval, output_size, self.0.clone());
         let time_series_helper  : TimeSeriesHelper = serde_json::from_str(&get(data).unwrap().text().unwrap()).unwrap();

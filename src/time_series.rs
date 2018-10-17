@@ -185,8 +185,8 @@ struct AdjustedHelper {
 pub fn create_url(
     function: Function,
     symbol: &str,
-    interval: Option<Interval>,
-    output_size: Option<OutputSize>,
+    interval: Interval,
+    output_size: OutputSize,
     api: String,
 ) -> Url {
     let function = match function {
@@ -201,14 +201,12 @@ pub fn create_url(
 
     let mut url = String::from(format!("{}{}&symbol={}", LINK, function, symbol));
     let interval = match interval {
-        Some(interval) => match interval {
             Interval::OneMin => "1min",
             Interval::FiveMin => "5min",
             Interval::FifteenMin => "15min",
             Interval::ThirtyMin => "30min",
             Interval::SixtyMin => "60min",
-        },
-        None => "",
+            Interval::None => "",
     };
 
     if interval != "" {
@@ -216,7 +214,7 @@ pub fn create_url(
     }
 
     url.push_str(match output_size {
-        Some(OutputSize::Full) => "&outputsize=full",
+        OutputSize::Full => "&outputsize=full",
         _ => "",
     });
 

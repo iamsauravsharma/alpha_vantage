@@ -4,11 +4,13 @@ pub enum Interval {
     FifteenMin,
     ThirtyMin,
     SixtyMin,
+    None,
 }
 
 pub enum OutputSize {
     Compact,
     Full,
+    None,
 }
 
 pub enum Function {
