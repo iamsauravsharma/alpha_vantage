@@ -23,7 +23,7 @@ pub enum StockFunction {
     MonthlyAdjusted,
 }
 
-pub enum ForexFunction{
+pub enum ForexFunction {
     IntraDay,
     Daily,
     Weekly,

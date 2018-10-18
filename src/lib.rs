@@ -5,12 +5,12 @@ extern crate reqwest;
 extern crate serde_json;
 
 pub mod exchange;
+pub mod forex;
 pub mod quote;
+pub mod search;
 pub mod time_series;
 pub mod user;
 pub mod util;
-pub mod search;
-pub mod forex;
 
 use self::user::APIKey;
 

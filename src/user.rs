@@ -1,14 +1,14 @@
 pub struct APIKey(String);
 
 use crate::exchange::Exchange;
-use crate::quote::Quote;
-use crate::time_series::{TimeSeries,TimeSeriesHelper};
-use crate::util::*;
-use crate::search::*;
-use reqwest::{get, Url};
-use crate::time_series::create_url as create_url_time_series;
 use crate::forex::create_url as create_url_forex;
-use crate::forex::{ForexHelper,Forex};
+use crate::forex::{Forex, ForexHelper};
+use crate::quote::Quote;
+use crate::search::*;
+use crate::time_series::create_url as create_url_time_series;
+use crate::time_series::{TimeSeries, TimeSeriesHelper};
+use crate::util::*;
+use reqwest::{get, Url};
 
 const LINK: &str = "https://www.alphavantage.co/query?function=";
 
@@ -57,27 +57,44 @@ impl APIKey {
         interval: Interval,
         output_size: OutputSize,
     ) -> TimeSeries {
-        let data: Url = create_url_time_series(function, symbol, interval, output_size, self.0.clone());
-        let time_series_helper  : TimeSeriesHelper = serde_json::from_str(&get(data).unwrap().text().unwrap()).unwrap();
+        let data: Url =
+            create_url_time_series(function, symbol, interval, output_size, self.0.clone());
+        let time_series_helper: TimeSeriesHelper =
+            serde_json::from_str(&get(data).unwrap().text().unwrap()).unwrap();
         time_series_helper.convert()
     }
 
-    pub fn search(&self,keywords : &str) -> Search{
-        let data :Url  = format!("{}SYMBOL_SEARCH&keywords={}&apikey={}",LINK,keywords,self.0.clone()).parse().unwrap();
+    pub fn search(&self, keywords: &str) -> Search {
+        let data: Url = format!(
+            "{}SYMBOL_SEARCH&keywords={}&apikey={}",
+            LINK,
+            keywords,
+            self.0.clone()
+        )
+        .parse()
+        .unwrap();
         let body = get(data).unwrap().text().unwrap();
         serde_json::from_str(&body).unwrap()
     }
 
     pub fn forex(
         &self,
-        function : ForexFunction,
-        from_symbol : &str,
-        to_symbol : &str,
-        interval : Interval,
-        output_size : OutputSize,
-    ) -> Forex{
-        let data : Url = create_url_forex(function,from_symbol,to_symbol,interval,output_size,self.0.clone());
-        let forex_helper : ForexHelper= serde_json::from_str(&get(data).unwrap().text().unwrap()).unwrap();
+        function: ForexFunction,
+        from_symbol: &str,
+        to_symbol: &str,
+        interval: Interval,
+        output_size: OutputSize,
+    ) -> Forex {
+        let data: Url = create_url_forex(
+            function,
+            from_symbol,
+            to_symbol,
+            interval,
+            output_size,
+            self.0.clone(),
+        );
+        let forex_helper: ForexHelper =
+            serde_json::from_str(&get(data).unwrap().text().unwrap()).unwrap();
         forex_helper.convert()
     }
 }
