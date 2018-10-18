@@ -66,31 +66,31 @@ impl TimeSeriesHelper {
         time_series.error_message = self.error_message;
         time_series.information = self.information;
         if let Some(meta_data) = self.meta_data {
-            let information = meta_data.get("1. Information").unwrap().clone();
-            let symbol = meta_data.get("2. Symbol").unwrap().clone();
-            let last_refreshed = meta_data.get("3. Last Refreshed").unwrap().clone();
+            let information = &meta_data["1. Information"];
+            let symbol = &meta_data["2. Symbol"];
+            let last_refreshed = &meta_data["3. Last Refreshed"];
             let interval = meta_data.get("4. Interval");
             let interval = return_value(interval);
             let output_size = meta_data.get("4. Output Size");
             let mut output_size_value = return_value(output_size);
-            if let None = output_size_value {
+            if output_size_value.is_none() {
                 let output_size = meta_data.get("5. Output Size");
                 output_size_value = return_value(output_size);
             }
             let time_zone = meta_data.get("4. Time Zone");
             let mut time_zone_value = return_value(time_zone);
-            if let None = time_zone_value {
+            if time_zone_value.is_none() {
                 let time_zone = meta_data.get("5. Time Zone");
                 time_zone_value = return_value(time_zone)
             }
-            if let None = time_zone_value {
+            if time_zone_value.is_none() {
                 let time_zone = meta_data.get("6. Time Zone");
                 time_zone_value = return_value(time_zone)
             }
             time_series.meta_data = Some(MetaData {
-                information,
-                symbol,
-                last_refreshed,
+                information: information.to_string(),
+                symbol: symbol.to_string(),
+                last_refreshed: last_refreshed.to_string(),
                 interval,
                 output_size: output_size_value,
                 time_zone: time_zone_value.unwrap(),
@@ -183,7 +183,7 @@ pub fn create_url(
     symbol: &str,
     interval: Interval,
     output_size: OutputSize,
-    api: String,
+    api: &str,
 ) -> Url {
     let function = match function {
         StockFunction::IntraDay => "TIME_SERIES_INTRADAY",
@@ -195,7 +195,7 @@ pub fn create_url(
         StockFunction::MonthlyAdjusted => "TIME_SERIES_MONTHLY_ADJUSTED",
     };
 
-    let mut url = String::from(format!("{}{}&symbol={}", LINK, function, symbol));
+    let mut url = format!("{}{}&symbol={}", LINK, function, symbol);
     let interval = match interval {
         Interval::OneMin => "1min",
         Interval::FiveMin => "5min",

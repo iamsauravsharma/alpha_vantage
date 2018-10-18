@@ -1,3 +1,4 @@
+#[derive(Copy, Clone)]
 pub enum Interval {
     OneMin,
     FiveMin,
@@ -7,12 +8,14 @@ pub enum Interval {
     None,
 }
 
+#[derive(Copy, Clone)]
 pub enum OutputSize {
     Compact,
     Full,
     None,
 }
 
+#[derive(Copy, Clone)]
 pub enum StockFunction {
     IntraDay,
     Daily,
@@ -23,6 +26,7 @@ pub enum StockFunction {
     MonthlyAdjusted,
 }
 
+#[derive(Copy, Clone)]
 pub enum ForexFunction {
     IntraDay,
     Daily,

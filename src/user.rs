@@ -57,8 +57,7 @@ impl APIKey {
         interval: Interval,
         output_size: OutputSize,
     ) -> TimeSeries {
-        let data: Url =
-            create_url_time_series(function, symbol, interval, output_size, self.0.clone());
+        let data: Url = create_url_time_series(function, symbol, interval, output_size, &self.0);
         let time_series_helper: TimeSeriesHelper =
             serde_json::from_str(&get(data).unwrap().text().unwrap()).unwrap();
         time_series_helper.convert()
@@ -91,7 +90,7 @@ impl APIKey {
             to_symbol,
             interval,
             output_size,
-            self.0.clone(),
+            &self.0,
         );
         let forex_helper: ForexHelper =
             serde_json::from_str(&get(data).unwrap().text().unwrap()).unwrap();

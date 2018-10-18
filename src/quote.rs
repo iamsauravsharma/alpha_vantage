@@ -70,7 +70,7 @@ impl Quote {
             } {
                 Ok(price.trim().parse::<f64>().unwrap())
             } else {
-                Err(format!("No value present please check Symbol again"))
+                Err("No value present please check Symbol again".to_string())
             }
         } else if let Some(error) = self.error_message.clone() {
             Err(format!("Error Message : {}", error))

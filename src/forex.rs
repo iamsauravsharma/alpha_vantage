@@ -61,37 +61,37 @@ impl ForexHelper {
         forex.error_message = self.error_message;
         forex.information = self.information;
         if let Some(meta_data) = self.meta_data {
-            let information = meta_data.get("1. Information").unwrap().clone();
-            let from_symbol = meta_data.get("2. From Symbol").unwrap().clone();
-            let to_symbol = meta_data.get("3. To Symbol").unwrap().clone();
+            let information = &meta_data["1. Information"];
+            let from_symbol = &meta_data["2. From Symbol"];
+            let to_symbol = &meta_data["3. To Symbol"];
             let last_refreshed = meta_data.get("4. Last Refreshed");
             let mut last_refreshed_value = return_value(last_refreshed);
-            if let None = last_refreshed_value {
+            if last_refreshed_value.is_none() {
                 let last_refreshed = meta_data.get("5. Last Refreshed");
                 last_refreshed_value = return_value(last_refreshed);
             }
             let time_zone = meta_data.get("5. Time Zone");
             let mut time_zone_value = return_value(time_zone);
-            if let None = time_zone_value {
+            if time_zone_value.is_none() {
                 let time_zone = meta_data.get("6. Time Zone");
                 time_zone_value = return_value(time_zone);
             }
-            if let None = time_zone_value {
+            if time_zone_value.is_none() {
                 let time_zone = meta_data.get("7. Time Zone");
                 time_zone_value = return_value(time_zone);
             }
             let output_size = meta_data.get("4. Output Size");
             let mut output_size_value = return_value(output_size);
-            if let None = output_size_value {
+            if output_size_value.is_none() {
                 let output_size = meta_data.get("6. Output Size");
                 output_size_value = return_value(output_size);
             }
             let interval = meta_data.get("5. Interval");
             let interval_value = return_value(interval);
             forex.meta_data = Some(MetaData {
-                information,
-                from_symbol,
-                to_symbol,
+                information: information.to_string(),
+                from_symbol: from_symbol.to_string(),
+                to_symbol: to_symbol.to_string(),
                 last_refreshed: last_refreshed_value.unwrap(),
                 interval: interval_value,
                 output_size: output_size_value,
@@ -145,7 +145,7 @@ pub fn create_url(
     to_symbol: &str,
     interval: Interval,
     output_size: OutputSize,
-    api: String,
+    api: &str,
 ) -> Url {
     let function = match function {
         ForexFunction::IntraDay => "FX_INTRADAY",
@@ -154,10 +154,10 @@ pub fn create_url(
         ForexFunction::Monthly => "FX_MONTHLY",
     };
 
-    let mut url = String::from(format!(
+    let mut url = format!(
         "{}{}&from_symbol={}&to_symbol={}",
         LINK, function, from_symbol, to_symbol
-    ));
+    );
     let interval = match interval {
         Interval::OneMin => "1min",
         Interval::FiveMin => "5min",
