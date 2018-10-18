@@ -13,7 +13,7 @@ pub enum OutputSize {
     None,
 }
 
-pub enum Function {
+pub enum StockFunction {
     IntraDay,
     Daily,
     DailyAdjusted,
@@ -21,4 +21,11 @@ pub enum Function {
     WeeklyAdjusted,
     Monthly,
     MonthlyAdjusted,
+}
+
+pub enum ForexFunction{
+    IntraDay,
+    Daily,
+    Weekly,
+    Monthly,
 }

@@ -1,10 +1,10 @@
-use crate::util::*;
+use crate::util::{StockFunction,Interval,OutputSize};
 use reqwest::Url;
 use std::collections::HashMap;
 
 const LINK: &str = "https://www.alphavantage.co/query?function=";
 
-#[derive(Debug,Clone)]
+#[derive(Debug)]
 pub struct TimeSeries{
     error_message : Option<String>,
     information : Option<String>,
@@ -24,7 +24,7 @@ impl TimeSeries{
 }
 
 
-#[derive(Debug,Clone)]
+#[derive(Debug)]
 struct MetaData{
     information : String,
     symbol : String,
@@ -34,7 +34,7 @@ struct MetaData{
     time_zone : String,
 }
 
-#[derive(Default,Debug,Clone)]
+#[derive(Default,Debug)]
 struct Entry{
     time : String,
     open : String,
@@ -48,7 +48,7 @@ struct Entry{
 
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Deserialize)]
 pub(crate) struct TimeSeriesHelper {
     #[serde(rename = "Error Message")]
     error_message: Option<String>,
@@ -148,7 +148,7 @@ fn return_value(value : Option<&std::string::String>) -> Option<String>{
     }
 }
 
-#[derive(Clone,Debug, Deserialize)]
+#[derive(Clone, Deserialize)]
 struct EntryHelper {
     #[serde(rename = "1. open")]
     open: String,
@@ -162,7 +162,7 @@ struct EntryHelper {
     volume: String,
 }
 
-#[derive(Debug, Deserialize,Clone)]
+#[derive( Deserialize,Clone)]
 struct AdjustedHelper {
     #[serde(rename = "1. open")]
     open: String,
@@ -183,20 +183,20 @@ struct AdjustedHelper {
 }
 
 pub fn create_url(
-    function: Function,
+    function: StockFunction,
     symbol: &str,
     interval: Interval,
     output_size: OutputSize,
     api: String,
 ) -> Url {
     let function = match function {
-        Function::IntraDay => "TIME_SERIES_INTRADAY",
-        Function::Daily => "TIME_SERIES_DAILY",
-        Function::DailyAdjusted => "TIME_SERIES_DAILY_ADJUSTED",
-        Function::Weekly => "TIME_SERIES_WEEKLY",
-        Function::WeeklyAdjusted => "TIME_SERIES_WEEKLY_ADJUSTED",
-        Function::Monthly => "TIME_SERIES_MONTHLY",
-        Function::MonthlyAdjusted => "TIME_SERIES_MONTHLY_ADJUSTED",
+        StockFunction::IntraDay => "TIME_SERIES_INTRADAY",
+        StockFunction::Daily => "TIME_SERIES_DAILY",
+        StockFunction::DailyAdjusted => "TIME_SERIES_DAILY_ADJUSTED",
+        StockFunction::Weekly => "TIME_SERIES_WEEKLY",
+        StockFunction::WeeklyAdjusted => "TIME_SERIES_WEEKLY_ADJUSTED",
+        StockFunction::Monthly => "TIME_SERIES_MONTHLY",
+        StockFunction::MonthlyAdjusted => "TIME_SERIES_MONTHLY_ADJUSTED",
     };
 
     let mut url = String::from(format!("{}{}&symbol={}", LINK, function, symbol));
@@ -217,7 +217,6 @@ pub fn create_url(
         OutputSize::Full => "&outputsize=full",
         _ => "",
     });
-
     url.push_str(format!("&apikey={}", api).as_str());
     url.parse().unwrap()
 }
