@@ -57,6 +57,12 @@ impl Quote {
         self.return_value("change")
     }
 
+    pub fn get_change_percent(&self) -> Result<f64,String>{
+        let previous = self.get_previous()?;
+        let price = self.get_price()?;
+        Ok((price - previous) / previous)
+    }
+
     fn return_value(&self, value: &str) -> Result<f64, String> {
         if let Some(global) = self.global_quote.clone() {
             if let Some(price) = match value {
@@ -70,6 +76,24 @@ impl Quote {
             } {
                 Ok(price.trim().parse::<f64>().unwrap())
             } else {
+                Err("No value present please check Symbol again".to_string())
+            }
+        } else if let Some(error) = self.error_message.clone() {
+            Err(format!("Error Message : {}", error))
+        } else {
+            Err(format!(
+                "Information : {}",
+                self.information.clone().unwrap()
+            ))
+        }
+    }
+
+    pub fn get_last_trading(&self) -> Result<String,String>{
+        if let Some(global) =self.global_quote.clone(){
+            if let  Some(value) = global.last_day{
+                Ok(value)
+            }
+            else {
                 Err("No value present please check Symbol again".to_string())
             }
         } else if let Some(error) = self.error_message.clone() {
