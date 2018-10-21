@@ -21,10 +21,18 @@ impl Forex {
             forex: None,
         }
     }
+
+    pub fn meta_data(&self) -> Option<MetaData>{
+        self.meta_data.clone()
+    }
+
+    pub fn entry(&self) -> Option<Vec<Entry>>{
+        self.forex.clone()
+    }
 }
 
-#[derive(Debug)]
-struct MetaData {
+#[derive(Debug,Clone)]
+pub struct MetaData {
     information: String,
     from_symbol: String,
     to_symbol: String,
@@ -34,13 +42,46 @@ struct MetaData {
     time_zone: String,
 }
 
-#[derive(Default, Debug)]
-struct Entry {
+impl MetaData{
+    pub fn last_refreshed(&self) -> String{
+        self.last_refreshed.clone()
+    }
+
+    pub fn time_zone(&self) -> String{
+        self.time_zone.clone()
+    }
+}
+
+#[derive(Default, Debug,Clone)]
+pub struct Entry {
     time: String,
     open: String,
     high: String,
     low: String,
     close: String,
+}
+
+
+impl Entry{
+    pub fn get_time(&self) -> String{
+        self.time.clone()
+    }
+
+    pub fn get_open(&self) -> String{
+        self.open.clone()
+    }
+
+    pub fn get_high(&self) -> String{
+        self.high.clone()
+    }
+
+    pub fn get_low(&self) -> String{
+        self.low.clone()
+    }
+
+    pub fn get_close(&self) -> String{
+        self.close.clone()
+    }
 }
 
 #[derive(Debug, Deserialize)]
