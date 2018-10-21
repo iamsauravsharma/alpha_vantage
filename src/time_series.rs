@@ -234,7 +234,7 @@ struct AdjustedHelper {
     split_coefficient: Option<String>,
 }
 
-pub fn create_url(
+pub(crate) fn create_url(
     function: StockFunction,
     symbol: &str,
     interval: Interval,

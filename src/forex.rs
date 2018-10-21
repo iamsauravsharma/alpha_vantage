@@ -180,7 +180,7 @@ fn return_value(value: Option<&std::string::String>) -> Option<String> {
     }
 }
 
-pub fn create_url(
+pub(crate) fn create_url(
     function: ForexFunction,
     from_symbol: &str,
     to_symbol: &str,
