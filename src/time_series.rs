@@ -21,10 +21,18 @@ impl TimeSeries {
             entry: None,
         }
     }
+
+    pub fn meta_data(&self) -> Option<MetaData>{
+        self.meta_data.clone()
+    }
+
+    pub fn entry(&self) -> Option<Vec<Entry>>{
+        self.entry.clone()
+    }
 }
 
-#[derive(Debug)]
-struct MetaData {
+#[derive(Debug,Clone)]
+pub struct MetaData {
     information: String,
     symbol: String,
     last_refreshed: String,
@@ -33,8 +41,18 @@ struct MetaData {
     time_zone: String,
 }
 
-#[derive(Default, Debug)]
-struct Entry {
+impl MetaData{
+    pub fn last_refreshed(&self) -> String{
+        self.last_refreshed.clone()
+    }
+
+    pub fn time_zone(&self) -> String{
+        self.time_zone.clone()
+    }
+}
+
+#[derive(Default, Debug,Clone)]
+pub struct Entry {
     time: String,
     open: String,
     high: String,
@@ -44,6 +62,44 @@ struct Entry {
     volume: String,
     dividend_amount: Option<String>,
     split_coefficient: Option<String>,
+}
+
+impl Entry{
+    pub fn get_time(&self) -> String{
+        self.time.clone()
+    }
+
+    pub fn get_open(&self) -> String{
+        self.open.clone()
+    }
+
+    pub fn get_high(&self) -> String{
+        self.high.clone()
+    }
+
+    pub fn get_low(&self) -> String{
+        self.low.clone()
+    }
+
+    pub fn get_close(&self) -> String{
+        self.close.clone()
+    }
+
+    pub fn get_adjusted(&self) -> Option<String>{
+        self.adjusted_close.clone()
+    }
+
+    pub fn get_volume(&self) -> String{
+        self.volume.clone()
+    }
+
+    pub fn get_dividend(&self) -> Option<String>{
+        self.dividend_amount.clone()
+    }
+
+    pub fn get_split(&self) -> Option<String>{
+        self.split_coefficient.clone()
+    }
 }
 
 #[derive(Deserialize)]
