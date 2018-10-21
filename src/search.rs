@@ -25,3 +25,39 @@ struct DataValue {
     #[serde(rename = "9. matchScore")]
     match_score: String,
 }
+
+#[derive(Debug,Default)]
+pub struct PublicDataValue{
+    pub symbol : String,
+    pub name:  String,
+    pub data_type : String,
+    pub region :String,
+    pub market_open : String,
+    pub market_close : String,
+    pub time_zone : String,
+    pub currency : String,
+    pub match_score : String,
+}
+
+impl Search{
+    pub fn result(&self) -> Vec<PublicDataValue>{
+        let mut vec  = Vec::new();
+        if let Some(value) = self.matches.clone(){
+            for data in value.iter(){
+                let data =data.clone();
+                let mut value : PublicDataValue = Default::default();
+                value.symbol = data.symbol;
+                value.name = data.name;
+                value.data_type = data.data_type;
+                value.region = data.region;
+                value.market_open = data.market_open;
+                value.market_close = data.market_close;
+                value.time_zone = data.time_zone;
+                value.currency = data.currency;
+                value.match_score = data.match_score;
+                vec.push(value);
+            }
+        }
+        vec
+    }
+}
