@@ -24,18 +24,18 @@ impl Forex {
     }
 
     ///Method return MetaData
-    pub fn meta_data(&self) -> Option<MetaData>{
+    pub fn meta_data(&self) -> Option<MetaData> {
         self.meta_data.clone()
     }
 
     ///Method return Entry
-    pub fn entry(&self) -> Option<Vec<Entry>>{
+    pub fn entry(&self) -> Option<Vec<Entry>> {
         self.forex.clone()
     }
 }
 
 ///Struct used to store MetaData value
-#[derive(Debug,Clone)]
+#[derive(Debug, Clone)]
 pub struct MetaData {
     information: String,
     from_symbol: String,
@@ -46,20 +46,20 @@ pub struct MetaData {
     time_zone: String,
 }
 
-impl MetaData{
+impl MetaData {
     /// Return last refreshed
-    pub fn last_refreshed(&self) -> String{
+    pub fn last_refreshed(&self) -> String {
         self.last_refreshed.clone()
     }
 
     /// Return time zone
-    pub fn time_zone(&self) -> String{
+    pub fn time_zone(&self) -> String {
         self.time_zone.clone()
     }
 }
 
 ///Struct to store Entry value
-#[derive(Default, Debug,Clone)]
+#[derive(Default, Debug, Clone)]
 pub struct Entry {
     time: String,
     open: String,
@@ -68,35 +68,34 @@ pub struct Entry {
     close: String,
 }
 
-
-impl Entry{
+impl Entry {
     /// Return time for entry
-    pub fn get_time(&self) -> String{
+    pub fn get_time(&self) -> String {
         self.time.clone()
     }
 
     /// Return open value
-    pub fn get_open(&self) -> f64{
+    pub fn get_open(&self) -> f64 {
         return_f64(self.open.clone())
     }
 
     /// Return high value
-    pub fn get_high(&self) -> f64{
+    pub fn get_high(&self) -> f64 {
         return_f64(self.high.clone())
     }
 
     /// Return low value
-    pub fn get_low(&self) -> f64{
+    pub fn get_low(&self) -> f64 {
         return_f64(self.low.clone())
     }
 
     /// Return close value
-    pub fn get_close(&self) -> f64{
+    pub fn get_close(&self) -> f64 {
         return_f64(self.close.clone())
     }
 }
 
-fn return_f64(data : String) -> f64{
+fn return_f64(data: String) -> f64 {
     data.trim().parse::<f64>().unwrap()
 }
 
@@ -238,7 +237,7 @@ pub(crate) fn create_url(
 }
 
 #[cfg(test)]
-mod test{
+mod test {
     use crate::util::*;
     use reqwest::Url;
     #[test]

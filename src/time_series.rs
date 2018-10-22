@@ -24,18 +24,18 @@ impl TimeSeries {
     }
 
     /// Return MetaData
-    pub fn meta_data(&self) -> Option<MetaData>{
+    pub fn meta_data(&self) -> Option<MetaData> {
         self.meta_data.clone()
     }
 
-    /// Return Entry 
-    pub fn entry(&self) -> Option<Vec<Entry>>{
+    /// Return Entry
+    pub fn entry(&self) -> Option<Vec<Entry>> {
         self.entry.clone()
     }
 }
 
 /// Struct for storing Meta Data value
-#[derive(Debug,Clone)]
+#[derive(Debug, Clone)]
 pub struct MetaData {
     information: String,
     symbol: String,
@@ -45,21 +45,20 @@ pub struct MetaData {
     time_zone: String,
 }
 
-impl MetaData{
-    
+impl MetaData {
     /// Return last refreshed value
-    pub fn last_refreshed(&self) -> String{
+    pub fn last_refreshed(&self) -> String {
         self.last_refreshed.clone()
     }
 
     /// Return time zone value
-    pub fn time_zone(&self) -> String{
+    pub fn time_zone(&self) -> String {
         self.time_zone.clone()
     }
 }
 
 /// Struct for Entry value
-#[derive(Default, Debug,Clone)]
+#[derive(Default, Debug, Clone)]
 pub struct Entry {
     time: String,
     open: String,
@@ -72,63 +71,63 @@ pub struct Entry {
     split_coefficient: Option<String>,
 }
 
-impl Entry{
+impl Entry {
     ///Get time
-    pub fn get_time(&self) -> String{
+    pub fn get_time(&self) -> String {
         self.time.clone()
     }
 
     ///Return open
-    pub fn get_open(&self) -> f64{
+    pub fn get_open(&self) -> f64 {
         return_f64(self.open.clone())
     }
 
     /// Return high
-    pub fn get_high(&self) -> f64{
+    pub fn get_high(&self) -> f64 {
         return_f64(self.high.clone())
     }
 
     /// Return low
-    pub fn get_low(&self) -> f64{
+    pub fn get_low(&self) -> f64 {
         return_f64(self.low.clone())
     }
 
     /// Return close
-    pub fn get_close(&self) -> f64{
+    pub fn get_close(&self) -> f64 {
         return_f64(self.close.clone())
     }
 
     /// Return adjusted
-    pub fn get_adjusted(&self) -> Option<f64>{
-        if let Some(data) = self.adjusted_close.clone(){
+    pub fn get_adjusted(&self) -> Option<f64> {
+        if let Some(data) = self.adjusted_close.clone() {
             return Some(return_f64(data));
         }
         None
     }
 
     /// Return volume
-    pub fn get_volume(&self) -> f64{
+    pub fn get_volume(&self) -> f64 {
         return_f64(self.volume.clone())
     }
 
     /// Return dividend
-    pub fn get_dividend(&self) -> Option<f64>{
-        if let Some(data) = self.dividend_amount.clone(){
+    pub fn get_dividend(&self) -> Option<f64> {
+        if let Some(data) = self.dividend_amount.clone() {
             return Some(return_f64(data));
         }
         None
     }
 
     /// Return split dividend
-    pub fn get_split(&self) -> Option<f64>{
-        if let Some(data) = self.split_coefficient.clone(){
+    pub fn get_split(&self) -> Option<f64> {
+        if let Some(data) = self.split_coefficient.clone() {
             return Some(return_f64(data));
         }
         None
     }
 }
 
-fn return_f64(data : String) -> f64{
+fn return_f64(data: String) -> f64 {
     data.trim().parse::<f64>().unwrap()
 }
 
@@ -304,7 +303,7 @@ pub(crate) fn create_url(
 }
 
 #[cfg(test)]
-mod test{
+mod test {
     use crate::util::*;
     use reqwest::Url;
     #[test]

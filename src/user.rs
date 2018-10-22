@@ -83,7 +83,7 @@ impl APIKey {
         serde_json::from_str(&body).unwrap()
     }
 
-    /// Forex method for calling stock time series 
+    /// Forex method for calling stock time series
     pub fn forex(
         &self,
         function: ForexFunction,
@@ -107,9 +107,9 @@ impl APIKey {
 }
 
 #[cfg(test)]
-mod test{
+mod test {
     #[test]
     fn test_get_api() {
-        assert_eq!(super::APIKey::set_api("demo").get_api(),"demo".to_string());
+        assert_eq!(super::APIKey::set_api("demo").get_api(), "demo".to_string());
     }
 }

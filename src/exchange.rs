@@ -42,8 +42,8 @@ impl Exchange {
         }
     }
 
-    #[doc="Get time when exchange rate was last refreshed. \n"]
-    #[doc="Example return value:- 2018-10-22 14:25:26 UTC."]
+    #[doc = "Get time when exchange rate was last refreshed. \n"]
+    #[doc = "Example return value:- 2018-10-22 14:25:26 UTC."]
     pub fn get_refreshed_time(&self) -> Result<String, String> {
         if let Some(real) = self.real_time.clone() {
             Ok(format!("{} {}", real.last_refreshed, real.time_zone))
