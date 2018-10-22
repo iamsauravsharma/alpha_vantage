@@ -72,7 +72,7 @@ pub struct Entry {
 impl Entry{
     /// Return time for entry
     pub fn get_time(&self) -> String{
-        return_f64(self.time.clone())
+        self.time.clone()
     }
 
     /// Return open value
