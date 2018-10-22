@@ -4,6 +4,7 @@ use std::collections::HashMap;
 
 const LINK: &str = "https://www.alphavantage.co/query?function=";
 
+/// Struct for storing time series data
 #[derive(Debug)]
 pub struct TimeSeries {
     error_message: Option<String>,
@@ -22,15 +23,18 @@ impl TimeSeries {
         }
     }
 
+    /// Return MetaData
     pub fn meta_data(&self) -> Option<MetaData>{
         self.meta_data.clone()
     }
 
+    /// Return Entry 
     pub fn entry(&self) -> Option<Vec<Entry>>{
         self.entry.clone()
     }
 }
 
+/// Struct for storing Meta Data value
 #[derive(Debug,Clone)]
 pub struct MetaData {
     information: String,
@@ -42,15 +46,19 @@ pub struct MetaData {
 }
 
 impl MetaData{
+    
+    /// Return last refreshed value
     pub fn last_refreshed(&self) -> String{
         self.last_refreshed.clone()
     }
 
+    /// Return time zone value
     pub fn time_zone(&self) -> String{
         self.time_zone.clone()
     }
 }
 
+/// Struct for Entry value
 #[derive(Default, Debug,Clone)]
 pub struct Entry {
     time: String,
@@ -65,38 +73,47 @@ pub struct Entry {
 }
 
 impl Entry{
+    ///Get time
     pub fn get_time(&self) -> String{
         self.time.clone()
     }
 
+    ///Return open
     pub fn get_open(&self) -> String{
         self.open.clone()
     }
 
+    /// Return high
     pub fn get_high(&self) -> String{
         self.high.clone()
     }
 
+    /// Return low
     pub fn get_low(&self) -> String{
         self.low.clone()
     }
 
+    /// Return close
     pub fn get_close(&self) -> String{
         self.close.clone()
     }
 
+    /// Return adjusted
     pub fn get_adjusted(&self) -> Option<String>{
         self.adjusted_close.clone()
     }
 
+    /// Return volume
     pub fn get_volume(&self) -> String{
         self.volume.clone()
     }
 
+    /// Return dividend
     pub fn get_dividend(&self) -> Option<String>{
         self.dividend_amount.clone()
     }
 
+    /// Return split dividend
     pub fn get_split(&self) -> Option<String>{
         self.split_coefficient.clone()
     }

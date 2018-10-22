@@ -4,6 +4,7 @@ use std::collections::HashMap;
 
 const LINK: &str = "https://www.alphavantage.co/query?function=";
 
+/// Struct to store Forex data after forex
 #[derive(Debug)]
 pub struct Forex {
     error_message: Option<String>,
@@ -22,15 +23,18 @@ impl Forex {
         }
     }
 
+    ///Method return MetaData
     pub fn meta_data(&self) -> Option<MetaData>{
         self.meta_data.clone()
     }
 
+    ///Method return Entry
     pub fn entry(&self) -> Option<Vec<Entry>>{
         self.forex.clone()
     }
 }
 
+///Struct used to store MetaData value
 #[derive(Debug,Clone)]
 pub struct MetaData {
     information: String,
@@ -43,15 +47,18 @@ pub struct MetaData {
 }
 
 impl MetaData{
+    /// Return last refreshed
     pub fn last_refreshed(&self) -> String{
         self.last_refreshed.clone()
     }
 
+    /// Return time zone
     pub fn time_zone(&self) -> String{
         self.time_zone.clone()
     }
 }
 
+///Struct to store Entry value
 #[derive(Default, Debug,Clone)]
 pub struct Entry {
     time: String,
@@ -63,22 +70,27 @@ pub struct Entry {
 
 
 impl Entry{
+    /// Return time for entry
     pub fn get_time(&self) -> String{
         self.time.clone()
     }
 
+    /// Return open value
     pub fn get_open(&self) -> String{
         self.open.clone()
     }
 
+    /// Return high value
     pub fn get_high(&self) -> String{
         self.high.clone()
     }
 
+    /// Return low value
     pub fn get_low(&self) -> String{
         self.low.clone()
     }
 
+    /// Return close value
     pub fn get_close(&self) -> String{
         self.close.clone()
     }

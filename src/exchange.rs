@@ -1,3 +1,4 @@
+/// Struct used for exchanging currency
 #[derive(Debug, Deserialize)]
 pub struct Exchange {
     #[serde(rename = "Error Message")]
@@ -27,6 +28,7 @@ struct RealtimeExchangeRate {
 }
 
 impl Exchange {
+    /// Get Rate for exchange
     pub fn get_rate(&self) -> Result<f64, String> {
         if let Some(real) = self.real_time.clone() {
             Ok(real.rate.trim().parse::<f64>().unwrap())
@@ -40,6 +42,8 @@ impl Exchange {
         }
     }
 
+    #[doc="Get time when exchange rate was last refreshed. \n"]
+    #[doc="Example return value:- 2018-10-22 14:25:26 UTC."]
     pub fn get_refreshed_time(&self) -> Result<String, String> {
         if let Some(real) = self.real_time.clone() {
             Ok(format!("{} {}", real.last_refreshed, real.time_zone))

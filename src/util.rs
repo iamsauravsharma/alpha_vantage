@@ -1,3 +1,4 @@
+///Enum for declaring interval for intraday
 #[derive(Copy, Clone)]
 pub enum Interval {
     OneMin,
@@ -8,6 +9,7 @@ pub enum Interval {
     None,
 }
 
+///Enum for declaring output size
 #[derive(Copy, Clone)]
 pub enum OutputSize {
     Compact,
@@ -15,6 +17,7 @@ pub enum OutputSize {
     None,
 }
 
+///Enum for declaring function for stock time series
 #[derive(Copy, Clone)]
 pub enum StockFunction {
     IntraDay,
@@ -26,6 +29,7 @@ pub enum StockFunction {
     MonthlyAdjusted,
 }
 
+///Enum for declaring function for forex function
 #[derive(Copy, Clone)]
 pub enum ForexFunction {
     IntraDay,

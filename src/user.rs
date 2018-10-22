@@ -1,3 +1,4 @@
+///Struct for initializing apikey value
 pub struct APIKey(String);
 
 use crate::exchange::Exchange;
@@ -13,14 +14,17 @@ use reqwest::{get, Url};
 const LINK: &str = "https://www.alphavantage.co/query?function=";
 
 impl APIKey {
+    /// Method for initializing APIKey struct
     pub fn set_api(api: &str) -> APIKey {
         APIKey(api.to_string())
     }
 
+    /// Method to get api key
     pub fn get_api(&self) -> String {
         self.0.clone()
     }
 
+    /// Method for exchanging currency value from one currency to another currency.
     pub fn exchange(&self, from_currency: &str, to_currency: &str) -> Exchange {
         let data: Url = format!(
             "{}CURRENCY_EXCHANGE_RATE&from_currency={}&to_currency={}&apikey={}",
@@ -36,6 +40,7 @@ impl APIKey {
         serde_json::from_str(&body).unwrap()
     }
 
+    ///Method for returning Quote Struct
     pub fn quote(&self, symbol: &str) -> Quote {
         let data: Url = format!(
             "{}GLOBAL_QUOTE&symbol={}&apikey={}",
@@ -50,6 +55,7 @@ impl APIKey {
         serde_json::from_str(&body).unwrap()
     }
 
+    /// Stock time method for calling stock time series API
     pub fn stock_time(
         &self,
         function: StockFunction,
@@ -63,6 +69,7 @@ impl APIKey {
         time_series_helper.convert()
     }
 
+    /// Search method for searching keyword or company
     pub fn search(&self, keywords: &str) -> Search {
         let data: Url = format!(
             "{}SYMBOL_SEARCH&keywords={}&apikey={}",
@@ -76,6 +83,7 @@ impl APIKey {
         serde_json::from_str(&body).unwrap()
     }
 
+    /// Forex method for calling stock time series 
     pub fn forex(
         &self,
         function: ForexFunction,

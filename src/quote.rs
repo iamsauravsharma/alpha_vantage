@@ -1,3 +1,4 @@
+/// Struct for storing Quote related information
 #[derive(Debug, Deserialize)]
 pub struct Quote {
     #[serde(rename = "Error Message")]
@@ -33,30 +34,37 @@ struct GlobalQuote {
 }
 
 impl Quote {
+    /// return open value
     pub fn get_open(&self) -> Result<f64, String> {
         self.return_value("open")
     }
 
+    /// return high value
     pub fn get_high(&self) -> Result<f64, String> {
         self.return_value("high")
     }
 
+    /// return low value
     pub fn get_low(&self) -> Result<f64, String> {
         self.return_value("low")
     }
 
+    /// return price value
     pub fn get_price(&self) -> Result<f64, String> {
         self.return_value("price")
     }
 
+    /// return previous
     pub fn get_previous(&self) -> Result<f64, String> {
         self.return_value("previous")
     }
 
+    ///return change
     pub fn get_change(&self) -> Result<f64, String> {
         self.return_value("change")
     }
 
+    ///return change percent
     pub fn get_change_percent(&self) -> Result<f64,String>{
         let previous = self.get_previous()?;
         let price = self.get_price()?;
@@ -88,6 +96,7 @@ impl Quote {
         }
     }
 
+    ///get last trading day
     pub fn get_last_trading(&self) -> Result<String,String>{
         if let Some(global) =self.global_quote.clone(){
             if let  Some(value) = global.last_day{

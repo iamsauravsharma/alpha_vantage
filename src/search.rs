@@ -1,3 +1,4 @@
+///struct for storing search method data
 #[derive(Debug, Deserialize)]
 pub struct Search {
     #[serde(rename = "bestMatches")]
@@ -26,6 +27,7 @@ struct DataValue {
     match_score: String,
 }
 
+///struct used for returning search result value
 #[derive(Debug,Default)]
 pub struct PublicDataValue{
     pub symbol : String,
