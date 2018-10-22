@@ -220,3 +220,16 @@ pub(crate) fn create_url(
     url.push_str(format!("&apikey={}", api).as_str());
     url.parse().unwrap()
 }
+
+#[cfg(test)]
+mod test{
+    use crate::util::*;
+    use reqwest::Url;
+    #[test]
+    fn test_forex_create_url() {
+        assert_eq!(super::create_url(ForexFunction::Daily, "USD", "NPR", Interval::None, OutputSize::None, "random"),
+        Url::parse("https://www.alphavantage.co/query?function=FX_DAILY&from_symbol=USD&to_symbol=NPR&apikey=random").unwrap());
+        assert_eq!(super::create_url(ForexFunction::IntraDay, "USD", "NPR", Interval::FifteenMin, OutputSize::Full, "random"),
+        Url::parse("https://www.alphavantage.co/query?function=FX_INTRADAY&from_symbol=USD&to_symbol=NPR&interval=15min&outputsize=full&apikey=random").unwrap());
+    }
+}

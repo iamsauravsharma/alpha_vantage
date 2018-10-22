@@ -97,3 +97,11 @@ impl APIKey {
         forex_helper.convert()
     }
 }
+
+#[cfg(test)]
+mod test{
+    #[test]
+    fn test_get_api() {
+        assert_eq!(super::APIKey::set_api("demo").get_api(),"demo".to_string());
+    }
+}
