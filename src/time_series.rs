@@ -79,44 +79,57 @@ impl Entry{
     }
 
     ///Return open
-    pub fn get_open(&self) -> String{
-        self.open.clone()
+    pub fn get_open(&self) -> f64{
+        return_f64(self.open.clone())
     }
 
     /// Return high
-    pub fn get_high(&self) -> String{
-        self.high.clone()
+    pub fn get_high(&self) -> f64{
+        return_f64(self.high.clone())
     }
 
     /// Return low
-    pub fn get_low(&self) -> String{
-        self.low.clone()
+    pub fn get_low(&self) -> f64{
+        return_f64(self.low.clone())
     }
 
     /// Return close
-    pub fn get_close(&self) -> String{
-        self.close.clone()
+    pub fn get_close(&self) -> f64{
+        return_f64(self.close.clone())
     }
 
     /// Return adjusted
-    pub fn get_adjusted(&self) -> Option<String>{
-        self.adjusted_close.clone()
+    pub fn get_adjusted(&self) -> Option<f64>{
+        if let Some(data) = self.adjusted_close.clone(){
+            return Some(return_f64(data));
+        }
+        None
     }
 
     /// Return volume
-    pub fn get_volume(&self) -> String{
-        self.volume.clone()
+    pub fn get_volume(&self) -> f64{
+        return_f64(self.volume.clone())
     }
 
     /// Return dividend
-    pub fn get_dividend(&self) -> Option<String>{
-        self.dividend_amount.clone()
+    pub fn get_dividend(&self) -> Option<f64>{
+        if let Some(data) = self.dividend_amount.clone(){
+            return Some(return_f64(data));
+        }
+        None
     }
 
     /// Return split dividend
-    pub fn get_split(&self) -> Option<String>{
-        self.split_coefficient.clone()
+    pub fn get_split(&self) -> Option<f64>{
+        if let Some(data) = self.split_coefficient.clone(){
+            return Some(return_f64(data));
+        }
+        None
     }
+}
+
+fn return_f64(data : String) -> f64{
+    data.trim().parse::<f64>().unwrap()
 }
 
 #[derive(Deserialize)]
