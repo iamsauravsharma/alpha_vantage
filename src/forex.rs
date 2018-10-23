@@ -200,7 +200,7 @@ fn return_value(value: Option<&std::string::String>) -> Option<String> {
     }
 }
 
-//Create Url from given user paramter for reqwest crate 
+//Create Url from given user paramter for reqwest crate
 pub(crate) fn create_url(
     function: ForexFunction,
     from_symbol: &str,
