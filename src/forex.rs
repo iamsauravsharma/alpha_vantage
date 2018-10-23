@@ -77,26 +77,26 @@ impl Entry {
 
     /// Return open value
     pub fn get_open(&self) -> f64 {
-        return_f64(self.open.clone())
+        return_f64(self.open.as_str())
     }
 
     /// Return high value
     pub fn get_high(&self) -> f64 {
-        return_f64(self.high.clone())
+        return_f64(self.high.as_str())
     }
 
     /// Return low value
     pub fn get_low(&self) -> f64 {
-        return_f64(self.low.clone())
+        return_f64(self.low.as_str())
     }
 
     /// Return close value
     pub fn get_close(&self) -> f64 {
-        return_f64(self.close.clone())
+        return_f64(self.close.as_str())
     }
 }
 
-fn return_f64(data: String) -> f64 {
+fn return_f64(data: &str) -> f64 {
     data.trim().parse::<f64>().unwrap()
 }
 

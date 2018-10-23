@@ -80,41 +80,41 @@ impl Entry {
 
     ///Return open
     pub fn get_open(&self) -> f64 {
-        return_f64(self.open.clone())
+        return_f64(self.open.as_str())
     }
 
     /// Return high
     pub fn get_high(&self) -> f64 {
-        return_f64(self.high.clone())
+        return_f64(self.high.as_str())
     }
 
     /// Return low
     pub fn get_low(&self) -> f64 {
-        return_f64(self.low.clone())
+        return_f64(self.low.as_str())
     }
 
     /// Return close
     pub fn get_close(&self) -> f64 {
-        return_f64(self.close.clone())
+        return_f64(self.close.as_str())
     }
 
     /// Return adjusted
     pub fn get_adjusted(&self) -> Option<f64> {
         if let Some(data) = self.adjusted_close.clone() {
-            return Some(return_f64(data));
+            return Some(return_f64(&data));
         }
         None
     }
 
     /// Return volume
     pub fn get_volume(&self) -> f64 {
-        return_f64(self.volume.clone())
+        return_f64(self.volume.as_str())
     }
 
     /// Return dividend
     pub fn get_dividend(&self) -> Option<f64> {
         if let Some(data) = self.dividend_amount.clone() {
-            return Some(return_f64(data));
+            return Some(return_f64(&data));
         }
         None
     }
@@ -122,14 +122,14 @@ impl Entry {
     /// Return split dividend
     pub fn get_split(&self) -> Option<f64> {
         if let Some(data) = self.split_coefficient.clone() {
-            return Some(return_f64(data));
+            return Some(return_f64(&data));
         }
         None
     }
 }
 
 //parse String to f64 and return value
-fn return_f64(data: String) -> f64 {
+fn return_f64(data: &str) -> f64 {
     data.trim().parse::<f64>().unwrap()
 }
 
