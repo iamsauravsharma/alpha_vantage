@@ -4,7 +4,7 @@ use std::collections::HashMap;
 
 const LINK: &str = "https://www.alphavantage.co/query?function=";
 
-/// Struct to store Forex data after forex
+/// Struct to store Forex data after forex API call
 #[derive(Debug)]
 pub struct Forex {
     error_message: Option<String>,
@@ -14,6 +14,7 @@ pub struct Forex {
 }
 
 impl Forex {
+    //create new forex struct
     fn new() -> Forex {
         Forex {
             error_message: None,
@@ -99,6 +100,7 @@ fn return_f64(data: String) -> f64 {
     data.trim().parse::<f64>().unwrap()
 }
 
+// struct which helps for collecting forex data from website
 #[derive(Debug, Deserialize)]
 pub(crate) struct ForexHelper {
     #[serde(rename = "Error Message")]
@@ -112,6 +114,7 @@ pub(crate) struct ForexHelper {
 }
 
 impl ForexHelper {
+    //convert ForexHelper to Forex
     pub(crate) fn convert(self) -> Forex {
         let mut forex = Forex::new();
         forex.error_message = self.error_message;
@@ -176,6 +179,7 @@ impl ForexHelper {
     }
 }
 
+//Entry Helper
 #[derive(Clone, Debug, Deserialize)]
 struct EntryHelper {
     #[serde(rename = "1. open")]
@@ -188,6 +192,7 @@ struct EntryHelper {
     close: String,
 }
 
+//Convert Option(&String) to String
 fn return_value(value: Option<&std::string::String>) -> Option<String> {
     match value {
         Some(value) => Some(value.to_string()),
@@ -195,6 +200,7 @@ fn return_value(value: Option<&std::string::String>) -> Option<String> {
     }
 }
 
+//Create Url from given user paramter for reqwest crate 
 pub(crate) fn create_url(
     function: ForexFunction,
     from_symbol: &str,
@@ -236,11 +242,13 @@ pub(crate) fn create_url(
     url.parse().unwrap()
 }
 
+//Test module
 #[cfg(test)]
 mod test {
     use crate::util::*;
     use reqwest::Url;
     #[test]
+    //Testing forex create_url() function
     fn test_forex_create_url() {
         assert_eq!(super::create_url(ForexFunction::Daily, "USD", "NPR", Interval::None, OutputSize::None, "random"),
         Url::parse("https://www.alphavantage.co/query?function=FX_DAILY&from_symbol=USD&to_symbol=NPR&apikey=random").unwrap());

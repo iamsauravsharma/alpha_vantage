@@ -106,9 +106,11 @@ impl APIKey {
     }
 }
 
+//Mod for unit testing
 #[cfg(test)]
 mod test {
     #[test]
+    //Testing get api and set api function
     fn test_get_api() {
         assert_eq!(super::APIKey::set_api("demo").get_api(), "demo".to_string());
     }

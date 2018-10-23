@@ -5,6 +5,7 @@ pub struct Search {
     matches: Option<Vec<DataValue>>,
 }
 
+//Struct which stores matches data for search keyword
 #[derive(Debug, Clone, Deserialize)]
 struct DataValue {
     #[serde(rename = "1. symbol")]
@@ -42,6 +43,7 @@ pub struct PublicDataValue {
 }
 
 impl Search {
+    //Return result of search
     pub fn result(&self) -> Vec<PublicDataValue> {
         let mut vec = Vec::new();
         if let Some(value) = self.matches.clone() {

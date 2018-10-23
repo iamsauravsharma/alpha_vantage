@@ -14,6 +14,7 @@ pub struct TimeSeries {
 }
 
 impl TimeSeries {
+    //create new TimeSeries
     fn new() -> TimeSeries {
         TimeSeries {
             error_message: None,
@@ -127,10 +128,12 @@ impl Entry {
     }
 }
 
+//parse String to f64 and return value
 fn return_f64(data: String) -> f64 {
     data.trim().parse::<f64>().unwrap()
 }
 
+//helper struct for TimeSeries which deseialize JSON
 #[derive(Deserialize)]
 pub(crate) struct TimeSeriesHelper {
     #[serde(rename = "Error Message")]
@@ -146,6 +149,7 @@ pub(crate) struct TimeSeriesHelper {
 }
 
 impl TimeSeriesHelper {
+    //Convert TimeSeriesHelper to TimeSeries
     pub(crate) fn convert(self) -> TimeSeries {
         let mut time_series = TimeSeries::new();
         time_series.error_message = self.error_message;
@@ -222,6 +226,7 @@ impl TimeSeriesHelper {
     }
 }
 
+//Convert Option<&String> to Option<String>
 fn return_value(value: Option<&std::string::String>) -> Option<String> {
     match value {
         Some(value) => Some(value.to_string()),
@@ -229,6 +234,7 @@ fn return_value(value: Option<&std::string::String>) -> Option<String> {
     }
 }
 
+//Helper struct to store non adjusted data
 #[derive(Clone, Deserialize)]
 struct EntryHelper {
     #[serde(rename = "1. open")]
@@ -243,6 +249,7 @@ struct EntryHelper {
     volume: String,
 }
 
+//Helper struct to store adjusted data
 #[derive(Deserialize, Clone)]
 struct AdjustedHelper {
     #[serde(rename = "1. open")]
@@ -263,6 +270,7 @@ struct AdjustedHelper {
     split_coefficient: Option<String>,
 }
 
+//create url from user provided data
 pub(crate) fn create_url(
     function: StockFunction,
     symbol: &str,

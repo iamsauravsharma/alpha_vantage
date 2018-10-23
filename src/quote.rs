@@ -9,6 +9,8 @@ pub struct Quote {
     global_quote: Option<GlobalQuote>,
 }
 
+
+//Struct storing Global Quote Value
 #[derive(Debug, Deserialize, Clone)]
 struct GlobalQuote {
     #[serde(rename = "01. symbol")]
@@ -71,6 +73,7 @@ impl Quote {
         Ok((price - previous) / previous)
     }
 
+    // general function used for returning value of Quote method
     fn return_value(&self, value: &str) -> Result<f64, String> {
         if let Some(global) = self.global_quote.clone() {
             if let Some(price) = match value {
