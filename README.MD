@@ -2,6 +2,7 @@
 
 **Status:**
 [![Travis Build Status](https://travis-ci.org/iamsauravsharma/alpha_vantage.svg?branch=master)](https://travis-ci.org/iamsauravsharma/alpha_vantage)
+[![dependency status](https://deps.rs/repo/github/iamsauravsharma/alpha_vantage/status.svg)](https://deps.rs/repo/github/iamsauravsharma/alpha_vantage)
 
 **Project Info:**
 [![License: MIT](https://img.shields.io/github/license/iamsauravsharma/alpha_vantage.svg)](LICENSE)
