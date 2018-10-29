@@ -14,16 +14,16 @@ pub mod forex;
 /// Module for returning latest price and volume information
 pub mod quote;
 
-///Module for searching specific symbol or companies
+/// Module for searching specific symbol or companies
 pub mod search;
 
-///Stock time series module
+/// Stock time series module
 pub mod time_series;
 
-///Module for basic definition of User information like setting API
+/// Module for basic definition of User information like setting API
 pub mod user;
 
-///Utility module declaring enum for basic use
+/// Utility module declaring enum for basic use
 pub mod util;
 
 use self::user::APIKey;

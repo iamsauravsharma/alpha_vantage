@@ -1,15 +1,26 @@
-///Struct for initializing apikey value
+/// Struct for initializing apikey value
 pub struct APIKey(String);
 
-use crate::exchange::Exchange;
-use crate::forex::create_url as create_url_forex;
-use crate::forex::{Forex, ForexHelper};
-use crate::quote::Quote;
-use crate::search::*;
-use crate::time_series::create_url as create_url_time_series;
-use crate::time_series::{TimeSeries, TimeSeriesHelper};
-use crate::util::*;
-use reqwest::{get, Url};
+use crate::{
+    exchange::Exchange,
+    forex::{
+        create_url as create_url_forex,
+        Forex,
+        ForexHelper,
+    },
+    quote::Quote,
+    search::*,
+    time_series::{
+        create_url as create_url_time_series,
+        TimeSeries,
+        TimeSeriesHelper,
+    },
+    util::*,
+};
+use reqwest::{
+    get,
+    Url,
+};
 
 const LINK: &str = "https://www.alphavantage.co/query?function=";
 
@@ -24,7 +35,8 @@ impl APIKey {
         self.0.clone()
     }
 
-    /// Method for exchanging currency value from one currency to another currency.
+    /// Method for exchanging currency value from one currency to another
+    /// currency.
     pub fn exchange(&self, from_currency: &str, to_currency: &str) -> Exchange {
         let data: Url = format!(
             "{}CURRENCY_EXCHANGE_RATE&from_currency={}&to_currency={}&apikey={}",
@@ -40,7 +52,7 @@ impl APIKey {
         serde_json::from_str(&body).unwrap()
     }
 
-    ///Method for returning Quote Struct
+    /// Method for returning Quote Struct
     pub fn quote(&self, symbol: &str) -> Quote {
         let data: Url = format!(
             "{}GLOBAL_QUOTE&symbol={}&apikey={}",
@@ -106,11 +118,11 @@ impl APIKey {
     }
 }
 
-//Mod for unit testing
+// Mod for unit testing
 #[cfg(test)]
 mod test {
     #[test]
-    //Testing get api and set api function
+    // Testing get api and set api function
     fn test_get_api() {
         assert_eq!(super::APIKey::set_api("demo").get_api(), "demo".to_string());
     }

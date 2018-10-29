@@ -9,7 +9,7 @@ pub struct Exchange {
     real_time: Option<RealtimeExchangeRate>,
 }
 
-//Struct Storing Real time Exchange Value
+// Struct Storing Real time Exchange Value
 #[derive(Debug, Deserialize, Clone)]
 struct RealtimeExchangeRate {
     #[serde(rename = "1. From_Currency Code")]

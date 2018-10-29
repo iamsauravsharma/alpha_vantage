@@ -1,11 +1,11 @@
-///struct for storing search method data
+/// struct for storing search method data
 #[derive(Debug, Deserialize)]
 pub struct Search {
     #[serde(rename = "bestMatches")]
     matches: Option<Vec<DataValue>>,
 }
 
-//Struct which stores matches data for search keyword
+// Struct which stores matches data for search keyword
 #[derive(Debug, Clone, Deserialize)]
 struct DataValue {
     #[serde(rename = "1. symbol")]
@@ -28,7 +28,7 @@ struct DataValue {
     match_score: String,
 }
 
-///struct used for returning search result value
+/// struct used for returning search result value
 #[derive(Debug, Default)]
 pub struct PublicDataValue {
     pub symbol: String,
@@ -43,7 +43,7 @@ pub struct PublicDataValue {
 }
 
 impl Search {
-    //Return result of search
+    // Return result of search
     pub fn result(&self) -> Vec<PublicDataValue> {
         let mut vec = Vec::new();
         if let Some(value) = self.matches.clone() {

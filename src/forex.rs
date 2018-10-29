@@ -1,4 +1,8 @@
-use crate::util::{ForexFunction, Interval, OutputSize};
+use crate::util::{
+    ForexFunction,
+    Interval,
+    OutputSize,
+};
 use reqwest::Url;
 use std::collections::HashMap;
 
@@ -14,7 +18,7 @@ pub struct Forex {
 }
 
 impl Forex {
-    //create new forex struct
+    // create new forex struct
     fn new() -> Forex {
         Forex {
             error_message: None,
@@ -24,18 +28,18 @@ impl Forex {
         }
     }
 
-    ///Method return MetaData
+    /// Method return MetaData
     pub fn meta_data(&self) -> Option<MetaData> {
         self.meta_data.clone()
     }
 
-    ///Method return Entry
+    /// Method return Entry
     pub fn entry(&self) -> Option<Vec<Entry>> {
         self.forex.clone()
     }
 }
 
-///Struct used to store MetaData value
+/// Struct used to store MetaData value
 #[derive(Debug, Clone)]
 pub struct MetaData {
     information: String,
@@ -59,7 +63,7 @@ impl MetaData {
     }
 }
 
-///Struct to store Entry value
+/// Struct to store Entry value
 #[derive(Default, Debug, Clone)]
 pub struct Entry {
     time: String,
@@ -114,7 +118,7 @@ pub(crate) struct ForexHelper {
 }
 
 impl ForexHelper {
-    //convert ForexHelper to Forex
+    // convert ForexHelper to Forex
     pub(crate) fn convert(self) -> Forex {
         let mut forex = Forex::new();
         forex.error_message = self.error_message;
@@ -179,7 +183,7 @@ impl ForexHelper {
     }
 }
 
-//Entry Helper
+// Entry Helper
 #[derive(Clone, Debug, Deserialize)]
 struct EntryHelper {
     #[serde(rename = "1. open")]
@@ -192,7 +196,7 @@ struct EntryHelper {
     close: String,
 }
 
-//Convert Option(&String) to String
+// Convert Option(&String) to String
 fn return_value(value: Option<&std::string::String>) -> Option<String> {
     match value {
         Some(value) => Some(value.to_string()),
@@ -200,7 +204,7 @@ fn return_value(value: Option<&std::string::String>) -> Option<String> {
     }
 }
 
-//Create Url from given user paramter for reqwest crate
+// Create Url from given user paramter for reqwest crate
 pub(crate) fn create_url(
     function: ForexFunction,
     from_symbol: &str,
@@ -242,13 +246,13 @@ pub(crate) fn create_url(
     url.parse().unwrap()
 }
 
-//Test module
+// Test module
 #[cfg(test)]
 mod test {
     use crate::util::*;
     use reqwest::Url;
     #[test]
-    //Testing forex create_url() function
+    // Testing forex create_url() function
     fn test_forex_create_url() {
         assert_eq!(super::create_url(ForexFunction::Daily, "USD", "NPR", Interval::None, OutputSize::None, "random"),
         Url::parse("https://www.alphavantage.co/query?function=FX_DAILY&from_symbol=USD&to_symbol=NPR&apikey=random").unwrap());
