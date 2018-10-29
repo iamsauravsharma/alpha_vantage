@@ -3,24 +3,13 @@ pub struct APIKey(String);
 
 use crate::{
     exchange::Exchange,
-    forex::{
-        create_url as create_url_forex,
-        Forex,
-        ForexHelper,
-    },
+    forex::{create_url as create_url_forex, Forex, ForexHelper},
     quote::Quote,
     search::*,
-    time_series::{
-        create_url as create_url_time_series,
-        TimeSeries,
-        TimeSeriesHelper,
-    },
+    time_series::{create_url as create_url_time_series, TimeSeries, TimeSeriesHelper},
     util::*,
 };
-use reqwest::{
-    get,
-    Url,
-};
+use reqwest::{get, Url};
 
 const LINK: &str = "https://www.alphavantage.co/query?function=";
 

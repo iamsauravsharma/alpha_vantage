@@ -1,8 +1,4 @@
-use crate::util::{
-    ForexFunction,
-    Interval,
-    OutputSize,
-};
+use crate::util::{ForexFunction, Interval, OutputSize};
 use reqwest::Url;
 use std::collections::HashMap;
 

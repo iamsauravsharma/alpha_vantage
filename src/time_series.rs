@@ -1,8 +1,4 @@
-use crate::util::{
-    Interval,
-    OutputSize,
-    StockFunction,
-};
+use crate::util::{Interval, OutputSize, StockFunction};
 use reqwest::Url;
 use std::collections::HashMap;
 
