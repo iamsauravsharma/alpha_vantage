@@ -1,8 +1,3 @@
-extern crate reqwest;
-extern crate serde;
-extern crate serde_derive;
-extern crate serde_json;
-
 /// Module for exchange currency (both digital & physical currency exchange)
 pub mod exchange;
 
