@@ -1,3 +1,5 @@
+use serde_derive::Deserialize;
+
 /// Struct used for exchanging currency
 #[derive(Debug, Deserialize)]
 pub struct Exchange {

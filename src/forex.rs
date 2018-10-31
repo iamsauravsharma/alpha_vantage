@@ -1,5 +1,6 @@
 use crate::util::{ForexFunction, Interval, OutputSize};
 use reqwest::Url;
+use serde_derive::Deserialize;
 use std::collections::HashMap;
 
 const LINK: &str = "https://www.alphavantage.co/query?function=";

@@ -1,3 +1,5 @@
+use serde_derive::Deserialize;
+
 /// Struct for storing Quote related information
 #[derive(Debug, Deserialize)]
 pub struct Quote {

@@ -1,3 +1,5 @@
+use serde_derive::Deserialize;
+
 /// struct for storing search method data
 #[derive(Debug, Deserialize)]
 pub struct Search {
