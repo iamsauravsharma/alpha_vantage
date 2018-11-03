@@ -1,9 +1,9 @@
-extern crate alpha_vantage;
+extern crate alphavantageapi;
 
 #[test]
 // Integration test exchange method call using api
 fn exchnage_test() {
-    let a = alpha_vantage::set_api("demo");
+    let a = alphavantageapi::set_api("demo");
     assert_eq!(a.exchange("BTC", "CNY").get_rate().is_ok(), true);
     assert_eq!(a.exchange("USD", "JPY").get_refreshed_time().is_ok(), true);
 }
@@ -11,7 +11,7 @@ fn exchnage_test() {
 #[test]
 // test Quote method call
 fn quote_test() {
-    let a = alpha_vantage::set_api("demo");
+    let a = alphavantageapi::set_api("demo");
     assert_eq!(a.quote("MSFT").get_price().is_ok(), true);
     assert_eq!(
         a.quote("BA").get_price(),
