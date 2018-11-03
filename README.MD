@@ -7,7 +7,7 @@
 **Project Info:**
 [![License: MIT](https://img.shields.io/github/license/iamsauravsharma/alphavantageapi.svg)](LICENSE)
 [![Rust nightly required](https://img.shields.io/badge/rust-nightly-blue.svg)](https://rustup.rs)
-[![LoC](https://tokei.rs/b1/github/iamsauravsharma/alphavantageapi)](https://github.com/iamsauravsharma/alpha_vantage)
+[![LoC](https://tokei.rs/b1/github/iamsauravsharma/alphavantageapi)](https://github.com/iamsauravsharma/alphavantageapi)
 
 
 (WIP) Rust Wrapper/Client built for [Alphavantage](https://www.alphavantage.co)  API
