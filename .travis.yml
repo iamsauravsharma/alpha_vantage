@@ -8,35 +8,25 @@ git:
 
 cache: cargo
 
-jobs:
-  
-  include:
-  - name: fmt
-    install: 
-    - rustup component add rustfmt-preview
-    - rustfmt -V
-    script:
-    - cargo fmt --all -- --check
-  
-  - name: deadlinks
-    install:
-    - cargo install cargo-deadlinks --force
-    - cargo deadlinks -V
-    script:
-    - cargo doc --no-deps
-    - cargo deadlinks --dir target/doc
-  
-  - name : clippy
-    install:
-    - rustup component add clippy-preview
-    - cargo clippy -V
-    script:
-    - cargo clippy --all -- -D warnings
+os:
+  - linux
+  - osx
+  - windows
 
-  - name: test
-    script:
-    - cargo test --all
+install:
+  - rustup component add rustfmt-preview
+  - rustup component add clippy-preview
+  - cargo install cargo-deadlinks --force
 
-  - name: build
-    script:
-    - cargo build --all
+before_script:
+  - rustfmt -V
+  - cargo deadlinks -V
+  - cargo clippy -V
+
+script:
+  - cargo fmt  --verbose --all -- --check
+  - cargo doc --verbose --no-deps
+  - cargo deadlinks --verbose --dir target/doc
+  - cargo clippy --verbose --all -- -D warnings
+  - cargo build --verbose --all
+  - cargo test --verbose --all
