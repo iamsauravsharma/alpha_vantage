@@ -1,4 +1,4 @@
-# ALPHA_VANTAGE
+# ALPHAVANTAGE-API
 
 **Status:**
 [![Travis Build Status](https://travis-ci.org/iamsauravsharma/alpha_vantage.svg?branch=master)](https://travis-ci.org/iamsauravsharma/alpha_vantage)

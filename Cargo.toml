@@ -1,5 +1,5 @@
 [package]
-name = "alpha_vantage"
+name = "alphavantage-api"
 version = "0.1.0"
 authors = ["Saurav Sharma <appdroiddeveloper@gmail.com>"]
 edition = "2018"
