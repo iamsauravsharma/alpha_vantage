@@ -1,7 +1,7 @@
 # ALPHAVANTAGEAPI
 
 **Status:**
-[![Travis Build Status](https://travis-ci.org/iamsauravsharma/alphavantageapi.svg?branch=master)](https://travis-ci.org/iamsauravsharma/alphavantageapi)
+[![Travis Build Status](https://travis-ci.com/iamsauravsharma/alphavantageapi.svg?branch=master)](https://travis-ci.com/iamsauravsharma/alphavantageapi)
 [![dependency status](https://deps.rs/repo/github/iamsauravsharma/alphavantageapi/status.svg)](https://deps.rs/repo/github/iamsauravsharma/alphavantageapi)
 
 **Project Info:**
