@@ -162,7 +162,7 @@ impl ForexHelper {
         if let Some(entry) = self.forex {
             for hash in entry.values() {
                 for val in hash.keys() {
-                    let mut entry: Entry = Default::default();
+                    let mut entry: Entry = crate::forex::Entry::default();
                     entry.time = val.to_string();
                     let entry_helper = hash.get(val).unwrap().clone();
                     entry.open = entry_helper.open;

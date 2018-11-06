@@ -190,7 +190,7 @@ impl TimeSeriesHelper {
         if let Some(entry) = self.time_series {
             for hash in entry.values() {
                 for val in hash.keys() {
-                    let mut entry: Entry = Default::default();
+                    let mut entry: Entry = crate::time_series::Entry::default();
                     entry.time = val.to_string();
                     let entry_helper = hash.get(val).unwrap().clone();
                     entry.open = entry_helper.open;
@@ -205,7 +205,7 @@ impl TimeSeriesHelper {
         if let Some(entry) = self.adjusted_series {
             for hash in entry.values() {
                 for val in hash.keys() {
-                    let mut entry: Entry = Default::default();
+                    let mut entry: Entry = crate::time_series::Entry::default();
                     entry.time = val.to_string();
                     let entry_helper = hash.get(val).unwrap().clone();
                     entry.open = entry_helper.open;

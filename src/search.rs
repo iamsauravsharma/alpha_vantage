@@ -49,9 +49,9 @@ impl Search {
     pub fn result(&self) -> Vec<PublicDataValue> {
         let mut vec = Vec::new();
         if let Some(value) = self.matches.clone() {
-            for data in value.iter() {
+            for data in &value {
                 let data = data.clone();
-                let mut value: PublicDataValue = Default::default();
+                let mut value: PublicDataValue = crate::search::PublicDataValue::default();
                 value.symbol = data.symbol;
                 value.name = data.name;
                 value.data_type = data.data_type;
