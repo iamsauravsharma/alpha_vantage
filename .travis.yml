@@ -16,8 +16,9 @@ os:
   - windows
 
 before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "linux"]]; then
-      sudo apt-get update
+  - |
+    if [[ "$TRAVIS_OS_NAME" == "linux"]]; then
+      sudo apt-get update;
     fi
 
 addons:
@@ -36,37 +37,41 @@ install:
   - ((rustup component add rustfmt-preview && export CLIPPY=true) || export CLIPPY=false);
 
 before_script:
-  - if [[$FMT]]; then
-    rustfmt -V
+  - |
+    if [[$FMT]]; then
+      rustfmt -V;
     fi
-  - if [[$CLIPPY]]; then
-    cargo clippy -V
+  - |
+    if [[$CLIPPY]]; then
+    cargo clippy -V;
     fi
 
 script:
-  - if [[$FMT]]; then
-    cargo fmt --verbose --all -- --check
+  - |
+    if [[$FMT]]; then
+      cargo fmt --verbose --all -- --check;
     fi
-  - if [[$CLIPPY]]; then
-    cargo clippy --verbose --all -- -D warnings
+  - |
+    if [[$CLIPPY]]; then
+      cargo clippy --verbose --all -- -D warnings;
     fi
   - cargo build --verbose --all
   - cargo test --verbose --all
 
 after_success:
   - |
-      if [[ "$TRAVIS_OS_NAME" == "linux"]]; then
-        wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
-        tar xzf master.tar.gz &&
-        cd kcov-master &&
-        mkdir build &&
-        cd build &&
-        cmake .. &&
-        make &&
-        sudo make install &&
-        cd ../.. &&
-        rm -rf kcov-master &&
-        for file in target/debug/*-*[^\.d]; do mkdir -p "target/cov/$(basename $file)"; kcov --exclude-pattern=/.cargo,/usr/lib --verify "target/cov/$(basename $file)" "$file"; done &&
-        bash <(curl -s https://codecov.io/bash) &&
-        echo "Uploaded code coverage"
-      fi
+    if [[ "$TRAVIS_OS_NAME" == "linux"]]; then
+      wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
+      tar xzf master.tar.gz &&
+      cd kcov-master &&
+      mkdir build &&
+      cd build &&
+      cmake .. &&
+      make &&
+      sudo make install &&
+      cd ../.. &&
+      rm -rf kcov-master &&
+      for file in target/debug/*-*[^\.d]; do mkdir -p "target/cov/$(basename $file)"; kcov --exclude-pattern=/.cargo,/usr/lib --verify "target/cov/$(basename $file)" "$file"; done &&
+      bash <(curl -s https://codecov.io/bash) &&
+      echo "Uploaded code coverage";
+    fi
