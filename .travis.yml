@@ -32,24 +32,16 @@ addons:
       - libiberty-dev
 
 install:
-  - ((rustup component add rustfmt-preview && export FMT=true) || export FMT=false);
-  - ((rustup component add rustfmt-preview && export CLIPPY=true) || export CLIPPY=false);
+  - rustup component add rustfmt-preview
+  - rustup component add clippy-preview
 
 before_script:
-  - if [[ $FMT ]]; then
-      rustfmt -V;
-    fi
-  - if [[ $CLIPPY ]]; then
-    cargo clippy -V;
-    fi
+  - rustfmt -V
+  - cargo clippy -V
 
 script:
-  - if [[ $FMT ]]; then
-      cargo fmt --verbose --all -- --check;
-    fi
-  - if [[ $CLIPPY ]]; then
-      cargo clippy --verbose --all -- -D warnings;
-    fi
+  - cargo fmt --verbose --all -- --check
+  - cargo clippy --verbose --all -- -D warnings
   - cargo build --verbose --all
   - cargo test --verbose --all
 
