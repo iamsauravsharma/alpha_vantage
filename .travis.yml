@@ -16,7 +16,9 @@ os:
   - windows
 
 before_install:
-  - sudo apt-get update
+  - if [[ "$TRAVIS_OS_NAME" == "linux"]]; then
+      sudo apt-get update
+    fi
 
 addons:
   apt:
@@ -30,8 +32,8 @@ addons:
       - libiberty-dev
 
 install:
-  - ((rustup component add rustfmt-preview && export FMT = true) || export FMT = false);
-  - ((rustup component add rustfmt-preview && export CLIPPY = true) || export CLIPPY = false);
+  - ((rustup component add rustfmt-preview && export FMT=true) || export FMT=false);
+  - ((rustup component add rustfmt-preview && export CLIPPY=true) || export CLIPPY=false);
 
 before_script:
   - if [[$FMT]]; then
