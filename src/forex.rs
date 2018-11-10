@@ -16,8 +16,8 @@ pub struct Forex {
 
 impl Forex {
     // create new forex struct
-    fn new() -> Forex {
-        Forex {
+    fn new() -> Self {
+        Self {
             error_message: None,
             information: None,
             meta_data: None,
@@ -36,7 +36,7 @@ impl Forex {
     }
 }
 
-/// Struct used to store MetaData value
+/// Struct used to store metadata value
 #[derive(Debug, Clone)]
 pub struct MetaData {
     information: String,

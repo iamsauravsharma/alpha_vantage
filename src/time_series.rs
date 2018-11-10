@@ -16,8 +16,8 @@ pub struct TimeSeries {
 
 impl TimeSeries {
     // create new TimeSeries
-    fn new() -> TimeSeries {
-        TimeSeries {
+    fn new() -> Self {
+        Self {
             error_message: None,
             information: None,
             meta_data: None,

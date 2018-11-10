@@ -15,7 +15,7 @@ const LINK: &str = "https://www.alphavantage.co/query?function=";
 
 impl APIKey {
     /// Method for initializing APIKey struct
-    pub fn set_api(api: &str) -> APIKey {
+    pub fn set_api(api: &str) -> Self {
         APIKey(api.to_string())
     }
 

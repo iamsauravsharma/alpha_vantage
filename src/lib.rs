@@ -21,7 +21,7 @@ pub mod util;
 
 use self::user::APIKey;
 
-/// Set APIKey value
+/// Set api value
 pub fn set_api(api: &str) -> APIKey {
     APIKey::set_api(api)
 }
