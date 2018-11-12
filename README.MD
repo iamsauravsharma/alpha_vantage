@@ -4,6 +4,7 @@
 [![Travis Build Status][build_badge]][build_link]
 [![Dependency status][deps_badge]][deps_link]
 [![Code coverage][codecov_badge]][codecov_link]
+[![Dependabot Status][dependabot_badge]][dependabot_link]
 
 **Project Info:**
 [![License: MIT][license_badge]][license_link]
@@ -19,6 +20,8 @@
 [deps_link]: https://deps.rs/repo/github/iamsauravsharma/alphavantageapi
 [codecov_badge]: https://img.shields.io/codecov/c/github/iamsauravsharma/alphavantageapi.svg
 [codecov_link]: https://codecov.io/gh/iamsauravsharma/alphavantageapi
+[dependabot_badge]: https://api.dependabot.com/badges/status?host=github&repo=iamsauravsharma/cargo-cleaner
+[dependabot_link]: https://dependabot.com
 [license_badge]: https://img.shields.io/github/license/iamsauravsharma/alphavantageapi.svg
 [license_link]: LICENSE
 [rust_badge]: https://img.shields.io/badge/rust-nightly-blue.svg

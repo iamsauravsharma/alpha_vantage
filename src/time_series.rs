@@ -319,7 +319,10 @@ mod test {
     fn test_time_series_create_url() {
         assert_eq!(super::create_url(StockFunction::Daily, "USD", Interval::None, OutputSize::None, "random"),
         Url::parse("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=USD&apikey=random").unwrap());
-
+        assert_eq!(super::create_url(StockFunction::Weekly, "NPR", Interval::None, OutputSize::None, "random"),
+        Url::parse("https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=NPR&apikey=random").unwrap());
+        assert_eq!(super::create_url(StockFunction::Monthly, "NPR", Interval::None, OutputSize::None, "random"),
+        Url::parse("https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=NPR&apikey=random").unwrap());
         assert_eq!(super::create_url(StockFunction::IntraDay, "MSFT", Interval::SixtyMin, OutputSize::Full, "random"),
         Url::parse("https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=MSFT&interval=60min&outputsize=full&apikey=random").unwrap());
     }
