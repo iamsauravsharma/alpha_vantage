@@ -15,14 +15,14 @@
 
 ### TODO List
 
-[X] StockTimeSeries
-[X] Quote Endpoint
-[X] Search Endpoint
-[X] Exchange Rate
-[X] Forex
-[ ] Crypto Currency
-[ ] Technical Indicators
-[ ] Sector Performances
+- [X] StockTimeSeries
+- [X] Quote Endpoint
+- [X] Search Endpoint
+- [X] Exchange Rate
+- [X] Forex
+- [ ] Crypto Currency
+- [ ] Technical Indicators
+- [ ] Sector Performances
 
 ## Add as dependencies
 Edit Cargo.toml file to add alphavantageapi as dependencies
