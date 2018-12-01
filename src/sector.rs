@@ -5,7 +5,7 @@ pub struct Sector {
     information: Option<String>,
     error_message: Option<String>,
     meta_data: Option<MetaData>,
-    data: Option<Data>,
+    data: Option<Vec<Data>>,
 }
 
 impl Sector {
@@ -16,6 +16,14 @@ impl Sector {
             meta_data: None,
             data: None,
         }
+    }
+
+    pub fn meta_data(&self) -> Option<MetaData> {
+        self.meta_data.clone()
+    }
+
+    pub fn data(&self) -> Option<Vec<Data>> {
+        self.data.clone()
     }
 }
 
@@ -38,15 +46,18 @@ impl SectorHelper {
         sector.error_message = self.error_message;
         sector.meta_data = self.meta_data;
         if let Some(temp_data) = self.data {
-            let mut data = Data::default();
+            let mut final_data = Vec::new();
             for (key, val) in temp_data.iter() {
+                let mut data = Data::default();
                 match key.as_str() {
                     "Rank A: Real-Time Performance" => data.rank = "real-time".to_string(),
                     "Rank B: 1 Day Performance" => data.rank = "1-day".to_string(),
                     "Rank C: 5 Day Performance" => data.rank = "5-day".to_string(),
                     "Rank D: 1 Month Performance" => data.rank = "1-month".to_string(),
                     "Rank E: 3 Month Performance" => data.rank = "3-month".to_string(),
-                    "Rank F: Year-to-Date (YTD) Performance" => data.rank = "ytd".to_string(),
+                    "Rank F: Year-to-Date (YTD) Performance" => {
+                        data.rank = "year-to-date".to_string()
+                    }
                     "Rank G: 1 Year Performance" => data.rank = "1-year".to_string(),
                     "Rank H: 3 Year Performance" => data.rank = "3-year".to_string(),
                     "Rank I: 5 Year Performance" => data.rank = "5-year".to_string(),
@@ -69,23 +80,24 @@ impl SectorHelper {
                         _ => {}
                     }
                 }
+                final_data.push(data);
             }
-            sector.data = Some(data);
+            sector.data = Some(final_data);
         }
         sector
     }
 }
 
-#[derive(Deserialize)]
-struct MetaData {
+#[derive(Deserialize, Clone)]
+pub struct MetaData {
     #[serde(rename = "Information")]
-    _information: String,
+    information: String,
     #[serde(rename = "Last Refreshed")]
-    _last_refreshed: String,
+    last_refreshed: String,
 }
 
-#[derive(Default)]
-struct Data {
+#[derive(Default, Clone)]
+pub struct Data {
     rank: String,
     utilites: String,
     health_care: String,
