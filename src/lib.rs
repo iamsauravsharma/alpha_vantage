@@ -10,6 +10,8 @@ pub mod quote;
 /// Module for searching specific symbol or companies
 pub mod search;
 
+pub mod sector;
+
 /// Stock time series module
 pub mod time_series;
 

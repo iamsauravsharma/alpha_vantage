@@ -6,6 +6,7 @@ use crate::{
     forex::{create_url as create_url_forex, Forex, ForexHelper},
     quote::Quote,
     search::*,
+    sector::{Sector, SectorHelper},
     time_series::{create_url as create_url_time_series, TimeSeries, TimeSeriesHelper},
     util::*,
 };
@@ -29,10 +30,7 @@ impl APIKey {
     pub fn exchange(&self, from_currency: &str, to_currency: &str) -> Exchange {
         let data: Url = format!(
             "{}CURRENCY_EXCHANGE_RATE&from_currency={}&to_currency={}&apikey={}",
-            LINK,
-            from_currency,
-            to_currency,
-            self.0.clone()
+            LINK, from_currency, to_currency, self.0
         )
         .parse()
         .unwrap();
@@ -43,14 +41,9 @@ impl APIKey {
 
     /// Method for returning Quote Struct
     pub fn quote(&self, symbol: &str) -> Quote {
-        let data: Url = format!(
-            "{}GLOBAL_QUOTE&symbol={}&apikey={}",
-            LINK,
-            symbol,
-            self.0.clone()
-        )
-        .parse()
-        .unwrap();
+        let data: Url = format!("{}GLOBAL_QUOTE&symbol={}&apikey={}", LINK, symbol, self.0)
+            .parse()
+            .unwrap();
 
         let body = get(data).unwrap().text().unwrap();
         serde_json::from_str(&body).unwrap()
@@ -74,14 +67,19 @@ impl APIKey {
     pub fn search(&self, keywords: &str) -> Search {
         let data: Url = format!(
             "{}SYMBOL_SEARCH&keywords={}&apikey={}",
-            LINK,
-            keywords,
-            self.0.clone()
+            LINK, keywords, self.0
         )
         .parse()
         .unwrap();
         let body = get(data).unwrap().text().unwrap();
         serde_json::from_str(&body).unwrap()
+    }
+
+    pub fn sector(&self) -> Sector {
+        let data: Url = format!("{}SECTOR&apikey={}", LINK, self.0).parse().unwrap();
+        let body = get(data).unwrap().text().unwrap();
+        let sector_helper: SectorHelper = serde_json::from_str(&body).unwrap();
+        sector_helper.convert()
     }
 
     /// Forex method for calling stock time series
