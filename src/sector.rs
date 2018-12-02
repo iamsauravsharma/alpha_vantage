@@ -96,6 +96,16 @@ pub struct MetaData {
     last_refreshed: String,
 }
 
+impl MetaData {
+    pub fn information(&self) -> String {
+        self.information.to_string()
+    }
+
+    pub fn last_refreshed(&self) -> String {
+        self.last_refreshed.to_string()
+    }
+}
+
 #[derive(Default, Clone)]
 pub struct Data {
     rank: String,

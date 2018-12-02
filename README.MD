@@ -22,7 +22,7 @@
 - [X] Forex
 - [ ] Crypto Currency
 - [ ] Technical Indicators
-- [ ] Sector Performances
+- [X] Sector Performances
 
 ## Add as dependencies
 Edit Cargo.toml file to add alphavantageapi as dependencies

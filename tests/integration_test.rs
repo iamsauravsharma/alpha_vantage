@@ -1,5 +1,3 @@
-extern crate alphavantageapi;
-
 #[test]
 // Integration test exchange method call using api
 fn exchnage_test() {
