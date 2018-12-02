@@ -11,9 +11,12 @@
 [![Rust nightly required][rust_badge]][rust_link]
 [![LoC][loc_badge]][loc_link]
 
+
+**WARNING : CONTAINS BUG CAUSING UNDESIRED FUNCTIONALITY (WILL BE FIXED ASAP)** 
+
 (WIP) Rust Wrapper/Client built for [Alphavantage][alphavantage_link]  API
 
-### TODO List
+### Project Functionality
 
 - [X] StockTimeSeries
 - [X] Quote Endpoint
@@ -23,6 +26,14 @@
 - [ ] Crypto Currency
 - [ ] Technical Indicators
 - [X] Sector Performances
+
+### TODO LIST AFTER FINISHING PROJECT
+
+- [ ] Optimize code
+- [ ] Improve performance of API Call 
+- [ ] Use generics and traits
+- [ ] Better documentation
+- [ ] Publish to crates.io
 
 ## Add as dependencies
 Edit Cargo.toml file to add alphavantageapi as dependencies
