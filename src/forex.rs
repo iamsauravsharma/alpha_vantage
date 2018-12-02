@@ -117,9 +117,9 @@ pub(crate) struct ForexHelper {
 impl ForexHelper {
     // convert ForexHelper to Forex
     pub(crate) fn convert(self) -> Forex {
-        let mut forex = Forex::new();
-        forex.error_message = self.error_message;
-        forex.information = self.information;
+        let mut forex_struct = Forex::new();
+        forex_struct.error_message = self.error_message;
+        forex_struct.information = self.information;
         if let Some(meta_data) = self.meta_data {
             let information = &meta_data["1. Information"];
             let from_symbol = &meta_data["2. From Symbol"];
@@ -148,7 +148,7 @@ impl ForexHelper {
             }
             let interval = meta_data.get("5. Interval");
             let interval_value = return_value(interval);
-            forex.meta_data = Some(MetaData {
+            forex_struct.meta_data = Some(MetaData {
                 information: information.to_string(),
                 from_symbol: from_symbol.to_string(),
                 to_symbol: to_symbol.to_string(),
@@ -174,9 +174,9 @@ impl ForexHelper {
             }
         }
         if !value.is_empty() {
-            forex.forex = Some(value);
+            forex_struct.forex = Some(value);
         }
-        forex
+        forex_struct
     }
 }
 

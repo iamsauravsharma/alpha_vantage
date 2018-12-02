@@ -12,7 +12,7 @@
 [![LoC][loc_badge]][loc_link]
 
 
-**WARNING : CONTAINS BUG CAUSING UNDESIRED FUNCTIONALITY (WILL BE FIXED ASAP)** 
+**WARNING : may contain bug which may cause undesired functionality** 
 
 (WIP) Rust Wrapper/Client built for [Alphavantage][alphavantage_link]  API
 
@@ -33,7 +33,7 @@
 - [ ] Improve performance of API Call 
 - [ ] Use generics and traits
 - [ ] Better documentation
-- [ ] Publish to crates.io
+- [ ] Publish to [crates.io][cratesio_link]
 
 ## Add as dependencies
 Edit Cargo.toml file to add alphavantageapi as dependencies
@@ -72,3 +72,4 @@ assert_eq!(rate.is_sign_positive(),true);
 [loc_badge]: https://tokei.rs/b1/github/iamsauravsharma/alphavantageapi
 [loc_link]: https://github.com/iamsauravsharma/alphavantageapi
 [alphavantage_link]: https://alphavantage.co
+[cratesio_link]: https://crates.io
