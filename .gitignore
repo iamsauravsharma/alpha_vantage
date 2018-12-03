@@ -1,3 +1,12 @@
-/target
+#rust
+target
 **/*.rs.bk
 Cargo.lock
+
+#IDE file
+.vscode
+.idea
+*.iml
+
+#UNIX file
+.directory
