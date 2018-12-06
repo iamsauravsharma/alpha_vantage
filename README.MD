@@ -63,7 +63,7 @@ assert_eq!(rate.is_sign_positive(),true);
 [deps_link]: https://deps.rs/repo/github/iamsauravsharma/alpha_vantage
 [codecov_badge]: https://img.shields.io/codecov/c/github/iamsauravsharma/alpha_vantage.svg
 [codecov_link]: https://codecov.io/gh/iamsauravsharma/alpha_vantage
-[dependabot_badge]: https://api.dependabot.com/badges/status?host=github&repo=iamsauravsharma/cargo-cleaner
+[dependabot_badge]: https://api.dependabot.com/badges/status?host=github&repo=iamsauravsharma/alpha_vantage
 [dependabot_link]: https://dependabot.com
 [license_badge]: https://img.shields.io/github/license/iamsauravsharma/alpha_vantage.svg
 [license_link]: LICENSE
