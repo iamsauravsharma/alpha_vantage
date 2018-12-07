@@ -61,7 +61,7 @@ println!("{}",rate);
 assert_eq!(rate.is_sign_positive(),true);
 ```
 
-[git_link] : https://github.com/iamsauravsharma/alpha_vantage
+[git_link]: https://github.com/iamsauravsharma/alpha_vantage
 [build_badge]: https://travis-ci.com/iamsauravsharma/alpha_vantage.svg?branch=master
 [build_link]: https://travis-ci.com/iamsauravsharma/alpha_vantage
 [deps_badge]: https://deps.rs/repo/github/iamsauravsharma/alpha_vantage/status.svg
