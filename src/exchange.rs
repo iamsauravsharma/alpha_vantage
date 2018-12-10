@@ -32,7 +32,7 @@ struct RealtimeExchangeRate {
 
 impl Exchange {
     /// Get Rate for exchange
-    pub fn get_rate(&self) -> Result<f64, String> {
+    pub fn rate(&self) -> Result<f64, String> {
         if let Some(real) = self.real_time.clone() {
             Ok(real.rate.trim().parse::<f64>().unwrap())
         } else if let Some(error) = self.error_message.clone() {
@@ -47,7 +47,7 @@ impl Exchange {
 
     #[doc = "Get time when exchange rate was last refreshed. \n"]
     #[doc = "Example return value:- 2018-10-22 14:25:26 UTC."]
-    pub fn get_refreshed_time(&self) -> Result<String, String> {
+    pub fn refreshed_time(&self) -> Result<String, String> {
         if let Some(real) = self.real_time.clone() {
             Ok(format!("{} {}", real.last_refreshed, real.time_zone))
         } else if let Some(error) = self.error_message.clone() {

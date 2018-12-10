@@ -75,32 +75,32 @@ pub struct Entry {
 
 impl Entry {
     /// Get time
-    pub fn get_time(&self) -> String {
+    pub fn time(&self) -> String {
         self.time.clone()
     }
 
     /// Return open
-    pub fn get_open(&self) -> f64 {
+    pub fn open(&self) -> f64 {
         return_f64(self.open.as_str())
     }
 
     /// Return high
-    pub fn get_high(&self) -> f64 {
+    pub fn high(&self) -> f64 {
         return_f64(self.high.as_str())
     }
 
     /// Return low
-    pub fn get_low(&self) -> f64 {
+    pub fn low(&self) -> f64 {
         return_f64(self.low.as_str())
     }
 
     /// Return close
-    pub fn get_close(&self) -> f64 {
+    pub fn close(&self) -> f64 {
         return_f64(self.close.as_str())
     }
 
     /// Return adjusted
-    pub fn get_adjusted(&self) -> Option<f64> {
+    pub fn adjusted(&self) -> Option<f64> {
         if let Some(data) = self.adjusted_close.clone() {
             return Some(return_f64(&data));
         }
@@ -108,12 +108,12 @@ impl Entry {
     }
 
     /// Return volume
-    pub fn get_volume(&self) -> f64 {
+    pub fn volume(&self) -> f64 {
         return_f64(self.volume.as_str())
     }
 
     /// Return dividend
-    pub fn get_dividend(&self) -> Option<f64> {
+    pub fn dividend(&self) -> Option<f64> {
         if let Some(data) = self.dividend_amount.clone() {
             return Some(return_f64(&data));
         }
@@ -121,7 +121,7 @@ impl Entry {
     }
 
     /// Return split dividend
-    pub fn get_split(&self) -> Option<f64> {
+    pub fn split(&self) -> Option<f64> {
         if let Some(data) = self.split_coefficient.clone() {
             return Some(return_f64(&data));
         }

@@ -72,27 +72,27 @@ pub struct Entry {
 
 impl Entry {
     /// Return time for entry
-    pub fn get_time(&self) -> String {
+    pub fn time(&self) -> String {
         self.time.clone()
     }
 
     /// Return open value
-    pub fn get_open(&self) -> f64 {
+    pub fn open(&self) -> f64 {
         return_f64(self.open.as_str())
     }
 
     /// Return high value
-    pub fn get_high(&self) -> f64 {
+    pub fn high(&self) -> f64 {
         return_f64(self.high.as_str())
     }
 
     /// Return low value
-    pub fn get_low(&self) -> f64 {
+    pub fn low(&self) -> f64 {
         return_f64(self.low.as_str())
     }
 
     /// Return close value
-    pub fn get_close(&self) -> f64 {
+    pub fn close(&self) -> f64 {
         return_f64(self.close.as_str())
     }
 }
