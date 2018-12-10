@@ -37,3 +37,10 @@ pub enum ForexFunction {
     Weekly,
     Monthly,
 }
+
+#[derive(Copy, Clone)]
+pub enum CryptoFunction {
+    Daily,
+    Weekly,
+    Monthly,
+}

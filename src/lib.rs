@@ -1,3 +1,5 @@
+pub mod crypto;
+
 /// Module for exchange currency (both digital & physical currency exchange)
 pub mod exchange;
 

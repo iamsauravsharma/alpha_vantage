@@ -27,7 +27,7 @@
 - [X] Search Endpoint
 - [X] Exchange Rate
 - [X] Forex
-- [ ] Crypto Currency
+- [X] Crypto Currency
 - [ ] Technical Indicators
 - [X] Sector Performances
 

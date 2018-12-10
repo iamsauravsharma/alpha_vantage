@@ -2,6 +2,7 @@
 pub struct APIKey(String);
 
 use crate::{
+    crypto::{create_url as create_url_crypto, Crypto, CryptoHelper},
     exchange::Exchange,
     forex::{create_url as create_url_forex, Forex, ForexHelper},
     quote::Quote,
@@ -102,6 +103,13 @@ impl APIKey {
         let forex_helper: ForexHelper =
             serde_json::from_str(&get(data).unwrap().text().unwrap()).unwrap();
         forex_helper.convert()
+    }
+
+    pub fn crypto(&self, function: CryptoFunction, symbol: &str, market: &str) -> Crypto {
+        let data: Url = create_url_crypto(function, symbol, market, &self.0);
+        let crypto_helper: CryptoHelper =
+            serde_json::from_str(&get(data).unwrap().text().unwrap()).unwrap();
+        crypto_helper.convert()
     }
 }
 
