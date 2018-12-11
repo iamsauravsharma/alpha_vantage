@@ -8,6 +8,7 @@ use crate::{
     quote::Quote,
     search::*,
     sector::{Sector, SectorHelper},
+    technical_indicator::{create_url as create_url_technical, Indicator},
     time_series::{create_url as create_url_time_series, TimeSeries, TimeSeriesHelper},
     util::*,
 };
@@ -110,6 +111,27 @@ impl APIKey {
         let crypto_helper: CryptoHelper =
             serde_json::from_str(&get(data).unwrap().text().unwrap()).unwrap();
         crypto_helper.convert()
+    }
+
+    pub fn technical_indicator(
+        function: &str,
+        symbol: &str,
+        interval: &str,
+        apikey: &str,
+        series_type: Option<&str>,
+        time_period: Option<&str>,
+        temporary_value: Vec<TechnicalIndicator>,
+    ) -> Indicator {
+        let url = create_url_technical(
+            function,
+            symbol,
+            interval,
+            apikey,
+            series_type,
+            time_period,
+            temporary_value,
+        );
+        serde_json::from_str(&get(url).unwrap().text().unwrap()).unwrap()
     }
 }
 

@@ -1,14 +1,48 @@
-use crate::util::TechnicalIndicator;
+use crate::util::TechnicalIndicator as UtilIndicator;
 use reqwest::Url;
+use serde_derive::Deserialize;
+use std::collections::HashMap;
 
-pub fn create_url(
+type DataType = Option<HashMap<String, HashMap<String, HashMap<String, String>>>>;
+
+#[derive(Deserialize)]
+pub struct Indicator {
+    #[serde(rename = "Error Message")]
+    error_message: Option<String>,
+    #[serde(rename = "Information")]
+    information: Option<String>,
+    #[serde(rename = "Meta Data")]
+    metadata: Option<HashMap<String, String>>,
+    #[serde(flatten)]
+    data: DataType,
+}
+
+impl Indicator {
+    pub fn error_message(&self) -> Option<String> {
+        self.error_message.to_owned()
+    }
+
+    pub fn information(&self) -> Option<String> {
+        self.information.to_owned()
+    }
+
+    pub fn metadata(&self) -> Option<HashMap<String, String>> {
+        self.metadata.to_owned()
+    }
+
+    pub fn data(&self) -> DataType {
+        self.data.to_owned()
+    }
+}
+
+pub(crate) fn create_url(
     function: &str,
     symbol: &str,
     interval: &str,
     apikey: &str,
     series_type: Option<&str>,
     time_period: Option<&str>,
-    temporary_value: Vec<TechnicalIndicator>,
+    temporary_value: Vec<UtilIndicator>,
 ) -> Url {
     let mut created_link = format!(
         "https://www.alphavantage.co/query?function={}&symbol={}&interval={}&apikey={}",
@@ -22,73 +56,73 @@ pub fn create_url(
     }
     for values in temporary_value {
         match values {
-            TechnicalIndicator::Acceleration(val) => {
+            UtilIndicator::Acceleration(val) => {
                 created_link.push_str(format!("&Acceleration={}", val).as_str())
             }
-            TechnicalIndicator::Fastdmatype(val) => {
+            UtilIndicator::Fastdmatype(val) => {
                 created_link.push_str(format!("&fastdmatype={}", val).as_str())
             }
-            TechnicalIndicator::Fastdperiod(val) => {
+            UtilIndicator::Fastdperiod(val) => {
                 created_link.push_str(format!("&fastdperiod={}", val).as_str())
             }
-            TechnicalIndicator::Fastkperiod(val) => {
+            UtilIndicator::Fastkperiod(val) => {
                 created_link.push_str(format!("&fastkperiod={}", val).as_str())
             }
-            TechnicalIndicator::Fastlimit(val) => {
+            UtilIndicator::Fastlimit(val) => {
                 created_link.push_str(format!("&fastlimit={}", val).as_str())
             }
-            TechnicalIndicator::Fastmatype(val) => {
+            UtilIndicator::Fastmatype(val) => {
                 created_link.push_str(format!("&fastmatype={}", val).as_str())
             }
-            TechnicalIndicator::Fastperiod(val) => {
+            UtilIndicator::Fastperiod(val) => {
                 created_link.push_str(format!("&fastperiod={}", val).as_str())
             }
-            TechnicalIndicator::Matype(val) => {
+            UtilIndicator::Matype(val) => {
                 created_link.push_str(format!("&matype={}", val).as_str())
             }
-            TechnicalIndicator::Maximum(val) => {
+            UtilIndicator::Maximum(val) => {
                 created_link.push_str(format!("&maximum={}", val).as_str())
             }
-            TechnicalIndicator::Nbdevdn(val) => {
+            UtilIndicator::Nbdevdn(val) => {
                 created_link.push_str(format!("&nbdevdn={}", val).as_str())
             }
-            TechnicalIndicator::Nbdevup(val) => {
+            UtilIndicator::Nbdevup(val) => {
                 created_link.push_str(format!("&nbdevup={}", val).as_str())
             }
-            TechnicalIndicator::Signalmatype(val) => {
+            UtilIndicator::Signalmatype(val) => {
                 created_link.push_str(format!("&signalmatype={}", val).as_str())
             }
-            TechnicalIndicator::Signalperiod(val) => {
+            UtilIndicator::Signalperiod(val) => {
                 created_link.push_str(format!("&signalperiod={}", val).as_str())
             }
-            TechnicalIndicator::Slowdmatype(val) => {
+            UtilIndicator::Slowdmatype(val) => {
                 created_link.push_str(format!("&slowdmatype={}", val).as_str())
             }
-            TechnicalIndicator::Slowdperiod(val) => {
+            UtilIndicator::Slowdperiod(val) => {
                 created_link.push_str(format!("&slowdperiod={}", val).as_str())
             }
-            TechnicalIndicator::Slowkmatype(val) => {
+            UtilIndicator::Slowkmatype(val) => {
                 created_link.push_str(format!("&slowkmatype={}", val).as_str())
             }
-            TechnicalIndicator::Slowkperiod(val) => {
+            UtilIndicator::Slowkperiod(val) => {
                 created_link.push_str(format!("&slowkperiod={}", val).as_str())
             }
-            TechnicalIndicator::Slowlimit(val) => {
+            UtilIndicator::Slowlimit(val) => {
                 created_link.push_str(format!("&slowlimit={}", val).as_str())
             }
-            TechnicalIndicator::Slowmatype(val) => {
+            UtilIndicator::Slowmatype(val) => {
                 created_link.push_str(format!("&slowmatype={}", val).as_str())
             }
-            TechnicalIndicator::Slowperiod(val) => {
+            UtilIndicator::Slowperiod(val) => {
                 created_link.push_str(format!("&slowperiod={}", val).as_str())
             }
-            TechnicalIndicator::Timeperiod1(val) => {
+            UtilIndicator::Timeperiod1(val) => {
                 created_link.push_str(format!("&timeperiod1={}", val).as_str())
             }
-            TechnicalIndicator::Timeperiod2(val) => {
+            UtilIndicator::Timeperiod2(val) => {
                 created_link.push_str(format!("&timeperiod2={}", val).as_str())
             }
-            TechnicalIndicator::Timeperiod3(val) => {
+            UtilIndicator::Timeperiod3(val) => {
                 created_link.push_str(format!("&timeperiod3={}", val).as_str())
             }
         }
