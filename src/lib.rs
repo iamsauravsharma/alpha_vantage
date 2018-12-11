@@ -14,6 +14,8 @@ pub mod search;
 
 pub mod sector;
 
+pub mod technical_indicator;
+
 /// Stock time series module
 pub mod time_series;
 

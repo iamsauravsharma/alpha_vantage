@@ -106,7 +106,8 @@ impl CryptoHelper {
                     entry.market_cap = entry_helper.market_cap;
                     entry.volume = entry_helper.volume;
                     for key in entry_helper.market_data.keys() {
-                        let value = entry_helper.market_data.get(key).unwrap().to_string();
+                        let value = &entry_helper.market_data[key];
+                        let value = value.to_string();
                         if key.contains("1a") {
                             entry.market_open = value;
                         } else if key.contains("2a") {

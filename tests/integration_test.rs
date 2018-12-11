@@ -2,17 +2,17 @@
 // Integration test exchange method call using api
 fn exchnage_test() {
     let a = alpha_vantage::set_api("demo");
-    assert_eq!(a.exchange("BTC", "CNY").get_rate().is_ok(), true);
-    assert_eq!(a.exchange("USD", "JPY").get_refreshed_time().is_ok(), true);
+    assert_eq!(a.exchange("BTC", "CNY").rate().is_ok(), true);
+    assert_eq!(a.exchange("USD", "JPY").refreshed_time().is_ok(), true);
 }
 
 #[test]
 // test Quote method call
 fn quote_test() {
     let a = alpha_vantage::set_api("demo");
-    assert_eq!(a.quote("MSFT").get_price().is_ok(), true);
+    assert_eq!(a.quote("MSFT").price().is_ok(), true);
     assert_eq!(
-        a.quote("BA").get_price(),
+        a.quote("BA").price(),
         Err(
             "Information : The **demo** API key is for demo purposes only. Please claim your free \
              API key at (https://www.alphavantage.co/support/#api-key) to explore our full API \

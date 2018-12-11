@@ -16,6 +16,11 @@
 [![Nightly support][nightly_supported_badge]][git_link]
 
 
+**OS support**
+[![Linux support][linux_supported_badge]][git_link]
+[![OSX support][osx_supported_badge]][git_link]
+[![Windows support][windows_supported_badge]][git_link]
+
 **WARNING : may contain bug which may cause undesired functionality** 
 
 (WIP) Rust Wrapper/Client built for [Alphavantage][alphavantage_link]  API
@@ -28,7 +33,7 @@
 - [X] Exchange Rate
 - [X] Forex
 - [X] Crypto Currency
-- [ ] Technical Indicators
+- [X] Technical Indicators
 - [X] Sector Performances
 
 ### TODO LIST AFTER FINISHING PROJECT
@@ -56,30 +61,45 @@ use alpha_vantage::exchange::*;
 
 let api_key = alpha_vantage::set_api("YOUR KEY HERE");
 let exchange : Exchange  = api_key.exchange("USD","CNY");
-let rate : exchange.get_rate().unwrap();
+let rate = exchange.get_rate().unwrap();
 println!("{}",rate);
 assert_eq!(rate.is_sign_positive(),true);
 ```
 
 [git_link]: https://github.com/iamsauravsharma/alpha_vantage
+
 [build_badge]: https://travis-ci.com/iamsauravsharma/alpha_vantage.svg?branch=master
 [build_link]: https://travis-ci.com/iamsauravsharma/alpha_vantage
+
 [deps_badge]: https://deps.rs/repo/github/iamsauravsharma/alpha_vantage/status.svg
 [deps_link]: https://deps.rs/repo/github/iamsauravsharma/alpha_vantage
+
 [codecov_badge]: https://img.shields.io/codecov/c/github/iamsauravsharma/alpha_vantage.svg
 [codecov_link]: https://codecov.io/gh/iamsauravsharma/alpha_vantage
+
 [license_badge]: https://img.shields.io/github/license/iamsauravsharma/alpha_vantage.svg
 [license_link]: LICENSE
+
 [rust_badge]: https://img.shields.io/badge/rust%20required-1.31.0+-blue.svg?logo=rust
 [rust_link]: https://rustup.rs
+
 [loc_badge]: https://tokei.rs/b1/github/iamsauravsharma/alpha_vantage
 [loc_link]: https://github.com/iamsauravsharma/alpha_vantage
+
 [alphavantage_link]: https://alphavantage.co
+
 [cratesio_link]: https://crates.io
-<!-- badge commented out according to support status of package -->
+
 [stable_supported_badge]: https://img.shields.io/badge/stable-supported-brightgreen.svg?logo=rust
 [beta_supported_badge]: https://img.shields.io/badge/beta-supported-brightgreen.svg?logo=rust
 [nightly_supported_badge]: https://img.shields.io/badge/nightly-supported-brightgreen.svg?logo=rust
-<!-- [stable_not_supported_badge]: https://img.shields.io/badge/stable-not%20supported-red.svg?logo=rust
+[stable_not_supported_badge]: https://img.shields.io/badge/stable-not%20supported-red.svg?logo=rust
 [beta_not_supported_badge]: https://img.shields.io/badge/beta-not%20supported-red.svg?logo=rust
-[nighlty_not_supported_badge]: https://img.shields.io/badge/nightly-not%20supported-red.svg?logo=rust -->
+[nighlty_not_supported_badge]: https://img.shields.io/badge/nightly-not%20supported-red.svg?logo=rust
+
+[linux_supported_badge]: https://img.shields.io/badge/linux-supported-brightgreen.svg?logo=linux
+[osx_supported_badge]: https://img.shields.io/badge/osx-supported-brightgreen.svg?logo=apple
+[windows_supported_badge]: https://img.shields.io/badge/windows-supported-brightgreen.svg?logo=windows
+[linux_not_supported_badge]: https://img.shields.io/badge/linux-not%20supported-red.svg?logo=linux
+[osx_not_supported_badge]: https://img.shields.io/badge/osx-not%20supported-red.svg?logo=apple
+[windows_not_supported_badge]: https://img.shields.io/badge/windows-not%20supported-red.svg?logo=windows
