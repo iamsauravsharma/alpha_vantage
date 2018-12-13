@@ -47,6 +47,7 @@ script:
   - cargo fmt --verbose --all -- --check
   - cargo clippy --verbose --all -- -D warnings
   - cargo build --verbose --all
+  - cargo doc --no-deps --all
   - cargo test --verbose --all
 
 after_success:
