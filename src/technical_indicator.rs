@@ -17,6 +17,12 @@ pub struct Indicator {
     data: DataType,
 }
 
+#[derive(Default)]
+pub struct DataCollector {
+    time: String,
+    values: HashMap<String, String>,
+}
+
 impl Indicator {
     pub fn error_message(&self) -> Option<String> {
         self.error_message.to_owned()
@@ -30,8 +36,22 @@ impl Indicator {
         self.metadata.to_owned()
     }
 
-    pub fn data(&self) -> DataType {
-        self.data.to_owned()
+    pub fn data(&self) -> Option<Vec<DataCollector>> {
+        let data = self.data.to_owned();
+        if data.is_some() {
+            let mut vector = Vec::new();
+            for hash in data.unwrap().values() {
+                for time in hash.keys() {
+                    let mut data_collector = DataCollector::default();
+                    data_collector.time = time.to_string();
+                    data_collector.values = hash.get(time).unwrap().to_owned();
+                    vector.push(data_collector);
+                }
+            }
+            Some(vector)
+        } else {
+            None
+        }
     }
 }
 
