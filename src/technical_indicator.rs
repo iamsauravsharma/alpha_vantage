@@ -17,12 +17,6 @@ pub struct Indicator {
     data: DataType,
 }
 
-#[derive(Default)]
-pub struct DataCollector {
-    time: String,
-    values: HashMap<String, String>,
-}
-
 impl Indicator {
     pub fn error_message(&self) -> Option<String> {
         self.error_message.to_owned()
@@ -53,6 +47,12 @@ impl Indicator {
             None
         }
     }
+}
+
+#[derive(Default)]
+pub struct DataCollector {
+    time: String,
+    values: HashMap<String, String>,
 }
 
 pub(crate) fn create_url(

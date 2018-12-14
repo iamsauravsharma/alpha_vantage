@@ -10,10 +10,20 @@ pub struct Crypto {
     information: Option<String>,
     error_message: Option<String>,
     meta_data: Option<MetaData>,
-    time_series: Option<Vec<Entry>>,
+    entry: Option<Vec<Entry>>,
 }
 
-#[derive(Default, Debug)]
+impl Crypto {
+    pub fn meta_data(&self) -> &Option<MetaData> {
+        &self.meta_data
+    }
+
+    pub fn entry(&self) -> &Option<Vec<Entry>> {
+        &self.entry
+    }
+}
+
+#[derive(Default, Debug, Clone)]
 pub struct Entry {
     time: String,
     market_open: String,
@@ -83,7 +93,7 @@ pub(crate) struct CryptoHelper {
     #[serde(rename = "Meta Data")]
     meta_data: Option<MetaData>,
     #[serde(flatten)]
-    time_series: Option<HashMap<String, HashMap<String, EntryHelper>>>,
+    entry: Option<HashMap<String, HashMap<String, EntryHelper>>>,
 }
 
 impl CryptoHelper {
@@ -92,9 +102,9 @@ impl CryptoHelper {
         crypto.information = self.information;
         crypto.error_message = self.error_message;
         crypto.meta_data = self.meta_data;
-        if self.time_series.is_some() {
-            let mut time_series = Vec::new();
-            for value in self.time_series.unwrap().values() {
+        if self.entry.is_some() {
+            let mut vec_entry = Vec::new();
+            for value in self.entry.unwrap().values() {
                 for key in value.keys() {
                     let mut entry = Entry::default();
                     entry.time = key.to_string();
@@ -118,16 +128,16 @@ impl CryptoHelper {
                             entry.market_close = value;
                         }
                     }
-                    time_series.push(entry);
+                    vec_entry.push(entry);
                 }
             }
-            crypto.time_series = Some(time_series);
+            crypto.entry = Some(vec_entry);
         }
         crypto
     }
 }
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Clone)]
 pub struct MetaData {
     #[serde(rename = "1. Information")]
     information: String,

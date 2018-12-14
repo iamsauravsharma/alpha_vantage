@@ -1,6 +1,3 @@
-/// Struct for initializing apikey value
-pub struct APIKey(String);
-
 use crate::{
     crypto::{create_url as create_url_crypto, Crypto, CryptoHelper},
     exchange::Exchange,
@@ -16,6 +13,9 @@ use reqwest::{get, Url};
 
 const LINK: &str = "https://www.alphavantage.co/query?function=";
 
+/// Struct for initializing apikey value
+pub struct APIKey(String);
+
 impl APIKey {
     /// Method for initializing APIKey struct
     pub fn set_api(api: &str) -> Self {
@@ -25,6 +25,14 @@ impl APIKey {
     /// Method to get api key
     pub fn get_api(&self) -> String {
         self.0.clone()
+    }
+
+    /// Crypto method for calling cryptography function
+    pub fn crypto(&self, function: CryptoFunction, symbol: &str, market: &str) -> Crypto {
+        let data: Url = create_url_crypto(function, symbol, market, &self.0);
+        let crypto_helper: CryptoHelper =
+            serde_json::from_str(&get(data).unwrap().text().unwrap()).unwrap();
+        crypto_helper.convert()
     }
 
     /// Method for exchanging currency value from one currency to another
@@ -39,49 +47,6 @@ impl APIKey {
 
         let body = get(data).unwrap().text().unwrap();
         serde_json::from_str(&body).unwrap()
-    }
-
-    /// Method for returning Quote Struct
-    pub fn quote(&self, symbol: &str) -> Quote {
-        let data: Url = format!("{}GLOBAL_QUOTE&symbol={}&apikey={}", LINK, symbol, self.0)
-            .parse()
-            .unwrap();
-
-        let body = get(data).unwrap().text().unwrap();
-        serde_json::from_str(&body).unwrap()
-    }
-
-    /// Stock time method for calling stock time series API
-    pub fn stock_time(
-        &self,
-        function: StockFunction,
-        symbol: &str,
-        interval: Interval,
-        output_size: OutputSize,
-    ) -> TimeSeries {
-        let data: Url = create_url_time_series(function, symbol, interval, output_size, &self.0);
-        let time_series_helper: TimeSeriesHelper =
-            serde_json::from_str(&get(data).unwrap().text().unwrap()).unwrap();
-        time_series_helper.convert()
-    }
-
-    /// Search method for searching keyword or company
-    pub fn search(&self, keywords: &str) -> Search {
-        let data: Url = format!(
-            "{}SYMBOL_SEARCH&keywords={}&apikey={}",
-            LINK, keywords, self.0
-        )
-        .parse()
-        .unwrap();
-        let body = get(data).unwrap().text().unwrap();
-        serde_json::from_str(&body).unwrap()
-    }
-
-    pub fn sector(&self) -> Sector {
-        let data: Url = format!("{}SECTOR&apikey={}", LINK, self.0).parse().unwrap();
-        let body = get(data).unwrap().text().unwrap();
-        let sector_helper: SectorHelper = serde_json::from_str(&body).unwrap();
-        sector_helper.convert()
     }
 
     /// Forex method for calling stock time series
@@ -106,13 +71,51 @@ impl APIKey {
         forex_helper.convert()
     }
 
-    pub fn crypto(&self, function: CryptoFunction, symbol: &str, market: &str) -> Crypto {
-        let data: Url = create_url_crypto(function, symbol, market, &self.0);
-        let crypto_helper: CryptoHelper =
-            serde_json::from_str(&get(data).unwrap().text().unwrap()).unwrap();
-        crypto_helper.convert()
+    /// Method for returning Quote Struct
+    pub fn quote(&self, symbol: &str) -> Quote {
+        let data: Url = format!("{}GLOBAL_QUOTE&symbol={}&apikey={}", LINK, symbol, self.0)
+            .parse()
+            .unwrap();
+
+        let body = get(data).unwrap().text().unwrap();
+        serde_json::from_str(&body).unwrap()
     }
 
+    /// Search method for searching keyword or company
+    pub fn search(&self, keywords: &str) -> Search {
+        let data: Url = format!(
+            "{}SYMBOL_SEARCH&keywords={}&apikey={}",
+            LINK, keywords, self.0
+        )
+        .parse()
+        .unwrap();
+        let body = get(data).unwrap().text().unwrap();
+        serde_json::from_str(&body).unwrap()
+    }
+
+    /// Method for returning out a sector data as struct
+    pub fn sector(&self) -> Sector {
+        let data: Url = format!("{}SECTOR&apikey={}", LINK, self.0).parse().unwrap();
+        let body = get(data).unwrap().text().unwrap();
+        let sector_helper: SectorHelper = serde_json::from_str(&body).unwrap();
+        sector_helper.convert()
+    }
+
+    /// Stock time method for calling stock time series API
+    pub fn stock_time(
+        &self,
+        function: StockFunction,
+        symbol: &str,
+        interval: Interval,
+        output_size: OutputSize,
+    ) -> TimeSeries {
+        let data: Url = create_url_time_series(function, symbol, interval, output_size, &self.0);
+        let time_series_helper: TimeSeriesHelper =
+            serde_json::from_str(&get(data).unwrap().text().unwrap()).unwrap();
+        time_series_helper.convert()
+    }
+
+    /// Technical indicator api caller method
     pub fn technical_indicator(
         function: &str,
         symbol: &str,

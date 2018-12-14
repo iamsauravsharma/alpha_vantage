@@ -1,3 +1,4 @@
+/// Module for crypto real time data
 pub mod crypto;
 
 /// Module for exchange currency (both digital & physical currency exchange)
@@ -12,8 +13,10 @@ pub mod quote;
 /// Module for searching specific symbol or companies
 pub mod search;
 
+/// Module for sector
 pub mod sector;
 
+/// Module for Technical Indicator
 pub mod technical_indicator;
 
 /// Stock time series module

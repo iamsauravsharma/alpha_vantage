@@ -1,3 +1,20 @@
+/// Enum for declaring function for crypto series
+#[derive(Copy, Clone)]
+pub enum CryptoFunction {
+    Daily,
+    Weekly,
+    Monthly,
+}
+
+/// Enum for declaring function for forex function
+#[derive(Copy, Clone)]
+pub enum ForexFunction {
+    IntraDay,
+    Daily,
+    Weekly,
+    Monthly,
+}
+
 /// Enum for declaring interval for intraday
 #[derive(Copy, Clone)]
 pub enum Interval {
@@ -29,22 +46,8 @@ pub enum StockFunction {
     MonthlyAdjusted,
 }
 
-/// Enum for declaring function for forex function
-#[derive(Copy, Clone)]
-pub enum ForexFunction {
-    IntraDay,
-    Daily,
-    Weekly,
-    Monthly,
-}
-
-#[derive(Copy, Clone)]
-pub enum CryptoFunction {
-    Daily,
-    Weekly,
-    Monthly,
-}
-
+/// Enum for declaring different optional value of Technical Indicator used so
+/// user can pass different optional value as same datatype
 pub enum TechnicalIndicator {
     Acceleration(String),
     Fastdmatype(String),

@@ -4,8 +4,6 @@ rust:
   - stable
   - beta
   - nightly
-  # minimum support version
-  - 1.31.0
 
 sudo: true
 

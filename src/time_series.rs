@@ -76,7 +76,7 @@ pub struct Entry {
 impl Entry {
     /// Get time
     pub fn time(&self) -> String {
-        self.time.clone()
+        self.time.to_string()
     }
 
     /// Return open

@@ -9,7 +9,7 @@ pub struct Search {
 
 // Struct which stores matches data for search keyword
 #[derive(Debug, Clone, Deserialize)]
-struct DataValue {
+pub struct DataValue {
     #[serde(rename = "1. symbol")]
     symbol: String,
     #[serde(rename = "2. name")]
@@ -30,38 +30,52 @@ struct DataValue {
     match_score: String,
 }
 
-/// struct used for returning search result value
-#[derive(Debug, Default)]
-pub struct PublicDataValue {
-    pub symbol: String,
-    pub name: String,
-    pub data_type: String,
-    pub region: String,
-    pub market_open: String,
-    pub market_close: String,
-    pub time_zone: String,
-    pub currency: String,
-    pub match_score: String,
+impl DataValue {
+    pub fn symbol(&self) -> String {
+        self.symbol.to_string()
+    }
+
+    pub fn name(&self) -> String {
+        self.name.to_string()
+    }
+
+    pub fn data_type(&self) -> String {
+        self.data_type.to_string()
+    }
+
+    pub fn region(&self) -> String {
+        self.region.to_string()
+    }
+
+    pub fn market_open(&self) -> String {
+        self.market_open.to_string()
+    }
+
+    pub fn market_close(&self) -> String {
+        self.market_close.to_string()
+    }
+
+    pub fn time_zone(&self) -> String {
+        self.time_zone.to_string()
+    }
+
+    pub fn currency(&self) -> String {
+        self.currency.to_string()
+    }
+
+    pub fn match_score(&self) -> String {
+        self.match_score.to_string()
+    }
 }
 
 impl Search {
     // Return result of search
-    pub fn result(&self) -> Vec<PublicDataValue> {
+    pub fn result(&self) -> Vec<DataValue> {
         let mut vec = Vec::new();
-        if let Some(value) = self.matches.clone() {
-            for data in &value {
-                let data = data.clone();
-                let mut value: PublicDataValue = crate::search::PublicDataValue::default();
-                value.symbol = data.symbol;
-                value.name = data.name;
-                value.data_type = data.data_type;
-                value.region = data.region;
-                value.market_open = data.market_open;
-                value.market_close = data.market_close;
-                value.time_zone = data.time_zone;
-                value.currency = data.currency;
-                value.match_score = data.match_score;
-                vec.push(value);
+        let is_some = self.matches.is_some();
+        if is_some {
+            for data in self.matches.clone().unwrap() {
+                vec.push(data);
             }
         }
         vec

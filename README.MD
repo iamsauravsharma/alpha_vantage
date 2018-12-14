@@ -7,7 +7,6 @@
 
 **Project Info:**
 [![License: MIT][license_badge]][license_link]
-[![Rust 1.31.0+ required][rust_badge]][rust_link]
 [![LoC][loc_badge]][loc_link]
 
 **Rust version support**
@@ -40,7 +39,7 @@
 
 - [ ] Optimize code
 - [ ] Improve performance of API Call 
-- [ ] Use generics and traits
+- [ ] Use generics, traits and lifetimes
 - [ ] Better documentation
 - [ ] Publish to [crates.io][cratesio_link]
 
@@ -61,9 +60,8 @@ use alpha_vantage::exchange::*;
 
 let api_key = alpha_vantage::set_api("YOUR KEY HERE");
 let exchange : Exchange  = api_key.exchange("USD","CNY");
-let rate = exchange.get_rate().unwrap();
+let rate = exchange.rate().unwrap();
 println!("{}",rate);
-assert_eq!(rate.is_sign_positive(),true);
 ```
 
 [git_link]: https://github.com/iamsauravsharma/alpha_vantage
@@ -79,9 +77,6 @@ assert_eq!(rate.is_sign_positive(),true);
 
 [license_badge]: https://img.shields.io/github/license/iamsauravsharma/alpha_vantage.svg
 [license_link]: LICENSE
-
-[rust_badge]: https://img.shields.io/badge/rust%20required-1.31.0+-blue.svg?logo=rust
-[rust_link]: https://rustup.rs
 
 [loc_badge]: https://tokei.rs/b1/github/iamsauravsharma/alpha_vantage
 [loc_link]: https://github.com/iamsauravsharma/alpha_vantage
