@@ -5,6 +5,7 @@ use std::collections::HashMap;
 
 type DataType = Option<HashMap<String, HashMap<String, HashMap<String, String>>>>;
 
+/// Struct for indicator
 #[derive(Deserialize)]
 pub struct Indicator {
     #[serde(rename = "Error Message")]
@@ -18,6 +19,7 @@ pub struct Indicator {
 }
 
 impl Indicator {
+    /// Return out meta data in hash form
     pub fn meta_data(&self) -> Result<HashMap<String, String>, String> {
         if let Some(meta_data) = &self.metadata {
             Ok(meta_data.to_owned())
@@ -31,6 +33,7 @@ impl Indicator {
         }
     }
 
+    /// Return data as a vector inside result
     pub fn data(&self) -> Result<Vec<DataCollector>, String> {
         let data = self.data.to_owned();
         if data.is_some() {
@@ -59,6 +62,7 @@ impl Indicator {
     }
 }
 
+/// Struct for storing a data values
 #[derive(Default)]
 pub struct DataCollector {
     time: String,
@@ -66,15 +70,18 @@ pub struct DataCollector {
 }
 
 impl DataCollector {
+    /// Return out a time
     pub fn time(&self) -> String {
         self.time.to_string()
     }
 
+    /// Return values for Data
     pub fn values(&self) -> HashMap<String, f64> {
         self.values.clone()
     }
 }
 
+/// Create url for reqwest
 pub(crate) fn create_url(
     function: &str,
     symbol: &str,

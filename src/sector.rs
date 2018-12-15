@@ -1,6 +1,7 @@
 use serde_derive::Deserialize;
 use std::collections::HashMap;
 
+/// Stores Metadata
 #[derive(Deserialize, Clone)]
 struct MetaData {
     #[serde(rename = "Information")]
@@ -9,6 +10,7 @@ struct MetaData {
     last_refreshed: String,
 }
 
+/// Store Sector data
 #[derive(Default, Clone)]
 pub struct Data {
     rank: String,
@@ -26,55 +28,68 @@ pub struct Data {
 }
 
 impl Data {
+    /// Return rank
     pub fn rank(&self) -> String {
         self.rank.to_string()
     }
 
+    /// Return utilites score
     pub fn utilites(&self) -> String {
         self.utilites.to_string()
     }
 
+    /// Return health care score
     pub fn health_care(&self) -> String {
         self.health_care.to_string()
     }
 
+    /// Return out information technology
     pub fn information_technology(&self) -> String {
         self.information_technology.to_string()
     }
 
+    /// Return industrials scores
     pub fn industrials(&self) -> String {
         self.industrials.to_string()
     }
 
+    /// Return out real estate value
     pub fn real_estate(&self) -> String {
         self.real_estate.to_string()
     }
 
+    /// Return consumer staples value
     pub fn consumer_staples(&self) -> String {
         self.consumer_staples.to_string()
     }
 
+    /// Return out value for consumer discretionary
     pub fn consumer_discretionary(&self) -> String {
         self.consumer_discretionary.to_string()
     }
 
+    /// Return out for financials
     pub fn financials(&self) -> String {
         self.financials.to_string()
     }
 
+    /// Gives value of communication services
     pub fn communication_services(&self) -> String {
         self.communication_services.to_string()
     }
 
+    /// Gives materials value
     pub fn materials(&self) -> String {
         self.materials.to_string()
     }
 
+    /// Gives out energy data
     pub fn energy(&self) -> String {
         self.energy.to_string()
     }
 }
 
+/// Stores sector data
 #[derive(Default)]
 pub struct Sector {
     error_message: Option<String>,
@@ -84,14 +99,17 @@ pub struct Sector {
 }
 
 impl Sector {
+    /// Return sector information
     pub fn information(&self) -> Result<String, String> {
         self.check_meta_data("information")
     }
 
+    /// Return last refreshed time
     pub fn last_refreshed(&self) -> Result<String, String> {
         self.check_meta_data("last refreshed")
     }
 
+    /// Return vector of data in Result
     pub fn data(&self) -> Result<Vec<Data>, String> {
         if let Some(data) = &self.data {
             Ok(data.to_vec())
@@ -105,6 +123,7 @@ impl Sector {
         }
     }
 
+    /// Check a meta data is present or not
     fn check_meta_data(&self, name: &str) -> Result<String, String> {
         if let Some(meta_data) = &self.meta_data {
             let value = match name {
@@ -124,6 +143,7 @@ impl Sector {
     }
 }
 
+/// struct for helping out sector
 #[derive(Deserialize)]
 pub(crate) struct SectorHelper {
     #[serde(rename = "Information")]
@@ -137,6 +157,7 @@ pub(crate) struct SectorHelper {
 }
 
 impl SectorHelper {
+    /// Convert out sectorhelper to sector
     pub(crate) fn convert(self) -> Sector {
         let mut sector = Sector::default();
         sector.information = self.information;

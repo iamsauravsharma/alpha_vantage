@@ -15,26 +15,32 @@ pub struct TimeSeries {
 }
 
 impl TimeSeries {
+    /// Return information present in meta data
     pub fn information(&self) -> Result<String, String> {
         self.return_meta_string("information")
     }
 
+    /// Return symbol for which time series function is called
     pub fn symbol(&self) -> Result<String, String> {
         self.return_meta_string("symbol")
     }
 
+    /// last time a data was refreshed
     pub fn last_refreshed(&self) -> Result<String, String> {
         self.return_meta_string("last refreshed")
     }
 
+    /// time zone of last refreshed time
     pub fn time_zone(&self) -> Result<String, String> {
         self.return_meta_string("time zone")
     }
 
+    /// Interval for which a time series intraday
     pub fn interval(&self) -> Result<String, String> {
         self.operate_option_meta_value("interval")
     }
 
+    /// Output Size of intraday which can be either Full or compact
     pub fn output_size(&self) -> Result<String, String> {
         self.operate_option_meta_value("output size")
     }
@@ -53,6 +59,7 @@ impl TimeSeries {
         }
     }
 
+    /// Return a meta data value as a form of String
     fn return_meta_string(&self, which_val: &str) -> Result<String, String> {
         if let Some(meta_data) = &self.meta_data {
             let value = match which_val {
@@ -73,6 +80,7 @@ impl TimeSeries {
         }
     }
 
+    /// Return Option metadata value as a Result form of String
     fn operate_option_meta_value(&self, which_val: &str) -> Result<String, String> {
         if let Some(meta_data) = &self.meta_data {
             if let Some(value) = match which_val {
@@ -176,12 +184,12 @@ impl Entry {
     }
 }
 
-// parse String to f64 and return value
+/// parse String to f64 and return value
 fn return_f64(data: &str) -> f64 {
     data.trim().parse::<f64>().unwrap()
 }
 
-// Helper struct to store non adjusted data
+/// Helper struct to store non adjusted data
 #[derive(Clone, Deserialize)]
 struct EntryHelper {
     #[serde(rename = "1. open")]
@@ -196,7 +204,7 @@ struct EntryHelper {
     volume: String,
 }
 
-// Helper struct to store adjusted data
+/// Helper struct to store adjusted data
 #[derive(Deserialize, Clone)]
 struct AdjustedHelper {
     #[serde(rename = "1. open")]
@@ -217,7 +225,7 @@ struct AdjustedHelper {
     split_coefficient: Option<String>,
 }
 
-// helper struct for TimeSeries which deseialize JSON
+/// helper struct for TimeSeries which deseialize JSON
 #[derive(Deserialize)]
 pub(crate) struct TimeSeriesHelper {
     #[serde(rename = "Error Message")]
@@ -233,7 +241,7 @@ pub(crate) struct TimeSeriesHelper {
 }
 
 impl TimeSeriesHelper {
-    // Convert TimeSeriesHelper to TimeSeries
+    /// Convert TimeSeriesHelper to TimeSeries
     pub(crate) fn convert(self) -> TimeSeries {
         let mut time_series = TimeSeries::default();
         time_series.error_message = self.error_message;
@@ -310,7 +318,7 @@ impl TimeSeriesHelper {
     }
 }
 
-// Convert Option<&String> to Option<String>
+/// Convert Option<&String> to Option<String>
 fn return_value(value: Option<&std::string::String>) -> Option<String> {
     match value {
         Some(value) => Some(value.to_string()),
@@ -318,7 +326,7 @@ fn return_value(value: Option<&std::string::String>) -> Option<String> {
     }
 }
 
-// create url from user provided data
+/// create url from user provided data
 pub(crate) fn create_url(
     function: StockFunction,
     symbol: &str,

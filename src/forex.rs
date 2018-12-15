@@ -54,6 +54,7 @@ impl Entry {
     }
 }
 
+/// Return f64 from &str
 fn return_f64(data: &str) -> f64 {
     data.trim().parse::<f64>().unwrap()
 }
@@ -68,30 +69,37 @@ pub struct Forex {
 }
 
 impl Forex {
+    /// Return information of data
     pub fn information(&self) -> Result<String, String> {
         self.return_meta_string("information")
     }
 
+    /// Retrun from symbol
     pub fn symbol_from(&self) -> Result<String, String> {
         self.return_meta_string("from symbol")
     }
 
+    /// Return to symbol
     pub fn symbol_to(&self) -> Result<String, String> {
         self.return_meta_string("to symbol")
     }
 
+    /// Return last refreshed time
     pub fn last_refreshed(&self) -> Result<String, String> {
         self.return_meta_string("last refreshed")
     }
 
+    /// Return last refreshed time zone
     pub fn time_zone(&self) -> Result<String, String> {
         self.return_meta_string("time zone")
     }
 
+    /// Return out interval for intraday
     pub fn interval(&self) -> Result<String, String> {
         self.operate_option_meta_value("interval")
     }
 
+    /// Return output size which can be full or compact
     pub fn output_size(&self) -> Result<String, String> {
         self.operate_option_meta_value("output size")
     }
@@ -110,6 +118,7 @@ impl Forex {
         }
     }
 
+    /// Return a meta data field in Result type
     fn return_meta_string(&self, which_val: &str) -> Result<String, String> {
         if let Some(meta_data) = &self.meta_data {
             let value = match which_val {
@@ -131,6 +140,7 @@ impl Forex {
         }
     }
 
+    /// Convert out Option meta data field as a Result field
     fn operate_option_meta_value(&self, which_val: &str) -> Result<String, String> {
         if let Some(meta_data) = &self.meta_data {
             if let Some(value) = match which_val {
@@ -153,7 +163,7 @@ impl Forex {
     }
 }
 
-// Entry Helper
+/// Entry Helper
 #[derive(Clone, Debug, Deserialize)]
 struct EntryHelper {
     #[serde(rename = "1. open")]
@@ -166,7 +176,7 @@ struct EntryHelper {
     close: String,
 }
 
-// struct which helps for collecting forex data from website
+/// struct which helps for collecting forex data from website
 #[derive(Debug, Deserialize)]
 pub(crate) struct ForexHelper {
     #[serde(rename = "Error Message")]
@@ -180,7 +190,7 @@ pub(crate) struct ForexHelper {
 }
 
 impl ForexHelper {
-    // convert ForexHelper to Forex
+    /// convert ForexHelper to Forex
     pub(crate) fn convert(self) -> Forex {
         let mut forex_struct = Forex::default();
         forex_struct.error_message = self.error_message;
@@ -245,7 +255,7 @@ impl ForexHelper {
     }
 }
 
-// Convert Option(&String) to String
+/// Convert Option(&String) to String
 fn return_option_value(value: Option<&std::string::String>) -> Option<String> {
     match value {
         Some(value) => Some(value.to_string()),
@@ -253,7 +263,7 @@ fn return_option_value(value: Option<&std::string::String>) -> Option<String> {
     }
 }
 
-// Create Url from given user paramter for reqwest crate
+/// Create Url from given user paramter for reqwest crate
 pub(crate) fn create_url(
     function: ForexFunction,
     from_symbol: &str,

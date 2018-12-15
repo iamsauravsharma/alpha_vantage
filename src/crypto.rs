@@ -5,6 +5,7 @@ use std::collections::HashMap;
 
 const LINK: &str = "https://www.alphavantage.co/query?function=";
 
+/// Store Meta Data Information
 #[derive(Deserialize, Clone)]
 struct MetaData {
     #[serde(rename = "1. Information")]
@@ -23,6 +24,7 @@ struct MetaData {
     time_zone: String,
 }
 
+/// Struct to help out for creation of struct Entry
 #[derive(Deserialize, Clone)]
 struct EntryHelper {
     #[serde(rename = "1b. open (USD)")]
@@ -41,6 +43,7 @@ struct EntryHelper {
     market_data: HashMap<String, String>,
 }
 
+/// Struct to help out for creation of struct Crypto
 #[derive(Deserialize)]
 pub(crate) struct CryptoHelper {
     #[serde(rename = "Information")]
@@ -54,6 +57,7 @@ pub(crate) struct CryptoHelper {
 }
 
 impl CryptoHelper {
+    /// Function which convert CryptoHelper to Crypto
     pub(crate) fn convert(self) -> Crypto {
         let mut crypto = Crypto::default();
         crypto.information = self.information;
@@ -94,6 +98,7 @@ impl CryptoHelper {
     }
 }
 
+/// Struct which stores Crypto data
 #[derive(Default, Debug, Clone)]
 pub struct Entry {
     time: String,
@@ -110,55 +115,68 @@ pub struct Entry {
 }
 
 impl Entry {
+    /// Return time as String
     pub fn time(&self) -> String {
         self.time.to_string()
     }
 
+    /// Return market open value
     pub fn market_open(&self) -> f64 {
         convert_to_f64(&self.market_open)
     }
 
+    /// Return usd open value
     pub fn usd_open(&self) -> f64 {
         convert_to_f64(&self.usd_open)
     }
 
+    /// Return market high value
     pub fn market_high(&self) -> f64 {
         convert_to_f64(&self.market_high)
     }
 
+    /// Return usd high value
     pub fn usd_high(&self) -> f64 {
         convert_to_f64(&self.usd_high)
     }
 
+    /// Return market low value
     pub fn market_low(&self) -> f64 {
         convert_to_f64(&self.market_low)
     }
 
+    /// Return usd low value
     pub fn usd_low(&self) -> f64 {
         convert_to_f64(&self.usd_low)
     }
 
+    /// Return market close value
     pub fn market_close(&self) -> f64 {
         convert_to_f64(&self.market_close)
     }
 
+    /// Return usd close value
     pub fn usd_close(&self) -> f64 {
         convert_to_f64(&self.usd_close)
     }
 
+    /// Return volume
     pub fn volume(&self) -> f64 {
         convert_to_f64(&self.volume)
     }
 
+    /// Return market cap
     pub fn market_cap(&self) -> f64 {
         convert_to_f64(&self.market_cap)
     }
 }
 
+/// Convert String to f64
 fn convert_to_f64(val: &str) -> f64 {
     val.trim().parse::<f64>().unwrap()
 }
 
+/// Struct which holds out Cryptocurrency information
 #[derive(Default)]
 pub struct Crypto {
     information: Option<String>,
@@ -168,34 +186,50 @@ pub struct Crypto {
 }
 
 impl Crypto {
+    /// Return meta data information produce error if API returns error_message
+    /// or information instead of meta data
     pub fn information(&self) -> Result<String, String> {
         self.return_meta_string("information")
     }
 
+    /// Return digial currency code produce error if API returns error_message
+    /// or information instead of meta data
     pub fn digital_code(&self) -> Result<String, String> {
         self.return_meta_string("digital code")
     }
 
+    /// Return digital currency name produce error if API returns error_message
+    /// or information instead of meta data
     pub fn digital_name(&self) -> Result<String, String> {
         self.return_meta_string("digital name")
     }
 
+    /// Return market code produce error if API returns error_message
+    /// or information instead of meta data
     pub fn market_code(self) -> Result<String, String> {
         self.return_meta_string("market code")
     }
 
+    /// Return market name produce error if API returns error_message
+    /// or information instead of meta data
     pub fn market_name(&self) -> Result<String, String> {
         self.return_meta_string("market name")
     }
 
+    /// Return last refreshed time produce error if API returns error_message
+    /// or information instead of meta data
     pub fn last_refreshed(&self) -> Result<String, String> {
         self.return_meta_string("last refreshed")
     }
 
+    /// Return time zone of last refreshed time produce error if API returns
+    /// error_message or information instead of meta data
     pub fn time_zone(&self) -> Result<String, String> {
         self.return_meta_string("time zone")
     }
 
+    /// Return out a entry produce error if API returns error_message
+    /// or information instead of vector of entry
     pub fn entry(&self) -> Result<Vec<Entry>, String> {
         if let Some(entry) = &self.entry {
             Ok(entry.to_vec())
@@ -209,6 +243,7 @@ impl Crypto {
         }
     }
 
+    /// Return meta string if meta data is present otherwise show any two error
     fn return_meta_string(&self, which_val: &str) -> Result<String, String> {
         if let Some(meta_data) = &self.meta_data {
             let value = match which_val {
@@ -233,6 +268,7 @@ impl Crypto {
     }
 }
 
+/// Create url from which JSON data is collected for Crypto
 pub(crate) fn create_url(function: CryptoFunction, symbol: &str, market: &str, api: &str) -> Url {
     let function_name = match function {
         CryptoFunction::Daily => "DIGITAL_CURRENCY_DAILY",

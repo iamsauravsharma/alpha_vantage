@@ -11,7 +11,7 @@ pub struct Quote {
     global_quote: Option<GlobalQuote>,
 }
 
-// Struct storing Global Quote Value
+/// Struct storing Global Quote Value
 #[derive(Debug, Deserialize, Clone)]
 struct GlobalQuote {
     #[serde(rename = "01. symbol")]

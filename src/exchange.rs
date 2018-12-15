@@ -31,7 +31,7 @@ struct RealtimeExchangeRate {
 }
 
 impl Exchange {
-    /// Get Rate for exchange
+    /// Get Rate for exchange produce error if no rate is available
     pub fn rate(&self) -> Result<f64, String> {
         if let Some(real) = self.real_time.clone() {
             Ok(real.rate.trim().parse::<f64>().unwrap())
@@ -60,22 +60,27 @@ impl Exchange {
         }
     }
 
+    /// get from code from which exchange is performed
     pub fn code_from(&self) -> Result<String, String> {
         self.get_result_string("from code")
     }
 
+    /// get from name from which exchange is performed
     pub fn name_from(&self) -> Result<String, String> {
         self.get_result_string("from name")
     }
 
+    /// get to code from exchange
     pub fn code_to(&self) -> Result<String, String> {
         self.get_result_string("to code")
     }
 
+    /// get to name from exchange
     pub fn name_to(&self) -> Result<String, String> {
         self.get_result_string("to name")
     }
 
+    /// Collect out certain value from real_time if presnt otherwise show error
     fn get_result_string(&self, match_str: &str) -> Result<String, String> {
         if let Some(real_time) = &self.real_time {
             let value = match match_str {
