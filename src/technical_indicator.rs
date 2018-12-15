@@ -18,19 +18,20 @@ pub struct Indicator {
 }
 
 impl Indicator {
-    pub fn error_message(&self) -> Option<String> {
-        self.error_message.to_owned()
+    pub fn meta_data(&self) -> Result<HashMap<String, String>, String> {
+        if let Some(meta_data) = &self.metadata {
+            Ok(meta_data.to_owned())
+        } else if let Some(error) = &self.error_message {
+            Err(format!("Error Message : {}", error))
+        } else {
+            Err(format!(
+                "Information : {}",
+                self.information.clone().unwrap()
+            ))
+        }
     }
 
-    pub fn information(&self) -> Option<String> {
-        self.information.to_owned()
-    }
-
-    pub fn metadata(&self) -> Option<HashMap<String, String>> {
-        self.metadata.to_owned()
-    }
-
-    pub fn data(&self) -> Option<Vec<DataCollector>> {
+    pub fn data(&self) -> Result<Vec<DataCollector>, String> {
         let data = self.data.to_owned();
         if data.is_some() {
             let mut vector = Vec::new();
@@ -38,13 +39,22 @@ impl Indicator {
                 for time in hash.keys() {
                     let mut data_collector = DataCollector::default();
                     data_collector.time = time.to_string();
-                    data_collector.values = hash.get(time).unwrap().to_owned();
+                    let hash_values = hash.get(time).unwrap().to_owned();
+                    for (key, value) in hash_values.iter() {
+                        let value_f64 = value.trim().parse::<f64>().unwrap();
+                        data_collector.values.insert(key.to_string(), value_f64);
+                    }
                     vector.push(data_collector);
                 }
             }
-            Some(vector)
+            Ok(vector)
+        } else if let Some(error) = &self.error_message {
+            Err(format!("Error Message : {}", error))
         } else {
-            None
+            Err(format!(
+                "Information : {}",
+                self.information.clone().unwrap()
+            ))
         }
     }
 }
@@ -52,7 +62,17 @@ impl Indicator {
 #[derive(Default)]
 pub struct DataCollector {
     time: String,
-    values: HashMap<String, String>,
+    values: HashMap<String, f64>,
+}
+
+impl DataCollector {
+    pub fn time(&self) -> String {
+        self.time.to_string()
+    }
+
+    pub fn values(&self) -> HashMap<String, f64> {
+        self.values.clone()
+    }
 }
 
 pub(crate) fn create_url(

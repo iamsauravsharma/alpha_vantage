@@ -3,6 +3,8 @@ use serde_derive::Deserialize;
 /// struct for storing search method data
 #[derive(Debug, Deserialize)]
 pub struct Search {
+    #[serde(rename = "Information")]
+    information: Option<String>,
     #[serde(rename = "bestMatches")]
     matches: Option<Vec<DataValue>>,
 }
@@ -63,21 +65,21 @@ impl DataValue {
         self.currency.to_string()
     }
 
-    pub fn match_score(&self) -> String {
-        self.match_score.to_string()
+    pub fn match_score(&self) -> f64 {
+        self.match_score.trim().parse::<f64>().unwrap()
     }
 }
 
 impl Search {
     // Return result of search
-    pub fn result(&self) -> Vec<DataValue> {
-        let mut vec = Vec::new();
-        let is_some = self.matches.is_some();
-        if is_some {
-            for data in self.matches.clone().unwrap() {
-                vec.push(data);
-            }
+    pub fn result(&self) -> Result<Vec<DataValue>, String> {
+        if let Some(entry) = &self.matches {
+            Ok(entry.to_vec())
+        } else {
+            Err(format!(
+                "Information : {}",
+                self.information.clone().unwrap()
+            ))
         }
-        vec
     }
 }

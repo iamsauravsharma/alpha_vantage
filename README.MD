@@ -37,9 +37,7 @@
 
 ### TODO LIST AFTER FINISHING PROJECT
 
-- [ ] Optimize code
-- [ ] Improve performance of API Call 
-- [ ] Use generics, traits and lifetimes
+- [ ] Improve performance of API Call
 - [ ] Better documentation
 - [ ] Publish to [crates.io][cratesio_link]
 

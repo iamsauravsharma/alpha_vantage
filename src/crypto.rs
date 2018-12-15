@@ -5,83 +5,40 @@ use std::collections::HashMap;
 
 const LINK: &str = "https://www.alphavantage.co/query?function=";
 
-#[derive(Default)]
-pub struct Crypto {
-    information: Option<String>,
-    error_message: Option<String>,
-    meta_data: Option<MetaData>,
-    entry: Option<Vec<Entry>>,
+#[derive(Deserialize, Clone)]
+struct MetaData {
+    #[serde(rename = "1. Information")]
+    information: String,
+    #[serde(rename = "2. Digital Currency Code")]
+    digital_code: String,
+    #[serde(rename = "3. Digital Currency Name")]
+    digital_name: String,
+    #[serde(rename = "4. Market Code")]
+    market_code: String,
+    #[serde(rename = "5. Market Name")]
+    market_name: String,
+    #[serde(rename = "6. Last Refreshed")]
+    last_refreshed: String,
+    #[serde(rename = "7. Time Zone")]
+    time_zone: String,
 }
 
-impl Crypto {
-    pub fn meta_data(&self) -> &Option<MetaData> {
-        &self.meta_data
-    }
-
-    pub fn entry(&self) -> &Option<Vec<Entry>> {
-        &self.entry
-    }
-}
-
-#[derive(Default, Debug, Clone)]
-pub struct Entry {
-    time: String,
-    market_open: String,
-    usd_open: String,
-    market_high: String,
-    usd_high: String,
-    market_low: String,
-    usd_low: String,
-    market_close: String,
-    usd_close: String,
+#[derive(Deserialize, Clone)]
+struct EntryHelper {
+    #[serde(rename = "1b. open (USD)")]
+    open_usd: String,
+    #[serde(rename = "2b. high (USD)")]
+    high_usd: String,
+    #[serde(rename = "3b. low (USD)")]
+    low_usd: String,
+    #[serde(rename = "4b. close (USD)")]
+    close_usd: String,
+    #[serde(rename = "5. volume")]
     volume: String,
+    #[serde(rename = "6. market cap (USD)")]
     market_cap: String,
-}
-
-impl Entry {
-    pub fn time(self) -> String {
-        self.time.to_string()
-    }
-
-    pub fn market_open(self) -> String {
-        self.market_open.to_string()
-    }
-
-    pub fn usd_open(self) -> String {
-        self.usd_open.to_string()
-    }
-
-    pub fn market_high(self) -> String {
-        self.market_high.to_string()
-    }
-
-    pub fn usd_high(self) -> String {
-        self.usd_high.to_string()
-    }
-
-    pub fn market_low(self) -> String {
-        self.market_low.to_string()
-    }
-
-    pub fn usd_low(self) -> String {
-        self.usd_low.to_string()
-    }
-
-    pub fn market_close(self) -> String {
-        self.market_close.to_string()
-    }
-
-    pub fn usd_close(self) -> String {
-        self.usd_close.to_string()
-    }
-
-    pub fn volume(self) -> String {
-        self.volume.to_string()
-    }
-
-    pub fn market_cap(self) -> String {
-        self.market_cap.to_string()
-    }
+    #[serde(flatten)]
+    market_data: HashMap<String, String>,
 }
 
 #[derive(Deserialize)]
@@ -137,70 +94,143 @@ impl CryptoHelper {
     }
 }
 
-#[derive(Deserialize, Clone)]
-pub struct MetaData {
-    #[serde(rename = "1. Information")]
-    information: String,
-    #[serde(rename = "2. Digital Currency Code")]
-    digital_code: String,
-    #[serde(rename = "3. Digital Currency Name")]
-    digital_name: String,
-    #[serde(rename = "4. Market Code")]
-    market_code: String,
-    #[serde(rename = "5. Market Name")]
-    market_name: String,
-    #[serde(rename = "6. Last Refreshed")]
-    last_refreshed: String,
-    #[serde(rename = "7. Time Zone")]
-    time_zone: String,
-}
-
-impl MetaData {
-    pub fn information(&self) -> String {
-        self.information.to_string()
-    }
-
-    pub fn digital_code(&self) -> String {
-        self.digital_code.to_string()
-    }
-
-    pub fn digital_name(&self) -> String {
-        self.digital_name.to_string()
-    }
-
-    pub fn market_code(self) -> String {
-        self.market_code.to_string()
-    }
-
-    pub fn market_name(&self) -> String {
-        self.market_name.to_string()
-    }
-
-    pub fn last_refreshed(&self) -> String {
-        self.last_refreshed.to_string()
-    }
-
-    pub fn time_zone(&self) -> String {
-        self.time_zone.to_string()
-    }
-}
-
-#[derive(Deserialize, Clone)]
-struct EntryHelper {
-    #[serde(rename = "1b. open (USD)")]
-    open_usd: String,
-    #[serde(rename = "2b. high (USD)")]
-    high_usd: String,
-    #[serde(rename = "3b. low (USD)")]
-    low_usd: String,
-    #[serde(rename = "4b. close (USD)")]
-    close_usd: String,
-    #[serde(rename = "5. volume")]
+#[derive(Default, Debug, Clone)]
+pub struct Entry {
+    time: String,
+    market_open: String,
+    usd_open: String,
+    market_high: String,
+    usd_high: String,
+    market_low: String,
+    usd_low: String,
+    market_close: String,
+    usd_close: String,
     volume: String,
-    #[serde(rename = "6. market cap (USD)")]
     market_cap: String,
-    #[serde(flatten)]
-    market_data: HashMap<String, String>,
+}
+
+impl Entry {
+    pub fn time(&self) -> String {
+        self.time.to_string()
+    }
+
+    pub fn market_open(&self) -> f64 {
+        convert_to_f64(&self.market_open)
+    }
+
+    pub fn usd_open(&self) -> f64 {
+        convert_to_f64(&self.usd_open)
+    }
+
+    pub fn market_high(&self) -> f64 {
+        convert_to_f64(&self.market_high)
+    }
+
+    pub fn usd_high(&self) -> f64 {
+        convert_to_f64(&self.usd_high)
+    }
+
+    pub fn market_low(&self) -> f64 {
+        convert_to_f64(&self.market_low)
+    }
+
+    pub fn usd_low(&self) -> f64 {
+        convert_to_f64(&self.usd_low)
+    }
+
+    pub fn market_close(&self) -> f64 {
+        convert_to_f64(&self.market_close)
+    }
+
+    pub fn usd_close(&self) -> f64 {
+        convert_to_f64(&self.usd_close)
+    }
+
+    pub fn volume(&self) -> f64 {
+        convert_to_f64(&self.volume)
+    }
+
+    pub fn market_cap(&self) -> f64 {
+        convert_to_f64(&self.market_cap)
+    }
+}
+
+fn convert_to_f64(val: &str) -> f64 {
+    val.trim().parse::<f64>().unwrap()
+}
+
+#[derive(Default)]
+pub struct Crypto {
+    information: Option<String>,
+    error_message: Option<String>,
+    meta_data: Option<MetaData>,
+    entry: Option<Vec<Entry>>,
+}
+
+impl Crypto {
+    pub fn information(&self) -> Result<String, String> {
+        self.return_meta_string("information")
+    }
+
+    pub fn digital_code(&self) -> Result<String, String> {
+        self.return_meta_string("digital code")
+    }
+
+    pub fn digital_name(&self) -> Result<String, String> {
+        self.return_meta_string("digital name")
+    }
+
+    pub fn market_code(self) -> Result<String, String> {
+        self.return_meta_string("market code")
+    }
+
+    pub fn market_name(&self) -> Result<String, String> {
+        self.return_meta_string("market name")
+    }
+
+    pub fn last_refreshed(&self) -> Result<String, String> {
+        self.return_meta_string("last refreshed")
+    }
+
+    pub fn time_zone(&self) -> Result<String, String> {
+        self.return_meta_string("time zone")
+    }
+
+    pub fn entry(&self) -> Result<Vec<Entry>, String> {
+        if let Some(entry) = &self.entry {
+            Ok(entry.to_vec())
+        } else if let Some(error) = &self.error_message {
+            Err(format!("Error Message : {}", error))
+        } else {
+            Err(format!(
+                "Information : {}",
+                self.information.clone().unwrap()
+            ))
+        }
+    }
+
+    fn return_meta_string(&self, which_val: &str) -> Result<String, String> {
+        if let Some(meta_data) = &self.meta_data {
+            let value = match which_val {
+                "information" => &meta_data.information,
+                "digital code" => &meta_data.digital_code,
+                "digital name" => &meta_data.digital_name,
+                "market code" => &meta_data.market_code,
+                "market name" => &meta_data.market_name,
+                "last refreshed" => &meta_data.last_refreshed,
+                "time zone" => &meta_data.time_zone,
+                _ => "",
+            };
+            Ok(value.to_string())
+        } else if let Some(error) = &self.error_message {
+            Err(format!("Error Message : {}", error))
+        } else {
+            Err(format!(
+                "Information : {}",
+                self.information.clone().unwrap()
+            ))
+        }
+    }
 }
 
 pub(crate) fn create_url(function: CryptoFunction, symbol: &str, market: &str, api: &str) -> Url {

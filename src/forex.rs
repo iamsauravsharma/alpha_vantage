@@ -5,40 +5,9 @@ use std::collections::HashMap;
 
 const LINK: &str = "https://www.alphavantage.co/query?function=";
 
-/// Struct to store Forex data after forex API call
-#[derive(Debug)]
-pub struct Forex {
-    error_message: Option<String>,
-    information: Option<String>,
-    meta_data: Option<MetaData>,
-    forex: Option<Vec<Entry>>,
-}
-
-impl Forex {
-    // create new forex struct
-    fn new() -> Self {
-        Self {
-            error_message: None,
-            information: None,
-            meta_data: None,
-            forex: None,
-        }
-    }
-
-    /// Method return MetaData
-    pub fn meta_data(&self) -> Option<MetaData> {
-        self.meta_data.clone()
-    }
-
-    /// Method return Entry
-    pub fn entry(&self) -> Option<Vec<Entry>> {
-        self.forex.clone()
-    }
-}
-
 /// Struct used to store metadata value
 #[derive(Debug, Clone)]
-pub struct MetaData {
+struct MetaData {
     information: String,
     from_symbol: String,
     to_symbol: String,
@@ -46,18 +15,6 @@ pub struct MetaData {
     interval: Option<String>,
     output_size: Option<String>,
     time_zone: String,
-}
-
-impl MetaData {
-    /// Return last refreshed
-    pub fn last_refreshed(&self) -> String {
-        self.last_refreshed.clone()
-    }
-
-    /// Return time zone
-    pub fn time_zone(&self) -> String {
-        self.time_zone.clone()
-    }
 }
 
 /// Struct to store Entry value
@@ -78,27 +35,135 @@ impl Entry {
 
     /// Return open value
     pub fn open(&self) -> f64 {
-        return_f64(self.open.as_str())
+        return_f64(&self.open)
     }
 
     /// Return high value
     pub fn high(&self) -> f64 {
-        return_f64(self.high.as_str())
+        return_f64(&self.high)
     }
 
     /// Return low value
     pub fn low(&self) -> f64 {
-        return_f64(self.low.as_str())
+        return_f64(&self.low)
     }
 
     /// Return close value
     pub fn close(&self) -> f64 {
-        return_f64(self.close.as_str())
+        return_f64(&self.close)
     }
 }
 
 fn return_f64(data: &str) -> f64 {
     data.trim().parse::<f64>().unwrap()
+}
+
+/// Struct to store Forex data after forex API call
+#[derive(Debug, Default)]
+pub struct Forex {
+    error_message: Option<String>,
+    information: Option<String>,
+    meta_data: Option<MetaData>,
+    forex: Option<Vec<Entry>>,
+}
+
+impl Forex {
+    pub fn information(&self) -> Result<String, String> {
+        self.return_meta_string("information")
+    }
+
+    pub fn symbol_from(&self) -> Result<String, String> {
+        self.return_meta_string("from symbol")
+    }
+
+    pub fn symbol_to(&self) -> Result<String, String> {
+        self.return_meta_string("to symbol")
+    }
+
+    pub fn last_refreshed(&self) -> Result<String, String> {
+        self.return_meta_string("last refreshed")
+    }
+
+    pub fn time_zone(&self) -> Result<String, String> {
+        self.return_meta_string("time zone")
+    }
+
+    pub fn interval(&self) -> Result<String, String> {
+        self.operate_option_meta_value("interval")
+    }
+
+    pub fn output_size(&self) -> Result<String, String> {
+        self.operate_option_meta_value("output size")
+    }
+
+    /// Method return Entry
+    pub fn entry(&self) -> Result<Vec<Entry>, String> {
+        if let Some(entry) = &self.forex {
+            Ok(entry.to_vec())
+        } else if let Some(error) = &self.error_message {
+            Err(format!("Error Message : {}", error))
+        } else {
+            Err(format!(
+                "Information : {}",
+                self.information.clone().unwrap()
+            ))
+        }
+    }
+
+    fn return_meta_string(&self, which_val: &str) -> Result<String, String> {
+        if let Some(meta_data) = &self.meta_data {
+            let value = match which_val {
+                "information" => &meta_data.information,
+                "from symbol" => &meta_data.from_symbol,
+                "to symbol" => &meta_data.to_symbol,
+                "last refreshed" => &meta_data.last_refreshed,
+                "time zone" => &meta_data.time_zone,
+                _ => "",
+            };
+            Ok(value.to_string())
+        } else if let Some(error) = &self.error_message {
+            Err(format!("Error Message : {}", error))
+        } else {
+            Err(format!(
+                "Information : {}",
+                self.information.clone().unwrap()
+            ))
+        }
+    }
+
+    fn operate_option_meta_value(&self, which_val: &str) -> Result<String, String> {
+        if let Some(meta_data) = &self.meta_data {
+            if let Some(value) = match which_val {
+                "interval" => &meta_data.interval,
+                "output size" => &meta_data.output_size,
+                _ => &None,
+            } {
+                Ok(value.to_string())
+            } else {
+                Err("No value present".to_string())
+            }
+        } else if let Some(error) = &self.error_message {
+            Err(format!("Error Message : {}", error))
+        } else {
+            Err(format!(
+                "Information : {}",
+                self.information.clone().unwrap()
+            ))
+        }
+    }
+}
+
+// Entry Helper
+#[derive(Clone, Debug, Deserialize)]
+struct EntryHelper {
+    #[serde(rename = "1. open")]
+    open: String,
+    #[serde(rename = "2. high")]
+    high: String,
+    #[serde(rename = "3. low")]
+    low: String,
+    #[serde(rename = "4. close")]
+    close: String,
 }
 
 // struct which helps for collecting forex data from website
@@ -117,7 +182,7 @@ pub(crate) struct ForexHelper {
 impl ForexHelper {
     // convert ForexHelper to Forex
     pub(crate) fn convert(self) -> Forex {
-        let mut forex_struct = Forex::new();
+        let mut forex_struct = Forex::default();
         forex_struct.error_message = self.error_message;
         forex_struct.information = self.information;
         if let Some(meta_data) = self.meta_data {
@@ -125,29 +190,29 @@ impl ForexHelper {
             let from_symbol = &meta_data["2. From Symbol"];
             let to_symbol = &meta_data["3. To Symbol"];
             let last_refreshed = meta_data.get("4. Last Refreshed");
-            let mut last_refreshed_value = return_value(last_refreshed);
+            let mut last_refreshed_value = return_option_value(last_refreshed);
             if last_refreshed_value.is_none() {
                 let last_refreshed = meta_data.get("5. Last Refreshed");
-                last_refreshed_value = return_value(last_refreshed);
+                last_refreshed_value = return_option_value(last_refreshed);
             }
             let time_zone = meta_data.get("5. Time Zone");
-            let mut time_zone_value = return_value(time_zone);
+            let mut time_zone_value = return_option_value(time_zone);
             if time_zone_value.is_none() {
                 let time_zone = meta_data.get("6. Time Zone");
-                time_zone_value = return_value(time_zone);
+                time_zone_value = return_option_value(time_zone);
             }
             if time_zone_value.is_none() {
                 let time_zone = meta_data.get("7. Time Zone");
-                time_zone_value = return_value(time_zone);
+                time_zone_value = return_option_value(time_zone);
             }
             let output_size = meta_data.get("4. Output Size");
-            let mut output_size_value = return_value(output_size);
+            let mut output_size_value = return_option_value(output_size);
             if output_size_value.is_none() {
                 let output_size = meta_data.get("6. Output Size");
-                output_size_value = return_value(output_size);
+                output_size_value = return_option_value(output_size);
             }
             let interval = meta_data.get("5. Interval");
-            let interval_value = return_value(interval);
+            let interval_value = return_option_value(interval);
             forex_struct.meta_data = Some(MetaData {
                 information: information.to_string(),
                 from_symbol: from_symbol.to_string(),
@@ -180,21 +245,8 @@ impl ForexHelper {
     }
 }
 
-// Entry Helper
-#[derive(Clone, Debug, Deserialize)]
-struct EntryHelper {
-    #[serde(rename = "1. open")]
-    open: String,
-    #[serde(rename = "2. high")]
-    high: String,
-    #[serde(rename = "3. low")]
-    low: String,
-    #[serde(rename = "4. close")]
-    close: String,
-}
-
 // Convert Option(&String) to String
-fn return_value(value: Option<&std::string::String>) -> Option<String> {
+fn return_option_value(value: Option<&std::string::String>) -> Option<String> {
     match value {
         Some(value) => Some(value.to_string()),
         None => None,

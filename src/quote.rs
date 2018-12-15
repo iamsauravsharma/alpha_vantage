@@ -15,56 +15,56 @@ pub struct Quote {
 #[derive(Debug, Deserialize, Clone)]
 struct GlobalQuote {
     #[serde(rename = "01. symbol")]
-    symbol: Option<String>,
+    symbol: String,
     #[serde(rename = "02. open")]
-    open: Option<String>,
+    open: String,
     #[serde(rename = "03. high")]
-    high: Option<String>,
+    high: String,
     #[serde(rename = "04. low")]
-    low: Option<String>,
+    low: String,
     #[serde(rename = "05. price")]
-    price: Option<String>,
+    price: String,
     #[serde(rename = "06. volume")]
-    volume: Option<String>,
+    volume: String,
     #[serde(rename = "07. latest trading day")]
-    last_day: Option<String>,
+    last_day: String,
     #[serde(rename = "08. previous close")]
-    previous_close: Option<String>,
+    previous_close: String,
     #[serde(rename = "09. change")]
-    change: Option<String>,
+    change: String,
     #[serde(rename = "10. change percent")]
-    change_percent: Option<String>,
+    change_percent: String,
 }
 
 impl Quote {
     /// return open value
     pub fn open(&self) -> Result<f64, String> {
-        self.return_value("open")
+        self.return_f64_value("open")
     }
 
     /// return high value
     pub fn high(&self) -> Result<f64, String> {
-        self.return_value("high")
+        self.return_f64_value("high")
     }
 
     /// return low value
     pub fn low(&self) -> Result<f64, String> {
-        self.return_value("low")
+        self.return_f64_value("low")
     }
 
     /// return price value
     pub fn price(&self) -> Result<f64, String> {
-        self.return_value("price")
+        self.return_f64_value("price")
     }
 
     /// return previous
     pub fn previous(&self) -> Result<f64, String> {
-        self.return_value("previous")
+        self.return_f64_value("previous")
     }
 
     /// return change
     pub fn change(&self) -> Result<f64, String> {
-        self.return_value("change")
+        self.return_f64_value("change")
     }
 
     /// return change percent
@@ -74,22 +74,19 @@ impl Quote {
         Ok((price - previous) / previous)
     }
 
-    // general function used for returning value of Quote method
-    fn return_value(&self, value: &str) -> Result<f64, String> {
+    /// general function used for returning f64 value of Quote method
+    fn return_f64_value(&self, value: &str) -> Result<f64, String> {
         if let Some(global) = self.global_quote.clone() {
-            if let Some(price) = match value {
+            let price = match value {
                 "open" => global.open,
                 "high" => global.high,
                 "low" => global.low,
                 "price" => global.price,
                 "previous" => global.previous_close,
                 "change" => global.change,
-                _ => None,
-            } {
-                Ok(price.trim().parse::<f64>().unwrap())
-            } else {
-                Err("No value present please check Symbol again".to_string())
-            }
+                _ => "".to_string(),
+            };
+            return Ok(price.trim().parse::<f64>().unwrap());
         } else if let Some(error) = self.error_message.clone() {
             Err(format!("Error Message : {}", error))
         } else {
@@ -102,12 +99,23 @@ impl Quote {
 
     /// get last trading day
     pub fn last_trading(&self) -> Result<String, String> {
+        self.return_string_value("trading")
+    }
+
+    /// get symbol
+    pub fn symbol(&self) -> Result<String, String> {
+        self.return_string_value("symbol")
+    }
+
+    /// general function used for returning String value
+    fn return_string_value(&self, value: &str) -> Result<String, String> {
         if let Some(global) = self.global_quote.clone() {
-            if let Some(value) = global.last_day {
-                Ok(value)
-            } else {
-                Err("No value present please check Symbol again".to_string())
-            }
+            let value = match value {
+                "trading" => global.last_day,
+                "symbol" => global.symbol,
+                _ => "".to_string(),
+            };
+            return Ok(value);
         } else if let Some(error) = self.error_message.clone() {
             Err(format!("Error Message : {}", error))
         } else {

@@ -1,29 +1,126 @@
 use serde_derive::Deserialize;
 use std::collections::HashMap;
 
+#[derive(Deserialize, Clone)]
+struct MetaData {
+    #[serde(rename = "Information")]
+    information: String,
+    #[serde(rename = "Last Refreshed")]
+    last_refreshed: String,
+}
+
+#[derive(Default, Clone)]
+pub struct Data {
+    rank: String,
+    utilites: String,
+    health_care: String,
+    information_technology: String,
+    industrials: String,
+    real_estate: String,
+    consumer_staples: String,
+    consumer_discretionary: String,
+    financials: String,
+    communication_services: String,
+    materials: String,
+    energy: String,
+}
+
+impl Data {
+    pub fn rank(&self) -> String {
+        self.rank.to_string()
+    }
+
+    pub fn utilites(&self) -> String {
+        self.utilites.to_string()
+    }
+
+    pub fn health_care(&self) -> String {
+        self.health_care.to_string()
+    }
+
+    pub fn information_technology(&self) -> String {
+        self.information_technology.to_string()
+    }
+
+    pub fn industrials(&self) -> String {
+        self.industrials.to_string()
+    }
+
+    pub fn real_estate(&self) -> String {
+        self.real_estate.to_string()
+    }
+
+    pub fn consumer_staples(&self) -> String {
+        self.consumer_staples.to_string()
+    }
+
+    pub fn consumer_discretionary(&self) -> String {
+        self.consumer_discretionary.to_string()
+    }
+
+    pub fn financials(&self) -> String {
+        self.financials.to_string()
+    }
+
+    pub fn communication_services(&self) -> String {
+        self.communication_services.to_string()
+    }
+
+    pub fn materials(&self) -> String {
+        self.materials.to_string()
+    }
+
+    pub fn energy(&self) -> String {
+        self.energy.to_string()
+    }
+}
+
+#[derive(Default)]
 pub struct Sector {
-    information: Option<String>,
     error_message: Option<String>,
+    information: Option<String>,
     meta_data: Option<MetaData>,
     data: Option<Vec<Data>>,
 }
 
 impl Sector {
-    fn new() -> Self {
-        Self {
-            information: None,
-            error_message: None,
-            meta_data: None,
-            data: None,
+    pub fn information(&self) -> Result<String, String> {
+        self.check_meta_data("information")
+    }
+
+    pub fn last_refreshed(&self) -> Result<String, String> {
+        self.check_meta_data("last refreshed")
+    }
+
+    pub fn data(&self) -> Result<Vec<Data>, String> {
+        if let Some(data) = &self.data {
+            Ok(data.to_vec())
+        } else if let Some(error) = &self.error_message {
+            Err(format!("Error Message : {}", error))
+        } else {
+            Err(format!(
+                "Information : {}",
+                self.information.clone().unwrap()
+            ))
         }
     }
 
-    pub fn meta_data(&self) -> Option<MetaData> {
-        self.meta_data.clone()
-    }
-
-    pub fn data(&self) -> Option<Vec<Data>> {
-        self.data.clone()
+    fn check_meta_data(&self, name: &str) -> Result<String, String> {
+        if let Some(meta_data) = &self.meta_data {
+            let value = match name {
+                "information" => &meta_data.information,
+                "last refreshed" => &meta_data.last_refreshed,
+                _ => "",
+            };
+            Ok(value.to_string())
+        } else if let Some(error) = &self.error_message {
+            Err(format!("Error Message : {}", error))
+        } else {
+            Err(format!(
+                "Information : {}",
+                self.information.clone().unwrap()
+            ))
+        }
     }
 }
 
@@ -41,7 +138,7 @@ pub(crate) struct SectorHelper {
 
 impl SectorHelper {
     pub(crate) fn convert(self) -> Sector {
-        let mut sector = Sector::new();
+        let mut sector = Sector::default();
         sector.information = self.information;
         sector.error_message = self.error_message;
         sector.meta_data = self.meta_data;
@@ -68,7 +165,7 @@ impl SectorHelper {
                     match key.as_str() {
                         "Utilities" => data.utilites = val.to_string(),
                         "Health Care" => data.health_care = val.to_string(),
-                        "Information Technology" => data.infromation_technology = val.to_string(),
+                        "Information Technology" => data.information_technology = val.to_string(),
                         "Industrials" => data.industrials = val.to_string(),
                         "Real Estate" => data.real_estate = val.to_string(),
                         "Consumer Staples" => data.consumer_staples = val.to_string(),
@@ -86,38 +183,4 @@ impl SectorHelper {
         }
         sector
     }
-}
-
-#[derive(Deserialize, Clone)]
-pub struct MetaData {
-    #[serde(rename = "Information")]
-    information: String,
-    #[serde(rename = "Last Refreshed")]
-    last_refreshed: String,
-}
-
-impl MetaData {
-    pub fn information(&self) -> String {
-        self.information.to_string()
-    }
-
-    pub fn last_refreshed(&self) -> String {
-        self.last_refreshed.to_string()
-    }
-}
-
-#[derive(Default, Clone)]
-pub struct Data {
-    rank: String,
-    utilites: String,
-    health_care: String,
-    infromation_technology: String,
-    industrials: String,
-    real_estate: String,
-    consumer_staples: String,
-    consumer_discretionary: String,
-    financials: String,
-    communication_services: String,
-    materials: String,
-    energy: String,
 }

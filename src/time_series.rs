@@ -6,7 +6,7 @@ use std::collections::HashMap;
 const LINK: &str = "https://www.alphavantage.co/query?function=";
 
 /// Struct for storing time series data
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct TimeSeries {
     error_message: Option<String>,
     information: Option<String>,
@@ -15,24 +15,83 @@ pub struct TimeSeries {
 }
 
 impl TimeSeries {
-    // create new TimeSeries
-    fn new() -> Self {
-        Self {
-            error_message: None,
-            information: None,
-            meta_data: None,
-            entry: None,
-        }
+    pub fn information(&self) -> Result<String, String> {
+        self.return_meta_string("information")
     }
 
-    /// Return MetaData
-    pub fn meta_data(&self) -> Option<MetaData> {
-        self.meta_data.clone()
+    pub fn symbol(&self) -> Result<String, String> {
+        self.return_meta_string("symbol")
+    }
+
+    pub fn last_refreshed(&self) -> Result<String, String> {
+        self.return_meta_string("last refreshed")
+    }
+
+    pub fn time_zone(&self) -> Result<String, String> {
+        self.return_meta_string("time zone")
+    }
+
+    pub fn interval(&self) -> Result<String, String> {
+        self.operate_option_meta_value("interval")
+    }
+
+    pub fn output_size(&self) -> Result<String, String> {
+        self.operate_option_meta_value("output size")
     }
 
     /// Return Entry
-    pub fn entry(&self) -> Option<Vec<Entry>> {
-        self.entry.clone()
+    pub fn entry(&self) -> Result<Vec<Entry>, String> {
+        if let Some(entry) = &self.entry {
+            Ok(entry.to_vec())
+        } else if let Some(error) = &self.error_message {
+            Err(format!("Error Message : {}", error))
+        } else {
+            Err(format!(
+                "Information : {}",
+                self.information.clone().unwrap()
+            ))
+        }
+    }
+
+    fn return_meta_string(&self, which_val: &str) -> Result<String, String> {
+        if let Some(meta_data) = &self.meta_data {
+            let value = match which_val {
+                "information" => &meta_data.information,
+                "symbol" => &meta_data.symbol,
+                "last refreshed" => &meta_data.last_refreshed,
+                "time zone" => &meta_data.time_zone,
+                _ => "",
+            };
+            Ok(value.to_string())
+        } else if let Some(error) = &self.error_message {
+            Err(format!("Error Message : {}", error))
+        } else {
+            Err(format!(
+                "Information : {}",
+                self.information.clone().unwrap()
+            ))
+        }
+    }
+
+    fn operate_option_meta_value(&self, which_val: &str) -> Result<String, String> {
+        if let Some(meta_data) = &self.meta_data {
+            if let Some(value) = match which_val {
+                "interval" => &meta_data.interval,
+                "output size" => &meta_data.output_size,
+                _ => &None,
+            } {
+                Ok(value.to_string())
+            } else {
+                Err("No value present".to_string())
+            }
+        } else if let Some(error) = &self.error_message {
+            Err(format!("Error Message : {}", error))
+        } else {
+            Err(format!(
+                "Information : {}",
+                self.information.clone().unwrap()
+            ))
+        }
     }
 }
 
@@ -45,18 +104,6 @@ pub struct MetaData {
     interval: Option<String>,
     output_size: Option<String>,
     time_zone: String,
-}
-
-impl MetaData {
-    /// Return last refreshed value
-    pub fn last_refreshed(&self) -> String {
-        self.last_refreshed.clone()
-    }
-
-    /// Return time zone value
-    pub fn time_zone(&self) -> String {
-        self.time_zone.clone()
-    }
 }
 
 /// Struct for Entry value
@@ -134,6 +181,42 @@ fn return_f64(data: &str) -> f64 {
     data.trim().parse::<f64>().unwrap()
 }
 
+// Helper struct to store non adjusted data
+#[derive(Clone, Deserialize)]
+struct EntryHelper {
+    #[serde(rename = "1. open")]
+    open: String,
+    #[serde(rename = "2. high")]
+    high: String,
+    #[serde(rename = "3. low")]
+    low: String,
+    #[serde(rename = "4. close")]
+    close: String,
+    #[serde(rename = "5. volume")]
+    volume: String,
+}
+
+// Helper struct to store adjusted data
+#[derive(Deserialize, Clone)]
+struct AdjustedHelper {
+    #[serde(rename = "1. open")]
+    open: String,
+    #[serde(rename = "2. high")]
+    high: String,
+    #[serde(rename = "3. low")]
+    low: String,
+    #[serde(rename = "4. close")]
+    close: String,
+    #[serde(rename = "5. adjusted close")]
+    adjusted_close: Option<String>,
+    #[serde(rename = "6. volume")]
+    volume: String,
+    #[serde(rename = "7. dividend amount")]
+    dividend_amount: Option<String>,
+    #[serde(rename = "8. split coefficient")]
+    split_coefficient: Option<String>,
+}
+
 // helper struct for TimeSeries which deseialize JSON
 #[derive(Deserialize)]
 pub(crate) struct TimeSeriesHelper {
@@ -152,7 +235,7 @@ pub(crate) struct TimeSeriesHelper {
 impl TimeSeriesHelper {
     // Convert TimeSeriesHelper to TimeSeries
     pub(crate) fn convert(self) -> TimeSeries {
-        let mut time_series = TimeSeries::new();
+        let mut time_series = TimeSeries::default();
         time_series.error_message = self.error_message;
         time_series.information = self.information;
         if let Some(meta_data) = self.meta_data {
@@ -233,42 +316,6 @@ fn return_value(value: Option<&std::string::String>) -> Option<String> {
         Some(value) => Some(value.to_string()),
         None => None,
     }
-}
-
-// Helper struct to store non adjusted data
-#[derive(Clone, Deserialize)]
-struct EntryHelper {
-    #[serde(rename = "1. open")]
-    open: String,
-    #[serde(rename = "2. high")]
-    high: String,
-    #[serde(rename = "3. low")]
-    low: String,
-    #[serde(rename = "4. close")]
-    close: String,
-    #[serde(rename = "5. volume")]
-    volume: String,
-}
-
-// Helper struct to store adjusted data
-#[derive(Deserialize, Clone)]
-struct AdjustedHelper {
-    #[serde(rename = "1. open")]
-    open: String,
-    #[serde(rename = "2. high")]
-    high: String,
-    #[serde(rename = "3. low")]
-    low: String,
-    #[serde(rename = "4. close")]
-    close: String,
-    #[serde(rename = "5. adjusted close")]
-    adjusted_close: Option<String>,
-    #[serde(rename = "6. volume")]
-    volume: String,
-    #[serde(rename = "7. dividend amount")]
-    dividend_amount: Option<String>,
-    #[serde(rename = "8. split coefficient")]
-    split_coefficient: Option<String>,
 }
 
 // create url from user provided data
