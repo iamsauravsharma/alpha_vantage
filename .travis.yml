@@ -55,14 +55,19 @@ script:
   - cargo test --verbose --all
 
 deploy:
-  provider: pages
-  skip-cleanup: true
-  github-token: $GITHUB_TOKEN
-  keep-history: true
-  local-dir: "target/doc"
-  on:
-    branch: master
-    condition: $TRAVIS_OS_NAME = linux && $TRAVIS_RUST_VERSION = stable
+  - provider: script
+    script: bash scripts/create_index.sh
+    on:
+      branch: master
+      condition: $TRAVIS_OS_NAME = linux
+  - provider: pages
+    skip-cleanup: true
+    github-token: $GITHUB_TOKEN
+    keep-history: true
+    local-dir: "target/doc"
+    on:
+      branch: master
+      condition: $TRAVIS_OS_NAME = linux && $TRAVIS_RUST_VERSION = stable
 
 after_success:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]] && [[ "$TRAVIS_RUST_VERSION" == "stable" ]]; then
