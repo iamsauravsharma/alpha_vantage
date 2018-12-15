@@ -57,9 +57,15 @@ script:
 deploy:
   - provider: script
     script: bash scripts/create_index.sh
+    skip-cleanup: true
     on:
       branch: master
-      condition: $TRAVIS_OS_NAME = linux
+      condition: $TRAVIS_OS_NAME = linux && $TRAVIS_RUST_VERSION = stable
+  - provider: script
+    script: bash scripts/codecov_coverage.sh
+    skip-cleanup: true
+    on:
+      condition: $TRAVIS_OS_NAME = linux && $TRAVIS_RUST_VERSION = stable
   - provider: pages
     skip-cleanup: true
     github-token: $GITHUB_TOKEN
@@ -68,20 +74,3 @@ deploy:
     on:
       branch: master
       condition: $TRAVIS_OS_NAME = linux && $TRAVIS_RUST_VERSION = stable
-
-after_success:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]] && [[ "$TRAVIS_RUST_VERSION" == "stable" ]]; then
-      wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
-      tar xzf master.tar.gz &&
-      cd kcov-master &&
-      mkdir build &&
-      cd build &&
-      cmake .. &&
-      make &&
-      sudo make install &&
-      cd ../.. &&
-      rm -rf kcov-master &&
-      for file in target/debug/*-*[^\.d]; do mkdir -p "target/cov/$(basename $file)"; kcov --exclude-pattern=/.cargo,/usr/lib --verify "target/cov/$(basename $file)" "$file"; done &&
-      bash <(curl -s https://codecov.io/bash) &&
-      echo "Uploaded code coverage";
-    fi
