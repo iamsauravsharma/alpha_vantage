@@ -54,6 +54,16 @@ script:
   - cargo doc --no-deps --all
   - cargo test --verbose --all
 
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  keep-history: true
+  local-dir: "target/doc"
+  on:
+    branch: master
+    condition: $TRAVIS_OS_NAME = linux && $TRAVIS_RUST_VERSION = stable
+
 after_success:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]] && [[ "$TRAVIS_RUST_VERSION" == "stable" ]]; then
       wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz &&
@@ -69,11 +79,4 @@ after_success:
       for file in target/debug/*-*[^\.d]; do mkdir -p "target/cov/$(basename $file)"; kcov --exclude-pattern=/.cargo,/usr/lib --verify "target/cov/$(basename $file)" "$file"; done &&
       bash <(curl -s https://codecov.io/bash) &&
       echo "Uploaded code coverage";
-    fi
-  - if [[ "$TRAVIS_BRANCH" == "master" ]] && [[ "$TRAVIS_OS_NAME" == "linux" ]] && [[ "$TRAVIS_RUST_VERSION" == "stable" ]]; then
-      cargo doc --no-deps --all &&
-      echo "<meta http-equiv=refresh content=0;url=`echo $TRAVIS_REPO_SLUG | cut -d '/' -f 2`/index.html>" > target/doc/index.html &&
-      sudo pip install ghp-import &&
-      ghp-import -n target/doc &&
-      git push -fq https://${GITHUB_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git gh-pages;
     fi
