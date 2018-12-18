@@ -1,3 +1,19 @@
+//! # Example
+//! ```
+//! fn forex() {
+//!     use alpha_vantage::util::*;
+//!     let api = alpha_vantage::set_api("another demo");
+//!     let forex = api.forex(
+//!         ForexFunction::Weekly,
+//!         "MSFT",
+//!         "BTC",
+//!         Interval::None,
+//!         OutputSize::None,
+//!     );
+//!     assert_eq!(forex.symbol_from().unwrap(), "MSFT".to_string());
+//! }
+//! ```
+
 use crate::util::{ForexFunction, Interval, OutputSize};
 use reqwest::Url;
 use serde_derive::Deserialize;

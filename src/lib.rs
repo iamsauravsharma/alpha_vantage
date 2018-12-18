@@ -16,11 +16,11 @@ pub mod search;
 /// Module for sector
 pub mod sector;
 
+/// Stock time series module
+pub mod stock_time;
+
 /// Module for Technical Indicator
 pub mod technical_indicator;
-
-/// Stock time series module
-pub mod time_series;
 
 /// Module for basic definition of User information like setting API
 pub mod user;

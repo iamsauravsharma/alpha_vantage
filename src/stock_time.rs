@@ -1,3 +1,18 @@
+//! # Example
+//! ```
+//! fn time_series() {
+//!     use alpha_vantage::util::*;
+//!     let api = alpha_vantage::set_api("another demo");
+//!     let stock = api.stock_time(
+//!         StockFunction::Weekly,
+//!         "MSFT",
+//!         Interval::None,
+//!         OutputSize::None,
+//!     );
+//!     assert_eq!(stock.symbol().unwrap(), "MSFT".to_string());
+//! }
+//! ```
+
 use crate::util::{Interval, OutputSize, StockFunction};
 use reqwest::Url;
 use serde_derive::Deserialize;
@@ -281,7 +296,7 @@ impl TimeSeriesHelper {
         if let Some(entry) = self.time_series {
             for hash in entry.values() {
                 for val in hash.keys() {
-                    let mut entry: Entry = crate::time_series::Entry::default();
+                    let mut entry: Entry = Entry::default();
                     entry.time = val.to_string();
                     let entry_helper = hash.get(val).unwrap().clone();
                     entry.open = entry_helper.open;
@@ -296,7 +311,7 @@ impl TimeSeriesHelper {
         if let Some(entry) = self.adjusted_series {
             for hash in entry.values() {
                 for val in hash.keys() {
-                    let mut entry: Entry = crate::time_series::Entry::default();
+                    let mut entry: Entry = Entry::default();
                     entry.time = val.to_string();
                     let entry_helper = hash.get(val).unwrap().clone();
                     entry.open = entry_helper.open;

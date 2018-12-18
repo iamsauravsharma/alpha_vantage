@@ -1,3 +1,13 @@
+//! # Example
+//! ```
+//! fn crypto_function() {
+//!     let api = alpha_vantage::set_api("random api");
+//!     let crypto = api.crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "USD");
+//!     let digital_name = crypto.digital_name();
+//!     assert_eq!(digital_name.unwrap(), String::from("Bitcoin"));
+//! }
+//! ```
+
 use crate::util::CryptoFunction;
 use reqwest::Url;
 use serde_derive::Deserialize;

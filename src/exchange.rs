@@ -1,3 +1,14 @@
+//! # Example
+//! ```
+//! fn exchnage_test() {
+//!     let api = alpha_vantage::set_api("demo");
+//!     assert_eq!(
+//!         api.exchange("BTC", "CNY").name_from().unwrap(),
+//!         String::from("Bitcoin")
+//!     );
+//! }
+//! ```
+
 use serde_derive::Deserialize;
 
 /// Struct used for exchanging currency

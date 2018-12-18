@@ -1,3 +1,12 @@
+//! # Example
+//! ```
+//! fn search() {
+//!     let api = alpha_vantage::set_api("demo");
+//!     let search = api.search("BA");
+//!     assert_eq!(search.result().is_ok(), true);
+//! }
+//! ```
+
 use serde_derive::Deserialize;
 
 /// struct for storing search method data

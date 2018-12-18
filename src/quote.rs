@@ -1,3 +1,12 @@
+//! # Example
+//! ```
+//! fn quote_function() {
+//!     let api = alpha_vantage::set_api("another key");
+//!     let quote = api.quote("MSFT");
+//!     assert_eq!(quote.open().is_ok(), true);
+//! }
+//! ```
+
 use serde_derive::Deserialize;
 
 /// Struct for storing Quote related information

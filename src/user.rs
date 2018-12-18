@@ -5,8 +5,8 @@ use crate::{
     quote::Quote,
     search::*,
     sector::{Sector, SectorHelper},
+    stock_time::{create_url as create_url_time_series, TimeSeries, TimeSeriesHelper},
     technical_indicator::{create_url as create_url_technical, Indicator},
-    time_series::{create_url as create_url_time_series, TimeSeries, TimeSeriesHelper},
     util::*,
 };
 use reqwest::{get, Url};

@@ -1,3 +1,12 @@
+//! # Example
+//! ```
+//! fn sector() {
+//!     let api = alpha_vantage::set_api("demo");
+//!     let sector = api.sector();
+//!     assert_eq!(sector.information().is_ok(), true);
+//! }
+//! ```
+
 use serde_derive::Deserialize;
 use std::collections::HashMap;
 
