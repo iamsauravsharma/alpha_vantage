@@ -117,10 +117,10 @@ impl APIKey {
 
     /// Technical indicator api caller method
     pub fn technical_indicator(
+        &self,
         function: &str,
         symbol: &str,
         interval: &str,
-        apikey: &str,
         series_type: Option<&str>,
         time_period: Option<&str>,
         temporary_value: Vec<TechnicalIndicator>,
@@ -129,7 +129,7 @@ impl APIKey {
             function,
             symbol,
             interval,
-            apikey,
+            &self.0,
             series_type,
             time_period,
             temporary_value,

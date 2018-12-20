@@ -1,3 +1,13 @@
+//! # Example
+//! ```
+//! fn technical_indicator() {
+//!     let api = alpha_vantage::set_api("demo");
+//!     let technical =
+//!         api.technical_indicator("SEMA", "MSFT", "1min", Some("open"), Some("10"), vec![]);
+//!     assert_eq!(technical.data().is_ok(), true);
+//! }
+//! ```
+
 use crate::util::TechnicalIndicator as UtilIndicator;
 use reqwest::Url;
 use serde_derive::Deserialize;

@@ -22,7 +22,9 @@
 
 **WARNING : may contain bug which may cause undesired functionality** 
 
-(WIP) Rust Wrapper/Client built for [Alphavantage][alphavantage_link]  API
+(WIP) Rust Wrapper/Client built for [Alphavantage][alphavantage_link]  API.
+Project is completed  and core functionality is already implemented out totally and project is in usable state.
+Better documentation and optimization are remaining before publishing to [crates.io][cratesio_link]
 
 ### Project Functionality
 
@@ -35,7 +37,7 @@
 - [X] Technical Indicators
 - [X] Sector Performances
 
-### TODO LIST AFTER FINISHING PROJECT
+### TODO LIST
 
 - [ ] Improve performance of API Call
 - [ ] Better documentation
