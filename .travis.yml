@@ -54,6 +54,10 @@ script:
   - cargo doc --no-deps --all
   - cargo test --verbose --all
 
+before_deploy:
+  - chmod +x scripts/codecov_coverage.sh
+  - chmod +x scripts/create_index.sh
+
 deploy:
   - provider: script
     script: bash scripts/create_index.sh
