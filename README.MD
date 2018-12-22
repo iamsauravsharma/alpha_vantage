@@ -55,11 +55,8 @@ alpha_vantage = {git = "https://github.com/iamsauravsharma/alpha_vantage"}
 Sample code to find out exchange rate between two currency(both physical & digital supported)
 
 ```Rust
-use alpha_vantage::user::*;
-use alpha_vantage::exchange::*;
-
 let api_key = alpha_vantage::set_api("YOUR KEY HERE");
-let exchange : Exchange  = api_key.exchange("USD","CNY");
+let exchange = api_key.exchange("USD","CNY");
 let rate = exchange.rate().unwrap();
 println!("{}",rate);
 ```

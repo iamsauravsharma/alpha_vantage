@@ -1,3 +1,7 @@
+//! Rust Client/Wrapper built for [Alphavantage][alpha_vantage_link] API.
+//!
+//! [alpha_vantage_link]: https://alphavantage.co
+
 /// Module for crypto real time data
 pub mod crypto;
 
