@@ -8,6 +8,6 @@ license="MIT"
 
 [dependencies]
 reqwest="0.9.5"
-serde="1.0.83"
-serde_json="1.0.33"
-serde_derive="1.0.83"
+serde="1.0.84"
+serde_json="1.0.34"
+serde_derive="1.0.84"
