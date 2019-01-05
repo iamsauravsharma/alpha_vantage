@@ -13,6 +13,11 @@
 //!     assert_eq!(forex.symbol_from().unwrap(), "MSFT".to_string());
 //! }
 //! ```
+//!
+//! You can read about [Forex][forex] API and what it returns
+//! on alphavantage documentation
+//!
+//! [forex]: https://www.alphavantage.co/documentation/#fx
 
 use crate::util::{ForexFunction, Interval, OutputSize};
 use reqwest::Url;

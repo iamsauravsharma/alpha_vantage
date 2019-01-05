@@ -7,6 +7,11 @@
 //!     assert_eq!(digital_name.unwrap(), String::from("Bitcoin"));
 //! }
 //! ```
+//!
+//! You can read about [Cryptocurrency][crypto_currency] API and what it returns
+//! on alphavantage documentation
+//!
+//! [crypto_currency]: https://www.alphavantage.co/documentation/#digital-currency
 
 use crate::util::CryptoFunction;
 use reqwest::Url;

@@ -6,6 +6,11 @@
 //!     assert_eq!(quote.open().is_ok(), true);
 //! }
 //! ```
+//!
+//! You can read about [Quote][quote] API and what it returns
+//! on alphavantage documentation
+//!
+//! [quote]: https://www.alphavantage.co/documentation/#latestprice
 
 use serde_derive::Deserialize;
 

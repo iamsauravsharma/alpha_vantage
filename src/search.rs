@@ -6,6 +6,11 @@
 //!     assert_eq!(search.result().is_ok(), true);
 //! }
 //! ```
+//!
+//! You can read about [Symbol][symbol_search] API and what it returns
+//! on alphavantage documentation
+//!
+//! [symbol_search]: https://www.alphavantage.co/documentation/#symbolsearch
 
 use serde_derive::Deserialize;
 

@@ -8,6 +8,11 @@
 //!     );
 //! }
 //! ```
+//!
+//! You can read about [Exchange][exchange] API and what it returns
+//! on alphavantage documentation
+//!
+//! [exchange]: https://www.alphavantage.co/documentation/#currency-exchnage
 
 use serde_derive::Deserialize;
 

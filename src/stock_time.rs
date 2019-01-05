@@ -12,6 +12,11 @@
 //!     assert_eq!(stock.symbol().unwrap(), "MSFT".to_string());
 //! }
 //! ```
+//!
+//! You can read about [Stock Time][stock_time] API and what it returns
+//! on alphavantage documentation
+//!
+//! [stock_time]: https://www.alphavantage.co/documentation/#time-series-data
 
 use crate::util::{Interval, OutputSize, StockFunction};
 use reqwest::Url;

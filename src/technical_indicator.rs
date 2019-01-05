@@ -7,6 +7,11 @@
 //!     assert_eq!(technical.data().is_ok(), true);
 //! }
 //! ```
+//!
+//! You can read about [Technical Indicator][technical_indicator] API and what
+//! it returns on alphavantage documentation
+//!
+//! [technical_indicator]: https://www.alphavantage.co/documentation/#technical-indicators
 
 use crate::util::TechnicalIndicator as UtilIndicator;
 use reqwest::Url;

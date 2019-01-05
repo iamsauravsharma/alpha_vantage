@@ -6,6 +6,11 @@
 //!     assert_eq!(sector.information().is_ok(), true);
 //! }
 //! ```
+//!
+//! You can read about [Sector][sector] API and what it returns
+//! on alphavantage documentation
+//!
+//! [sector]: https://www.alphavantage.co/documentation/#sector
 
 use serde_derive::Deserialize;
 use std::collections::HashMap;
