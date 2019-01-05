@@ -2,7 +2,7 @@
 //! ```
 //! fn forex() {
 //!     use alpha_vantage::util::*;
-//!     let api = alpha_vantage::set_api("another demo");
+//!     let api = alpha_vantage::set_api("YOUR-API-HERE");
 //!     let forex = api.forex(
 //!         ForexFunction::Weekly,
 //!         "MSFT",

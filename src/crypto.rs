@@ -1,7 +1,7 @@
 //! # Example
 //! ```
 //! fn crypto_function() {
-//!     let api = alpha_vantage::set_api("random api");
+//!     let api = alpha_vantage::set_api("YOUR-API-HERE");
 //!     let crypto = api.crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "USD");
 //!     let digital_name = crypto.digital_name();
 //!     assert_eq!(digital_name.unwrap(), String::from("Bitcoin"));

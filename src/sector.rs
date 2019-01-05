@@ -1,7 +1,7 @@
 //! # Example
 //! ```
 //! fn sector() {
-//!     let api = alpha_vantage::set_api("demo");
+//!     let api = alpha_vantage::set_api("YOUR-API-HERE");
 //!     let sector = api.sector();
 //!     assert_eq!(sector.information().is_ok(), true);
 //! }

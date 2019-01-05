@@ -2,7 +2,7 @@
 //! ```
 //! fn time_series() {
 //!     use alpha_vantage::util::*;
-//!     let api = alpha_vantage::set_api("another demo");
+//!     let api = alpha_vantage::set_api("YOUR-API-HERE");
 //!     let stock = api.stock_time(
 //!         StockFunction::Weekly,
 //!         "MSFT",
