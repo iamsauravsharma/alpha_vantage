@@ -1,3 +1,7 @@
+//! # Note
+//! A lightweight alternative to the time series APIs, this service returns the
+//! latest price and volume information for a security of your choice.
+//!
 //! # Example
 //! ```
 //! fn quote_function() {

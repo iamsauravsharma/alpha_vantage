@@ -1,3 +1,7 @@
+//! # Note
+//! APIs under this section provide a wide range of data feed for realtime and
+//! historical forex (FX) rates.
+//!
 //! # Example
 //! ```
 //! fn forex() {

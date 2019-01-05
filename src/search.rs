@@ -1,3 +1,7 @@
+//! # Note
+//! Looking for some specific symbols or companies? Trying to build a search box
+//! similar to the one below?
+//!
 //! # Example
 //! ```
 //! fn search() {

@@ -1,3 +1,8 @@
+//! # Note
+//! Technical indicator values are updated realtime: the latest data point is
+//! derived from the current trading day of a given equity or currency exchange
+//! pair.
+//!
 //! # Example
 //! ```
 //! fn technical_indicator() {

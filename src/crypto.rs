@@ -1,3 +1,7 @@
+//! # Note
+//! APIs under this section provide a wide range of data feed for digital and
+//! crypto currencies such as Bitcoin.
+//!
 //! # Example
 //! ```
 //! fn crypto_function() {

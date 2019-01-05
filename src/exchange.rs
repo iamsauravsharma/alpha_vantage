@@ -1,3 +1,7 @@
+//! # Note
+//! This API returns the realtime exchange rate for any pair of digital currency
+//! (e.g., Bitcoin) or physical currency (e.g., USD).
+//!
 //! # Example
 //! ```
 //! fn exchnage_test() {

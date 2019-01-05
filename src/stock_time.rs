@@ -1,3 +1,9 @@
+//! # Note
+//! This suite of APIs provide realtime and historical global equity data in 4
+//! different temporal resolutions: (1) daily, (2) weekly, (3) monthly, and (4)
+//! intraday. Daily, weekly, and monthly time series contain 20+ years of
+//! historical data
+//!
 //! # Example
 //! ```
 //! fn time_series() {

@@ -20,21 +20,23 @@ pub mod search;
 /// Module for sector
 pub mod sector;
 
-/// Stock time series module
+/// Module for stock time series
 pub mod stock_time;
 
 /// Module for Technical Indicator
 pub mod technical_indicator;
 
-/// Module for basic definition of User information like setting API
+/// Module for basic definition of user information like setting API and
+/// requesting through that API
 pub mod user;
 
-/// Utility module declaring enum for basic use
+/// Utility module declaring enum for basic function and parameters for
+/// different API
 pub mod util;
 
 use self::user::APIKey;
 
-/// Set api value
+/// Set API value which can be used for calling different module
 pub fn set_api(api: &str) -> APIKey {
     APIKey::set_api(api)
 }

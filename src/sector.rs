@@ -1,3 +1,7 @@
+//! # Note
+//! This API returns the realtime and historical sector performances calculated
+//! from S&P500 incumbents.
+//!
 //! # Example
 //! ```
 //! fn sector() {
