@@ -5,7 +5,7 @@
 //!
 //! # Example
 //! ```
-//! fn technical_indicator() {
+//! fn technical_indicator_function() {
 //!     let api = alpha_vantage::set_api("YOUR-API-HERE");
 //!     let technical =
 //!         api.technical_indicator("SEMA", "MSFT", "1min", Some("open"), Some("10"), vec![]);

@@ -4,7 +4,7 @@
 //!
 //! # Example
 //! ```
-//! fn search() {
+//! fn search_function() {
 //!     let api = alpha_vantage::set_api("YOUR-API-HERE");
 //!     let search = api.search("BA");
 //!     assert_eq!(search.result().is_ok(), true);

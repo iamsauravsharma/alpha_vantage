@@ -6,7 +6,7 @@
 //!
 //! # Example
 //! ```
-//! fn time_series() {
+//! fn time_series_function() {
 //!     use alpha_vantage::util::*;
 //!     let api = alpha_vantage::set_api("YOUR-API-HERE");
 //!     let stock = api.stock_time(

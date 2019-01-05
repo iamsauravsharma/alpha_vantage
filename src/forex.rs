@@ -4,7 +4,7 @@
 //!
 //! # Example
 //! ```
-//! fn forex() {
+//! fn forex_function() {
 //!     use alpha_vantage::util::*;
 //!     let api = alpha_vantage::set_api("YOUR-API-HERE");
 //!     let forex = api.forex(

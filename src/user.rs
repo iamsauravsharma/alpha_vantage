@@ -13,7 +13,8 @@ use reqwest::{get, Url};
 
 const LINK: &str = "https://www.alphavantage.co/query?function=";
 
-/// Struct for initializing apikey value
+/// Struct for initializing apikey value as well as contain different method for
+/// API call
 pub struct APIKey(String);
 
 impl APIKey {
@@ -28,6 +29,16 @@ impl APIKey {
     }
 
     /// Crypto method for calling cryptography function
+    ///
+    /// # Example
+    /// ```
+    /// fn crypto_function() {
+    ///     let api = alpha_vantage::set_api("YOUR-API-HERE");
+    ///     let crypto = api.crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "USD");
+    ///     let digital_name = crypto.digital_name();
+    ///     assert_eq!(digital_name.unwrap(), String::from("Bitcoin"));
+    /// }
+    /// ```
     pub fn crypto(&self, function: CryptoFunction, symbol: &str, market: &str) -> Crypto {
         let data: Url = create_url_crypto(function, symbol, market, &self.0);
         let crypto_helper: CryptoHelper =
@@ -37,6 +48,17 @@ impl APIKey {
 
     /// Method for exchanging currency value from one currency to another
     /// currency.
+    ///
+    /// # Example
+    /// ```
+    /// fn exchange_function() {
+    ///     let api = alpha_vantage::set_api("YOUR-API-HERE");
+    ///     assert_eq!(
+    ///         api.exchange("BTC", "CNY").name_from().unwrap(),
+    ///         String::from("Bitcoin")
+    ///     );
+    /// }
+    /// ```
     pub fn exchange(&self, from_currency: &str, to_currency: &str) -> Exchange {
         let data: Url = format!(
             "{}CURRENCY_EXCHANGE_RATE&from_currency={}&to_currency={}&apikey={}",
@@ -50,6 +72,22 @@ impl APIKey {
     }
 
     /// Forex method for calling stock time series
+    ///
+    /// # Example
+    /// ```
+    /// fn forex_function() {
+    ///     use alpha_vantage::util::*;
+    ///     let api = alpha_vantage::set_api("YOUR-API-HERE");
+    ///     let forex = api.forex(
+    ///         ForexFunction::Weekly,
+    ///         "MSFT",
+    ///         "BTC",
+    ///         Interval::None,
+    ///         OutputSize::None,
+    ///     );
+    ///     assert_eq!(forex.symbol_from().unwrap(), "MSFT".to_string());
+    /// }
+    /// ```
     pub fn forex(
         &self,
         function: ForexFunction,
@@ -72,6 +110,14 @@ impl APIKey {
     }
 
     /// Method for returning Quote Struct
+    /// # Example
+    /// ```
+    /// fn quote_function() {
+    ///     let api = alpha_vantage::set_api("YOUR-API-HERE");
+    ///     let quote = api.quote("MSFT");
+    ///     assert_eq!(quote.open().is_ok(), true);
+    /// }
+    /// ```
     pub fn quote(&self, symbol: &str) -> Quote {
         let data: Url = format!("{}GLOBAL_QUOTE&symbol={}&apikey={}", LINK, symbol, self.0)
             .parse()
@@ -82,6 +128,14 @@ impl APIKey {
     }
 
     /// Search method for searching keyword or company
+    /// # Example
+    /// ```
+    /// fn search_function() {
+    ///     let api = alpha_vantage::set_api("YOUR-API-HERE");
+    ///     let search = api.search("BA");
+    ///     assert_eq!(search.result().is_ok(), true);
+    /// }
+    /// ```
     pub fn search(&self, keywords: &str) -> Search {
         let data: Url = format!(
             "{}SYMBOL_SEARCH&keywords={}&apikey={}",
@@ -94,6 +148,14 @@ impl APIKey {
     }
 
     /// Method for returning out a sector data as struct
+    /// # Example
+    /// ```
+    /// fn sector_function() {
+    ///     let api = alpha_vantage::set_api("YOUR-API-HERE");
+    ///     let sector = api.sector();
+    ///     assert_eq!(sector.information().is_ok(), true);
+    /// }
+    /// ```
     pub fn sector(&self) -> Sector {
         let data: Url = format!("{}SECTOR&apikey={}", LINK, self.0).parse().unwrap();
         let body = get(data).unwrap().text().unwrap();
@@ -102,6 +164,20 @@ impl APIKey {
     }
 
     /// Stock time method for calling stock time series API
+    /// # Example
+    /// ```
+    /// fn time_series_function() {
+    ///     use alpha_vantage::util::*;
+    ///     let api = alpha_vantage::set_api("YOUR-API-HERE");
+    ///     let stock = api.stock_time(
+    ///         StockFunction::Weekly,
+    ///         "MSFT",
+    ///         Interval::None,
+    ///         OutputSize::None,
+    ///     );
+    ///     assert_eq!(stock.symbol().unwrap(), "MSFT".to_string());
+    /// }
+    /// ```
     pub fn stock_time(
         &self,
         function: StockFunction,
@@ -115,7 +191,16 @@ impl APIKey {
         time_series_helper.convert()
     }
 
-    /// Technical indicator api caller method
+    /// Technical indicator API caller method
+    /// # Example
+    /// ```
+    /// fn technical_indicator_function() {
+    ///     let api = alpha_vantage::set_api("YOUR-API-HERE");
+    ///     let technical =
+    ///         api.technical_indicator("SEMA", "MSFT", "1min", Some("open"), Some("10"), vec![]);
+    ///     assert_eq!(technical.data().is_ok(), true);
+    /// }
+    /// ```
     pub fn technical_indicator(
         &self,
         function: &str,

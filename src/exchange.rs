@@ -4,7 +4,7 @@
 //!
 //! # Example
 //! ```
-//! fn exchnage_test() {
+//! fn exchange_function() {
 //!     let api = alpha_vantage::set_api("YOUR-API-HERE");
 //!     assert_eq!(
 //!         api.exchange("BTC", "CNY").name_from().unwrap(),
