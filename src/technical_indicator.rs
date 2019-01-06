@@ -106,10 +106,10 @@ pub(crate) fn create_url(
     function: &str,
     symbol: &str,
     interval: &str,
-    apikey: &str,
     series_type: Option<&str>,
     time_period: Option<&str>,
     temporary_value: Vec<UtilIndicator>,
+    apikey: &str,
 ) -> Url {
     let mut created_link = format!(
         "https://www.alphavantage.co/query?function={}&symbol={}&interval={}&apikey={}",

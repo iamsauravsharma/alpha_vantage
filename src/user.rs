@@ -214,10 +214,10 @@ impl APIKey {
             function,
             symbol,
             interval,
-            &self.0,
             series_type,
             time_period,
             temporary_value,
+            &self.0,
         );
         serde_json::from_str(&get(url).unwrap().text().unwrap()).unwrap()
     }
