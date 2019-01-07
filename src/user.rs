@@ -15,17 +15,21 @@ const LINK: &str = "https://www.alphavantage.co/query?function=";
 
 /// Struct for initializing apikey value as well as contain different method for
 /// API call
-pub struct APIKey(String);
+pub struct APIKey {
+    api: String,
+}
 
 impl APIKey {
     /// Method for initializing APIKey struct
     pub fn set_api(api: &str) -> Self {
-        APIKey(api.to_string())
+        APIKey {
+            api: api.to_string(),
+        }
     }
 
     /// Method to get api key
     pub fn get_api(&self) -> String {
-        self.0.clone()
+        self.api.clone()
     }
 
     /// Crypto method for calling cryptography function
@@ -40,7 +44,7 @@ impl APIKey {
     /// }
     /// ```
     pub fn crypto(&self, function: CryptoFunction, symbol: &str, market: &str) -> Crypto {
-        let data: Url = create_url_crypto(function, symbol, market, &self.0);
+        let data: Url = create_url_crypto(function, symbol, market, &self.get_api());
         let crypto_helper: CryptoHelper =
             serde_json::from_str(&get(data).unwrap().text().unwrap()).unwrap();
         crypto_helper.convert()
@@ -62,7 +66,10 @@ impl APIKey {
     pub fn exchange(&self, from_currency: &str, to_currency: &str) -> Exchange {
         let data: Url = format!(
             "{}CURRENCY_EXCHANGE_RATE&from_currency={}&to_currency={}&apikey={}",
-            LINK, from_currency, to_currency, self.0
+            LINK,
+            from_currency,
+            to_currency,
+            self.get_api()
         )
         .parse()
         .unwrap();
@@ -102,7 +109,7 @@ impl APIKey {
             to_symbol,
             interval,
             output_size,
-            &self.0,
+            &self.get_api(),
         );
         let forex_helper: ForexHelper =
             serde_json::from_str(&get(data).unwrap().text().unwrap()).unwrap();
@@ -119,9 +126,14 @@ impl APIKey {
     /// }
     /// ```
     pub fn quote(&self, symbol: &str) -> Quote {
-        let data: Url = format!("{}GLOBAL_QUOTE&symbol={}&apikey={}", LINK, symbol, self.0)
-            .parse()
-            .unwrap();
+        let data: Url = format!(
+            "{}GLOBAL_QUOTE&symbol={}&apikey={}",
+            LINK,
+            symbol,
+            self.get_api()
+        )
+        .parse()
+        .unwrap();
 
         let body = get(data).unwrap().text().unwrap();
         serde_json::from_str(&body).unwrap()
@@ -139,7 +151,9 @@ impl APIKey {
     pub fn search(&self, keywords: &str) -> Search {
         let data: Url = format!(
             "{}SYMBOL_SEARCH&keywords={}&apikey={}",
-            LINK, keywords, self.0
+            LINK,
+            keywords,
+            self.get_api()
         )
         .parse()
         .unwrap();
@@ -157,7 +171,9 @@ impl APIKey {
     /// }
     /// ```
     pub fn sector(&self) -> Sector {
-        let data: Url = format!("{}SECTOR&apikey={}", LINK, self.0).parse().unwrap();
+        let data: Url = format!("{}SECTOR&apikey={}", LINK, self.get_api())
+            .parse()
+            .unwrap();
         let body = get(data).unwrap().text().unwrap();
         let sector_helper: SectorHelper = serde_json::from_str(&body).unwrap();
         sector_helper.convert()
@@ -185,7 +201,8 @@ impl APIKey {
         interval: Interval,
         output_size: OutputSize,
     ) -> TimeSeries {
-        let data: Url = create_url_time_series(function, symbol, interval, output_size, &self.0);
+        let data: Url =
+            create_url_time_series(function, symbol, interval, output_size, &self.get_api());
         let time_series_helper: TimeSeriesHelper =
             serde_json::from_str(&get(data).unwrap().text().unwrap()).unwrap();
         time_series_helper.convert()
@@ -217,7 +234,7 @@ impl APIKey {
             series_type,
             time_period,
             temporary_value,
-            &self.0,
+            &self.get_api(),
         );
         serde_json::from_str(&get(url).unwrap().text().unwrap()).unwrap()
     }
