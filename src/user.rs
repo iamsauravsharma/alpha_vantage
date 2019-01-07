@@ -9,7 +9,7 @@ use crate::{
     technical_indicator::{create_url as create_url_technical, Indicator},
     util::*,
 };
-use reqwest::{get, Url};
+use reqwest::{Client, ClientBuilder, Url};
 
 const LINK: &str = "https://www.alphavantage.co/query?function=";
 
@@ -17,19 +17,43 @@ const LINK: &str = "https://www.alphavantage.co/query?function=";
 /// API call
 pub struct APIKey {
     api: String,
+    timeout: u64,
+    client: Client,
 }
 
 impl APIKey {
     /// Method for initializing APIKey struct
     pub fn set_api(api: &str) -> Self {
-        APIKey {
+        let client = ClientBuilder::new()
+            .timeout(Some(std::time::Duration::from_secs(30)))
+            .build()
+            .unwrap();
+        Self {
             api: api.to_string(),
+            timeout: 30,
+            client,
+        }
+    }
+
+    pub fn set_with_timeout(api: &str, timeout: u64) -> Self {
+        let client = ClientBuilder::new()
+            .timeout(Some(std::time::Duration::from_secs(timeout)))
+            .build()
+            .unwrap();
+        Self {
+            api: api.to_string(),
+            timeout,
+            client,
         }
     }
 
     /// Method to get api key
     pub fn get_api(&self) -> String {
         self.api.clone()
+    }
+
+    pub fn get_timeout(&self) -> u64 {
+        self.timeout
     }
 
     /// Crypto method for calling cryptography function
@@ -45,8 +69,8 @@ impl APIKey {
     /// ```
     pub fn crypto(&self, function: CryptoFunction, symbol: &str, market: &str) -> Crypto {
         let data: Url = create_url_crypto(function, symbol, market, &self.get_api());
-        let crypto_helper: CryptoHelper =
-            serde_json::from_str(&get(data).unwrap().text().unwrap()).unwrap();
+        let body = &self.client.get(data).send().unwrap().text().unwrap();
+        let crypto_helper: CryptoHelper = serde_json::from_str(body).unwrap();
         crypto_helper.convert()
     }
 
@@ -74,8 +98,8 @@ impl APIKey {
         .parse()
         .unwrap();
 
-        let body = get(data).unwrap().text().unwrap();
-        serde_json::from_str(&body).unwrap()
+        let body = &self.client.get(data).send().unwrap().text().unwrap();
+        serde_json::from_str(body).unwrap()
     }
 
     /// Forex method for calling stock time series
@@ -111,8 +135,8 @@ impl APIKey {
             output_size,
             &self.get_api(),
         );
-        let forex_helper: ForexHelper =
-            serde_json::from_str(&get(data).unwrap().text().unwrap()).unwrap();
+        let body = &self.client.get(data).send().unwrap().text().unwrap();
+        let forex_helper: ForexHelper = serde_json::from_str(body).unwrap();
         forex_helper.convert()
     }
 
@@ -135,8 +159,8 @@ impl APIKey {
         .parse()
         .unwrap();
 
-        let body = get(data).unwrap().text().unwrap();
-        serde_json::from_str(&body).unwrap()
+        let body = &self.client.get(data).send().unwrap().text().unwrap();
+        serde_json::from_str(body).unwrap()
     }
 
     /// Search method for searching keyword or company
@@ -157,8 +181,8 @@ impl APIKey {
         )
         .parse()
         .unwrap();
-        let body = get(data).unwrap().text().unwrap();
-        serde_json::from_str(&body).unwrap()
+        let body = &self.client.get(data).send().unwrap().text().unwrap();
+        serde_json::from_str(body).unwrap()
     }
 
     /// Method for returning out a sector data as struct
@@ -174,7 +198,7 @@ impl APIKey {
         let data: Url = format!("{}SECTOR&apikey={}", LINK, self.get_api())
             .parse()
             .unwrap();
-        let body = get(data).unwrap().text().unwrap();
+        let body = &self.client.get(data).send().unwrap().text().unwrap();
         let sector_helper: SectorHelper = serde_json::from_str(&body).unwrap();
         sector_helper.convert()
     }
@@ -203,8 +227,8 @@ impl APIKey {
     ) -> TimeSeries {
         let data: Url =
             create_url_time_series(function, symbol, interval, output_size, &self.get_api());
-        let time_series_helper: TimeSeriesHelper =
-            serde_json::from_str(&get(data).unwrap().text().unwrap()).unwrap();
+        let body = &self.client.get(data).send().unwrap().text().unwrap();
+        let time_series_helper: TimeSeriesHelper = serde_json::from_str(body).unwrap();
         time_series_helper.convert()
     }
 
@@ -227,7 +251,7 @@ impl APIKey {
         time_period: Option<&str>,
         temporary_value: Vec<TechnicalIndicator>,
     ) -> Indicator {
-        let url = create_url_technical(
+        let data = create_url_technical(
             function,
             symbol,
             interval,
@@ -236,7 +260,8 @@ impl APIKey {
             temporary_value,
             &self.get_api(),
         );
-        serde_json::from_str(&get(url).unwrap().text().unwrap()).unwrap()
+        let body = &self.client.get(data).send().unwrap().text().unwrap();
+        serde_json::from_str(body).unwrap()
     }
 }
 
