@@ -146,12 +146,12 @@ impl Quote {
     }
 }
 
-pub fn quote(symbol: &str, apikey: &str, timeout: Option<u64>) -> Quote {
-    let mut api;
-    if let Some(timeout) = timeout {
-        api = APIKey::set_with_timeout(apikey, timeout);
+pub fn quote(symbol: &str, api_data: (&str, Option<u64>)) -> Quote {
+    let api;
+    if let Some(timeout) = api_data.1 {
+        api = APIKey::set_with_timeout(api_data.0, timeout);
     } else {
-        api = APIKey::set_api(apikey);
+        api = APIKey::set_api(api_data.0);
     }
     api.quote(symbol)
 }

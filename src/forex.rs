@@ -297,14 +297,13 @@ pub fn forex(
     to_symbol: &str,
     interval: Interval,
     output_size: OutputSize,
-    apikey: &str,
-    timeout: Option<u64>,
+    api_data: (&str, Option<u64>),
 ) -> Forex {
-    let mut api;
-    if let Some(timeout) = timeout {
-        api = APIKey::set_with_timeout(apikey, timeout);
+    let api;
+    if let Some(timeout) = api_data.1 {
+        api = APIKey::set_with_timeout(api_data.0, timeout);
     } else {
-        api = APIKey::set_api(apikey);
+        api = APIKey::set_api(api_data.0);
     }
     api.forex(function, from_symbol, to_symbol, interval, output_size)
 }
