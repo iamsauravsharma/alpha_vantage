@@ -16,6 +16,7 @@
 //!
 //! [sector]: https://www.alphavantage.co/documentation/#sector
 
+use crate::user::APIKey;
 use serde_derive::Deserialize;
 use std::collections::HashMap;
 
@@ -222,4 +223,14 @@ impl SectorHelper {
         }
         sector
     }
+}
+
+pub fn sector(apikey: &str, timeout: Option<u64>) -> Sector {
+    let mut api;
+    if let Some(timeout) = timeout {
+        api = APIKey::set_with_timeout(apikey, timeout);
+    } else {
+        api = APIKey::set_api(apikey);
+    }
+    api.sector()
 }

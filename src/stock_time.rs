@@ -24,7 +24,10 @@
 //!
 //! [stock_time]: https://www.alphavantage.co/documentation/#time-series-data
 
-use crate::util::{Interval, OutputSize, StockFunction};
+use crate::{
+    user::APIKey,
+    util::{Interval, OutputSize, StockFunction},
+};
 use reqwest::Url;
 use serde_derive::Deserialize;
 use std::collections::HashMap;
@@ -350,6 +353,23 @@ fn return_value(value: Option<&std::string::String>) -> Option<String> {
         Some(value) => Some(value.to_string()),
         None => None,
     }
+}
+
+pub fn stock_time(
+    function: StockFunction,
+    symbol: &str,
+    interval: Interval,
+    output_size: OutputSize,
+    apikey: &str,
+    timeout: Option<u64>,
+) -> TimeSeries {
+    let mut api;
+    if let Some(timeout) = timeout {
+        api = APIKey::set_with_timeout(apikey, timeout);
+    } else {
+        api = APIKey::set_api(apikey);
+    }
+    api.stock_time(function, symbol, interval, output_size)
 }
 
 /// create url from user provided data

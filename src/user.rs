@@ -24,10 +24,7 @@ pub struct APIKey {
 impl APIKey {
     /// Method for initializing APIKey struct
     pub fn set_api(api: &str) -> Self {
-        let client = ClientBuilder::new()
-            .timeout(Some(std::time::Duration::from_secs(30)))
-            .build()
-            .unwrap();
+        let client = ClientBuilder::new().build().unwrap();
         Self {
             api: api.to_string(),
             timeout: 30,

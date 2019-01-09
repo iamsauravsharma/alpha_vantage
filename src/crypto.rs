@@ -17,7 +17,7 @@
 //!
 //! [crypto_currency]: https://www.alphavantage.co/documentation/#digital-currency
 
-use crate::util::CryptoFunction;
+use crate::{user::APIKey, util::CryptoFunction};
 use reqwest::Url;
 use serde_derive::Deserialize;
 use std::collections::HashMap;
@@ -285,6 +285,22 @@ impl Crypto {
             ))
         }
     }
+}
+
+pub fn crypto(
+    function: CryptoFunction,
+    symbol: &str,
+    market: &str,
+    apikey: &str,
+    timeout: Option<u64>,
+) -> Crypto {
+    let mut api;
+    if let Some(timeout) = timeout {
+        api = APIKey::set_with_timeout(apikey, timeout);
+    } else {
+        api = APIKey::set_api(apikey);
+    }
+    api.crypto(function, symbol, market)
 }
 
 /// Create url from which JSON data is collected for Crypto

@@ -18,6 +18,7 @@
 //!
 //! [exchange]: https://www.alphavantage.co/documentation/#currency-exchnage
 
+use crate::user::APIKey;
 use serde_derive::Deserialize;
 
 /// Struct used for exchanging currency
@@ -120,4 +121,14 @@ impl Exchange {
             ))
         }
     }
+}
+
+pub fn exchange(from: &str, to: &str, apikey: &str, timeout: Option<u64>) -> Exchange {
+    let mut api;
+    if let Some(timeout) = timeout {
+        api = APIKey::set_with_timeout(apikey, timeout);
+    } else {
+        api = APIKey::set_api(apikey);
+    }
+    api.exchange(from, to)
 }

@@ -18,7 +18,7 @@
 //!
 //! [technical_indicator]: https://www.alphavantage.co/documentation/#technical-indicators
 
-use crate::util::TechnicalIndicator as UtilIndicator;
+use crate::{user::APIKey, util::TechnicalIndicator as UtilIndicator};
 use reqwest::Url;
 use serde_derive::Deserialize;
 use std::collections::HashMap;
@@ -99,6 +99,32 @@ impl DataCollector {
     pub fn values(&self) -> HashMap<String, f64> {
         self.values.clone()
     }
+}
+
+pub fn technical_indicator(
+    function: &str,
+    symbol: &str,
+    interval: &str,
+    series_type: Option<&str>,
+    time_period: Option<&str>,
+    temporary_value: Vec<UtilIndicator>,
+    apikey: &str,
+    timeout: Option<u64>,
+) -> Indicator {
+    let mut api;
+    if let Some(timeout) = timeout {
+        api = APIKey::set_with_timeout(apikey, timeout);
+    } else {
+        api = APIKey::set_api(apikey);
+    }
+    api.technical_indicator(
+        function,
+        symbol,
+        interval,
+        series_type,
+        time_period,
+        temporary_value,
+    )
 }
 
 /// Create url for reqwest

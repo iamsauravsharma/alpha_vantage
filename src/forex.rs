@@ -23,7 +23,10 @@
 //!
 //! [forex]: https://www.alphavantage.co/documentation/#fx
 
-use crate::util::{ForexFunction, Interval, OutputSize};
+use crate::{
+    user::APIKey,
+    util::{ForexFunction, Interval, OutputSize},
+};
 use reqwest::Url;
 use serde_derive::Deserialize;
 use std::collections::HashMap;
@@ -286,6 +289,24 @@ fn return_option_value(value: Option<&std::string::String>) -> Option<String> {
         Some(value) => Some(value.to_string()),
         None => None,
     }
+}
+
+pub fn forex(
+    function: ForexFunction,
+    from_symbol: &str,
+    to_symbol: &str,
+    interval: Interval,
+    output_size: OutputSize,
+    apikey: &str,
+    timeout: Option<u64>,
+) -> Forex {
+    let mut api;
+    if let Some(timeout) = timeout {
+        api = APIKey::set_with_timeout(apikey, timeout);
+    } else {
+        api = APIKey::set_api(apikey);
+    }
+    api.forex(function, from_symbol, to_symbol, interval, output_size)
 }
 
 /// Create Url from given user paramter for reqwest crate

@@ -16,6 +16,7 @@
 //!
 //! [quote]: https://www.alphavantage.co/documentation/#latestprice
 
+use crate::user::APIKey;
 use serde_derive::Deserialize;
 
 /// Struct for storing Quote related information
@@ -143,4 +144,14 @@ impl Quote {
             ))
         }
     }
+}
+
+pub fn quote(symbol: &str, apikey: &str, timeout: Option<u64>) -> Quote {
+    let mut api;
+    if let Some(timeout) = timeout {
+        api = APIKey::set_with_timeout(apikey, timeout);
+    } else {
+        api = APIKey::set_api(apikey);
+    }
+    api.quote(symbol)
 }

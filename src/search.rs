@@ -16,6 +16,7 @@
 //!
 //! [symbol_search]: https://www.alphavantage.co/documentation/#symbolsearch
 
+use crate::user::APIKey;
 use serde_derive::Deserialize;
 
 /// struct for storing search method data
@@ -109,4 +110,14 @@ impl Search {
             ))
         }
     }
+}
+
+pub fn search(keyword: &str, apikey: &str, timeout: Option<u64>) -> Search {
+    let mut api;
+    if let Some(timeout) = timeout {
+        api = APIKey::set_with_timeout(apikey, timeout);
+    } else {
+        api = APIKey::set_api(apikey);
+    }
+    api.search(keyword)
 }
