@@ -1,7 +1,7 @@
 #[test]
 // Integration test exchange method call using api
-fn exchnage_test() {
-    let a = alpha_vantage::set_api("demo");
+fn exchange_test() {
+    let a = alpha_vantage::set_with_timeout("demo", 120);
     assert_eq!(a.exchange("BTC", "CNY").rate().is_ok(), true);
     assert_eq!(a.exchange("USD", "JPY").refreshed_time().is_ok(), true);
 }
@@ -9,7 +9,7 @@ fn exchnage_test() {
 #[test]
 // test Quote method call
 fn quote_test() {
-    let a = alpha_vantage::set_api("demo");
+    let a = alpha_vantage::set_with_timeout("demo", 120);
     assert_eq!(a.quote("MSFT").price().is_ok(), true);
     assert_eq!(
         a.quote("BA").price(),
