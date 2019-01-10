@@ -101,6 +101,10 @@ impl DataCollector {
     }
 }
 
+/// Function used to create a [Indicator][Indicator] struct.
+///
+/// Instead of using this function directly calling through [APIKey][APIKey]
+/// method is recommended
 pub fn technical_indicator(
     function: &str,
     symbol: &str,

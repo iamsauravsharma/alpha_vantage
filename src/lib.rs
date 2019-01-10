@@ -41,6 +41,7 @@ pub fn set_api(api: &str) -> APIKey {
     APIKey::set_api(api)
 }
 
+/// Set API value with timeout period
 pub fn set_with_timeout(api: &str, timeout: u64) -> APIKey {
     APIKey::set_with_timeout(api, timeout)
 }

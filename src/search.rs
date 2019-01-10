@@ -112,6 +112,10 @@ impl Search {
     }
 }
 
+/// Function used to create a [Search][Search] struct.
+///
+/// Instead of using this function directly calling through [APIKey][APIKey]
+/// method is recommended
 pub fn search(keyword: &str, api_data: (&str, Option<u64>)) -> Search {
     let api;
     if let Some(timeout) = api_data.1 {

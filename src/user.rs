@@ -32,6 +32,7 @@ impl APIKey {
         }
     }
 
+    /// Set API value with timeout period
     pub fn set_with_timeout(api: &str, timeout: u64) -> Self {
         let client = ClientBuilder::new()
             .timeout(Some(std::time::Duration::from_secs(timeout)))
@@ -49,6 +50,7 @@ impl APIKey {
         self.api.clone()
     }
 
+    /// Get API value timeout period
     pub fn get_timeout(&self) -> u64 {
         self.timeout
     }

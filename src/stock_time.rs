@@ -355,6 +355,10 @@ fn return_value(value: Option<&std::string::String>) -> Option<String> {
     }
 }
 
+/// Function used to create a [TimeSeries][TimeSeries] struct.
+///
+/// Instead of using this function directly calling through [APIKey][APIKey]
+/// method is recommended
 pub fn stock_time(
     function: StockFunction,
     symbol: &str,

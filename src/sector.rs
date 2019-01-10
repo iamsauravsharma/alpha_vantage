@@ -225,6 +225,10 @@ impl SectorHelper {
     }
 }
 
+/// Function used to create a [Sector][Sector] struct.
+///
+/// Instead of using this function directly calling through [APIKey][APIKey]
+/// method is recommended
 pub fn sector(api_data: (&str, Option<u64>)) -> Sector {
     let api;
     if let Some(timeout) = api_data.1 {

@@ -287,6 +287,10 @@ impl Crypto {
     }
 }
 
+/// Function used to create a [Crypto][Crypto] struct.
+///
+/// Instead of using this function directly calling through [APIKey][APIKey]
+/// method is recommended
 pub fn crypto(
     function: CryptoFunction,
     symbol: &str,
