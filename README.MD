@@ -39,7 +39,6 @@ Better documentation and optimization are remaining before publishing to [crates
 
 ### TODO LIST
 
-- [ ] Improve performance of API Call
 - [ ] Better documentation
 - [ ] Publish to [crates.io][cratesio_link]
 
