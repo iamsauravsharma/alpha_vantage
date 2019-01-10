@@ -16,6 +16,7 @@
 //!
 //! [sector]: https://www.alphavantage.co/documentation/#sector
 
+use crate::user::APIKey;
 use serde_derive::Deserialize;
 use std::collections::HashMap;
 
@@ -222,4 +223,18 @@ impl SectorHelper {
         }
         sector
     }
+}
+
+/// Function used to create a [Sector][Sector] struct.
+///
+/// Instead of using this function directly calling through [APIKey][APIKey]
+/// method is recommended
+pub fn sector(api_data: (&str, Option<u64>)) -> Sector {
+    let api;
+    if let Some(timeout) = api_data.1 {
+        api = APIKey::set_with_timeout(api_data.0, timeout);
+    } else {
+        api = APIKey::set_api(api_data.0);
+    }
+    api.sector()
 }

@@ -17,7 +17,7 @@
 //!
 //! [crypto_currency]: https://www.alphavantage.co/documentation/#digital-currency
 
-use crate::util::CryptoFunction;
+use crate::{user::APIKey, util::CryptoFunction};
 use reqwest::Url;
 use serde_derive::Deserialize;
 use std::collections::HashMap;
@@ -285,6 +285,25 @@ impl Crypto {
             ))
         }
     }
+}
+
+/// Function used to create a [Crypto][Crypto] struct.
+///
+/// Instead of using this function directly calling through [APIKey][APIKey]
+/// method is recommended
+pub fn crypto(
+    function: CryptoFunction,
+    symbol: &str,
+    market: &str,
+    api_data: (&str, Option<u64>),
+) -> Crypto {
+    let api;
+    if let Some(timeout) = api_data.1 {
+        api = APIKey::set_with_timeout(api_data.0, timeout);
+    } else {
+        api = APIKey::set_api(api_data.0);
+    }
+    api.crypto(function, symbol, market)
 }
 
 /// Create url from which JSON data is collected for Crypto

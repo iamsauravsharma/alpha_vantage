@@ -16,6 +16,7 @@
 //!
 //! [symbol_search]: https://www.alphavantage.co/documentation/#symbolsearch
 
+use crate::user::APIKey;
 use serde_derive::Deserialize;
 
 /// struct for storing search method data
@@ -109,4 +110,18 @@ impl Search {
             ))
         }
     }
+}
+
+/// Function used to create a [Search][Search] struct.
+///
+/// Instead of using this function directly calling through [APIKey][APIKey]
+/// method is recommended
+pub fn search(keyword: &str, api_data: (&str, Option<u64>)) -> Search {
+    let api;
+    if let Some(timeout) = api_data.1 {
+        api = APIKey::set_with_timeout(api_data.0, timeout);
+    } else {
+        api = APIKey::set_api(api_data.0);
+    }
+    api.search(keyword)
 }

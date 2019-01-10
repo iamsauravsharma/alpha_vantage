@@ -24,7 +24,10 @@
 //!
 //! [stock_time]: https://www.alphavantage.co/documentation/#time-series-data
 
-use crate::util::{Interval, OutputSize, StockFunction};
+use crate::{
+    user::APIKey,
+    util::{Interval, OutputSize, StockFunction},
+};
 use reqwest::Url;
 use serde_derive::Deserialize;
 use std::collections::HashMap;
@@ -350,6 +353,26 @@ fn return_value(value: Option<&std::string::String>) -> Option<String> {
         Some(value) => Some(value.to_string()),
         None => None,
     }
+}
+
+/// Function used to create a [TimeSeries][TimeSeries] struct.
+///
+/// Instead of using this function directly calling through [APIKey][APIKey]
+/// method is recommended
+pub fn stock_time(
+    function: StockFunction,
+    symbol: &str,
+    interval: Interval,
+    output_size: OutputSize,
+    api_data: (&str, Option<u64>),
+) -> TimeSeries {
+    let api;
+    if let Some(timeout) = api_data.1 {
+        api = APIKey::set_with_timeout(api_data.0, timeout);
+    } else {
+        api = APIKey::set_api(api_data.0);
+    }
+    api.stock_time(function, symbol, interval, output_size)
 }
 
 /// create url from user provided data

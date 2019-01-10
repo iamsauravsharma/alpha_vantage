@@ -16,6 +16,7 @@
 //!
 //! [quote]: https://www.alphavantage.co/documentation/#latestprice
 
+use crate::user::APIKey;
 use serde_derive::Deserialize;
 
 /// Struct for storing Quote related information
@@ -143,4 +144,18 @@ impl Quote {
             ))
         }
     }
+}
+
+/// Function used to create a [Quote][Quote] struct.
+///
+/// Instead of using this function directly calling through [APIKey][APIKey]
+/// method is recommended
+pub fn quote(symbol: &str, api_data: (&str, Option<u64>)) -> Quote {
+    let api;
+    if let Some(timeout) = api_data.1 {
+        api = APIKey::set_with_timeout(api_data.0, timeout);
+    } else {
+        api = APIKey::set_api(api_data.0);
+    }
+    api.quote(symbol)
 }

@@ -23,7 +23,10 @@
 //!
 //! [forex]: https://www.alphavantage.co/documentation/#fx
 
-use crate::util::{ForexFunction, Interval, OutputSize};
+use crate::{
+    user::APIKey,
+    util::{ForexFunction, Interval, OutputSize},
+};
 use reqwest::Url;
 use serde_derive::Deserialize;
 use std::collections::HashMap;
@@ -286,6 +289,27 @@ fn return_option_value(value: Option<&std::string::String>) -> Option<String> {
         Some(value) => Some(value.to_string()),
         None => None,
     }
+}
+
+/// Function used to create a [Forex][Forex] struct.
+///
+/// Instead of using this function directly calling through [APIKey][APIKey]
+/// method is recommended
+pub fn forex(
+    function: ForexFunction,
+    from_symbol: &str,
+    to_symbol: &str,
+    interval: Interval,
+    output_size: OutputSize,
+    api_data: (&str, Option<u64>),
+) -> Forex {
+    let api;
+    if let Some(timeout) = api_data.1 {
+        api = APIKey::set_with_timeout(api_data.0, timeout);
+    } else {
+        api = APIKey::set_api(api_data.0);
+    }
+    api.forex(function, from_symbol, to_symbol, interval, output_size)
 }
 
 /// Create Url from given user paramter for reqwest crate
