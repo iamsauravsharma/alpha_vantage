@@ -62,13 +62,13 @@ println!("{}",rate);
 
 [git_link]: https://github.com/iamsauravsharma/alpha_vantage
 
-[build_badge]: https://travis-ci.com/iamsauravsharma/alpha_vantage.svg?branch=master
+[build_badge]: https://img.shields.io/travis/com/iamsauravsharma/alpha_vantage.svg?logo=travis
 [build_link]: https://travis-ci.com/iamsauravsharma/alpha_vantage
 
 [deps_badge]: https://deps.rs/repo/github/iamsauravsharma/alpha_vantage/status.svg
 [deps_link]: https://deps.rs/repo/github/iamsauravsharma/alpha_vantage
 
-[codecov_badge]: https://img.shields.io/codecov/c/github/iamsauravsharma/alpha_vantage.svg
+[codecov_badge]: https://img.shields.io/codecov/c/github/iamsauravsharma/alpha_vantage.svg?logo=codecov
 [codecov_link]: https://codecov.io/gh/iamsauravsharma/alpha_vantage
 
 [license_badge]: https://img.shields.io/github/license/iamsauravsharma/alpha_vantage.svg

@@ -1,16 +1,7 @@
-//! # Note
+//! Module for crypto real time data
+//!
 //! APIs under this section provide a wide range of data feed for digital and
 //! crypto currencies such as Bitcoin.
-//!
-//! # Example
-//! ```
-//! fn crypto_function() {
-//!     let api = alpha_vantage::set_api("YOUR-API-HERE");
-//!     let crypto = api.crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "USD");
-//!     let digital_name = crypto.digital_name();
-//!     assert_eq!(digital_name.unwrap(), String::from("Bitcoin"));
-//! }
-//! ```
 //!
 //! You can read about [Cryptocurrency][crypto_currency] API and what it returns
 //! on alphavantage documentation

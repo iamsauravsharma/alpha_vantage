@@ -1,15 +1,7 @@
-//! # Note
+//! Module for searching specific symbol or companies
+//!
 //! Looking for some specific symbols or companies? Trying to build a search box
 //! similar to the one below?
-//!
-//! # Example
-//! ```
-//! fn search_function() {
-//!     let api = alpha_vantage::set_api("YOUR-API-HERE");
-//!     let search = api.search("BA");
-//!     assert_eq!(search.result().is_ok(), true);
-//! }
-//! ```
 //!
 //! You can read about [Symbol][symbol_search] API and what it returns
 //! on alphavantage documentation

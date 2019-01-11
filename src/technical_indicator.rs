@@ -1,17 +1,8 @@
-//! # Note
+//! Module for Technical Indicator
+//!
 //! Technical indicator values are updated realtime: the latest data point is
 //! derived from the current trading day of a given equity or currency exchange
 //! pair.
-//!
-//! # Example
-//! ```
-//! fn technical_indicator_function() {
-//!     let api = alpha_vantage::set_api("YOUR-API-HERE");
-//!     let technical =
-//!         api.technical_indicator("SEMA", "MSFT", "1min", Some("open"), Some("10"), vec![]);
-//!     assert_eq!(technical.data().is_ok(), true);
-//! }
-//! ```
 //!
 //! You can read about [Technical Indicator][technical_indicator] API and what
 //! it returns on alphavantage documentation

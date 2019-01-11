@@ -1,22 +1,7 @@
-//! # Note
+//! Module for Forex realtime and historical data
+//!
 //! APIs under this section provide a wide range of data feed for realtime and
 //! historical forex (FX) rates.
-//!
-//! # Example
-//! ```
-//! fn forex_function() {
-//!     use alpha_vantage::util::*;
-//!     let api = alpha_vantage::set_api("YOUR-API-HERE");
-//!     let forex = api.forex(
-//!         ForexFunction::Weekly,
-//!         "MSFT",
-//!         "BTC",
-//!         Interval::None,
-//!         OutputSize::None,
-//!     );
-//!     assert_eq!(forex.symbol_from().unwrap(), "MSFT".to_string());
-//! }
-//! ```
 //!
 //! You can read about [Forex][forex] API and what it returns
 //! on alphavantage documentation

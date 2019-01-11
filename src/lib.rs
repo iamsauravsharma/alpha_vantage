@@ -2,28 +2,20 @@
 //!
 //! [alpha_vantage_link]: https://alphavantage.co
 
-/// Module for crypto real time data
 pub mod crypto;
 
-/// Module for exchange currency (both digital & physical currency exchange)
 pub mod exchange;
 
-/// Module for Forex realtime and historical data
 pub mod forex;
 
-/// Module for returning latest price and volume information
 pub mod quote;
 
-/// Module for searching specific symbol or companies
 pub mod search;
 
-/// Module for sector
 pub mod sector;
 
-/// Module for stock time series
 pub mod stock_time;
 
-/// Module for Technical Indicator
 pub mod technical_indicator;
 
 /// Module for basic definition of user information like setting API and

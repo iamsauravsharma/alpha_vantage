@@ -1,23 +1,9 @@
-//! # Note
+//! Module for stock time series
+//!
 //! This suite of APIs provide realtime and historical global equity data in 4
 //! different temporal resolutions: (1) daily, (2) weekly, (3) monthly, and (4)
 //! intraday. Daily, weekly, and monthly time series contain 20+ years of
 //! historical data
-//!
-//! # Example
-//! ```
-//! fn time_series_function() {
-//!     use alpha_vantage::util::*;
-//!     let api = alpha_vantage::set_api("YOUR-API-HERE");
-//!     let stock = api.stock_time(
-//!         StockFunction::Weekly,
-//!         "MSFT",
-//!         Interval::None,
-//!         OutputSize::None,
-//!     );
-//!     assert_eq!(stock.symbol().unwrap(), "MSFT".to_string());
-//! }
-//! ```
 //!
 //! You can read about [Stock Time][stock_time] API and what it returns
 //! on alphavantage documentation

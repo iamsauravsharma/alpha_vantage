@@ -1,15 +1,7 @@
-//! # Note
+//! Module for returning latest price and volume information
+//!
 //! A lightweight alternative to the time series APIs, this service returns the
 //! latest price and volume information for a security of your choice.
-//!
-//! # Example
-//! ```
-//! fn quote_function() {
-//!     let api = alpha_vantage::set_api("YOUR-API-HERE");
-//!     let quote = api.quote("MSFT");
-//!     assert_eq!(quote.open().is_ok(), true);
-//! }
-//! ```
 //!
 //! You can read about [Quote][quote] API and what it returns
 //! on alphavantage documentation

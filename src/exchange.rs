@@ -1,17 +1,7 @@
-//! # Note
-//! This API returns the realtime exchange rate for any pair of digital currency
-//! (e.g., Bitcoin) or physical currency (e.g., USD).
+//! Module for exchange currency (both digital & physical currency exchange)
 //!
-//! # Example
-//! ```
-//! fn exchange_function() {
-//!     let api = alpha_vantage::set_api("YOUR-API-HERE");
-//!     assert_eq!(
-//!         api.exchange("BTC", "CNY").name_from().unwrap(),
-//!         String::from("Bitcoin")
-//!     );
-//! }
-//! ```
+//!  This API returns the realtime exchange rate for any pair of digital
+//! currency (e.g., Bitcoin) or physical currency (e.g., USD).
 //!
 //! You can read about [Exchange][exchange] API and what it returns
 //! on alphavantage documentation

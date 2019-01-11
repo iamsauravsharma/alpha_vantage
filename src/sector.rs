@@ -1,15 +1,7 @@
-//! # Note
+//! Module for sector
+//!
 //! This API returns the realtime and historical sector performances calculated
 //! from S&P500 incumbents.
-//!
-//! # Example
-//! ```
-//! fn sector_function() {
-//!     let api = alpha_vantage::set_api("YOUR-API-HERE");
-//!     let sector = api.sector();
-//!     assert_eq!(sector.information().is_ok(), true);
-//! }
-//! ```
 //!
 //! You can read about [Sector][sector] API and what it returns
 //! on alphavantage documentation
