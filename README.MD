@@ -1,24 +1,28 @@
 # ALPHA_VANTAGE
 
 **Status:**
-[![Travis Build Status][build_badge]][build_link]
-[![Dependency status][deps_badge]][deps_link]
-[![Code coverage][codecov_badge]][codecov_link]
+
+| Travis Build Status | Dependency Status | Code Coverage |
+| :---: | :---: | :---: |
+| [![Travis Build Status][build_badge]][build_link] | [![Dependency status][deps_badge]][deps_link] | [![Code coverage][codecov_badge]][codecov_link] |
 
 **Project Info:**
-[![License: MIT][license_badge]][license_link]
-[![LoC][loc_badge]][loc_link]
 
-**Rust version support**
-[![Stable support][stable_supported_badge]][git_link]
-[![Beta support][beta_supported_badge]][git_link]
-[![Nightly support][nightly_supported_badge]][git_link]
+| License | LoC |
+| :---: | :---: |
+| [![License: MIT][license_badge]][license_link] | [![LoC][loc_badge]][loc_link] |
 
+**Rust version support:**
 
-**OS support**
-[![Linux support][linux_supported_badge]][git_link]
-[![OSX support][osx_supported_badge]][git_link]
-[![Windows support][windows_supported_badge]][git_link]
+| Stable | Beta | Nightly |
+| :---: | :---: | :---: |
+| [![Stable support][stable_supported_badge]][git_link] | [![Beta support][beta_supported_badge]][git_link] | [![Nightly support][nightly_supported_badge]][git_link] |
+
+**OS support:**
+
+| Linux | OSX | Windows |
+| :---: | :---: | :---: |
+| [![Linux support][linux_supported_badge]][git_link] | [![OSX support][osx_supported_badge]][git_link] | [![Windows support][windows_supported_badge]][git_link] |
 
 **WARNING : may contain bug which may cause undesired functionality** 
 
