@@ -111,6 +111,13 @@ pub struct Sector {
 
 impl Sector {
     /// Return sector information
+    ///
+    /// ```
+    /// let api = alpha_vantage::set_api("demo");
+    /// let sector = api.sector();
+    /// let information = sector.information();
+    /// assert_eq!(information.unwrap(),"US Sector Performance (realtime & historical)");
+    /// ```
     pub fn information(&self) -> Result<String, String> {
         self.check_meta_data("information")
     }

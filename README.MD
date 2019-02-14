@@ -40,10 +40,6 @@ Better documentation and optimization are remaining before publishing to [crates
 - [X] Crypto Currency
 - [X] Technical Indicators
 - [X] Sector Performances
-
-### TODO LIST
-
-- [ ] Better documentation
 - [ ] Publish to [crates.io][cratesio_link]
 
 ## Add as dependencies

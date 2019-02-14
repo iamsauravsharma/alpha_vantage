@@ -31,11 +31,27 @@ pub struct TimeSeries {
 
 impl TimeSeries {
     /// Return information present in meta data
+    ///
+    /// ```
+    /// use alpha_vantage::util::*;
+    /// let api = alpha_vantage::set_api("demo");
+    /// let stock_time = api.stock_time(StockFunction::IntraDay, "MSFT", Interval::FiveMin, OutputSize::Full);
+    /// let information = stock_time.information();
+    /// assert_eq!(information.unwrap(),"Intraday (5min) open, high, low, close prices and volume");
+    /// ```
     pub fn information(&self) -> Result<String, String> {
         self.return_meta_string("information")
     }
 
     /// Return symbol for which time series function is called
+    ///
+    /// ```
+    /// use alpha_vantage::util::*;
+    /// let api = alpha_vantage::set_api("demo");
+    /// let stock_time = api.stock_time(StockFunction::IntraDay, "MSFT", Interval::FiveMin, OutputSize::Full);
+    /// let symbol = stock_time.symbol();
+    /// assert_eq!(symbol.unwrap(),"MSFT");
+    /// ```
     pub fn symbol(&self) -> Result<String, String> {
         self.return_meta_string("symbol")
     }
@@ -55,11 +71,27 @@ impl TimeSeries {
     }
 
     /// Interval for which a time series intraday
+    ///
+    /// ```
+    /// use alpha_vantage::util::*;
+    /// let api = alpha_vantage::set_api("demo");
+    /// let stock_time = api.stock_time(StockFunction::IntraDay, "MSFT", Interval::FiveMin, OutputSize::Full);
+    /// let interval = stock_time.interval();
+    /// assert_eq!(interval.unwrap(),"5min");
+    /// ```
     pub fn interval(&self) -> Result<String, String> {
         self.operate_option_meta_value("interval")
     }
 
     /// Output Size of intraday which can be either Full or compact
+    ///
+    /// ```
+    /// use alpha_vantage::util::*;
+    /// let api = alpha_vantage::set_api("demo");
+    /// let stock_time = api.stock_time(StockFunction::IntraDay, "MSFT", Interval::FiveMin, OutputSize::Full);
+    /// let output_size = stock_time.output_size();
+    /// assert_eq!(output_size.unwrap(),"Full size");
+    /// ```
     pub fn output_size(&self) -> Result<String, String> {
         self.operate_option_meta_value("output size")
     }

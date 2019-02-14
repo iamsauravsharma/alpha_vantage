@@ -83,16 +83,40 @@ pub struct Forex {
 
 impl Forex {
     /// Return information of data
+    ///
+    /// ```
+    /// use alpha_vantage::util::*;
+    /// let api = alpha_vantage::set_api("demo");
+    /// let forex = api.forex(ForexFunction::IntraDay, "EUR", "USD", Interval::FiveMin, OutputSize::Full);
+    /// let information = forex.information();
+    /// assert_eq!(information.unwrap(),"FX Intraday (5min) Time Series");
+    /// ```
     pub fn information(&self) -> Result<String, String> {
         self.return_meta_string("information")
     }
 
     /// Retrun from symbol
+    ///
+    /// ```
+    /// use alpha_vantage::util::*;
+    /// let api = alpha_vantage::set_api("demo");
+    /// let forex = api.forex(ForexFunction::IntraDay, "EUR", "USD", Interval::FiveMin, OutputSize::Full);
+    /// let symbol_from = forex.symbol_from();
+    /// assert_eq!(symbol_from.unwrap(),"EUR");
+    /// ```
     pub fn symbol_from(&self) -> Result<String, String> {
         self.return_meta_string("from symbol")
     }
 
     /// Return to symbol
+    ///
+    /// ```
+    /// use alpha_vantage::util::*;
+    /// let api = alpha_vantage::set_api("demo");
+    /// let forex = api.forex(ForexFunction::IntraDay, "EUR", "USD", Interval::FiveMin, OutputSize::Full);
+    /// let symbol_to = forex.symbol_to();
+    /// assert_eq!(symbol_to.unwrap(),"USD");
+    /// ```
     pub fn symbol_to(&self) -> Result<String, String> {
         self.return_meta_string("to symbol")
     }
@@ -112,11 +136,27 @@ impl Forex {
     }
 
     /// Return out interval for intraday
+    ///
+    /// ```
+    /// use alpha_vantage::util::*;
+    /// let api = alpha_vantage::set_api("demo");
+    /// let forex = api.forex(ForexFunction::IntraDay, "EUR", "USD", Interval::FiveMin, OutputSize::Full);
+    /// let interval = forex.interval();
+    /// assert_eq!(interval.unwrap(),"5min");
+    /// ```
     pub fn interval(&self) -> Result<String, String> {
         self.operate_option_meta_value("interval")
     }
 
     /// Return output size which can be full or compact
+    ///
+    /// ```
+    /// use alpha_vantage::util::*;
+    /// let api = alpha_vantage::set_api("demo");
+    /// let forex = api.forex(ForexFunction::IntraDay, "EUR", "USD", Interval::FiveMin, OutputSize::Full);
+    /// let output_size = forex.output_size();
+    /// assert_eq!(output_size.unwrap(),"Full size");
+    /// ```
     pub fn output_size(&self) -> Result<String, String> {
         self.operate_option_meta_value("output size")
     }
