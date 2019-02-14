@@ -56,8 +56,7 @@ impl Exchange {
         }
     }
 
-    /// Get time when exchange rate was last refreshed.
-    /// Example return value:- 2018-10-22 14:25:26 UTC.
+    /// Get time when exchange rate was last refreshed along with time zone.
     pub fn refreshed_time(&self) -> Result<String, String> {
         if let Some(real) = &self.real_time {
             Ok(format!("{} {}", real.last_refreshed, real.time_zone))
@@ -72,21 +71,49 @@ impl Exchange {
     }
 
     /// get from code from which exchange is performed
+    ///
+    /// ```
+    /// let api = alpha_vantage::set_api("demo");
+    /// let exchange = api.exchange("BTC", "CNY");
+    /// let code_from = exchange.code_from();
+    /// assert_eq!(code_from.unwrap(),"BTC");
+    /// ```
     pub fn code_from(&self) -> Result<String, String> {
         self.get_result_string("from code")
     }
 
     /// get from name from which exchange is performed
+    ///
+    /// ```
+    /// let api = alpha_vantage::set_api("demo");
+    /// let exchange = api.exchange("BTC", "CNY");
+    /// let name_from = exchange.name_from();
+    /// assert_eq!(name_from.unwrap(),"Bitcoin");
+    /// ```
     pub fn name_from(&self) -> Result<String, String> {
         self.get_result_string("from name")
     }
 
     /// get to code from exchange
+    ///
+    /// ```
+    /// let api = alpha_vantage::set_api("demo");
+    /// let exchange = api.exchange("BTC", "CNY");
+    /// let code_to = exchange.code_to();
+    /// assert_eq!(code_to.unwrap(),"CNY");
+    /// ```
     pub fn code_to(&self) -> Result<String, String> {
         self.get_result_string("to code")
     }
 
     /// get to name from exchange
+    ///
+    /// ```
+    /// let api = alpha_vantage::set_api("demo");
+    /// let exchange = api.exchange("BTC", "CNY");
+    /// let name_to = exchange.name_to();
+    /// assert_eq!(name_to.unwrap(),"Chinese Yuan");
+    /// ```
     pub fn name_to(&self) -> Result<String, String> {
         self.get_result_string("to name")
     }

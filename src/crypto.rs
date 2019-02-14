@@ -198,44 +198,82 @@ pub struct Crypto {
 impl Crypto {
     /// Return meta data information produce error if API returns error_message
     /// or information instead of meta data
+    ///
+    /// ```
+    /// let api = alpha_vantage::set_api("demo");
+    /// let crypto = api.crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY");
+    /// let information = crypto.information();
+    /// assert_eq!(information.unwrap(),"Daily Prices and Volumes for Digital Currency");
+    /// ```
     pub fn information(&self) -> Result<String, String> {
         self.return_meta_string("information")
     }
 
     /// Return digial currency code produce error if API returns error_message
     /// or information instead of meta data
+    ///
+    /// ```
+    /// let api = alpha_vantage::set_api("demo");
+    /// let crypto = api.crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY");
+    /// let digital_code = crypto.digital_code();
+    /// assert_eq!(digital_code.unwrap(),"BTC");
+    /// ```
     pub fn digital_code(&self) -> Result<String, String> {
         self.return_meta_string("digital code")
     }
 
     /// Return digital currency name produce error if API returns error_message
     /// or information instead of meta data
+    ///
+    /// ```
+    /// let api = alpha_vantage::set_api("demo");
+    /// let crypto = api.crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY");
+    /// let digital_name = crypto.digital_name();
+    /// assert_eq!(digital_name.unwrap(),"Bitcoin");
+    /// ```
     pub fn digital_name(&self) -> Result<String, String> {
         self.return_meta_string("digital name")
     }
 
     /// Return market code produce error if API returns error_message
     /// or information instead of meta data
+    ///
+    /// ```
+    /// let api = alpha_vantage::set_api("demo");
+    /// let crypto = api.crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY");
+    /// let market_code = crypto.market_code();
+    /// assert_eq!(market_code.unwrap(),"CNY");
+    /// ```
     pub fn market_code(self) -> Result<String, String> {
         self.return_meta_string("market code")
     }
 
     /// Return market name produce error if API returns error_message
     /// or information instead of meta data
+    ///
+    /// ```
+    /// let api = alpha_vantage::set_api("demo");
+    /// let crypto = api.crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY");
+    /// let market_name = crypto.market_name();
+    /// assert_eq!(market_name.unwrap(),"Chinese Yuan");
+    /// ```
     pub fn market_name(&self) -> Result<String, String> {
         self.return_meta_string("market name")
     }
 
-    /// Return last refreshed time produce error if API returns error_message
+    /// Return last refreshed time along with time zone produce error if API returns error_message
     /// or information instead of meta data
     pub fn last_refreshed(&self) -> Result<String, String> {
-        self.return_meta_string("last refreshed")
-    }
-
-    /// Return time zone of last refreshed time produce error if API returns
-    /// error_message or information instead of meta data
-    pub fn time_zone(&self) -> Result<String, String> {
-        self.return_meta_string("time zone")
+        if let Some(meta) = &self.meta_data {
+            Ok(format!("{} {}", meta.last_refreshed, meta.time_zone))
+        } else if let Some(error) = self.error_message.clone() {
+            Err(format!("Error Message : {}", error))
+        } else {
+            Err(format!(
+                "Information : {}",
+                self.information.clone().unwrap()
+            ))
+        }
     }
 
     /// Return out a entry produce error if API returns error_message
@@ -262,8 +300,6 @@ impl Crypto {
                 "digital name" => &meta_data.digital_name,
                 "market code" => &meta_data.market_code,
                 "market name" => &meta_data.market_name,
-                "last refreshed" => &meta_data.last_refreshed,
-                "time zone" => &meta_data.time_zone,
                 _ => "",
             };
             Ok(value.to_string())
@@ -309,4 +345,19 @@ pub(crate) fn create_url(function: CryptoFunction, symbol: &str, market: &str, a
         LINK, function_name, symbol, market, api
     );
     url.parse().unwrap()
+}
+
+#[cfg(test)]
+mod test {
+    use crate::util::*;
+    use reqwest::Url;
+    #[test]
+    fn test_crypto_create_url() {
+        assert_eq!(super::create_url(CryptoFunction::Daily, "BTC","USD","random"),
+        Url::parse("https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_DAILY&symbol=BTC&market=USD&apikey=random").unwrap());
+        assert_eq!(super::create_url(CryptoFunction::Weekly, "ETH", "EUR", "randomkey"),
+        Url::parse("https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_WEEKLY&symbol=ETH&market=EUR&apikey=randomkey").unwrap());
+        assert_eq!(super::create_url(CryptoFunction::Monthly, "BTC","CNY", "demo"),
+        Url::parse("https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_MONTHLY&symbol=BTC&market=CNY&apikey=demo").unwrap());
+    }
 }

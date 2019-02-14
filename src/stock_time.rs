@@ -40,14 +40,18 @@ impl TimeSeries {
         self.return_meta_string("symbol")
     }
 
-    /// last time a data was refreshed
+    /// last time a data was refreshed with time zone
     pub fn last_refreshed(&self) -> Result<String, String> {
-        self.return_meta_string("last refreshed")
-    }
-
-    /// time zone of last refreshed time
-    pub fn time_zone(&self) -> Result<String, String> {
-        self.return_meta_string("time zone")
+        if let Some(meta) = &self.meta_data {
+            Ok(format!("{} {}", meta.last_refreshed, meta.time_zone))
+        } else if let Some(error) = self.error_message.clone() {
+            Err(format!("Error Message : {}", error))
+        } else {
+            Err(format!(
+                "Information : {}",
+                self.information.clone().unwrap()
+            ))
+        }
     }
 
     /// Interval for which a time series intraday
@@ -80,8 +84,6 @@ impl TimeSeries {
             let value = match which_val {
                 "information" => &meta_data.information,
                 "symbol" => &meta_data.symbol,
-                "last refreshed" => &meta_data.last_refreshed,
-                "time zone" => &meta_data.time_zone,
                 _ => "",
             };
             Ok(value.to_string())

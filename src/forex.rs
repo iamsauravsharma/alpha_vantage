@@ -97,14 +97,18 @@ impl Forex {
         self.return_meta_string("to symbol")
     }
 
-    /// Return last refreshed time
+    /// Return last refreshed time with time zone
     pub fn last_refreshed(&self) -> Result<String, String> {
-        self.return_meta_string("last refreshed")
-    }
-
-    /// Return last refreshed time zone
-    pub fn time_zone(&self) -> Result<String, String> {
-        self.return_meta_string("time zone")
+        if let Some(meta) = &self.meta_data {
+            Ok(format!("{} {}", meta.last_refreshed, meta.time_zone))
+        } else if let Some(error) = self.error_message.clone() {
+            Err(format!("Error Message : {}", error))
+        } else {
+            Err(format!(
+                "Information : {}",
+                self.information.clone().unwrap()
+            ))
+        }
     }
 
     /// Return out interval for intraday
@@ -138,8 +142,6 @@ impl Forex {
                 "information" => &meta_data.information,
                 "from symbol" => &meta_data.from_symbol,
                 "to symbol" => &meta_data.to_symbol,
-                "last refreshed" => &meta_data.last_refreshed,
-                "time zone" => &meta_data.time_zone,
                 _ => "",
             };
             Ok(value.to_string())
