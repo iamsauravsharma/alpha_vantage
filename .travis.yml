@@ -71,7 +71,7 @@ deploy:
     script: bash scripts/codecov_coverage.sh
     skip-cleanup: true
     on:
-      condition: $TRAVIS_OS_NAME = linux && $TRAVIS_RUST_VERSION = stable
+      condition: $TRAVIS_OS_NAME = linux && $TRAVIS_RUST_VERSION = nightly
   - provider: pages
     skip-cleanup: true
     github-token: $GITHUB_TOKEN
