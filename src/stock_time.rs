@@ -474,8 +474,8 @@ mod test {
             ),
             Url::parse(
                 "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY\
-                &symbol=USD\
-                &apikey=random"
+                 &symbol=USD\
+                 &apikey=random"
             )
             .unwrap()
         );
@@ -486,11 +486,11 @@ mod test {
                 Interval::None,
                 OutputSize::None,
                 "random"
-                ),
+            ),
             Url::parse(
                 "https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY\
-                &symbol=NPR\
-                &apikey=random"
+                 &symbol=NPR\
+                 &apikey=random"
             )
             .unwrap()
         );
@@ -504,8 +504,8 @@ mod test {
             ),
             Url::parse(
                 "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY\
-                &symbol=NPR\
-                &apikey=random"
+                 &symbol=NPR\
+                 &apikey=random"
             )
             .unwrap()
         );
@@ -519,10 +519,10 @@ mod test {
             ),
             Url::parse(
                 "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY\
-                &symbol=MSFT\
-                &interval=60min\
-                &outputsize=full\
-                &apikey=random"
+                 &symbol=MSFT\
+                 &interval=60min\
+                 &outputsize=full\
+                 &apikey=random"
             )
             .unwrap()
         );

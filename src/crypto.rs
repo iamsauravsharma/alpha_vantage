@@ -357,46 +357,32 @@ mod test {
     #[test]
     fn test_crypto_create_url() {
         assert_eq!(
-            super::create_url(
-                CryptoFunction::Daily,
-                "BTC",
-                "USD",
-                "random"
-            ),
+            super::create_url(CryptoFunction::Daily, "BTC", "USD", "random"),
             Url::parse(
                 "https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_DAILY\
-                &symbol=BTC\
-                &market=USD\
-                &apikey=random"
+                 &symbol=BTC\
+                 &market=USD\
+                 &apikey=random"
             )
             .unwrap()
         );
         assert_eq!(
-            super::create_url(
-                CryptoFunction::Weekly,
-                "ETH",
-                "EUR",
-                "randomkey"
-            ),
+            super::create_url(CryptoFunction::Weekly, "ETH", "EUR", "randomkey"),
             Url::parse(
                 "https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_WEEKLY\
-                &symbol=ETH\
-                &market=EUR\
-                &apikey=randomkey"
+                 &symbol=ETH\
+                 &market=EUR\
+                 &apikey=randomkey"
             )
             .unwrap()
         );
         assert_eq!(
-            super::create_url(
-                CryptoFunction::Monthly,
-                "BTC",
-                "CNY",
-                "demo"),
+            super::create_url(CryptoFunction::Monthly, "BTC", "CNY", "demo"),
             Url::parse(
                 "https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_MONTHLY\
-                &symbol=BTC\
-                &market=CNY\
-                &apikey=demo"
+                 &symbol=BTC\
+                 &market=CNY\
+                 &apikey=demo"
             )
             .unwrap()
         );
