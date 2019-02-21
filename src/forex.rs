@@ -419,13 +419,13 @@ mod test {
     #[test]
     // Testing forex create_url() function
     fn test_forex_create_url() {
-        assert_eq!(super::create_url(StockFunction::Daily, "USD", Interval::None, OutputSize::None, "random"),
-        Url::parse("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=USD&apikey=random").unwrap());
-        assert_eq!(super::create_url(StockFunction::Weekly, "NPR", Interval::None, OutputSize::None, "random"),
-        Url::parse("https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=NPR&apikey=random").unwrap());
-        assert_eq!(super::create_url(StockFunction::Monthly, "NPR", Interval::None, OutputSize::None, "random"),
-        Url::parse("https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=NPR&apikey=random").unwrap());
-        assert_eq!(super::create_url(StockFunction::IntraDay, "MSFT", Interval::SixtyMin, OutputSize::Full, "random"),
-        Url::parse("https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=MSFT&interval=60min&outputsize=full&apikey=random").unwrap());
+        assert_eq!(super::create_url(ForexFunction::Daily, "USD", "NPR", Interval::None, OutputSize::None, "random"),
+        Url::parse("https://www.alphavantage.co/query?function=FX_DAILY&from_symbol=USD&to_symbol=NPR&apikey=random").unwrap());
+        assert_eq!(super::create_url(ForexFunction::Weekly, "USD", "NPR", Interval::None, OutputSize::None, "random"),
+        Url::parse("https://www.alphavantage.co/query?function=FX_WEEKLY&from_symbol=USD&to_symbol=NPR&apikey=random").unwrap());
+        assert_eq!(super::create_url(ForexFunction::Monthly, "USD", "NPR", Interval::None, OutputSize::None, "random"),
+        Url::parse("https://www.alphavantage.co/query?function=FX_MONTHLY&from_symbol=USD&to_symbol=NPR&apikey=random").unwrap());
+        assert_eq!(super::create_url(ForexFunction::IntraDay, "USD", "NPR", Interval::FifteenMin, OutputSize::Full, "random"),
+        Url::parse("https://www.alphavantage.co/query?function=FX_INTRADAY&from_symbol=USD&to_symbol=NPR&interval=15min&outputsize=full&apikey=random").unwrap());
     }
 }
