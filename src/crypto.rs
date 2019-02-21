@@ -203,7 +203,10 @@ impl Crypto {
     /// let api = alpha_vantage::set_api("demo");
     /// let crypto = api.crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY");
     /// let information = crypto.information();
-    /// assert_eq!(information.unwrap(),"Daily Prices and Volumes for Digital Currency");
+    /// assert_eq!(
+    ///     information.unwrap(),
+    ///     "Daily Prices and Volumes for Digital Currency"
+    /// );
     /// ```
     pub fn information(&self) -> Result<String, String> {
         self.return_meta_string("information")
@@ -216,7 +219,7 @@ impl Crypto {
     /// let api = alpha_vantage::set_api("demo");
     /// let crypto = api.crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY");
     /// let digital_code = crypto.digital_code();
-    /// assert_eq!(digital_code.unwrap(),"BTC");
+    /// assert_eq!(digital_code.unwrap(), "BTC");
     /// ```
     pub fn digital_code(&self) -> Result<String, String> {
         self.return_meta_string("digital code")
@@ -229,7 +232,7 @@ impl Crypto {
     /// let api = alpha_vantage::set_api("demo");
     /// let crypto = api.crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY");
     /// let digital_name = crypto.digital_name();
-    /// assert_eq!(digital_name.unwrap(),"Bitcoin");
+    /// assert_eq!(digital_name.unwrap(), "Bitcoin");
     /// ```
     pub fn digital_name(&self) -> Result<String, String> {
         self.return_meta_string("digital name")
@@ -242,7 +245,7 @@ impl Crypto {
     /// let api = alpha_vantage::set_api("demo");
     /// let crypto = api.crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY");
     /// let market_code = crypto.market_code();
-    /// assert_eq!(market_code.unwrap(),"CNY");
+    /// assert_eq!(market_code.unwrap(), "CNY");
     /// ```
     pub fn market_code(self) -> Result<String, String> {
         self.return_meta_string("market code")
@@ -255,14 +258,14 @@ impl Crypto {
     /// let api = alpha_vantage::set_api("demo");
     /// let crypto = api.crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY");
     /// let market_name = crypto.market_name();
-    /// assert_eq!(market_name.unwrap(),"Chinese Yuan");
+    /// assert_eq!(market_name.unwrap(), "Chinese Yuan");
     /// ```
     pub fn market_name(&self) -> Result<String, String> {
         self.return_meta_string("market name")
     }
 
-    /// Return last refreshed time along with time zone produce error if API returns error_message
-    /// or information instead of meta data
+    /// Return last refreshed time along with time zone produce error if API
+    /// returns error_message or information instead of meta data
     pub fn last_refreshed(&self) -> Result<String, String> {
         if let Some(meta) = &self.meta_data {
             Ok(format!("{} {}", meta.last_refreshed, meta.time_zone))
@@ -353,11 +356,49 @@ mod test {
     use reqwest::Url;
     #[test]
     fn test_crypto_create_url() {
-        assert_eq!(super::create_url(CryptoFunction::Daily, "BTC","USD","random"),
-        Url::parse("https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_DAILY&symbol=BTC&market=USD&apikey=random").unwrap());
-        assert_eq!(super::create_url(CryptoFunction::Weekly, "ETH", "EUR", "randomkey"),
-        Url::parse("https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_WEEKLY&symbol=ETH&market=EUR&apikey=randomkey").unwrap());
-        assert_eq!(super::create_url(CryptoFunction::Monthly, "BTC","CNY", "demo"),
-        Url::parse("https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_MONTHLY&symbol=BTC&market=CNY&apikey=demo").unwrap());
+        assert_eq!(
+            super::create_url(
+                CryptoFunction::Daily,
+                "BTC",
+                "USD",
+                "random"
+            ),
+            Url::parse(
+                "https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_DAILY\
+                &symbol=BTC\
+                &market=USD\
+                &apikey=random"
+            )
+            .unwrap()
+        );
+        assert_eq!(
+            super::create_url(
+                CryptoFunction::Weekly,
+                "ETH",
+                "EUR",
+                "randomkey"
+            ),
+            Url::parse(
+                "https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_WEEKLY\
+                &symbol=ETH\
+                &market=EUR\
+                &apikey=randomkey"
+            )
+            .unwrap()
+        );
+        assert_eq!(
+            super::create_url(
+                CryptoFunction::Monthly,
+                "BTC",
+                "CNY",
+                "demo"),
+            Url::parse(
+                "https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_MONTHLY\
+                &symbol=BTC\
+                &market=CNY\
+                &apikey=demo"
+            )
+            .unwrap()
+        );
     }
 }

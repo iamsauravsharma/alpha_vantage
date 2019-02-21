@@ -76,7 +76,7 @@ impl Exchange {
     /// let api = alpha_vantage::set_api("demo");
     /// let exchange = api.exchange("BTC", "CNY");
     /// let code_from = exchange.code_from();
-    /// assert_eq!(code_from.unwrap(),"BTC");
+    /// assert_eq!(code_from.unwrap(), "BTC");
     /// ```
     pub fn code_from(&self) -> Result<String, String> {
         self.get_result_string("from code")
@@ -88,7 +88,7 @@ impl Exchange {
     /// let api = alpha_vantage::set_api("demo");
     /// let exchange = api.exchange("BTC", "CNY");
     /// let name_from = exchange.name_from();
-    /// assert_eq!(name_from.unwrap(),"Bitcoin");
+    /// assert_eq!(name_from.unwrap(), "Bitcoin");
     /// ```
     pub fn name_from(&self) -> Result<String, String> {
         self.get_result_string("from name")
@@ -100,7 +100,7 @@ impl Exchange {
     /// let api = alpha_vantage::set_api("demo");
     /// let exchange = api.exchange("BTC", "CNY");
     /// let code_to = exchange.code_to();
-    /// assert_eq!(code_to.unwrap(),"CNY");
+    /// assert_eq!(code_to.unwrap(), "CNY");
     /// ```
     pub fn code_to(&self) -> Result<String, String> {
         self.get_result_string("to code")
@@ -112,7 +112,7 @@ impl Exchange {
     /// let api = alpha_vantage::set_api("demo");
     /// let exchange = api.exchange("BTC", "CNY");
     /// let name_to = exchange.name_to();
-    /// assert_eq!(name_to.unwrap(),"Chinese Yuan");
+    /// assert_eq!(name_to.unwrap(), "Chinese Yuan");
     /// ```
     pub fn name_to(&self) -> Result<String, String> {
         self.get_result_string("to name")

@@ -116,7 +116,10 @@ impl Sector {
     /// let api = alpha_vantage::set_api("demo");
     /// let sector = api.sector();
     /// let information = sector.information();
-    /// assert_eq!(information.unwrap(),"US Sector Performance (realtime & historical)");
+    /// assert_eq!(
+    ///     information.unwrap(),
+    ///     "US Sector Performance (realtime & historical)"
+    /// );
     /// ```
     pub fn information(&self) -> Result<String, String> {
         self.check_meta_data("information")
@@ -193,7 +196,7 @@ impl SectorHelper {
                     "Rank E: 3 Month Performance" => data.rank = "3-month".to_string(),
                     "Rank F: Year-to-Date (YTD) Performance" => {
                         data.rank = "year-to-date".to_string()
-                    }
+                    },
                     "Rank G: 1 Year Performance" => data.rank = "1-year".to_string(),
                     "Rank H: 3 Year Performance" => data.rank = "3-year".to_string(),
                     "Rank I: 5 Year Performance" => data.rank = "5-year".to_string(),
@@ -213,7 +216,7 @@ impl SectorHelper {
                         "Communication Services" => data.communication_services = val.to_string(),
                         "Materials" => data.materials = val.to_string(),
                         "Energy" => data.energy = val.to_string(),
-                        _ => {}
+                        _ => {},
                     }
                 }
                 final_data.push(data);

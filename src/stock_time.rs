@@ -35,9 +35,17 @@ impl TimeSeries {
     /// ```
     /// use alpha_vantage::util::*;
     /// let api = alpha_vantage::set_api("demo");
-    /// let stock_time = api.stock_time(StockFunction::IntraDay, "MSFT", Interval::FiveMin, OutputSize::Full);
+    /// let stock_time = api.stock_time(
+    ///     StockFunction::IntraDay,
+    ///     "MSFT",
+    ///     Interval::FiveMin,
+    ///     OutputSize::Full,
+    /// );
     /// let information = stock_time.information();
-    /// assert_eq!(information.unwrap(),"Intraday (5min) open, high, low, close prices and volume");
+    /// assert_eq!(
+    ///     information.unwrap(),
+    ///     "Intraday (5min) open, high, low, close prices and volume"
+    /// );
     /// ```
     pub fn information(&self) -> Result<String, String> {
         self.return_meta_string("information")
@@ -48,9 +56,14 @@ impl TimeSeries {
     /// ```
     /// use alpha_vantage::util::*;
     /// let api = alpha_vantage::set_api("demo");
-    /// let stock_time = api.stock_time(StockFunction::IntraDay, "MSFT", Interval::FiveMin, OutputSize::Full);
+    /// let stock_time = api.stock_time(
+    ///     StockFunction::IntraDay,
+    ///     "MSFT",
+    ///     Interval::FiveMin,
+    ///     OutputSize::Full,
+    /// );
     /// let symbol = stock_time.symbol();
-    /// assert_eq!(symbol.unwrap(),"MSFT");
+    /// assert_eq!(symbol.unwrap(), "MSFT");
     /// ```
     pub fn symbol(&self) -> Result<String, String> {
         self.return_meta_string("symbol")
@@ -75,9 +88,14 @@ impl TimeSeries {
     /// ```
     /// use alpha_vantage::util::*;
     /// let api = alpha_vantage::set_api("demo");
-    /// let stock_time = api.stock_time(StockFunction::IntraDay, "MSFT", Interval::FiveMin, OutputSize::Full);
+    /// let stock_time = api.stock_time(
+    ///     StockFunction::IntraDay,
+    ///     "MSFT",
+    ///     Interval::FiveMin,
+    ///     OutputSize::Full,
+    /// );
     /// let interval = stock_time.interval();
-    /// assert_eq!(interval.unwrap(),"5min");
+    /// assert_eq!(interval.unwrap(), "5min");
     /// ```
     pub fn interval(&self) -> Result<String, String> {
         self.operate_option_meta_value("interval")
@@ -88,9 +106,14 @@ impl TimeSeries {
     /// ```
     /// use alpha_vantage::util::*;
     /// let api = alpha_vantage::set_api("demo");
-    /// let stock_time = api.stock_time(StockFunction::IntraDay, "MSFT", Interval::FiveMin, OutputSize::Full);
+    /// let stock_time = api.stock_time(
+    ///     StockFunction::IntraDay,
+    ///     "MSFT",
+    ///     Interval::FiveMin,
+    ///     OutputSize::Full,
+    /// );
     /// let output_size = stock_time.output_size();
-    /// assert_eq!(output_size.unwrap(),"Full size");
+    /// assert_eq!(output_size.unwrap(), "Full size");
     /// ```
     pub fn output_size(&self) -> Result<String, String> {
         self.operate_option_meta_value("output size")
@@ -441,13 +464,67 @@ mod test {
     use reqwest::Url;
     #[test]
     fn test_time_series_create_url() {
-        assert_eq!(super::create_url(StockFunction::Daily, "USD", Interval::None, OutputSize::None, "random"),
-        Url::parse("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=USD&apikey=random").unwrap());
-        assert_eq!(super::create_url(StockFunction::Weekly, "NPR", Interval::None, OutputSize::None, "random"),
-        Url::parse("https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=NPR&apikey=random").unwrap());
-        assert_eq!(super::create_url(StockFunction::Monthly, "NPR", Interval::None, OutputSize::None, "random"),
-        Url::parse("https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=NPR&apikey=random").unwrap());
-        assert_eq!(super::create_url(StockFunction::IntraDay, "MSFT", Interval::SixtyMin, OutputSize::Full, "random"),
-        Url::parse("https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=MSFT&interval=60min&outputsize=full&apikey=random").unwrap());
+        assert_eq!(
+            super::create_url(
+                StockFunction::Daily,
+                "USD",
+                Interval::None,
+                OutputSize::None,
+                "random"
+            ),
+            Url::parse(
+                "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY\
+                &symbol=USD\
+                &apikey=random"
+            )
+            .unwrap()
+        );
+        assert_eq!(
+            super::create_url(
+                StockFunction::Weekly,
+                "NPR",
+                Interval::None,
+                OutputSize::None,
+                "random"
+                ),
+            Url::parse(
+                "https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY\
+                &symbol=NPR\
+                &apikey=random"
+            )
+            .unwrap()
+        );
+        assert_eq!(
+            super::create_url(
+                StockFunction::Monthly,
+                "NPR",
+                Interval::None,
+                OutputSize::None,
+                "random"
+            ),
+            Url::parse(
+                "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY\
+                &symbol=NPR\
+                &apikey=random"
+            )
+            .unwrap()
+        );
+        assert_eq!(
+            super::create_url(
+                StockFunction::IntraDay,
+                "MSFT",
+                Interval::SixtyMin,
+                OutputSize::Full,
+                "random"
+            ),
+            Url::parse(
+                "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY\
+                &symbol=MSFT\
+                &interval=60min\
+                &outputsize=full\
+                &apikey=random"
+            )
+            .unwrap()
+        );
     }
 }

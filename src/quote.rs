@@ -119,7 +119,7 @@ impl Quote {
     /// let api = alpha_vantage::set_api("demo");
     /// let quote = api.quote("MSFT");
     /// let symbol = quote.symbol();
-    /// assert_eq!(symbol.unwrap(),"MSFT");
+    /// assert_eq!(symbol.unwrap(), "MSFT");
     /// ```
     pub fn symbol(&self) -> Result<String, String> {
         self.return_string_value("symbol")

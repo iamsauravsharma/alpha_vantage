@@ -87,9 +87,15 @@ impl Forex {
     /// ```
     /// use alpha_vantage::util::*;
     /// let api = alpha_vantage::set_api("demo");
-    /// let forex = api.forex(ForexFunction::IntraDay, "EUR", "USD", Interval::FiveMin, OutputSize::Full);
+    /// let forex = api.forex(
+    ///     ForexFunction::IntraDay,
+    ///     "EUR",
+    ///     "USD",
+    ///     Interval::FiveMin,
+    ///     OutputSize::Full,
+    /// );
     /// let information = forex.information();
-    /// assert_eq!(information.unwrap(),"FX Intraday (5min) Time Series");
+    /// assert_eq!(information.unwrap(), "FX Intraday (5min) Time Series");
     /// ```
     pub fn information(&self) -> Result<String, String> {
         self.return_meta_string("information")
@@ -100,9 +106,15 @@ impl Forex {
     /// ```
     /// use alpha_vantage::util::*;
     /// let api = alpha_vantage::set_api("demo");
-    /// let forex = api.forex(ForexFunction::IntraDay, "EUR", "USD", Interval::FiveMin, OutputSize::Full);
+    /// let forex = api.forex(
+    ///     ForexFunction::IntraDay,
+    ///     "EUR",
+    ///     "USD",
+    ///     Interval::FiveMin,
+    ///     OutputSize::Full,
+    /// );
     /// let symbol_from = forex.symbol_from();
-    /// assert_eq!(symbol_from.unwrap(),"EUR");
+    /// assert_eq!(symbol_from.unwrap(), "EUR");
     /// ```
     pub fn symbol_from(&self) -> Result<String, String> {
         self.return_meta_string("from symbol")
@@ -113,9 +125,15 @@ impl Forex {
     /// ```
     /// use alpha_vantage::util::*;
     /// let api = alpha_vantage::set_api("demo");
-    /// let forex = api.forex(ForexFunction::IntraDay, "EUR", "USD", Interval::FiveMin, OutputSize::Full);
+    /// let forex = api.forex(
+    ///     ForexFunction::IntraDay,
+    ///     "EUR",
+    ///     "USD",
+    ///     Interval::FiveMin,
+    ///     OutputSize::Full,
+    /// );
     /// let symbol_to = forex.symbol_to();
-    /// assert_eq!(symbol_to.unwrap(),"USD");
+    /// assert_eq!(symbol_to.unwrap(), "USD");
     /// ```
     pub fn symbol_to(&self) -> Result<String, String> {
         self.return_meta_string("to symbol")
@@ -140,9 +158,15 @@ impl Forex {
     /// ```
     /// use alpha_vantage::util::*;
     /// let api = alpha_vantage::set_api("demo");
-    /// let forex = api.forex(ForexFunction::IntraDay, "EUR", "USD", Interval::FiveMin, OutputSize::Full);
+    /// let forex = api.forex(
+    ///     ForexFunction::IntraDay,
+    ///     "EUR",
+    ///     "USD",
+    ///     Interval::FiveMin,
+    ///     OutputSize::Full,
+    /// );
     /// let interval = forex.interval();
-    /// assert_eq!(interval.unwrap(),"5min");
+    /// assert_eq!(interval.unwrap(), "5min");
     /// ```
     pub fn interval(&self) -> Result<String, String> {
         self.operate_option_meta_value("interval")
@@ -153,9 +177,15 @@ impl Forex {
     /// ```
     /// use alpha_vantage::util::*;
     /// let api = alpha_vantage::set_api("demo");
-    /// let forex = api.forex(ForexFunction::IntraDay, "EUR", "USD", Interval::FiveMin, OutputSize::Full);
+    /// let forex = api.forex(
+    ///     ForexFunction::IntraDay,
+    ///     "EUR",
+    ///     "USD",
+    ///     Interval::FiveMin,
+    ///     OutputSize::Full,
+    /// );
     /// let output_size = forex.output_size();
-    /// assert_eq!(output_size.unwrap(),"Full size");
+    /// assert_eq!(output_size.unwrap(), "Full size");
     /// ```
     pub fn output_size(&self) -> Result<String, String> {
         self.operate_option_meta_value("output size")
@@ -389,13 +419,75 @@ mod test {
     #[test]
     // Testing forex create_url() function
     fn test_forex_create_url() {
-        assert_eq!(super::create_url(ForexFunction::Daily, "USD", "NPR", Interval::None, OutputSize::None, "random"),
-        Url::parse("https://www.alphavantage.co/query?function=FX_DAILY&from_symbol=USD&to_symbol=NPR&apikey=random").unwrap());
-        assert_eq!(super::create_url(ForexFunction::Weekly, "USD", "NPR", Interval::None, OutputSize::None, "random"),
-        Url::parse("https://www.alphavantage.co/query?function=FX_WEEKLY&from_symbol=USD&to_symbol=NPR&apikey=random").unwrap());
-        assert_eq!(super::create_url(ForexFunction::Monthly, "USD", "NPR", Interval::None, OutputSize::None, "random"),
-        Url::parse("https://www.alphavantage.co/query?function=FX_MONTHLY&from_symbol=USD&to_symbol=NPR&apikey=random").unwrap());
-        assert_eq!(super::create_url(ForexFunction::IntraDay, "USD", "NPR", Interval::FifteenMin, OutputSize::Full, "random"),
-        Url::parse("https://www.alphavantage.co/query?function=FX_INTRADAY&from_symbol=USD&to_symbol=NPR&interval=15min&outputsize=full&apikey=random").unwrap());
+        assert_eq!(
+            super::create_url(
+                ForexFunction::Daily,
+                "USD",
+                "NPR",
+                Interval::None,
+                OutputSize::None,
+                "random"
+            ),
+            Url::parse(
+                "https://www.alphavantage.co/query?function=FX_DAILY\
+                &from_symbol=USD\
+                &to_symbol=NPR\
+                &apikey=random"
+            )
+            .unwrap()
+        );
+        assert_eq!(
+            super::create_url(
+                ForexFunction::Weekly,
+                "USD",
+                "NPR",
+                Interval::None,
+                OutputSize::None,
+                "random"
+            ),
+            Url::parse(
+                "https://www.alphavantage.co/query?function=FX_WEEKLY\
+                &from_symbol=USD\
+                &to_symbol=NPR\
+                &apikey=random"
+            )
+            .unwrap()
+        );
+        assert_eq!(
+            super::create_url(
+                ForexFunction::Monthly,
+                "USD",
+                "NPR",
+                Interval::None,
+                OutputSize::None,
+                "random"
+            ),
+            Url::parse(
+                "https://www.alphavantage.co/query?function=FX_MONTHLY\
+                &from_symbol=USD\
+                &to_symbol=NPR\
+                &apikey=random"
+            )
+            .unwrap()
+        );
+        assert_eq!(
+            super::create_url(
+                ForexFunction::IntraDay,
+                "USD",
+                "NPR",
+                Interval::FifteenMin,
+                OutputSize::Full,
+                "random"
+            ),
+            Url::parse(
+                "https://www.alphavantage.co/query?function=FX_INTRADAY\
+                &from_symbol=USD\
+                &to_symbol=NPR\
+                &interval=15min\
+                &outputsize=full\
+                &apikey=random"
+            )
+            .unwrap()
+        );
     }
 }
