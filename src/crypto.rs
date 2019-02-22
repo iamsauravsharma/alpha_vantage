@@ -269,7 +269,7 @@ impl Crypto {
     pub fn last_refreshed(&self) -> Result<String, String> {
         if let Some(meta) = &self.meta_data {
             Ok(format!("{} {}", meta.last_refreshed, meta.time_zone))
-        } else if let Some(error) = self.error_message.clone() {
+        } else if let Some(error) = &self.error_message {
             Err(format!("Error Message : {}", error))
         } else {
             Err(format!(

@@ -43,7 +43,7 @@ pub struct Entry {
 impl Entry {
     /// Return time for entry
     pub fn time(&self) -> String {
-        self.time.clone()
+        self.time.to_string()
     }
 
     /// Return open value
@@ -143,7 +143,7 @@ impl Forex {
     pub fn last_refreshed(&self) -> Result<String, String> {
         if let Some(meta) = &self.meta_data {
             Ok(format!("{} {}", meta.last_refreshed, meta.time_zone))
-        } else if let Some(error) = self.error_message.clone() {
+        } else if let Some(error) = &self.error_message {
             Err(format!("Error Message : {}", error))
         } else {
             Err(format!(
@@ -419,13 +419,75 @@ mod test {
     #[test]
     // Testing forex create_url() function
     fn test_forex_create_url() {
-        assert_eq!(super::create_url(ForexFunction::Daily, "USD", "NPR", Interval::None, OutputSize::None, "random"),
-        Url::parse("https://www.alphavantage.co/query?function=FX_DAILY&from_symbol=USD&to_symbol=NPR&apikey=random").unwrap());
-        assert_eq!(super::create_url(ForexFunction::Weekly, "USD", "NPR", Interval::None, OutputSize::None, "random"),
-        Url::parse("https://www.alphavantage.co/query?function=FX_WEEKLY&from_symbol=USD&to_symbol=NPR&apikey=random").unwrap());
-        assert_eq!(super::create_url(ForexFunction::Monthly, "USD", "NPR", Interval::None, OutputSize::None, "random"),
-        Url::parse("https://www.alphavantage.co/query?function=FX_MONTHLY&from_symbol=USD&to_symbol=NPR&apikey=random").unwrap());
-        assert_eq!(super::create_url(ForexFunction::IntraDay, "USD", "NPR", Interval::FifteenMin, OutputSize::Full, "random"),
-        Url::parse("https://www.alphavantage.co/query?function=FX_INTRADAY&from_symbol=USD&to_symbol=NPR&interval=15min&outputsize=full&apikey=random").unwrap());
+        assert_eq!(
+            super::create_url(
+                ForexFunction::Daily,
+                "USD",
+                "NPR",
+                Interval::None,
+                OutputSize::None,
+                "random"
+            ),
+            Url::parse(
+                "https://www.alphavantage.co/query?function=FX_DAILY\
+                 &from_symbol=USD\
+                 &to_symbol=NPR\
+                 &apikey=random"
+            )
+            .unwrap()
+        );
+        assert_eq!(
+            super::create_url(
+                ForexFunction::Weekly,
+                "USD",
+                "NPR",
+                Interval::None,
+                OutputSize::None,
+                "random"
+            ),
+            Url::parse(
+                "https://www.alphavantage.co/query?function=FX_WEEKLY\
+                 &from_symbol=USD\
+                 &to_symbol=NPR\
+                 &apikey=random"
+            )
+            .unwrap()
+        );
+        assert_eq!(
+            super::create_url(
+                ForexFunction::Monthly,
+                "USD",
+                "NPR",
+                Interval::None,
+                OutputSize::None,
+                "random"
+            ),
+            Url::parse(
+                "https://www.alphavantage.co/query?function=FX_MONTHLY\
+                 &from_symbol=USD\
+                 &to_symbol=NPR\
+                 &apikey=random"
+            )
+            .unwrap()
+        );
+        assert_eq!(
+            super::create_url(
+                ForexFunction::IntraDay,
+                "USD",
+                "NPR",
+                Interval::FifteenMin,
+                OutputSize::Full,
+                "random"
+            ),
+            Url::parse(
+                "https://www.alphavantage.co/query?function=FX_INTRADAY\
+                 &from_symbol=USD\
+                 &to_symbol=NPR\
+                 &interval=15min\
+                 &outputsize=full\
+                 &apikey=random"
+            )
+            .unwrap()
+        );
     }
 }

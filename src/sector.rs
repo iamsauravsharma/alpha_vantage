@@ -186,7 +186,7 @@ impl SectorHelper {
         sector.meta_data = self.meta_data;
         if let Some(temp_data) = self.data {
             let mut final_data = Vec::new();
-            for (key, val) in temp_data.iter() {
+            for (key, val) in &temp_data {
                 let mut data = Data::default();
                 match key.as_str() {
                     "Rank A: Real-Time Performance" => data.rank = "real-time".to_string(),

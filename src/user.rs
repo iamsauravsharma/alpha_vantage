@@ -47,7 +47,7 @@ impl APIKey {
 
     /// Method to get api key
     pub fn get_api(&self) -> String {
-        self.api.clone()
+        self.api.to_string()
     }
 
     /// Get API value timeout period

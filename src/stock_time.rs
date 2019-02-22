@@ -73,7 +73,7 @@ impl TimeSeries {
     pub fn last_refreshed(&self) -> Result<String, String> {
         if let Some(meta) = &self.meta_data {
             Ok(format!("{} {}", meta.last_refreshed, meta.time_zone))
-        } else if let Some(error) = self.error_message.clone() {
+        } else if let Some(error) = &self.error_message {
             Err(format!("Error Message : {}", error))
         } else {
             Err(format!(
@@ -228,7 +228,7 @@ impl Entry {
 
     /// Return adjusted
     pub fn adjusted(&self) -> Option<f64> {
-        if let Some(data) = self.adjusted_close.clone() {
+        if let Some(data) = &self.adjusted_close {
             return Some(return_f64(&data));
         }
         None
@@ -241,7 +241,7 @@ impl Entry {
 
     /// Return dividend
     pub fn dividend(&self) -> Option<f64> {
-        if let Some(data) = self.dividend_amount.clone() {
+        if let Some(data) = &self.dividend_amount {
             return Some(return_f64(&data));
         }
         None
@@ -249,7 +249,7 @@ impl Entry {
 
     /// Return split dividend
     pub fn split(&self) -> Option<f64> {
-        if let Some(data) = self.split_coefficient.clone() {
+        if let Some(data) = &self.split_coefficient {
             return Some(return_f64(&data));
         }
         None
@@ -297,7 +297,7 @@ struct AdjustedHelper {
     split_coefficient: Option<String>,
 }
 
-/// helper struct for TimeSeries which deseialize JSON
+/// helper struct for `TimeSeries` which deseialize JSON
 #[derive(Deserialize)]
 pub(crate) struct TimeSeriesHelper {
     #[serde(rename = "Error Message")]
@@ -463,7 +463,7 @@ mod test {
     use crate::util::*;
     use reqwest::Url;
     #[test]
-    fn test_time_series_create_url() {
+    fn test_stock_time_create_url() {
         assert_eq!(
             super::create_url(
                 StockFunction::Daily,

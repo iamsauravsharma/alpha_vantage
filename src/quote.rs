@@ -87,18 +87,18 @@ impl Quote {
 
     /// general function used for returning f64 value of Quote method
     fn return_f64_value(&self, value: &str) -> Result<f64, String> {
-        if let Some(global) = self.global_quote.clone() {
+        if let Some(global) = &self.global_quote {
             let price = match value {
-                "open" => global.open,
-                "high" => global.high,
-                "low" => global.low,
-                "price" => global.price,
-                "previous" => global.previous_close,
-                "change" => global.change,
-                _ => "".to_string(),
+                "open" => &global.open,
+                "high" => &global.high,
+                "low" => &global.low,
+                "price" => &global.price,
+                "previous" => &global.previous_close,
+                "change" => &global.change,
+                _ => "",
             };
             return Ok(price.trim().parse::<f64>().unwrap());
-        } else if let Some(error) = self.error_message.clone() {
+        } else if let Some(error) = &self.error_message {
             Err(format!("Error Message : {}", error))
         } else {
             Err(format!(
@@ -127,14 +127,14 @@ impl Quote {
 
     /// general function used for returning String value
     fn return_string_value(&self, value: &str) -> Result<String, String> {
-        if let Some(global) = self.global_quote.clone() {
+        if let Some(global) = &self.global_quote {
             let value = match value {
-                "trading" => global.last_day,
-                "symbol" => global.symbol,
+                "trading" => global.last_day.to_string(),
+                "symbol" => global.symbol.to_string(),
                 _ => "".to_string(),
             };
             return Ok(value);
-        } else if let Some(error) = self.error_message.clone() {
+        } else if let Some(error) = &self.error_message {
             Err(format!("Error Message : {}", error))
         } else {
             Err(format!(

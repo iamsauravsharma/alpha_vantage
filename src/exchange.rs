@@ -44,9 +44,9 @@ struct RealtimeExchangeRate {
 impl Exchange {
     /// Get Rate for exchange produce error if no rate is available
     pub fn rate(&self) -> Result<f64, String> {
-        if let Some(real) = self.real_time.clone() {
+        if let Some(real) = &self.real_time {
             Ok(real.rate.trim().parse::<f64>().unwrap())
-        } else if let Some(error) = self.error_message.clone() {
+        } else if let Some(error) = &self.error_message {
             Err(format!("Error Message : {}", error))
         } else {
             Err(format!(
@@ -60,7 +60,7 @@ impl Exchange {
     pub fn refreshed_time(&self) -> Result<String, String> {
         if let Some(real) = &self.real_time {
             Ok(format!("{} {}", real.last_refreshed, real.time_zone))
-        } else if let Some(error) = self.error_message.clone() {
+        } else if let Some(error) = &self.error_message {
             Err(format!("Error Message : {}", error))
         } else {
             Err(format!(

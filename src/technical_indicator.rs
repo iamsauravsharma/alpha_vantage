@@ -54,7 +54,7 @@ impl Indicator {
                     let mut data_collector = DataCollector::default();
                     data_collector.time = time.to_string();
                     let hash_values = hash.get(time).unwrap().to_owned();
-                    for (key, value) in hash_values.iter() {
+                    for (key, value) in &hash_values {
                         let value_f64 = value.trim().parse::<f64>().unwrap();
                         data_collector.values.insert(key.to_string(), value_f64);
                     }
