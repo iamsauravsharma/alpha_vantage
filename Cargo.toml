@@ -8,7 +8,7 @@ description="Rust Wrapper/Crate built for AlphaVantage API"
 license="MIT"
 readme = "README.MD"
 edition = "2018"
-keywords = ["alpha vantage","currency","finance","stock","exchange rate"]
+keywords = ["alphavantage","currency","finance","stock","exchange"]
 categories = ["api-bindings","web-programming::http-client"]
 
 [dependencies]
