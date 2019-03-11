@@ -2,12 +2,17 @@
 name = "alpha_vantage"
 version = "0.1.0"
 authors = ["Saurav Sharma <appdroiddeveloper@gmail.com>"]
-edition = "2018"
+homepage = "https://github.com/iamsauravsharma/alpha_vantage"
+repository = "https://github.com/iamsauravsharma/alpha_vantage"
 description="Rust Wrapper/Crate built for AlphaVantage API"
 license="MIT"
+readme = "README.MD"
+edition = "2018"
+keywords = ["alpha vantage","currency","finance","stock","exchange rate"]
+categories = ["api-bindings","web-programming::http-client"]
 
 [dependencies]
-reqwest="0.9.10"
+reqwest="0.9.11"
 serde="1.0.89"
 serde_json="1.0.39"
 serde_derive="1.0.89"

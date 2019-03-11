@@ -80,3 +80,8 @@ deploy:
     on:
       branch: master
       condition: $TRAVIS_OS_NAME = linux && $TRAVIS_RUST_VERSION = stable
+  - provider: cargo
+    token: $CARGO_TOKEN
+    on:
+      tags: true
+      condition: $TRAVIS_OS_NAME = linux && $TRAVIS_RUST_VERSION = stable

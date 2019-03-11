@@ -8,9 +8,9 @@
 
 **Project Info:**
 
-| License | LoC |
-| :---: | :---: |
-| [![License: MIT][license_badge]][license_link] | [![LoC][loc_badge]][loc_link] |
+| License | LoC | Crates Version |
+| :---: | :---: | :---: |
+| [![License: MIT][license_badge]][license_link] | [![LoC][loc_badge]][loc_link] | [![Crate][cratesio_badge]][cratesio_link] |
 
 **Rust version support:**
 
@@ -26,7 +26,7 @@
 
 **WARNING : may contain bug which may cause undesired functionality** 
 
-(WIP) Rust Wrapper/Client built for [Alphavantage][alphavantage_link]  API.
+Rust Wrapper/Client built for [Alphavantage][alphavantage_link]  API.
 Project is completed  and core functionality is already implemented out totally and project is in usable state.
 Better documentation and optimization are remaining before publishing to [crates.io][cratesio_link]
 
@@ -40,12 +40,18 @@ Better documentation and optimization are remaining before publishing to [crates
 - [X] Crypto Currency
 - [X] Technical Indicators
 - [X] Sector Performances
-- [ ] Publish to [crates.io][cratesio_link]
 
 ## Add as dependencies
 Edit Cargo.toml file to add alpha_vantage as dependencies
+```
+[dependencies]
+alpha_vantage = 0.1.0
+```
 
-```Rust
+__OR__
+For bleeding edge development use
+
+```
 [dependencies]
 alpha_vantage = {git = "https://github.com/iamsauravsharma/alpha_vantage"}
 ```
@@ -79,7 +85,8 @@ println!("{}",rate);
 
 [alphavantage_link]: https://alphavantage.co
 
-[cratesio_link]: https://crates.io
+[cratesio_badge]: https://img.shields.io/crates/v/alpha_vantage.svg
+[cratesio_link]: https://crates.io/crates/alpha_vantage
 
 [stable_supported_badge]: https://img.shields.io/badge/stable-supported-brightgreen.svg?logo=rust
 [beta_supported_badge]: https://img.shields.io/badge/beta-supported-brightgreen.svg?logo=rust
