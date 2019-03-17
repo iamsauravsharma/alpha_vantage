@@ -9,9 +9,9 @@ sudo: true
 
 git:
   depth: false
- 
+
 dist: xenial
-  
+
 os:
   - linux
   - osx
@@ -76,7 +76,7 @@ deploy:
     script: bash scripts/codecov_coverage.sh
     skip-cleanup: true
     on:
-      condition: $TRAVIS_OS_NAME = linux && $TRAVIS_RUST_VERSION = nightly
+      condition: $TRAVIS_OS_NAME = linux && $TRAVIS_RUST_VERSION = stable
   - provider: pages
     skip-cleanup: true
     github-token: $GITHUB_TOKEN
