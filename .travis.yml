@@ -17,6 +17,11 @@ os:
   - osx
   - windows
 
+matrix:
+  allow_failures:
+    - os: windows
+  fast_finish: true
+
 addons:
   apt:
     packages:
