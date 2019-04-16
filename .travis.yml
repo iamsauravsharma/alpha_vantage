@@ -82,11 +82,3 @@ deploy:
     skip-cleanup: true
     on:
       condition: $TRAVIS_OS_NAME = linux && $TRAVIS_RUST_VERSION = stable
-  - provider: pages
-    skip-cleanup: true
-    github-token: $GITHUB_TOKEN
-    keep-history: true
-    local-dir: "target/doc"
-    on:
-      branch: master
-      condition: $TRAVIS_OS_NAME = linux && $TRAVIS_RUST_VERSION = nightly
