@@ -72,12 +72,6 @@ deploy:
       tags: true
       condition: $TRAVIS_OS_NAME = linux && $TRAVIS_RUST_VERSION = stable
   - provider: script
-    script: bash scripts/create_index.sh
-    skip-cleanup: true
-    on:
-      branch: master
-      condition: $TRAVIS_OS_NAME = linux && $TRAVIS_RUST_VERSION = nightly
-  - provider: script
     script: bash scripts/codecov_coverage.sh
     skip-cleanup: true
     on:
