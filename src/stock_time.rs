@@ -47,7 +47,7 @@ impl TimeSeries {
     ///     "Intraday (5min) open, high, low, close prices and volume"
     /// );
     /// ```
-    pub fn information(&self) -> Result<String, String> {
+    pub fn information(&self) -> Result<&str, String> {
         self.return_meta_string("information")
     }
 
@@ -65,7 +65,7 @@ impl TimeSeries {
     /// let symbol = stock_time.symbol();
     /// assert_eq!(symbol.unwrap(), "MSFT");
     /// ```
-    pub fn symbol(&self) -> Result<String, String> {
+    pub fn symbol(&self) -> Result<&str, String> {
         self.return_meta_string("symbol")
     }
 
@@ -97,7 +97,7 @@ impl TimeSeries {
     /// let interval = stock_time.interval();
     /// assert_eq!(interval.unwrap(), "5min");
     /// ```
-    pub fn interval(&self) -> Result<String, String> {
+    pub fn interval(&self) -> Result<&str, String> {
         self.operate_option_meta_value("interval")
     }
 
@@ -115,7 +115,7 @@ impl TimeSeries {
     /// let output_size = stock_time.output_size();
     /// assert_eq!(output_size.unwrap(), "Full size");
     /// ```
-    pub fn output_size(&self) -> Result<String, String> {
+    pub fn output_size(&self) -> Result<&str, String> {
         self.operate_option_meta_value("output size")
     }
 
@@ -134,14 +134,14 @@ impl TimeSeries {
     }
 
     /// Return a meta data value as a form of String
-    fn return_meta_string(&self, which_val: &str) -> Result<String, String> {
+    fn return_meta_string(&self, which_val: &str) -> Result<&str, String> {
         if let Some(meta_data) = &self.meta_data {
             let value = match which_val {
                 "information" => &meta_data.information,
                 "symbol" => &meta_data.symbol,
                 _ => "",
             };
-            Ok(value.to_string())
+            Ok(value)
         } else if let Some(error) = &self.error_message {
             Err(format!("Error Message : {}", error))
         } else {
@@ -153,14 +153,14 @@ impl TimeSeries {
     }
 
     /// Return Option metadata value as a Result form of String
-    fn operate_option_meta_value(&self, which_val: &str) -> Result<String, String> {
+    fn operate_option_meta_value(&self, which_val: &str) -> Result<&str, String> {
         if let Some(meta_data) = &self.meta_data {
             if let Some(value) = match which_val {
                 "interval" => &meta_data.interval,
                 "output size" => &meta_data.output_size,
                 _ => &None,
             } {
-                Ok(value.to_string())
+                Ok(value)
             } else {
                 Err("No value present".to_string())
             }
@@ -202,8 +202,8 @@ pub struct Entry {
 
 impl Entry {
     /// Get time
-    pub fn time(&self) -> String {
-        self.time.to_string()
+    pub fn time(&self) -> &str {
+        &self.time
     }
 
     /// Return open

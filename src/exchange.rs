@@ -78,7 +78,7 @@ impl Exchange {
     /// let code_from = exchange.code_from();
     /// assert_eq!(code_from.unwrap(), "BTC");
     /// ```
-    pub fn code_from(&self) -> Result<String, String> {
+    pub fn code_from(&self) -> Result<&str, String> {
         self.get_result_string("from code")
     }
 
@@ -90,7 +90,7 @@ impl Exchange {
     /// let name_from = exchange.name_from();
     /// assert_eq!(name_from.unwrap(), "Bitcoin");
     /// ```
-    pub fn name_from(&self) -> Result<String, String> {
+    pub fn name_from(&self) -> Result<&str, String> {
         self.get_result_string("from name")
     }
 
@@ -102,7 +102,7 @@ impl Exchange {
     /// let code_to = exchange.code_to();
     /// assert_eq!(code_to.unwrap(), "CNY");
     /// ```
-    pub fn code_to(&self) -> Result<String, String> {
+    pub fn code_to(&self) -> Result<&str, String> {
         self.get_result_string("to code")
     }
 
@@ -114,12 +114,12 @@ impl Exchange {
     /// let name_to = exchange.name_to();
     /// assert_eq!(name_to.unwrap(), "Chinese Yuan");
     /// ```
-    pub fn name_to(&self) -> Result<String, String> {
+    pub fn name_to(&self) -> Result<&str, String> {
         self.get_result_string("to name")
     }
 
     /// Collect out certain value from real_time if presnt otherwise show error
-    fn get_result_string(&self, match_str: &str) -> Result<String, String> {
+    fn get_result_string(&self, match_str: &str) -> Result<&str, String> {
         if let Some(real_time) = &self.real_time {
             let value = match match_str {
                 "from code" => &real_time.from_code,
@@ -128,7 +128,7 @@ impl Exchange {
                 "to name" => &real_time.to_name,
                 _ => "",
             };
-            Ok(value.to_string())
+            Ok(value)
         } else if let Some(error) = &self.error_message {
             Err(format!("Error Message : {}", error))
         } else {

@@ -109,7 +109,7 @@ impl Quote {
     }
 
     /// get last trading day
-    pub fn last_trading(&self) -> Result<String, String> {
+    pub fn last_trading(&self) -> Result<&str, String> {
         self.return_string_value("trading")
     }
 
@@ -121,17 +121,17 @@ impl Quote {
     /// let symbol = quote.symbol();
     /// assert_eq!(symbol.unwrap(), "MSFT");
     /// ```
-    pub fn symbol(&self) -> Result<String, String> {
+    pub fn symbol(&self) -> Result<&str, String> {
         self.return_string_value("symbol")
     }
 
     /// general function used for returning String value
-    fn return_string_value(&self, value: &str) -> Result<String, String> {
+    fn return_string_value(&self, value: &str) -> Result<&str, String> {
         if let Some(global) = &self.global_quote {
             let value = match value {
-                "trading" => global.last_day.to_string(),
-                "symbol" => global.symbol.to_string(),
-                _ => "".to_string(),
+                "trading" => &global.last_day,
+                "symbol" => &global.symbol,
+                _ => "",
             };
             return Ok(value);
         } else if let Some(error) = &self.error_message {

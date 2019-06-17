@@ -45,43 +45,43 @@ pub struct DataValue {
 
 impl DataValue {
     /// Return symbol
-    pub fn symbol(&self) -> String {
-        self.symbol.to_string()
+    pub fn symbol(&self) -> &str {
+        &self.symbol
     }
 
     /// Return name for symbol
-    pub fn name(&self) -> String {
-        self.name.to_string()
+    pub fn name(&self) -> &str {
+        &self.name
     }
 
     /// Return data type
-    pub fn data_type(&self) -> String {
-        self.data_type.to_string()
+    pub fn data_type(&self) -> &str {
+        &self.data_type
     }
 
     /// Return region of search entry
-    pub fn region(&self) -> String {
-        self.region.to_string()
+    pub fn region(&self) -> &str {
+        &self.region
     }
 
     /// Return open value
-    pub fn market_open(&self) -> String {
-        self.market_open.to_string()
+    pub fn market_open(&self) -> &str {
+        &self.market_open
     }
 
     /// Return close value
-    pub fn market_close(&self) -> String {
-        self.market_close.to_string()
+    pub fn market_close(&self) -> &str {
+        &self.market_close
     }
 
     /// Return time zone of symbol
-    pub fn time_zone(&self) -> String {
-        self.time_zone.to_string()
+    pub fn time_zone(&self) -> &str {
+        &self.time_zone
     }
 
     /// Return currency
-    pub fn currency(&self) -> String {
-        self.currency.to_string()
+    pub fn currency(&self) -> &str {
+        &self.currency
     }
 
     /// Return match score

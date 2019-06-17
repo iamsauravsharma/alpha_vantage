@@ -85,13 +85,13 @@ pub struct DataCollector {
 
 impl DataCollector {
     /// Return out a time
-    pub fn time(&self) -> String {
-        self.time.to_string()
+    pub fn time(&self) -> &str {
+        &self.time
     }
 
     /// Return values for Data
-    pub fn values(&self) -> HashMap<String, f64> {
-        self.values.clone()
+    pub fn values(&self) -> &HashMap<String, f64> {
+        &self.values
     }
 }
 

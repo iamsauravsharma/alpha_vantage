@@ -125,9 +125,9 @@ pub struct Entry {
 }
 
 impl Entry {
-    /// Return time as String
-    pub fn time(&self) -> String {
-        self.time.to_string()
+    /// Return time
+    pub fn time(&self) -> &str {
+        &self.time
     }
 
     /// Return market open value
@@ -208,7 +208,7 @@ impl Crypto {
     ///     "Daily Prices and Volumes for Digital Currency"
     /// );
     /// ```
-    pub fn information(&self) -> Result<String, String> {
+    pub fn information(&self) -> Result<&str, String> {
         self.return_meta_string("information")
     }
 
@@ -221,7 +221,7 @@ impl Crypto {
     /// let digital_code = crypto.digital_code();
     /// assert_eq!(digital_code.unwrap(), "BTC");
     /// ```
-    pub fn digital_code(&self) -> Result<String, String> {
+    pub fn digital_code(&self) -> Result<&str, String> {
         self.return_meta_string("digital code")
     }
 
@@ -234,7 +234,7 @@ impl Crypto {
     /// let digital_name = crypto.digital_name();
     /// assert_eq!(digital_name.unwrap(), "Bitcoin");
     /// ```
-    pub fn digital_name(&self) -> Result<String, String> {
+    pub fn digital_name(&self) -> Result<&str, String> {
         self.return_meta_string("digital name")
     }
 
@@ -247,7 +247,7 @@ impl Crypto {
     /// let market_code = crypto.market_code();
     /// assert_eq!(market_code.unwrap(), "CNY");
     /// ```
-    pub fn market_code(self) -> Result<String, String> {
+    pub fn market_code(&self) -> Result<&str, String> {
         self.return_meta_string("market code")
     }
 
@@ -260,7 +260,7 @@ impl Crypto {
     /// let market_name = crypto.market_name();
     /// assert_eq!(market_name.unwrap(), "Chinese Yuan");
     /// ```
-    pub fn market_name(&self) -> Result<String, String> {
+    pub fn market_name(&self) -> Result<&str, String> {
         self.return_meta_string("market name")
     }
 
@@ -295,7 +295,7 @@ impl Crypto {
     }
 
     /// Return meta string if meta data is present otherwise show any two error
-    fn return_meta_string(&self, which_val: &str) -> Result<String, String> {
+    fn return_meta_string(&self, which_val: &str) -> Result<&str, String> {
         if let Some(meta_data) = &self.meta_data {
             let value = match which_val {
                 "information" => &meta_data.information,
@@ -305,7 +305,7 @@ impl Crypto {
                 "market name" => &meta_data.market_name,
                 _ => "",
             };
-            Ok(value.to_string())
+            Ok(value)
         } else if let Some(error) = &self.error_message {
             Err(format!("Error Message : {}", error))
         } else {

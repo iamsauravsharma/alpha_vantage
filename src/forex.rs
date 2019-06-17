@@ -42,8 +42,8 @@ pub struct Entry {
 
 impl Entry {
     /// Return time for entry
-    pub fn time(&self) -> String {
-        self.time.to_string()
+    pub fn time(&self) -> &str {
+        &self.time
     }
 
     /// Return open value
@@ -97,7 +97,7 @@ impl Forex {
     /// let information = forex.information();
     /// assert_eq!(information.unwrap(), "FX Intraday (5min) Time Series");
     /// ```
-    pub fn information(&self) -> Result<String, String> {
+    pub fn information(&self) -> Result<&str, String> {
         self.return_meta_string("information")
     }
 
@@ -116,7 +116,7 @@ impl Forex {
     /// let symbol_from = forex.symbol_from();
     /// assert_eq!(symbol_from.unwrap(), "EUR");
     /// ```
-    pub fn symbol_from(&self) -> Result<String, String> {
+    pub fn symbol_from(&self) -> Result<&str, String> {
         self.return_meta_string("from symbol")
     }
 
@@ -135,7 +135,7 @@ impl Forex {
     /// let symbol_to = forex.symbol_to();
     /// assert_eq!(symbol_to.unwrap(), "USD");
     /// ```
-    pub fn symbol_to(&self) -> Result<String, String> {
+    pub fn symbol_to(&self) -> Result<&str, String> {
         self.return_meta_string("to symbol")
     }
 
@@ -168,7 +168,7 @@ impl Forex {
     /// let interval = forex.interval();
     /// assert_eq!(interval.unwrap(), "5min");
     /// ```
-    pub fn interval(&self) -> Result<String, String> {
+    pub fn interval(&self) -> Result<&str, String> {
         self.operate_option_meta_value("interval")
     }
 
@@ -187,7 +187,7 @@ impl Forex {
     /// let output_size = forex.output_size();
     /// assert_eq!(output_size.unwrap(), "Full size");
     /// ```
-    pub fn output_size(&self) -> Result<String, String> {
+    pub fn output_size(&self) -> Result<&str, String> {
         self.operate_option_meta_value("output size")
     }
 
@@ -206,7 +206,7 @@ impl Forex {
     }
 
     /// Return a meta data field in Result type
-    fn return_meta_string(&self, which_val: &str) -> Result<String, String> {
+    fn return_meta_string(&self, which_val: &str) -> Result<&str, String> {
         if let Some(meta_data) = &self.meta_data {
             let value = match which_val {
                 "information" => &meta_data.information,
@@ -214,7 +214,7 @@ impl Forex {
                 "to symbol" => &meta_data.to_symbol,
                 _ => "",
             };
-            Ok(value.to_string())
+            Ok(value)
         } else if let Some(error) = &self.error_message {
             Err(format!("Error Message : {}", error))
         } else {
@@ -226,14 +226,14 @@ impl Forex {
     }
 
     /// Convert out Option meta data field as a Result field
-    fn operate_option_meta_value(&self, which_val: &str) -> Result<String, String> {
+    fn operate_option_meta_value(&self, which_val: &str) -> Result<&str, String> {
         if let Some(meta_data) = &self.meta_data {
             if let Some(value) = match which_val {
                 "interval" => &meta_data.interval,
                 "output size" => &meta_data.output_size,
                 _ => &None,
             } {
-                Ok(value.to_string())
+                Ok(value)
             } else {
                 Err("No value present".to_string())
             }

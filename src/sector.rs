@@ -40,63 +40,63 @@ pub struct Data {
 
 impl Data {
     /// Return rank
-    pub fn rank(&self) -> String {
-        self.rank.to_string()
+    pub fn rank(&self) -> &str {
+        &self.rank
     }
 
     /// Return utilites score
-    pub fn utilites(&self) -> String {
-        self.utilites.to_string()
+    pub fn utilites(&self) -> &str {
+        &self.utilites
     }
 
     /// Return health care score
-    pub fn health_care(&self) -> String {
-        self.health_care.to_string()
+    pub fn health_care(&self) -> &str {
+        &self.health_care
     }
 
     /// Return out information technology
-    pub fn information_technology(&self) -> String {
-        self.information_technology.to_string()
+    pub fn information_technology(&self) -> &str {
+        &self.information_technology
     }
 
     /// Return industrials scores
-    pub fn industrials(&self) -> String {
-        self.industrials.to_string()
+    pub fn industrials(&self) -> &str {
+        &self.industrials
     }
 
     /// Return out real estate value
-    pub fn real_estate(&self) -> String {
-        self.real_estate.to_string()
+    pub fn real_estate(&self) -> &str {
+        &self.real_estate
     }
 
     /// Return consumer staples value
-    pub fn consumer_staples(&self) -> String {
-        self.consumer_staples.to_string()
+    pub fn consumer_staples(&self) -> &str {
+        &self.consumer_staples
     }
 
     /// Return out value for consumer discretionary
-    pub fn consumer_discretionary(&self) -> String {
-        self.consumer_discretionary.to_string()
+    pub fn consumer_discretionary(&self) -> &str {
+        &self.consumer_discretionary
     }
 
     /// Return out for financials
-    pub fn financials(&self) -> String {
-        self.financials.to_string()
+    pub fn financials(&self) -> &str {
+        &self.financials
     }
 
     /// Gives value of communication services
-    pub fn communication_services(&self) -> String {
-        self.communication_services.to_string()
+    pub fn communication_services(&self) -> &str {
+        &self.communication_services
     }
 
     /// Gives materials value
-    pub fn materials(&self) -> String {
-        self.materials.to_string()
+    pub fn materials(&self) -> &str {
+        &self.materials
     }
 
     /// Gives out energy data
-    pub fn energy(&self) -> String {
-        self.energy.to_string()
+    pub fn energy(&self) -> &str {
+        &self.energy
     }
 }
 
@@ -121,12 +121,12 @@ impl Sector {
     ///     "US Sector Performance (realtime & historical)"
     /// );
     /// ```
-    pub fn information(&self) -> Result<String, String> {
+    pub fn information(&self) -> Result<&str, String> {
         self.check_meta_data("information")
     }
 
     /// Return last refreshed time
-    pub fn last_refreshed(&self) -> Result<String, String> {
+    pub fn last_refreshed(&self) -> Result<&str, String> {
         self.check_meta_data("last refreshed")
     }
 
@@ -145,14 +145,14 @@ impl Sector {
     }
 
     /// Check a meta data is present or not
-    fn check_meta_data(&self, name: &str) -> Result<String, String> {
+    fn check_meta_data(&self, name: &str) -> Result<&str, String> {
         if let Some(meta_data) = &self.meta_data {
             let value = match name {
                 "information" => &meta_data.information,
                 "last refreshed" => &meta_data.last_refreshed,
                 _ => "",
             };
-            Ok(value.to_string())
+            Ok(value)
         } else if let Some(error) = &self.error_message {
             Err(format!("Error Message : {}", error))
         } else {

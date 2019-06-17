@@ -46,8 +46,8 @@ impl APIKey {
     }
 
     /// Method to get api key
-    pub fn get_api(&self) -> String {
-        self.api.to_string()
+    pub fn get_api(&self) -> &str {
+        &self.api
     }
 
     /// Get API value timeout period
