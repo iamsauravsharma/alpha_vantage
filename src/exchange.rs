@@ -43,30 +43,42 @@ struct RealtimeExchangeRate {
 
 impl Exchange {
     /// Get Rate for exchange produce error if no rate is available
-    pub fn rate(&self) -> Result<f64, String> {
+    pub fn rate(&self) -> Result<f64, &str> {
         if let Some(real) = &self.real_time {
             Ok(real.rate.trim().parse::<f64>().unwrap())
         } else if let Some(error) = &self.error_message {
-            Err(format!("Error Message : {}", error))
+            Err(error)
+        } else if let Some(information) = &self.information {
+            Err(information)
         } else {
-            Err(format!(
-                "Information : {}",
-                self.information.clone().unwrap()
-            ))
+            Err("Unknown error")
         }
     }
 
     /// Get time when exchange rate was last refreshed along with time zone.
-    pub fn refreshed_time(&self) -> Result<String, String> {
+    pub fn refreshed_time(&self) -> Result<&str, &str> {
         if let Some(real) = &self.real_time {
-            Ok(format!("{} {}", real.last_refreshed, real.time_zone))
+            Ok(&real.last_refreshed)
         } else if let Some(error) = &self.error_message {
-            Err(format!("Error Message : {}", error))
+            Err(error)
+        } else if let Some(information) = &self.information {
+            Err(information)
         } else {
-            Err(format!(
-                "Information : {}",
-                self.information.clone().unwrap()
-            ))
+            Err("Unknown error")
+        }
+    }
+
+    /// Return time zone of all data time produce error if API return
+    /// error_message or information instead of meta data
+    pub fn time_zone(&self) -> Result<&str, &str> {
+        if let Some(meta) = &self.real_time {
+            Ok(&meta.time_zone)
+        } else if let Some(error) = &self.error_message {
+            Err(error)
+        } else if let Some(information) = &self.information {
+            Err(information)
+        } else {
+            Err("Unknown error")
         }
     }
 
@@ -78,7 +90,7 @@ impl Exchange {
     /// let code_from = exchange.code_from();
     /// assert_eq!(code_from.unwrap(), "BTC");
     /// ```
-    pub fn code_from(&self) -> Result<&str, String> {
+    pub fn code_from(&self) -> Result<&str, &str> {
         self.get_result_string("from code")
     }
 
@@ -90,7 +102,7 @@ impl Exchange {
     /// let name_from = exchange.name_from();
     /// assert_eq!(name_from.unwrap(), "Bitcoin");
     /// ```
-    pub fn name_from(&self) -> Result<&str, String> {
+    pub fn name_from(&self) -> Result<&str, &str> {
         self.get_result_string("from name")
     }
 
@@ -102,7 +114,7 @@ impl Exchange {
     /// let code_to = exchange.code_to();
     /// assert_eq!(code_to.unwrap(), "CNY");
     /// ```
-    pub fn code_to(&self) -> Result<&str, String> {
+    pub fn code_to(&self) -> Result<&str, &str> {
         self.get_result_string("to code")
     }
 
@@ -114,12 +126,12 @@ impl Exchange {
     /// let name_to = exchange.name_to();
     /// assert_eq!(name_to.unwrap(), "Chinese Yuan");
     /// ```
-    pub fn name_to(&self) -> Result<&str, String> {
+    pub fn name_to(&self) -> Result<&str, &str> {
         self.get_result_string("to name")
     }
 
     /// Collect out certain value from real_time if presnt otherwise show error
-    fn get_result_string(&self, match_str: &str) -> Result<&str, String> {
+    fn get_result_string(&self, match_str: &str) -> Result<&str, &str> {
         if let Some(real_time) = &self.real_time {
             let value = match match_str {
                 "from code" => &real_time.from_code,
@@ -130,12 +142,11 @@ impl Exchange {
             };
             Ok(value)
         } else if let Some(error) = &self.error_message {
-            Err(format!("Error Message : {}", error))
+            Err(error)
+        } else if let Some(information) = &self.information {
+            Err(information)
         } else {
-            Err(format!(
-                "Information : {}",
-                self.information.clone().unwrap()
-            ))
+            Err("Unknown error")
         }
     }
 }

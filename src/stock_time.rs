@@ -47,7 +47,7 @@ impl TimeSeries {
     ///     "Intraday (5min) open, high, low, close prices and volume"
     /// );
     /// ```
-    pub fn information(&self) -> Result<&str, String> {
+    pub fn information(&self) -> Result<&str, &str> {
         self.return_meta_string("information")
     }
 
@@ -65,21 +65,35 @@ impl TimeSeries {
     /// let symbol = stock_time.symbol();
     /// assert_eq!(symbol.unwrap(), "MSFT");
     /// ```
-    pub fn symbol(&self) -> Result<&str, String> {
+    pub fn symbol(&self) -> Result<&str, &str> {
         self.return_meta_string("symbol")
     }
 
-    /// last time a data was refreshed with time zone
-    pub fn last_refreshed(&self) -> Result<String, String> {
+    /// Return last refreshed time produce error if API returns error_message or
+    /// information instead of meta data
+    pub fn last_refreshed(&self) -> Result<&str, &str> {
         if let Some(meta) = &self.meta_data {
-            Ok(format!("{} {}", meta.last_refreshed, meta.time_zone))
+            Ok(&meta.last_refreshed)
         } else if let Some(error) = &self.error_message {
-            Err(format!("Error Message : {}", error))
+            Err(error)
+        } else if let Some(information) = &self.information {
+            Err(information)
         } else {
-            Err(format!(
-                "Information : {}",
-                self.information.clone().unwrap()
-            ))
+            Err("Unknown error")
+        }
+    }
+
+    /// Return time zone of all data time produce error if API return
+    /// error_message or information instead of meta data
+    pub fn time_zone(&self) -> Result<&str, &str> {
+        if let Some(meta) = &self.meta_data {
+            Ok(&meta.time_zone)
+        } else if let Some(error) = &self.error_message {
+            Err(error)
+        } else if let Some(information) = &self.information {
+            Err(information)
+        } else {
+            Err("Unknown error")
         }
     }
 
@@ -97,7 +111,7 @@ impl TimeSeries {
     /// let interval = stock_time.interval();
     /// assert_eq!(interval.unwrap(), "5min");
     /// ```
-    pub fn interval(&self) -> Result<&str, String> {
+    pub fn interval(&self) -> Result<&str, &str> {
         self.operate_option_meta_value("interval")
     }
 
@@ -115,26 +129,25 @@ impl TimeSeries {
     /// let output_size = stock_time.output_size();
     /// assert_eq!(output_size.unwrap(), "Full size");
     /// ```
-    pub fn output_size(&self) -> Result<&str, String> {
+    pub fn output_size(&self) -> Result<&str, &str> {
         self.operate_option_meta_value("output size")
     }
 
     /// Return Entry
-    pub fn entry(&self) -> Result<Vec<Entry>, String> {
+    pub fn entry(&self) -> Result<Vec<Entry>, &str> {
         if let Some(entry) = &self.entry {
             Ok(entry.to_vec())
         } else if let Some(error) = &self.error_message {
-            Err(format!("Error Message : {}", error))
+            Err(error)
+        } else if let Some(information) = &self.information {
+            Err(information)
         } else {
-            Err(format!(
-                "Information : {}",
-                self.information.clone().unwrap()
-            ))
+            Err("Unknown error")
         }
     }
 
     /// Return a meta data value as a form of String
-    fn return_meta_string(&self, which_val: &str) -> Result<&str, String> {
+    fn return_meta_string(&self, which_val: &str) -> Result<&str, &str> {
         if let Some(meta_data) = &self.meta_data {
             let value = match which_val {
                 "information" => &meta_data.information,
@@ -143,17 +156,16 @@ impl TimeSeries {
             };
             Ok(value)
         } else if let Some(error) = &self.error_message {
-            Err(format!("Error Message : {}", error))
+            Err(error)
+        } else if let Some(information) = &self.information {
+            Err(information)
         } else {
-            Err(format!(
-                "Information : {}",
-                self.information.clone().unwrap()
-            ))
+            Err("Unknown error")
         }
     }
 
     /// Return Option metadata value as a Result form of String
-    fn operate_option_meta_value(&self, which_val: &str) -> Result<&str, String> {
+    fn operate_option_meta_value(&self, which_val: &str) -> Result<&str, &str> {
         if let Some(meta_data) = &self.meta_data {
             if let Some(value) = match which_val {
                 "interval" => &meta_data.interval,
@@ -162,15 +174,14 @@ impl TimeSeries {
             } {
                 Ok(value)
             } else {
-                Err("No value present".to_string())
+                Err("No value present")
             }
         } else if let Some(error) = &self.error_message {
-            Err(format!("Error Message : {}", error))
+            Err(error)
+        } else if let Some(information) = &self.information {
+            Err(information)
         } else {
-            Err(format!(
-                "Information : {}",
-                self.information.clone().unwrap()
-            ))
+            Err("Unknown error")
         }
     }
 }

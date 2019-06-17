@@ -49,44 +49,44 @@ struct GlobalQuote {
 
 impl Quote {
     /// return open value
-    pub fn open(&self) -> Result<f64, String> {
+    pub fn open(&self) -> Result<f64, &str> {
         self.return_f64_value("open")
     }
 
     /// return high value
-    pub fn high(&self) -> Result<f64, String> {
+    pub fn high(&self) -> Result<f64, &str> {
         self.return_f64_value("high")
     }
 
     /// return low value
-    pub fn low(&self) -> Result<f64, String> {
+    pub fn low(&self) -> Result<f64, &str> {
         self.return_f64_value("low")
     }
 
     /// return price value
-    pub fn price(&self) -> Result<f64, String> {
+    pub fn price(&self) -> Result<f64, &str> {
         self.return_f64_value("price")
     }
 
     /// return previous
-    pub fn previous(&self) -> Result<f64, String> {
+    pub fn previous(&self) -> Result<f64, &str> {
         self.return_f64_value("previous")
     }
 
     /// return change
-    pub fn change(&self) -> Result<f64, String> {
+    pub fn change(&self) -> Result<f64, &str> {
         self.return_f64_value("change")
     }
 
     /// return change percent
-    pub fn change_percent(&self) -> Result<f64, String> {
+    pub fn change_percent(&self) -> Result<f64, &str> {
         let previous = self.previous()?;
         let price = self.price()?;
         Ok((price - previous) / previous)
     }
 
     /// general function used for returning f64 value of Quote method
-    fn return_f64_value(&self, value: &str) -> Result<f64, String> {
+    fn return_f64_value(&self, value: &str) -> Result<f64, &str> {
         if let Some(global) = &self.global_quote {
             let price = match value {
                 "open" => &global.open,
@@ -99,17 +99,16 @@ impl Quote {
             };
             return Ok(price.trim().parse::<f64>().unwrap());
         } else if let Some(error) = &self.error_message {
-            Err(format!("Error Message : {}", error))
+            Err(error)
+        } else if let Some(information) = &self.information {
+            Err(information)
         } else {
-            Err(format!(
-                "Information : {}",
-                self.information.clone().unwrap()
-            ))
+            Err("Unknown error")
         }
     }
 
     /// get last trading day
-    pub fn last_trading(&self) -> Result<&str, String> {
+    pub fn last_trading(&self) -> Result<&str, &str> {
         self.return_string_value("trading")
     }
 
@@ -121,12 +120,12 @@ impl Quote {
     /// let symbol = quote.symbol();
     /// assert_eq!(symbol.unwrap(), "MSFT");
     /// ```
-    pub fn symbol(&self) -> Result<&str, String> {
+    pub fn symbol(&self) -> Result<&str, &str> {
         self.return_string_value("symbol")
     }
 
     /// general function used for returning String value
-    fn return_string_value(&self, value: &str) -> Result<&str, String> {
+    fn return_string_value(&self, value: &str) -> Result<&str, &str> {
         if let Some(global) = &self.global_quote {
             let value = match value {
                 "trading" => &global.last_day,
@@ -135,12 +134,11 @@ impl Quote {
             };
             return Ok(value);
         } else if let Some(error) = &self.error_message {
-            Err(format!("Error Message : {}", error))
+            Err(error)
+        } else if let Some(information) = &self.information {
+            Err(information)
         } else {
-            Err(format!(
-                "Information : {}",
-                self.information.clone().unwrap()
-            ))
+            Err("Unknown error")
         }
     }
 }

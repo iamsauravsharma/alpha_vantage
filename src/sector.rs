@@ -121,31 +121,30 @@ impl Sector {
     ///     "US Sector Performance (realtime & historical)"
     /// );
     /// ```
-    pub fn information(&self) -> Result<&str, String> {
+    pub fn information(&self) -> Result<&str, &str> {
         self.check_meta_data("information")
     }
 
     /// Return last refreshed time
-    pub fn last_refreshed(&self) -> Result<&str, String> {
+    pub fn last_refreshed(&self) -> Result<&str, &str> {
         self.check_meta_data("last refreshed")
     }
 
     /// Return vector of data in Result
-    pub fn data(&self) -> Result<Vec<Data>, String> {
+    pub fn data(&self) -> Result<Vec<Data>, &str> {
         if let Some(data) = &self.data {
             Ok(data.to_vec())
         } else if let Some(error) = &self.error_message {
-            Err(format!("Error Message : {}", error))
+            Err(error)
+        } else if let Some(information) = &self.information {
+            Err(information)
         } else {
-            Err(format!(
-                "Information : {}",
-                self.information.clone().unwrap()
-            ))
+            Err("Unknown error")
         }
     }
 
     /// Check a meta data is present or not
-    fn check_meta_data(&self, name: &str) -> Result<&str, String> {
+    fn check_meta_data(&self, name: &str) -> Result<&str, &str> {
         if let Some(meta_data) = &self.meta_data {
             let value = match name {
                 "information" => &meta_data.information,
@@ -154,12 +153,11 @@ impl Sector {
             };
             Ok(value)
         } else if let Some(error) = &self.error_message {
-            Err(format!("Error Message : {}", error))
+            Err(error)
+        } else if let Some(information) = &self.information {
+            Err(information)
         } else {
-            Err(format!(
-                "Information : {}",
-                self.information.clone().unwrap()
-            ))
+            Err("Unknown error")
         }
     }
 }

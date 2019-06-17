@@ -97,7 +97,7 @@ impl Forex {
     /// let information = forex.information();
     /// assert_eq!(information.unwrap(), "FX Intraday (5min) Time Series");
     /// ```
-    pub fn information(&self) -> Result<&str, String> {
+    pub fn information(&self) -> Result<&str, &str> {
         self.return_meta_string("information")
     }
 
@@ -116,7 +116,7 @@ impl Forex {
     /// let symbol_from = forex.symbol_from();
     /// assert_eq!(symbol_from.unwrap(), "EUR");
     /// ```
-    pub fn symbol_from(&self) -> Result<&str, String> {
+    pub fn symbol_from(&self) -> Result<&str, &str> {
         self.return_meta_string("from symbol")
     }
 
@@ -135,21 +135,35 @@ impl Forex {
     /// let symbol_to = forex.symbol_to();
     /// assert_eq!(symbol_to.unwrap(), "USD");
     /// ```
-    pub fn symbol_to(&self) -> Result<&str, String> {
+    pub fn symbol_to(&self) -> Result<&str, &str> {
         self.return_meta_string("to symbol")
     }
 
-    /// Return last refreshed time with time zone
-    pub fn last_refreshed(&self) -> Result<String, String> {
+    /// Return last refreshed time produce error if API returns error_message or
+    /// information instead of meta data
+    pub fn last_refreshed(&self) -> Result<&str, &str> {
         if let Some(meta) = &self.meta_data {
-            Ok(format!("{} {}", meta.last_refreshed, meta.time_zone))
+            Ok(&meta.last_refreshed)
         } else if let Some(error) = &self.error_message {
-            Err(format!("Error Message : {}", error))
+            Err(error)
+        } else if let Some(information) = &self.information {
+            Err(information)
         } else {
-            Err(format!(
-                "Information : {}",
-                self.information.clone().unwrap()
-            ))
+            Err("Unknown error")
+        }
+    }
+
+    /// Return time zone of all data time produce error if API return
+    /// error_message or information instead of meta data
+    pub fn time_zone(&self) -> Result<&str, &str> {
+        if let Some(meta) = &self.meta_data {
+            Ok(&meta.time_zone)
+        } else if let Some(error) = &self.error_message {
+            Err(error)
+        } else if let Some(information) = &self.information {
+            Err(information)
+        } else {
+            Err("Unknown error")
         }
     }
 
@@ -168,7 +182,7 @@ impl Forex {
     /// let interval = forex.interval();
     /// assert_eq!(interval.unwrap(), "5min");
     /// ```
-    pub fn interval(&self) -> Result<&str, String> {
+    pub fn interval(&self) -> Result<&str, &str> {
         self.operate_option_meta_value("interval")
     }
 
@@ -187,26 +201,25 @@ impl Forex {
     /// let output_size = forex.output_size();
     /// assert_eq!(output_size.unwrap(), "Full size");
     /// ```
-    pub fn output_size(&self) -> Result<&str, String> {
+    pub fn output_size(&self) -> Result<&str, &str> {
         self.operate_option_meta_value("output size")
     }
 
     /// Method return Entry
-    pub fn entry(&self) -> Result<Vec<Entry>, String> {
+    pub fn entry(&self) -> Result<Vec<Entry>, &str> {
         if let Some(entry) = &self.forex {
             Ok(entry.to_vec())
         } else if let Some(error) = &self.error_message {
-            Err(format!("Error Message : {}", error))
+            Err(error)
+        } else if let Some(information) = &self.information {
+            Err(information)
         } else {
-            Err(format!(
-                "Information : {}",
-                self.information.clone().unwrap()
-            ))
+            Err("Unknown error")
         }
     }
 
     /// Return a meta data field in Result type
-    fn return_meta_string(&self, which_val: &str) -> Result<&str, String> {
+    fn return_meta_string(&self, which_val: &str) -> Result<&str, &str> {
         if let Some(meta_data) = &self.meta_data {
             let value = match which_val {
                 "information" => &meta_data.information,
@@ -216,17 +229,16 @@ impl Forex {
             };
             Ok(value)
         } else if let Some(error) = &self.error_message {
-            Err(format!("Error Message : {}", error))
+            Err(error)
+        } else if let Some(information) = &self.information {
+            Err(information)
         } else {
-            Err(format!(
-                "Information : {}",
-                self.information.clone().unwrap()
-            ))
+            Err("Unknown error")
         }
     }
 
     /// Convert out Option meta data field as a Result field
-    fn operate_option_meta_value(&self, which_val: &str) -> Result<&str, String> {
+    fn operate_option_meta_value(&self, which_val: &str) -> Result<&str, &str> {
         if let Some(meta_data) = &self.meta_data {
             if let Some(value) = match which_val {
                 "interval" => &meta_data.interval,
@@ -235,15 +247,14 @@ impl Forex {
             } {
                 Ok(value)
             } else {
-                Err("No value present".to_string())
+                Err("No value present")
             }
         } else if let Some(error) = &self.error_message {
-            Err(format!("Error Message : {}", error))
+            Err(error)
+        } else if let Some(information) = &self.information {
+            Err(information)
         } else {
-            Err(format!(
-                "Information : {}",
-                self.information.clone().unwrap()
-            ))
+            Err("Unknown error")
         }
     }
 }

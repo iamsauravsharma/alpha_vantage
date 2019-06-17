@@ -34,21 +34,20 @@ pub struct Indicator {
 
 impl Indicator {
     /// Return out meta data in hash form
-    pub fn meta_data(&self) -> Result<HashMap<String, String>, String> {
+    pub fn meta_data(&self) -> Result<&HashMap<String, String>, &str> {
         if let Some(meta_data) = &self.metadata {
-            Ok(meta_data.to_owned())
+            Ok(&meta_data)
         } else if let Some(error) = &self.error_message {
-            Err(format!("Error Message : {}", error))
+            Err(error)
+        } else if let Some(information) = &self.information {
+            Err(information)
         } else {
-            Err(format!(
-                "Information : {}",
-                self.information.clone().unwrap()
-            ))
+            Err("Unknown error")
         }
     }
 
     /// Return data as a vector inside result
-    pub fn data(&self) -> Result<Vec<DataCollector>, String> {
+    pub fn data(&self) -> Result<Vec<DataCollector>, &str> {
         let data = self.data.to_owned();
         if data.is_some() {
             let mut vector = Vec::new();
@@ -66,12 +65,11 @@ impl Indicator {
             }
             Ok(vector)
         } else if let Some(error) = &self.error_message {
-            Err(format!("Error Message : {}", error))
+            Err(error)
+        } else if let Some(information) = &self.information {
+            Err(information)
         } else {
-            Err(format!(
-                "Information : {}",
-                self.information.clone().unwrap()
-            ))
+            Err("Unknown error")
         }
     }
 }

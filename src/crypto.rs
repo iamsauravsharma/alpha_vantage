@@ -208,7 +208,7 @@ impl Crypto {
     ///     "Daily Prices and Volumes for Digital Currency"
     /// );
     /// ```
-    pub fn information(&self) -> Result<&str, String> {
+    pub fn information(&self) -> Result<&str, &str> {
         self.return_meta_string("information")
     }
 
@@ -221,7 +221,7 @@ impl Crypto {
     /// let digital_code = crypto.digital_code();
     /// assert_eq!(digital_code.unwrap(), "BTC");
     /// ```
-    pub fn digital_code(&self) -> Result<&str, String> {
+    pub fn digital_code(&self) -> Result<&str, &str> {
         self.return_meta_string("digital code")
     }
 
@@ -234,7 +234,7 @@ impl Crypto {
     /// let digital_name = crypto.digital_name();
     /// assert_eq!(digital_name.unwrap(), "Bitcoin");
     /// ```
-    pub fn digital_name(&self) -> Result<&str, String> {
+    pub fn digital_name(&self) -> Result<&str, &str> {
         self.return_meta_string("digital name")
     }
 
@@ -247,7 +247,7 @@ impl Crypto {
     /// let market_code = crypto.market_code();
     /// assert_eq!(market_code.unwrap(), "CNY");
     /// ```
-    pub fn market_code(&self) -> Result<&str, String> {
+    pub fn market_code(&self) -> Result<&str, &str> {
         self.return_meta_string("market code")
     }
 
@@ -260,42 +260,54 @@ impl Crypto {
     /// let market_name = crypto.market_name();
     /// assert_eq!(market_name.unwrap(), "Chinese Yuan");
     /// ```
-    pub fn market_name(&self) -> Result<&str, String> {
+    pub fn market_name(&self) -> Result<&str, &str> {
         self.return_meta_string("market name")
     }
 
-    /// Return last refreshed time along with time zone produce error if API
-    /// returns error_message or information instead of meta data
-    pub fn last_refreshed(&self) -> Result<String, String> {
+    /// Return last refreshed time produce error if API returns error_message or
+    /// information instead of meta data
+    pub fn last_refreshed(&self) -> Result<&str, &str> {
         if let Some(meta) = &self.meta_data {
-            Ok(format!("{} {}", meta.last_refreshed, meta.time_zone))
+            Ok(&meta.last_refreshed)
         } else if let Some(error) = &self.error_message {
-            Err(format!("Error Message : {}", error))
+            Err(error)
+        } else if let Some(information) = &self.information {
+            Err(information)
         } else {
-            Err(format!(
-                "Information : {}",
-                self.information.clone().unwrap()
-            ))
+            Err("Unknown error")
+        }
+    }
+
+    /// Return time zone of all data time produce error if API return
+    /// error_message or information instead of meta data
+    pub fn time_zone(&self) -> Result<&str, &str> {
+        if let Some(meta) = &self.meta_data {
+            Ok(&meta.time_zone)
+        } else if let Some(error) = &self.error_message {
+            Err(error)
+        } else if let Some(information) = &self.information {
+            Err(information)
+        } else {
+            Err("Unknown error")
         }
     }
 
     /// Return out a entry produce error if API returns error_message
     /// or information instead of vector of entry
-    pub fn entry(&self) -> Result<Vec<Entry>, String> {
+    pub fn entry(&self) -> Result<Vec<Entry>, &str> {
         if let Some(entry) = &self.entry {
             Ok(entry.to_vec())
         } else if let Some(error) = &self.error_message {
-            Err(format!("Error Message : {}", error))
+            Err(error)
+        } else if let Some(information) = &self.information {
+            Err(information)
         } else {
-            Err(format!(
-                "Information : {}",
-                self.information.clone().unwrap()
-            ))
+            Err("Unknown error")
         }
     }
 
     /// Return meta string if meta data is present otherwise show any two error
-    fn return_meta_string(&self, which_val: &str) -> Result<&str, String> {
+    fn return_meta_string(&self, which_val: &str) -> Result<&str, &str> {
         if let Some(meta_data) = &self.meta_data {
             let value = match which_val {
                 "information" => &meta_data.information,
@@ -307,12 +319,11 @@ impl Crypto {
             };
             Ok(value)
         } else if let Some(error) = &self.error_message {
-            Err(format!("Error Message : {}", error))
+            Err(error)
+        } else if let Some(information) = &self.information {
+            Err(information)
         } else {
-            Err(format!(
-                "Information : {}",
-                self.information.clone().unwrap()
-            ))
+            Err("Unknown error")
         }
     }
 }

@@ -92,14 +92,13 @@ impl DataValue {
 
 impl Search {
     /// Return result of search
-    pub fn result(&self) -> Result<Vec<DataValue>, String> {
+    pub fn result(&self) -> Result<Vec<DataValue>, &str> {
         if let Some(entry) = &self.matches {
             Ok(entry.to_vec())
+        } else if let Some(information) = &self.information {
+            Err(information)
         } else {
-            Err(format!(
-                "Information : {}",
-                self.information.clone().unwrap()
-            ))
+            Err("Unknown error")
         }
     }
 }
