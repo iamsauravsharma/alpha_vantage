@@ -137,36 +137,36 @@ pub(crate) fn create_url(
         function, symbol, interval, apikey
     );
     if series_type.is_some() {
-        created_link.push_str(format!("&series_type={}", series_type.unwrap()).as_str());
+        created_link.push_str(&format!("&series_type={}", series_type.unwrap()));
     }
     if time_period.is_some() {
-        created_link.push_str(format!("&time_period={}", time_period.unwrap()).as_str());
+        created_link.push_str(&format!("&time_period={}", time_period.unwrap()));
     }
     for values in temporary_value {
         match values {
-            Acceleration(val) => created_link.push_str(format!("&acceleration={}", val).as_str()),
-            Fastdmatype(val) => created_link.push_str(format!("&fastdmatype={}", val).as_str()),
-            Fastdperiod(val) => created_link.push_str(format!("&fastdperiod={}", val).as_str()),
-            Fastkperiod(val) => created_link.push_str(format!("&fastkperiod={}", val).as_str()),
-            Fastlimit(val) => created_link.push_str(format!("&fastlimit={}", val).as_str()),
-            Fastmatype(val) => created_link.push_str(format!("&fastmatype={}", val).as_str()),
-            Fastperiod(val) => created_link.push_str(format!("&fastperiod={}", val).as_str()),
-            Matype(val) => created_link.push_str(format!("&matype={}", val).as_str()),
-            Maximum(val) => created_link.push_str(format!("&maximum={}", val).as_str()),
-            Nbdevdn(val) => created_link.push_str(format!("&nbdevdn={}", val).as_str()),
-            Nbdevup(val) => created_link.push_str(format!("&nbdevup={}", val).as_str()),
-            Signalmatype(val) => created_link.push_str(format!("&signalmatype={}", val).as_str()),
-            Signalperiod(val) => created_link.push_str(format!("&signalperiod={}", val).as_str()),
-            Slowdmatype(val) => created_link.push_str(format!("&slowdmatype={}", val).as_str()),
-            Slowdperiod(val) => created_link.push_str(format!("&slowdperiod={}", val).as_str()),
-            Slowkmatype(val) => created_link.push_str(format!("&slowkmatype={}", val).as_str()),
-            Slowkperiod(val) => created_link.push_str(format!("&slowkperiod={}", val).as_str()),
-            Slowlimit(val) => created_link.push_str(format!("&slowlimit={}", val).as_str()),
-            Slowmatype(val) => created_link.push_str(format!("&slowmatype={}", val).as_str()),
-            Slowperiod(val) => created_link.push_str(format!("&slowperiod={}", val).as_str()),
-            Timeperiod1(val) => created_link.push_str(format!("&timeperiod1={}", val).as_str()),
-            Timeperiod2(val) => created_link.push_str(format!("&timeperiod2={}", val).as_str()),
-            Timeperiod3(val) => created_link.push_str(format!("&timeperiod3={}", val).as_str()),
+            Acceleration(val) => created_link.push_str(&format!("&acceleration={}", val)),
+            Fastdmatype(val) => created_link.push_str(&format!("&fastdmatype={}", val)),
+            Fastdperiod(val) => created_link.push_str(&format!("&fastdperiod={}", val)),
+            Fastkperiod(val) => created_link.push_str(&format!("&fastkperiod={}", val)),
+            Fastlimit(val) => created_link.push_str(&format!("&fastlimit={}", val)),
+            Fastmatype(val) => created_link.push_str(&format!("&fastmatype={}", val)),
+            Fastperiod(val) => created_link.push_str(&format!("&fastperiod={}", val)),
+            Matype(val) => created_link.push_str(&format!("&matype={}", val)),
+            Maximum(val) => created_link.push_str(&format!("&maximum={}", val)),
+            Nbdevdn(val) => created_link.push_str(&format!("&nbdevdn={}", val)),
+            Nbdevup(val) => created_link.push_str(&format!("&nbdevup={}", val)),
+            Signalmatype(val) => created_link.push_str(&format!("&signalmatype={}", val)),
+            Signalperiod(val) => created_link.push_str(&format!("&signalperiod={}", val)),
+            Slowdmatype(val) => created_link.push_str(&format!("&slowdmatype={}", val)),
+            Slowdperiod(val) => created_link.push_str(&format!("&slowdperiod={}", val)),
+            Slowkmatype(val) => created_link.push_str(&format!("&slowkmatype={}", val)),
+            Slowkperiod(val) => created_link.push_str(&format!("&slowkperiod={}", val)),
+            Slowlimit(val) => created_link.push_str(&format!("&slowlimit={}", val)),
+            Slowmatype(val) => created_link.push_str(&format!("&slowmatype={}", val)),
+            Slowperiod(val) => created_link.push_str(&format!("&slowperiod={}", val)),
+            Timeperiod1(val) => created_link.push_str(&format!("&timeperiod1={}", val)),
+            Timeperiod2(val) => created_link.push_str(&format!("&timeperiod2={}", val)),
+            Timeperiod3(val) => created_link.push_str(&format!("&timeperiod3={}", val)),
         }
     }
     created_link.parse().unwrap()

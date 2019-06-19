@@ -410,7 +410,7 @@ pub(crate) fn create_url(
     };
 
     if interval != "" {
-        url.push_str(format!("&interval={}", interval).as_str());
+        url.push_str(&format!("&interval={}", interval));
     }
 
     url.push_str(match output_size {
@@ -418,7 +418,7 @@ pub(crate) fn create_url(
         _ => "",
     });
 
-    url.push_str(format!("&apikey={}", api).as_str());
+    url.push_str(&format!("&apikey={}", api));
     url.parse().unwrap()
 }
 

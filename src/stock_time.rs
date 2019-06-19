@@ -219,22 +219,22 @@ impl Entry {
 
     /// Return open
     pub fn open(&self) -> f64 {
-        return_f64(self.open.as_str())
+        return_f64(&self.open)
     }
 
     /// Return high
     pub fn high(&self) -> f64 {
-        return_f64(self.high.as_str())
+        return_f64(&self.high)
     }
 
     /// Return low
     pub fn low(&self) -> f64 {
-        return_f64(self.low.as_str())
+        return_f64(&self.low)
     }
 
     /// Return close
     pub fn close(&self) -> f64 {
-        return_f64(self.close.as_str())
+        return_f64(&self.close)
     }
 
     /// Return adjusted
@@ -247,7 +247,7 @@ impl Entry {
 
     /// Return volume
     pub fn volume(&self) -> f64 {
-        return_f64(self.volume.as_str())
+        return_f64(&self.volume)
     }
 
     /// Return dividend
@@ -458,14 +458,14 @@ pub(crate) fn create_url(
     };
 
     if interval != "" {
-        url.push_str(format!("&interval={}", interval).as_str());
+        url.push_str(&format!("&interval={}", interval));
     }
 
     url.push_str(match output_size {
         OutputSize::Full => "&outputsize=full",
         _ => "",
     });
-    url.push_str(format!("&apikey={}", api).as_str());
+    url.push_str(&format!("&apikey={}", api));
     url.parse().unwrap()
 }
 
