@@ -40,6 +40,22 @@ pub struct Entry {
     close: String,
 }
 
+pub trait FindEntry {
+    fn find(&self, time: &str) -> Option<&Entry>;
+}
+
+impl FindEntry for Vec<Entry> {
+    /// Find a entry with a given time as a input return none if no entry found
+    fn find(&self, time: &str) -> Option<&Entry> {
+        for entry in self {
+            if entry.time == time {
+                return Some(entry);
+            }
+        }
+        None
+    }
+}
+
 impl Entry {
     /// Return time for entry
     pub fn time(&self) -> &str {
