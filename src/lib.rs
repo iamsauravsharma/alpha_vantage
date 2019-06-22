@@ -1,3 +1,7 @@
+#![warn(bare_trait_objects, missing_docs, unreachable_pub)]
+#![deny(unsafe_code)]
+#![deny(clippy::all, clippy::pedantic)]
+
 //! Rust Client/Wrapper built for [Alphavantage][alpha_vantage_link] API.
 //!
 //! [alpha_vantage_link]: https://alphavantage.co

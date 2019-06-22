@@ -9,10 +9,7 @@
 //!
 //! [technical_indicator]: https://www.alphavantage.co/documentation/#technical-indicators
 
-use crate::{
-    user::APIKey,
-    util::{TechnicalIndicator as UtilIndicator, TechnicalIndicator::*},
-};
+use crate::{user::APIKey, util::TechnicalIndicator as UtilIndicator};
 use reqwest::Url;
 use serde_derive::Deserialize;
 use std::collections::HashMap;
@@ -144,29 +141,63 @@ pub(crate) fn create_url(
     }
     for values in temporary_value {
         match values {
-            Acceleration(val) => created_link.push_str(&format!("&acceleration={}", val)),
-            Fastdmatype(val) => created_link.push_str(&format!("&fastdmatype={}", val)),
-            Fastdperiod(val) => created_link.push_str(&format!("&fastdperiod={}", val)),
-            Fastkperiod(val) => created_link.push_str(&format!("&fastkperiod={}", val)),
-            Fastlimit(val) => created_link.push_str(&format!("&fastlimit={}", val)),
-            Fastmatype(val) => created_link.push_str(&format!("&fastmatype={}", val)),
-            Fastperiod(val) => created_link.push_str(&format!("&fastperiod={}", val)),
-            Matype(val) => created_link.push_str(&format!("&matype={}", val)),
-            Maximum(val) => created_link.push_str(&format!("&maximum={}", val)),
-            Nbdevdn(val) => created_link.push_str(&format!("&nbdevdn={}", val)),
-            Nbdevup(val) => created_link.push_str(&format!("&nbdevup={}", val)),
-            Signalmatype(val) => created_link.push_str(&format!("&signalmatype={}", val)),
-            Signalperiod(val) => created_link.push_str(&format!("&signalperiod={}", val)),
-            Slowdmatype(val) => created_link.push_str(&format!("&slowdmatype={}", val)),
-            Slowdperiod(val) => created_link.push_str(&format!("&slowdperiod={}", val)),
-            Slowkmatype(val) => created_link.push_str(&format!("&slowkmatype={}", val)),
-            Slowkperiod(val) => created_link.push_str(&format!("&slowkperiod={}", val)),
-            Slowlimit(val) => created_link.push_str(&format!("&slowlimit={}", val)),
-            Slowmatype(val) => created_link.push_str(&format!("&slowmatype={}", val)),
-            Slowperiod(val) => created_link.push_str(&format!("&slowperiod={}", val)),
-            Timeperiod1(val) => created_link.push_str(&format!("&timeperiod1={}", val)),
-            Timeperiod2(val) => created_link.push_str(&format!("&timeperiod2={}", val)),
-            Timeperiod3(val) => created_link.push_str(&format!("&timeperiod3={}", val)),
+            UtilIndicator::Acceleration(val) => {
+                created_link.push_str(&format!("&acceleration={}", val))
+            }
+            UtilIndicator::Fastdmatype(val) => {
+                created_link.push_str(&format!("&fastdmatype={}", val))
+            }
+            UtilIndicator::Fastdperiod(val) => {
+                created_link.push_str(&format!("&fastdperiod={}", val))
+            }
+            UtilIndicator::Fastkperiod(val) => {
+                created_link.push_str(&format!("&fastkperiod={}", val))
+            }
+            UtilIndicator::Fastlimit(val) => created_link.push_str(&format!("&fastlimit={}", val)),
+            UtilIndicator::Fastmatype(val) => {
+                created_link.push_str(&format!("&fastmatype={}", val))
+            }
+            UtilIndicator::Fastperiod(val) => {
+                created_link.push_str(&format!("&fastperiod={}", val))
+            }
+            UtilIndicator::Matype(val) => created_link.push_str(&format!("&matype={}", val)),
+            UtilIndicator::Maximum(val) => created_link.push_str(&format!("&maximum={}", val)),
+            UtilIndicator::Nbdevdn(val) => created_link.push_str(&format!("&nbdevdn={}", val)),
+            UtilIndicator::Nbdevup(val) => created_link.push_str(&format!("&nbdevup={}", val)),
+            UtilIndicator::Signalmatype(val) => {
+                created_link.push_str(&format!("&signalmatype={}", val))
+            }
+            UtilIndicator::Signalperiod(val) => {
+                created_link.push_str(&format!("&signalperiod={}", val))
+            }
+            UtilIndicator::Slowdmatype(val) => {
+                created_link.push_str(&format!("&slowdmatype={}", val))
+            }
+            UtilIndicator::Slowdperiod(val) => {
+                created_link.push_str(&format!("&slowdperiod={}", val))
+            }
+            UtilIndicator::Slowkmatype(val) => {
+                created_link.push_str(&format!("&slowkmatype={}", val))
+            }
+            UtilIndicator::Slowkperiod(val) => {
+                created_link.push_str(&format!("&slowkperiod={}", val))
+            }
+            UtilIndicator::Slowlimit(val) => created_link.push_str(&format!("&slowlimit={}", val)),
+            UtilIndicator::Slowmatype(val) => {
+                created_link.push_str(&format!("&slowmatype={}", val))
+            }
+            UtilIndicator::Slowperiod(val) => {
+                created_link.push_str(&format!("&slowperiod={}", val))
+            }
+            UtilIndicator::Timeperiod1(val) => {
+                created_link.push_str(&format!("&timeperiod1={}", val))
+            }
+            UtilIndicator::Timeperiod2(val) => {
+                created_link.push_str(&format!("&timeperiod2={}", val))
+            }
+            UtilIndicator::Timeperiod3(val) => {
+                created_link.push_str(&format!("&timeperiod3={}", val))
+            }
         }
     }
     created_link.parse().unwrap()
