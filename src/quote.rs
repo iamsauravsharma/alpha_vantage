@@ -97,7 +97,7 @@ impl Quote {
                 "change" => &global.change,
                 _ => "",
             };
-            return Ok(price.trim().parse::<f64>().unwrap());
+            Ok(price.trim().parse::<f64>().unwrap())
         } else if let Some(error) = &self.error_message {
             Err(error)
         } else if let Some(information) = &self.information {
@@ -132,7 +132,7 @@ impl Quote {
                 "symbol" => &global.symbol,
                 _ => "",
             };
-            return Ok(value);
+            Ok(value)
         } else if let Some(error) = &self.error_message {
             Err(error)
         } else if let Some(information) = &self.information {
