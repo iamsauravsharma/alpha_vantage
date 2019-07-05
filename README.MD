@@ -45,7 +45,7 @@ Better documentation and optimization are remaining before publishing to [crates
 Edit Cargo.toml file to add alpha_vantage as dependencies
 ```
 [dependencies]
-alpha_vantage = 0.1.0
+alpha_vantage = 0.2.0
 ```
 
 __OR__
