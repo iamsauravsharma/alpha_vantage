@@ -13,6 +13,6 @@ categories = ["api-bindings","web-programming::http-client"]
 
 [dependencies]
 reqwest="0.9.18"
-serde="1.0.95"
+serde="1.0.96"
 serde_json="1.0.40"
-serde_derive="1.0.95"
+serde_derive="1.0.96"
