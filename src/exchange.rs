@@ -57,29 +57,13 @@ impl Exchange {
 
     /// Get time when exchange rate was last refreshed along with time zone.
     pub fn refreshed_time(&self) -> Result<&str, &str> {
-        if let Some(real) = &self.real_time {
-            Ok(&real.last_refreshed)
-        } else if let Some(error) = &self.error_message {
-            Err(error)
-        } else if let Some(information) = &self.information {
-            Err(information)
-        } else {
-            Err("Unknown error")
-        }
+        self.get_result_string("Refreshed time")
     }
 
     /// Return time zone of all data time produce error if API return
     /// error_message or information instead of meta data
     pub fn time_zone(&self) -> Result<&str, &str> {
-        if let Some(meta) = &self.real_time {
-            Ok(&meta.time_zone)
-        } else if let Some(error) = &self.error_message {
-            Err(error)
-        } else if let Some(information) = &self.information {
-            Err(information)
-        } else {
-            Err("Unknown error")
-        }
+        self.get_result_string("time zone")
     }
 
     /// get from code from which exchange is performed
@@ -138,6 +122,8 @@ impl Exchange {
                 "from name" => &real_time.from_name,
                 "to code" => &real_time.to_code,
                 "to name" => &real_time.to_name,
+                "time zone" => &real_time.time_zone,
+                "refreshed time" => &real_time.last_refreshed,
                 _ => "",
             };
             Ok(value)

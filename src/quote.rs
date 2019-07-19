@@ -68,6 +68,11 @@ impl Quote {
         self.return_f64_value("price")
     }
 
+    /// return out a volume
+    pub fn volume(&self) -> Result<f64, &str> {
+        self.return_f64_value("volume")
+    }
+
     /// return previous
     pub fn previous(&self) -> Result<f64, &str> {
         self.return_f64_value("previous")
@@ -95,6 +100,7 @@ impl Quote {
                 "price" => &global.price,
                 "previous" => &global.previous_close,
                 "change" => &global.change,
+                "volume" => &global.volume,
                 _ => "",
             };
             Ok(price.trim().parse::<f64>().unwrap())

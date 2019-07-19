@@ -72,29 +72,13 @@ impl TimeSeries {
     /// Return last refreshed time produce error if API returns error_message or
     /// information instead of meta data
     pub fn last_refreshed(&self) -> Result<&str, &str> {
-        if let Some(meta) = &self.meta_data {
-            Ok(&meta.last_refreshed)
-        } else if let Some(error) = &self.error_message {
-            Err(error)
-        } else if let Some(information) = &self.information {
-            Err(information)
-        } else {
-            Err("Unknown error")
-        }
+        self.return_meta_string("last refreshed")
     }
 
     /// Return time zone of all data time produce error if API return
     /// error_message or information instead of meta data
     pub fn time_zone(&self) -> Result<&str, &str> {
-        if let Some(meta) = &self.meta_data {
-            Ok(&meta.time_zone)
-        } else if let Some(error) = &self.error_message {
-            Err(error)
-        } else if let Some(information) = &self.information {
-            Err(information)
-        } else {
-            Err("Unknown error")
-        }
+        self.return_meta_string("time zone")
     }
 
     /// Interval for which a time series intraday
@@ -152,6 +136,8 @@ impl TimeSeries {
             let value = match which_val {
                 "information" => &meta_data.information,
                 "symbol" => &meta_data.symbol,
+                "time zone" => &meta_data.time_zone,
+                "last refreshed" => &meta_data.last_refreshed,
                 _ => "",
             };
             Ok(value)
