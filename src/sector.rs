@@ -25,7 +25,7 @@ struct MetaData {
 #[derive(Default, Clone)]
 pub struct Data {
     rank: String,
-    utilites: String,
+    utilities: String,
     health_care: String,
     information_technology: String,
     industrials: String,
@@ -44,9 +44,9 @@ impl Data {
         &self.rank
     }
 
-    /// Return utilites score
-    pub fn utilites(&self) -> &str {
-        &self.utilites
+    /// Return utilities score
+    pub fn utilities(&self) -> &str {
+        &self.utilities
     }
 
     /// Return health care score
@@ -176,7 +176,7 @@ pub(crate) struct SectorHelper {
 }
 
 impl SectorHelper {
-    /// Convert out sectorhelper to sector
+    /// Convert out SectorHelper to sector
     pub(crate) fn convert(self) -> Sector {
         let mut sector = Sector::default();
         sector.information = self.information;
@@ -203,7 +203,7 @@ impl SectorHelper {
                 }
                 for (key, val) in val.iter() {
                     match key.as_str() {
-                        "Utilities" => data.utilites = val.to_string(),
+                        "Utilities" => data.utilities = val.to_string(),
                         "Health Care" => data.health_care = val.to_string(),
                         "Information Technology" => data.information_technology = val.to_string(),
                         "Industrials" => data.industrials = val.to_string(),

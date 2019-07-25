@@ -50,7 +50,7 @@ pub enum Interval {
     ThirtyMin,
     /// 60 min interval
     SixtyMin,
-    /// no interval which applies for all time series expect intrasay
+    /// no interval which applies for all time series expect intraday
     None,
 }
 

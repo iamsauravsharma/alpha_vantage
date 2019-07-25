@@ -118,7 +118,7 @@ impl Forex {
         self.return_meta_string("information")
     }
 
-    /// Retrun from symbol
+    /// Return from symbol
     ///
     /// ```
     /// use alpha_vantage::util::*;
@@ -383,7 +383,7 @@ pub fn forex(
     api.forex(function, from_symbol, to_symbol, interval, output_size)
 }
 
-/// Create Url from given user paramter for reqwest crate
+/// Create Url from given user parameter for reqwest crate
 pub(crate) fn create_url(
     function: ForexFunction,
     from_symbol: &str,

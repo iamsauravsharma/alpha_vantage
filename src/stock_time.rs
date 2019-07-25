@@ -311,7 +311,7 @@ struct AdjustedHelper {
     split_coefficient: Option<String>,
 }
 
-/// helper struct for `TimeSeries` which deseialize JSON
+/// helper struct for `TimeSeries` which deserialize JSON
 #[derive(Deserialize)]
 pub(crate) struct TimeSeriesHelper {
     #[serde(rename = "Error Message")]

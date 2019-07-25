@@ -114,7 +114,7 @@ impl Exchange {
         self.get_result_string("to name")
     }
 
-    /// Collect out certain value from real_time if presnt otherwise show error
+    /// Collect out certain value from real_time if present otherwise show error
     fn get_result_string(&self, match_str: &str) -> Result<&str, &str> {
         if let Some(real_time) = &self.real_time {
             let value = match match_str {

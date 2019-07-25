@@ -229,7 +229,7 @@ impl Crypto {
         self.return_meta_string("information")
     }
 
-    /// Return digial currency code produce error if API returns error_message
+    /// Return digital currency code produce error if API returns error_message
     /// or information instead of meta data
     ///
     /// ```
