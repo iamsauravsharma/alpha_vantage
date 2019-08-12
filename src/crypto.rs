@@ -130,6 +130,8 @@ pub trait VecEntry {
     fn find(&self, time: &str) -> Option<Entry>;
     /// Return a entry which is of latest time period
     fn latest(&self) -> Entry;
+    /// Return a top n latest Entry if n Entry is present else return Error
+    fn latestn(&self, n: usize) -> Result<Vec<Entry>, &str>;
 }
 
 impl VecEntry for Vec<Entry> {
@@ -152,6 +154,26 @@ impl VecEntry for Vec<Entry> {
             }
         }
         latest
+    }
+
+    fn latestn(&self, n: usize) -> Result<Vec<Entry>, &str> {
+        let mut time_list = Vec::new();
+        for entry in self {
+            time_list.push(entry.time.clone());
+        }
+        time_list.sort();
+        time_list.reverse();
+        let mut full_list = Self::new();
+        for i in 0..n {
+            let time = time_list.get(i);
+            if let Some(time) = time {
+                let entry = self.find(time).unwrap();
+                full_list.push(entry);
+            } else {
+                return Err("n latest Entry not found try using less value");
+            }
+        }
+        Ok(full_list)
     }
 }
 
