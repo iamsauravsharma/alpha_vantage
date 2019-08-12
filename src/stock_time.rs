@@ -230,7 +230,7 @@ impl VecEntry for Vec<Entry> {
     }
 
     fn latestn(&self, n: usize) -> Result<Vec<Entry>, &str> {
-        let mut time_list = Vec::new();
+        let mut time_list = vec![];
         for entry in self {
             time_list.push(entry.time.clone());
         }
