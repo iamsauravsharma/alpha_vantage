@@ -197,20 +197,34 @@ pub struct Entry {
     split_coefficient: Option<String>,
 }
 
-/// trait which helps for performing some operation on Vec<Entry>
-pub trait FindEntry {
+/// trait which helps for performing some common operation on Vec<Entry>
+pub trait VecEntry {
     /// Find a entry with a given time as a input return none if no entry found
-    fn find(&self, time: &str) -> Option<&Entry>;
+    fn find(&self, time: &str) -> Option<Entry>;
+    /// Return a entry which is of latest time period
+    fn latest(&self) -> Entry;
 }
 
-impl FindEntry for Vec<Entry> {
-    fn find(&self, time: &str) -> Option<&Entry> {
+impl VecEntry for Vec<Entry> {
+    fn find(&self, time: &str) -> Option<Entry> {
         for entry in self {
             if entry.time == time {
-                return Some(entry);
+                return Some(entry.clone());
             }
         }
         None
+    }
+
+    fn latest(&self) -> Entry {
+        let mut latest = Entry::default();
+        let mut new_time = String::new();
+        for entry in self {
+            if new_time < entry.time {
+                latest = entry.clone();
+                new_time = entry.time.clone();
+            }
+        }
+        latest
     }
 }
 
