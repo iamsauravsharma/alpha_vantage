@@ -45,10 +45,9 @@ impl Indicator {
 
     /// Return data as a vector inside result
     pub fn data(&self) -> Result<Vec<DataCollector>, &str> {
-        let data = self.data.to_owned();
-        if data.is_some() {
+        if let Some(data) = &self.data {
             let mut vector = Vec::new();
-            for hash in data.unwrap().values() {
+            for hash in data.values() {
                 for time in hash.keys() {
                     let mut data_collector = DataCollector::default();
                     data_collector.time = time.to_string();
@@ -133,11 +132,11 @@ pub(crate) fn create_url(
         "https://www.alphavantage.co/query?function={}&symbol={}&interval={}&apikey={}",
         function, symbol, interval, apikey
     );
-    if series_type.is_some() {
-        created_link.push_str(&format!("&series_type={}", series_type.unwrap()));
+    if let Some(series_type) = series_type {
+        created_link.push_str(&format!("&series_type={}", series_type));
     }
-    if time_period.is_some() {
-        created_link.push_str(&format!("&time_period={}", time_period.unwrap()));
+    if let Some(time_period) = time_period {
+        created_link.push_str(&format!("&time_period={}", time_period));
     }
     for values in temporary_value {
         match values {
