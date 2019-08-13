@@ -170,7 +170,7 @@ impl VecEntry for Vec<Entry> {
                 let entry = self.find(time).unwrap();
                 full_list.push(entry);
             } else {
-                return Err("n latest Entry not found try using less value");
+                return Err("desired number of latest Entry not found try using less value");
             }
         }
         Ok(full_list)
