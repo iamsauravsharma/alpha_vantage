@@ -24,8 +24,6 @@
 | :---: | :---: | :---: |
 | [![Linux support][linux_supported_badge]][git_link] | [![OSX support][osx_supported_badge]][git_link] | [![Windows support][windows_supported_badge]][git_link] |
 
-**WARNING : may contain bug which may cause undesired functionality** 
-
 Rust Wrapper/Client built for [Alphavantage][alphavantage_link]  API.
 Project is completed  and core functionality is already implemented out totally and project is in usable state.
 Better documentation and optimization are remaining before publishing to [crates.io][cratesio_link]
