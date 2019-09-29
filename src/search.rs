@@ -86,7 +86,10 @@ impl DataValue {
 
     /// Return match score
     pub fn match_score(&self) -> f64 {
-        self.match_score.trim().parse::<f64>().unwrap()
+        self.match_score
+            .trim()
+            .parse::<f64>()
+            .expect("Failed to trim out string and convert to f64")
     }
 }
 

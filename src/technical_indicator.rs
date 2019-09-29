@@ -51,9 +51,15 @@ impl Indicator {
                 for time in hash.keys() {
                     let mut data_collector = DataCollector::default();
                     data_collector.time = time.to_string();
-                    let hash_values = hash.get(time).unwrap().to_owned();
+                    let hash_values = hash
+                        .get(time)
+                        .expect("cannot get out time key value from hash map")
+                        .to_owned();
                     for (key, value) in &hash_values {
-                        let value_f64 = value.trim().parse::<f64>().unwrap();
+                        let value_f64 = value
+                            .trim()
+                            .parse::<f64>()
+                            .expect("Cannot convert string to f64");
                         data_collector.values.insert(key.to_string(), value_f64);
                     }
                     vector.push(data_collector);
@@ -199,5 +205,7 @@ pub(crate) fn create_url(
             }
         }
     }
-    created_link.parse().unwrap()
+    created_link
+        .parse()
+        .expect("Cannot parse out created link ti url")
 }

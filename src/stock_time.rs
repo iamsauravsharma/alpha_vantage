@@ -240,7 +240,9 @@ impl VecEntry for Vec<Entry> {
         for i in 0..n {
             let time = time_list.get(i);
             if let Some(time) = time {
-                let entry = self.find(time).unwrap();
+                let entry = self
+                    .find(time)
+                    .expect("cannot find out time for latestn stock time");
                 full_list.push(entry);
             } else {
                 return Err("desired number of latest Entry not found try using less value");
@@ -308,7 +310,9 @@ impl Entry {
 
 /// parse String to f64 and return value
 fn return_f64(data: &str) -> f64 {
-    data.trim().parse::<f64>().unwrap()
+    data.trim()
+        .parse::<f64>()
+        .expect("Cannot convert out &str to f64")
 }
 
 /// Helper struct to store non adjusted data
@@ -396,7 +400,7 @@ impl TimeSeriesHelper {
                 last_refreshed: last_refreshed.to_string(),
                 interval,
                 output_size: output_size_value,
-                time_zone: time_zone_value.unwrap(),
+                time_zone: time_zone_value.expect("time zone value is None"),
             });
         }
         let mut value: Vec<Entry> = Vec::new();
@@ -505,7 +509,7 @@ pub(crate) fn create_url(
         _ => "",
     });
     url.push_str(&format!("&apikey={}", api));
-    url.parse().unwrap()
+    url.parse().expect("Cannot parse out url")
 }
 
 #[cfg(test)]

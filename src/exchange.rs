@@ -45,7 +45,11 @@ impl Exchange {
     /// Get Rate for exchange produce error if no rate is available
     pub fn rate(&self) -> Result<f64, &str> {
         if let Some(real) = &self.real_time {
-            Ok(real.rate.trim().parse::<f64>().unwrap())
+            Ok(real
+                .rate
+                .trim()
+                .parse::<f64>()
+                .expect("failed to parse real_time rate to f64"))
         } else if let Some(error) = &self.error_message {
             Err(error)
         } else if let Some(information) = &self.information {

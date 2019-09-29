@@ -83,7 +83,9 @@ impl VecEntry for Vec<Entry> {
         for i in 0..n {
             let time = time_list.get(i);
             if let Some(time) = time {
-                let entry = self.find(time).unwrap();
+                let entry = self
+                    .find(time)
+                    .expect("fail to find time value for latestn forex");
                 full_list.push(entry);
             } else {
                 return Err("desired number of latest Entry not found try using less value");
@@ -122,7 +124,9 @@ impl Entry {
 
 /// Return f64 from &str
 fn return_f64(data: &str) -> f64 {
-    data.trim().parse::<f64>().unwrap()
+    data.trim()
+        .parse::<f64>()
+        .expect("Cannot convert string to f64")
 }
 
 /// Struct to store Forex data after forex API call
@@ -362,10 +366,10 @@ impl ForexHelper {
                 information: information.to_string(),
                 from_symbol: from_symbol.to_string(),
                 to_symbol: to_symbol.to_string(),
-                last_refreshed: last_refreshed_value.unwrap(),
+                last_refreshed: last_refreshed_value.expect("Last refreshed value contains None"),
                 interval: interval_value,
                 output_size: output_size_value,
-                time_zone: time_zone_value.unwrap(),
+                time_zone: time_zone_value.expect("Time zone contains None value"),
             });
         }
         let mut value: Vec<Entry> = Vec::new();
@@ -374,7 +378,10 @@ impl ForexHelper {
                 for val in hash.keys() {
                     let mut entry: Entry = crate::forex::Entry::default();
                     entry.time = val.to_string();
-                    let entry_helper = hash.get(val).unwrap().clone();
+                    let entry_helper = hash
+                        .get(val)
+                        .expect("Cannot get a val from hash map")
+                        .clone();
                     entry.open = entry_helper.open;
                     entry.high = entry_helper.high;
                     entry.low = entry_helper.low;
@@ -458,7 +465,7 @@ pub(crate) fn create_url(
     });
 
     url.push_str(&format!("&apikey={}", api));
-    url.parse().unwrap()
+    url.parse().expect("Fail to parse url")
 }
 
 // Test module

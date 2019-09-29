@@ -167,7 +167,9 @@ impl VecEntry for Vec<Entry> {
         for i in 0..n {
             let time = time_list.get(i);
             if let Some(time) = time {
-                let entry = self.find(time).unwrap();
+                let entry = self
+                    .find(time)
+                    .expect("Failed to find time value for latest n");
                 full_list.push(entry);
             } else {
                 return Err("desired number of latest Entry not found try using less value");
@@ -236,10 +238,12 @@ impl Entry {
 
 /// Convert String to f64
 fn convert_to_f64(val: &str) -> f64 {
-    val.trim().parse::<f64>().unwrap()
+    val.trim()
+        .parse::<f64>()
+        .expect("Failed to convert String to f64")
 }
 
-/// Struct which holds out Cryptocurrency information
+/// Struct which holds out Crypto currency information
 #[derive(Default)]
 pub struct Crypto {
     information: Option<String>,
@@ -397,7 +401,7 @@ pub(crate) fn create_url(function: CryptoFunction, symbol: &str, market: &str, a
         "{}{}&symbol={}&market={}&apikey={}",
         LINK, function_name, symbol, market, api
     );
-    url.parse().unwrap()
+    url.parse().expect("Failed to parse an url")
 }
 
 #[cfg(test)]
