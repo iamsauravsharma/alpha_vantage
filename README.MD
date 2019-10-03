@@ -24,7 +24,7 @@
 | :---: | :---: | :---: |
 | [![Linux support][linux_supported_badge]][git_link] | [![OSX support][osx_supported_badge]][git_link] | [![Windows support][windows_supported_badge]][git_link] |
 
-Rust Client library built for accessing [Alphavantage][alphavantage_link]  API.
+Rust Client library built for accessing [Alphavantage][alphavantage_link] API.
 
 ### Project Functionality
 
