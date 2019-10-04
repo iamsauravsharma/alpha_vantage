@@ -26,11 +26,6 @@ matrix:
   - rust: beta
   - rust: nightly
 
-before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-      sudo apt-get update;
-    fi
-
 install:
   - rustup component add rustfmt && RUSTFMT="yes" || RUSTFMT="no"
   - rustup component add clippy && CLIPPY="yes" || CLIPPY="no"
@@ -55,7 +50,7 @@ script:
   - cargo test --all
 
 before_deploy:
-  - chmod +x scripts/codecov_coverage.sh
+  - chmod -R 777 ci
 
 deploy:
   - provider: cargo
@@ -64,7 +59,7 @@ deploy:
       tags: true
       condition: $TRAVIS_OS_NAME = linux && $TRAVIS_RUST_VERSION = stable
   - provider: script
-    script: bash scripts/codecov_coverage.sh
+    script: bash ci/codecov_coverage.sh
     skip-cleanup: true
     on:
       all_branches: true
