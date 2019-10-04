@@ -1,21 +1,11 @@
 language: rust
 
-rust:
-  - stable
-  - beta
-  - nightly
-
 sudo: true
 
 git:
   depth: false
 
 dist: bionic
-
-os:
-  - linux
-  - osx
-  - windows
 
 addons:
   apt:
@@ -27,6 +17,14 @@ addons:
       - gcc
       - binutils-dev
       - libiberty-dev
+
+matrix:
+  include:
+  - os: linux
+  - os: osx
+  - os: windows
+  - rust: beta
+  - rust: nightly
 
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
@@ -69,4 +67,8 @@ deploy:
     script: bash scripts/codecov_coverage.sh
     skip-cleanup: true
     on:
+      all_branches: true
       condition: $TRAVIS_OS_NAME = linux && $TRAVIS_RUST_VERSION = stable
+
+notifications:
+  email: false
