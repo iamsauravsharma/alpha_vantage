@@ -69,3 +69,6 @@ deploy:
     on:
       all_branches: true
       condition: $TRAVIS_OS_NAME = linux && $TRAVIS_RUST_VERSION = stable
+
+notifications:
+  email: false
