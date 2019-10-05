@@ -30,7 +30,7 @@ before_install:
   - chmod -R 777 ci
 
 install:
-  - bash ci/install.sh
+  - . ci/install.sh
 
 before_script:
   - bash ci/before_script.sh
