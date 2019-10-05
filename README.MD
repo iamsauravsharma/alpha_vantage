@@ -1,28 +1,16 @@
 # ALPHA_VANTAGE
 
-**Status:**
+**Project status & info:**
 
-| Travis Build Status | Dependency Status | Code Coverage |
-| :---: | :---: | :---: |
-| [![Travis Build Status][build_badge]][build_link] | [![Dependency status][deps_badge]][deps_link] | [![Code coverage][codecov_badge]][codecov_link] |
+| Travis Build Status | Dependency Status | Code Coverage | License | Crates Version |
+| :---: | :---: | :---: | :---: | :---: |
+| [![Travis Build Status][build_badge]][build_link] | [![Dependency status][deps_badge]][deps_link] | [![Code coverage][codecov_badge]][codecov_link] |[![License: MIT][license_badge]][license_link] | [![Crate][cratesio_badge]][cratesio_link] | 
 
-**Project Info:**
+**Rust & OS support:**
 
-| License | LoC | Crates Version |
-| :---: | :---: | :---: |
-| [![License: MIT][license_badge]][license_link] | [![LoC][loc_badge]][loc_link] | [![Crate][cratesio_badge]][cratesio_link] |
-
-**Rust version support:**
-
-| Stable | Beta | Nightly |
-| :---: | :---: | :---: |
-| [![Stable support][stable_supported_badge]][git_link] | [![Beta support][beta_supported_badge]][git_link] | [![Nightly support][nightly_supported_badge]][git_link] |
-
-**OS support:**
-
-| Linux | OSX | Windows |
-| :---: | :---: | :---: |
-| [![Linux support][linux_supported_badge]][git_link] | [![OSX support][osx_supported_badge]][git_link] | [![Windows support][windows_supported_badge]][git_link] |
+| Stable | Beta | Nightly | Linux | OSX | Windows |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| [![Stable support][stable_supported_badge]][git_link] | [![Beta support][beta_supported_badge]][git_link] | [![Nightly support][nightly_supported_badge]][git_link] | [![Linux support][linux_supported_badge]][git_link] | [![OSX support][osx_supported_badge]][git_link] | [![Windows support][windows_supported_badge]][git_link] |
 
 Rust Client library built for accessing [Alphavantage][alphavantage_link] API.
 
@@ -75,9 +63,6 @@ println!("{}",rate);
 
 [license_badge]: https://img.shields.io/github/license/iamsauravsharma/alpha_vantage.svg
 [license_link]: LICENSE
-
-[loc_badge]: https://tokei.rs/b1/github/iamsauravsharma/alpha_vantage
-[loc_link]: https://github.com/iamsauravsharma/alpha_vantage
 
 [alphavantage_link]: https://alphavantage.co
 
