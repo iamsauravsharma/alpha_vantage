@@ -26,31 +26,17 @@ matrix:
   - rust: beta
   - rust: nightly
 
+before_install:
+  - chmod -R 777 ci
+
 install:
-  - rustup component add rustfmt && RUSTFMT="yes" || RUSTFMT="no"
-  - rustup component add clippy && CLIPPY="yes" || CLIPPY="no"
+  - bash ci/install.sh
 
 before_script:
-  - if [[ "$RUSTFMT" == "yes" ]]; then
-      rustfmt -V;
-    fi
-  - if [[ "$CLIPPY" == "yes" ]]; then
-      cargo clippy -V;
-    fi
+  - bash ci/before_script.sh
 
 script:
-  - if [[ "$RUSTFMT" == "yes" ]]; then
-      cargo fmt --all -- --check;
-    fi
-  - if [[ "$CLIPPY" == "yes" ]]; then
-      cargo clippy --all -- -D warnings;
-    fi
-  - cargo build --all
-  - cargo doc --no-deps --all
-  - cargo test --all
-
-before_deploy:
-  - chmod -R 777 ci
+  - bash ci/script.sh
 
 deploy:
   - provider: cargo

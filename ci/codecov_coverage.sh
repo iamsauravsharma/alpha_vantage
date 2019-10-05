@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz 
 tar xzf master.tar.gz
-cd kcov-master
+cd kcov-master || exit
 mkdir build
-cd build
+cd build  || exit
 cmake ..
 make
 sudo make install
