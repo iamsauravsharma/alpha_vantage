@@ -11,8 +11,8 @@ if [[ "$CLIPPY_ADDED" == "true" ]]; then
   rustup default nightly-${LAST_AVAILABLE}
   rustup component add clippy
 fi
-rustup -V
-rustc -V
-cargo -V
-rustfmt -V
-clippy -V
+rustup --version
+rustc --version
+cargo --version
+cargo fmt --version
+cargo clippy --version
