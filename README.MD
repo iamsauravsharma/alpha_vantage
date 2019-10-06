@@ -74,7 +74,7 @@ println!("{}",rate);
 [nightly_supported_badge]: https://img.shields.io/badge/nightly-supported-brightgreen.svg?logo=rust
 [stable_not_supported_badge]: https://img.shields.io/badge/stable-not%20supported-red.svg?logo=rust
 [beta_not_supported_badge]: https://img.shields.io/badge/beta-not%20supported-red.svg?logo=rust
-[nighlty_not_supported_badge]: https://img.shields.io/badge/nightly-not%20supported-red.svg?logo=rust
+[nightly_not_supported_badge]: https://img.shields.io/badge/nightly-not%20supported-red.svg?logo=rust
 
 [linux_supported_badge]: https://img.shields.io/badge/linux-supported-brightgreen.svg?logo=linux
 [osx_supported_badge]: https://img.shields.io/badge/osx-supported-brightgreen.svg?logo=apple
