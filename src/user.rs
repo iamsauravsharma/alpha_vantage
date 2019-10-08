@@ -13,8 +13,8 @@ use reqwest::{Client, ClientBuilder, Url};
 
 const LINK: &str = "https://www.alphavantage.co/query?function=";
 
-/// Struct for initializing apikey value as well as contain different method for
-/// API call
+/// Struct for initializing api key value as well as contain different method
+/// for API call
 pub struct APIKey {
     api: String,
     timeout: u64,
@@ -43,6 +43,22 @@ impl APIKey {
             timeout,
             client,
         }
+    }
+
+    /// Set out API key by reading out environment variable
+    pub fn set_with_env(env_name: &str) -> Self {
+        let api = std::env::var(env_name).expect("environment variable is not present");
+        let client = ClientBuilder::new().build().unwrap();
+        Self {
+            api,
+            timeout: 30,
+            client,
+        }
+    }
+
+    /// Update timeout for API key
+    pub fn update_timeout(&mut self, timeout: u64) {
+        self.timeout = timeout;
     }
 
     /// Method to get api key
