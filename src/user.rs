@@ -23,6 +23,11 @@ pub struct APIKey {
 
 impl APIKey {
     /// Method for initializing APIKey struct
+    ///
+    /// ```
+    /// use alpha_vantage::user::APIKey;
+    /// let api = alpha_vantage::user::APIKey::set_api("some_key");
+    /// ```
     pub fn set_api(api: &str) -> Self {
         let client = ClientBuilder::new().build().unwrap();
         Self {
@@ -33,6 +38,11 @@ impl APIKey {
     }
 
     /// Set API value with timeout period
+    ///
+    /// ```
+    /// use alpha_vantage::user::APIKey;
+    /// let api_with_custom_timeout = APIKey::set_with_timeout("your_api_key", 45);
+    /// ```
     pub fn set_with_timeout(api: &str, timeout: u64) -> Self {
         let client = ClientBuilder::new()
             .timeout(Some(std::time::Duration::from_secs(timeout)))
@@ -46,6 +56,13 @@ impl APIKey {
     }
 
     /// Set out API key by reading out environment variable
+    ///
+    /// ```
+    /// use alpha_vantage::user::APIKey;
+    /// std::env::set_var("KEY_NAME", "some_key");
+    /// let api_from_env = APIKey::set_with_env("KEY_NAME");
+    /// assert_eq!(api_from_env.get_api(), "some_key");
+    /// ```
     pub fn set_with_env(env_name: &str) -> Self {
         let api = std::env::var(env_name).expect("environment variable is not present");
         let client = ClientBuilder::new().build().unwrap();
@@ -57,16 +74,36 @@ impl APIKey {
     }
 
     /// Update timeout for API key
+    ///
+    /// ```
+    /// use alpha_vantage::user::APIKey;
+    /// let mut api = alpha_vantage::user::APIKey::set_api("some_key");
+    /// assert_eq!(api.get_timeout(), 30_u64);
+    /// api.update_timeout(60_u64);
+    /// assert_eq!(api.get_timeout(), 60_u64);
+    /// ```
     pub fn update_timeout(&mut self, timeout: u64) {
         self.timeout = timeout;
     }
 
     /// Method to get api key
+    ///
+    /// ```
+    /// use alpha_vantage::user::APIKey;
+    /// let api = alpha_vantage::user::APIKey::set_api("some_key");
+    /// assert_eq!(api.get_api(), "some_key");
+    /// ```
     pub fn get_api(&self) -> &str {
         &self.api
     }
 
-    /// Get API value timeout period
+    /// Get API timeout period
+    ///
+    /// ```
+    /// use alpha_vantage::user::APIKey;
+    /// let api_with_custom_timeout = APIKey::set_with_timeout("your_api_key", 45);
+    /// assert_eq!(api_with_custom_timeout.get_timeout(), 45_u64);
+    /// ```
     pub fn get_timeout(&self) -> u64 {
         self.timeout
     }
@@ -271,5 +308,23 @@ mod test {
     // Testing get api and set api function
     fn test_get_api() {
         assert_eq!(super::APIKey::set_api("demo").get_api(), "demo".to_string());
+    }
+
+    #[test]
+    fn set_api_from_env() {
+        std::env::set_var("ALPHA_VANTAGE_KEY", "some_random_key");
+        assert_eq!(
+            super::APIKey::set_with_env("ALPHA_VANTAGE_KEY").get_api(),
+            "some_random_key".to_string()
+        );
+    }
+
+    #[test]
+    fn test_set_get_timeout() {
+        assert_eq!(super::APIKey::set_api("demo").get_timeout(), 30_u64);
+        assert_eq!(
+            super::APIKey::set_with_timeout("some_key", 45).get_timeout(),
+            45_u64
+        );
     }
 }
