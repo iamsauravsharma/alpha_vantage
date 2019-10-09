@@ -33,10 +33,10 @@ install:
   - . ci/install.sh
 
 before_script:
-  - bash ci/before_script.sh
+  - . ci/before_script.sh
 
 script:
-  - bash ci/script.sh
+  - . ci/script.sh
 
 deploy:
   - provider: cargo

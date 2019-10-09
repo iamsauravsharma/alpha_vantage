@@ -1,18 +1,30 @@
 #!/usr/bin/env bash/
-if [[ "$RUSTFMT_ADDED" == "false" ]]; then
-  LAST_AVAILABLE=$(curl https://rust-lang.github.io/rustup-components-history/x86_64-apple-darwin/rustfmt)
-  rustup toolchain install nightly-${LAST_AVAILABLE}
-  rustup default nightly-${LAST_AVAILABLE}
-  rustup component add rustfmt
+if [[ "$RUSTFMT_ADDED" == "false" ]]
+then
+  LAST_AVAILABLE_FMT=$(curl https://rust-lang.github.io/rustup-components-history/x86_64-apple-darwin/rustfmt)
+  rustup toolchain install nightly-"${LAST_AVAILABLE_FMT}"
+  rustup component add rustfmt --toolchain nighlty-"${LAST_AVAILABLE_FMT}"
 fi
-if [[ "$CLIPPY_ADDED" == "false" ]]; then
-  LAST_AVAILABLE=$(curl https://rust-lang.github.io/rustup-components-history/x86_64-apple-darwin/clippy)
-  rustup toolchain install nightly-${LAST_AVAILABLE}
-  rustup default nightly-${LAST_AVAILABLE}
-  rustup component add clippy
+if [[ "$CLIPPY_ADDED" == "false" ]]
+then
+  LAST_AVAILABLE_CLIPPY=$(curl https://rust-lang.github.io/rustup-components-history/x86_64-apple-darwin/clippy)
+  rustup toolchain install nightly-"${LAST_AVAILABLE_CLIPPY}"
+  rustup component add clippy --toolchain nighlty-"${LAST_AVAILABLE_CLIPPY}"
 fi
 rustup --version
 rustc --version
 cargo --version
-cargo fmt --version
-cargo clippy --version
+if [[ $RUSTFMT_ADDED == "false" ]]
+then
+  cargo +nightly-"${LAST_AVAILABLE_FMT}" fmt --version
+else
+  cargo fmt --version
+fi
+if [[ $CLIPPY_ADDED == "false" ]]
+then
+  cargo +nightly-"${LAST_AVAILABLE_CLIPPY}" clippy --version
+else
+  cargo clippy --version
+fi
+export LAST_AVAILABLE_FMT
+export LAST_AVAILABLE_CLIPPY
