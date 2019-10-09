@@ -1,5 +1,7 @@
 language: rust
 
+services: docker
+
 sudo: true
 
 git:
@@ -7,26 +9,24 @@ git:
 
 dist: bionic
 
-addons:
-  apt:
-    packages:
-      - libcurl4-openssl-dev
-      - libelf-dev
-      - libdw-dev
-      - cmake
-      - gcc
-      - binutils-dev
-      - libiberty-dev
-
 matrix:
   include:
   - os: linux
+    env: CODECOV_COVERAGE=true PUBLISH_PACKAGE=true
+    addons:
+      apt:
+        packages:
+          - libcurl4-openssl-dev
+          - libelf-dev
+          - libdw-dev
+          - cmake
+          - gcc
+          - binutils-dev
+          - libiberty-dev
   - os: osx
   - os: windows
   - rust: beta
   - rust: nightly
-  - os: linux
-    env: TARGET=x86_64-unknown-linux-musl
   - os: windows
     env: TARGET=x86_64-pc-windows-gnu
 
@@ -47,13 +47,13 @@ deploy:
     token: $CARGO_TOKEN
     on:
       tags: true
-      condition: $TRAVIS_OS_NAME = linux && $TRAVIS_RUST_VERSION = stable
+      condition: $PUBLISH_PACKAGE = true
   - provider: script
     script: bash ci/codecov_coverage.sh
     skip-cleanup: true
     on:
       all_branches: true
-      condition: $TRAVIS_OS_NAME = linux && $TRAVIS_RUST_VERSION = stable
+      condition: $CODECOV_COVERAGE = true
 
 notifications:
   email: false

@@ -24,7 +24,7 @@ run_all_cargo_command(){
 # if $TARGET is present then run only build over that target else run_all_cargo_command
 if [[ -n $TARGET ]]
 then
-  cargo build --all --target="$TARGET"
+    cargo build --all --target="$TARGET"
 else
   run_all_cargo_command
 fi
