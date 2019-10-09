@@ -3,13 +3,15 @@ if [[ "$RUSTFMT_ADDED" == "false" ]]
 then
   LAST_AVAILABLE_FMT=$(curl https://rust-lang.github.io/rustup-components-history/x86_64-apple-darwin/rustfmt)
   rustup toolchain install nightly-"${LAST_AVAILABLE_FMT}"
-  rustup component add rustfmt --toolchain nighlty-"${LAST_AVAILABLE_FMT}"
+  rustup component add rustfmt --toolchain nightly-"${LAST_AVAILABLE_FMT}"
+  rustup default nightly
 fi
 if [[ "$CLIPPY_ADDED" == "false" ]]
 then
   LAST_AVAILABLE_CLIPPY=$(curl https://rust-lang.github.io/rustup-components-history/x86_64-apple-darwin/clippy)
   rustup toolchain install nightly-"${LAST_AVAILABLE_CLIPPY}"
-  rustup component add clippy --toolchain nighlty-"${LAST_AVAILABLE_CLIPPY}"
+  rustup component add clippy --toolchain nightly-"${LAST_AVAILABLE_CLIPPY}"
+  rustup default nightly
 fi
 rustup --version
 rustc --version
