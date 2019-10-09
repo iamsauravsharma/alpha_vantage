@@ -112,7 +112,7 @@ pub struct Sector {
 impl Sector {
     /// Return sector information
     ///
-    /// ```
+    /// ```ignore
     /// let api = alpha_vantage::set_api("demo");
     /// let sector = api.sector();
     /// let information = sector.information();
