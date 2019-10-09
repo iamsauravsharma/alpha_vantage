@@ -1,4 +1,5 @@
 #!/usr/bin/env bash/
+set -e
 if [[ $RUSTFMT_ADDED == "false" ]]
 then
   cargo +nightly-"${LAST_AVAILABLE_FMT}" fmt --all -- --check
