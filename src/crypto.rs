@@ -67,7 +67,7 @@ pub(crate) struct CryptoHelper {
 }
 
 impl CryptoHelper {
-    /// Function which convert CryptoHelper to Crypto
+    /// Function which convert [CryptoHelper][CryptoHelper] to [Crypto][Crypto]
     pub(crate) fn convert(self) -> Crypto {
         let mut crypto = Crypto::default();
         crypto.information = self.information;
@@ -253,7 +253,7 @@ pub struct Crypto {
 }
 
 impl Crypto {
-    /// Return meta data information produce error if API returns error_message
+    /// Return meta data information produce error if API returns error message
     /// or information instead of meta data
     ///
     /// ```
@@ -269,7 +269,7 @@ impl Crypto {
         self.return_meta_string("information")
     }
 
-    /// Return digital currency code produce error if API returns error_message
+    /// Return digital currency code produce error if API returns error message
     /// or information instead of meta data
     ///
     /// ```
@@ -282,7 +282,7 @@ impl Crypto {
         self.return_meta_string("digital code")
     }
 
-    /// Return digital currency name produce error if API returns error_message
+    /// Return digital currency name produce error if API returns error message
     /// or information instead of meta data
     ///
     /// ```
@@ -295,7 +295,7 @@ impl Crypto {
         self.return_meta_string("digital name")
     }
 
-    /// Return market code produce error if API returns error_message
+    /// Return market code produce error if API returns error message
     /// or information instead of meta data
     ///
     /// ```
@@ -308,7 +308,7 @@ impl Crypto {
         self.return_meta_string("market code")
     }
 
-    /// Return market name produce error if API returns error_message
+    /// Return market name produce error if API returns error message
     /// or information instead of meta data
     ///
     /// ```
@@ -321,19 +321,19 @@ impl Crypto {
         self.return_meta_string("market name")
     }
 
-    /// Return last refreshed time produce error if API returns error_message or
+    /// Return last refreshed time produce error if API returns error message or
     /// information instead of meta data
     pub fn last_refreshed(&self) -> Result<&str, &str> {
         self.return_meta_string("last refreshed")
     }
 
-    /// Return time zone of all data time produce error if API return
-    /// error_message or information instead of meta data
+    /// Return time zone of all data time produce error if API return error
+    /// message or information instead of meta data
     pub fn time_zone(&self) -> Result<&str, &str> {
         self.return_meta_string("time zone")
     }
 
-    /// Return out a entry produce error if API returns error_message
+    /// Return out a entry produce error if API returns error message
     /// or information instead of vector of entry
     pub fn entry(&self) -> Result<Vec<Entry>, &str> {
         if let Some(entry) = &self.entry {

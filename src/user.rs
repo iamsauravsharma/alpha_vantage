@@ -22,7 +22,7 @@ pub struct APIKey {
 }
 
 impl APIKey {
-    /// Method for initializing APIKey struct
+    /// Method for initializing [APIKey][APIKey] struct
     ///
     /// ```
     /// use alpha_vantage::user::APIKey;
@@ -55,7 +55,7 @@ impl APIKey {
         }
     }
 
-    /// Set out API key by reading out environment variable
+    /// Set out [APIKey][APIKey] by reading out environment variable
     ///
     /// ```
     /// use alpha_vantage::user::APIKey;

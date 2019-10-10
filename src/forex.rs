@@ -196,14 +196,14 @@ impl Forex {
         self.return_meta_string("to symbol")
     }
 
-    /// Return last refreshed time produce error if API returns error_message or
+    /// Return last refreshed time produce error if API returns error message or
     /// information instead of meta data
     pub fn last_refreshed(&self) -> Result<&str, &str> {
         self.return_meta_string("last refreshed")
     }
 
     /// Return time zone of all data time produce error if API return
-    /// error_message or information instead of meta data
+    /// error message or information instead of meta data
     pub fn time_zone(&self) -> Result<&str, &str> {
         self.return_meta_string("time zone")
     }
@@ -329,7 +329,7 @@ pub(crate) struct ForexHelper {
 }
 
 impl ForexHelper {
-    /// convert ForexHelper to Forex
+    /// convert [ForexHelper][ForexHelper] to [Forex][Forex]
     pub(crate) fn convert(self) -> Forex {
         let mut forex_struct = Forex::default();
         forex_struct.error_message = self.error_message;

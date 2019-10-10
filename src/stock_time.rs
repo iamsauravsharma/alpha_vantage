@@ -69,14 +69,14 @@ impl TimeSeries {
         self.return_meta_string("symbol")
     }
 
-    /// Return last refreshed time produce error if API returns error_message or
+    /// Return last refreshed time produce error if API returns error message or
     /// information instead of meta data
     pub fn last_refreshed(&self) -> Result<&str, &str> {
         self.return_meta_string("last refreshed")
     }
 
     /// Return time zone of all data time produce error if API return
-    /// error_message or information instead of meta data
+    /// error message or information instead of meta data
     pub fn time_zone(&self) -> Result<&str, &str> {
         self.return_meta_string("time zone")
     }
@@ -367,7 +367,7 @@ pub(crate) struct TimeSeriesHelper {
 }
 
 impl TimeSeriesHelper {
-    /// Convert TimeSeriesHelper to TimeSeries
+    /// Convert [TimeSeriesHelper][TimeSeriesHelper] to [TimeSeries][TimeSeries]
     pub(crate) fn convert(self) -> TimeSeries {
         let mut time_series = TimeSeries::default();
         time_series.error_message = self.error_message;

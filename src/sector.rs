@@ -176,7 +176,7 @@ pub(crate) struct SectorHelper {
 }
 
 impl SectorHelper {
-    /// Convert out SectorHelper to sector
+    /// Convert out [SectorHelper][SectorHelper] to [Sector][Sector]
     pub(crate) fn convert(self) -> Sector {
         let mut sector = Sector::default();
         sector.information = self.information;
