@@ -65,7 +65,7 @@ impl Exchange {
     }
 
     /// Return time zone of all data time produce error if API return
-    /// error_message or information instead of meta data
+    /// error message or information instead of meta data
     pub fn time_zone(&self) -> Result<&str, &str> {
         self.get_result_string("time zone")
     }
@@ -118,7 +118,7 @@ impl Exchange {
         self.get_result_string("to name")
     }
 
-    /// Collect out certain value from real_time if present otherwise show error
+    /// Collect out certain value from real time if present otherwise show error
     fn get_result_string(&self, match_str: &str) -> Result<&str, &str> {
         if let Some(real_time) = &self.real_time {
             let value = match match_str {
