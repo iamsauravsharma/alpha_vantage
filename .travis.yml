@@ -1,7 +1,5 @@
 language: rust
 
-services: docker
-
 sudo: true
 
 git:
@@ -27,6 +25,11 @@ matrix:
   - os: windows
   - rust: beta
   - rust: nightly
+  - os: linux
+    env: TARGET=x86_64-unknown-linux-musl FEATURES=--features=vendored
+    addons:
+      apt:
+        packages: musl-tools
   - os: windows
     env: TARGET=x86_64-pc-windows-gnu
 
