@@ -17,9 +17,10 @@ pull_request_rules:
     name: 'merge iamsauravsharma PR'
     conditions:
       - author=iamsauravsharma
-      - status-success=DCO
       - label!=WIP
       - '-conflict'
+      - status-success=DCO
+      - status-success=CommitCheck
       - 'status-success=Travis CI - Branch'
       - 'status-success=Travis CI - Pull Request'
       - status-success=WIP
@@ -37,6 +38,7 @@ pull_request_rules:
       - '-conflict'
       - label!=WIP
       - status-success=DCO
+      - status-success=CommitCheck
       - 'status-success=Travis CI - Branch'
       - 'status-success=Travis CI - Pull Request'
       - status-success=WIP
