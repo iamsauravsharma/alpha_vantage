@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+set -ex
+
 wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz 
 tar xzf master.tar.gz
 cd kcov-master || exit
@@ -16,3 +18,5 @@ do
 done
 bash <(curl -s https://codecov.io/bash)
 echo "Uploaded code coverage";
+
+set +x
