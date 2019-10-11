@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["sector","Function used to create a [Sector][Sector] struct."]],"struct":[["Data","Store Sector data"],["Sector","Stores sector data"]]});

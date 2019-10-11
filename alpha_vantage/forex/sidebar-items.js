@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["forex","Function used to create a [Forex][Forex] struct."]],"struct":[["Entry","Struct to store Entry value"],["Forex","Struct to store Forex data after forex API call"]],"trait":[["VecEntry","trait which helps for performing some common operation on Vec"]]});
