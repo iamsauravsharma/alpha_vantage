@@ -27,7 +27,7 @@ Rust Client library built for accessing [Alphavantage][alphavantage_link] API.
 
 ## Add as dependencies
 Edit Cargo.toml file to add alpha_vantage as dependencies
-```
+```toml
 [dependencies]
 alpha_vantage = 0.2.0
 ```
@@ -35,7 +35,7 @@ alpha_vantage = 0.2.0
 __OR__
 For bleeding edge development use
 
-```
+```toml
 [dependencies]
 alpha_vantage = {git = "https://github.com/iamsauravsharma/alpha_vantage"}
 ```
