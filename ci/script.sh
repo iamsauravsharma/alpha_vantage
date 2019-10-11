@@ -2,7 +2,7 @@
 #shellcheck disable=SC2086
 #SC2086 => Double quote to prevent globbing and word splitting
 #SC2086 => https://github.com/koalaman/shellcheck/wiki/SC2086
-set -e
+set -ex
 
 run_all_cargo_command(){
   if [[ $RUSTFMT_ADDED == "false" ]]
@@ -31,3 +31,5 @@ then
 else
   run_all_cargo_command
 fi
+
+set +x

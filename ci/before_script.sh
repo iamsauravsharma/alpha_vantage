@@ -1,5 +1,5 @@
 #!/usr/bin/env bash/
-set -e
+set -ex
 
 rustfmt_and_clippy_latest_nightly() {
   if [[ "$RUSTFMT_ADDED" == "false" ]]
@@ -52,3 +52,5 @@ then
 else
   target_print_out_list
 fi
+
+set +x

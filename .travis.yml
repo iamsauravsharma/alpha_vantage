@@ -9,29 +9,35 @@ dist: bionic
 
 matrix:
   include:
-  - os: linux
-    env: CODECOV_COVERAGE=true PUBLISH_PACKAGE=true
-    addons:
-      apt:
-        packages:
-          - libcurl4-openssl-dev
-          - libelf-dev
-          - libdw-dev
-          - cmake
-          - gcc
-          - binutils-dev
-          - libiberty-dev
-  - os: osx
-  - os: windows
-  - rust: beta
-  - rust: nightly
-  - os: linux
-    env: TARGET=x86_64-unknown-linux-musl FEATURES=--features=vendored
-    addons:
-      apt:
-        packages: musl-tools
-  - os: windows
-    env: TARGET=x86_64-pc-windows-gnu
+    - os: linux
+      env:
+        - CODECOV_COVERAGE=true
+        - PUBLISH_PACKAGE=true
+      addons:
+        apt:
+          update: true
+          packages:
+            - libcurl4-openssl-dev
+            - libelf-dev
+            - libdw-dev
+            - cmake
+            - gcc
+            - binutils-dev
+            - libiberty-dev
+    - os: osx
+    - os: windows
+    - rust: beta
+    - rust: nightly
+    - os: linux
+      env:
+        - TARGET=x86_64-unknown-linux-musl
+        - FEATURES=--features=vendored
+      addons:
+        apt:
+          update: true
+          packages: musl-tools
+    - os: windows
+      env: TARGET=x86_64-pc-windows-gnu
 
 before_install:
   - chmod -R 777 ci
