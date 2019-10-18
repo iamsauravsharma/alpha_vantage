@@ -40,61 +40,73 @@ pub struct Data {
 
 impl Data {
     /// Return rank
+    #[must_use]
     pub fn rank(&self) -> &str {
         &self.rank
     }
 
     /// Return utilities score
+    #[must_use]
     pub fn utilities(&self) -> &str {
         &self.utilities
     }
 
     /// Return health care score
+    #[must_use]
     pub fn health_care(&self) -> &str {
         &self.health_care
     }
 
     /// Return out information technology
+    #[must_use]
     pub fn information_technology(&self) -> &str {
         &self.information_technology
     }
 
     /// Return industrials scores
+    #[must_use]
     pub fn industrials(&self) -> &str {
         &self.industrials
     }
 
     /// Return out real estate value
+    #[must_use]
     pub fn real_estate(&self) -> &str {
         &self.real_estate
     }
 
     /// Return consumer staples value
+    #[must_use]
     pub fn consumer_staples(&self) -> &str {
         &self.consumer_staples
     }
 
     /// Return out value for consumer discretionary
+    #[must_use]
     pub fn consumer_discretionary(&self) -> &str {
         &self.consumer_discretionary
     }
 
     /// Return out for financials
+    #[must_use]
     pub fn financials(&self) -> &str {
         &self.financials
     }
 
     /// Gives value of communication services
+    #[must_use]
     pub fn communication_services(&self) -> &str {
         &self.communication_services
     }
 
     /// Gives materials value
+    #[must_use]
     pub fn materials(&self) -> &str {
         &self.materials
     }
 
     /// Gives out energy data
+    #[must_use]
     pub fn energy(&self) -> &str {
         &self.energy
     }
@@ -229,6 +241,7 @@ impl SectorHelper {
 ///
 /// Instead of using this function directly calling through [APIKey][APIKey]
 /// method is recommended
+#[must_use]
 pub fn sector(api_data: (&str, Option<u64>)) -> Sector {
     let api;
     if let Some(timeout) = api_data.1 {

@@ -45,46 +45,55 @@ pub struct DataValue {
 
 impl DataValue {
     /// Return symbol
+    #[must_use]
     pub fn symbol(&self) -> &str {
         &self.symbol
     }
 
     /// Return name for symbol
+    #[must_use]
     pub fn name(&self) -> &str {
         &self.name
     }
 
     /// Return data type
+    #[must_use]
     pub fn data_type(&self) -> &str {
         &self.data_type
     }
 
     /// Return region of search entry
+    #[must_use]
     pub fn region(&self) -> &str {
         &self.region
     }
 
     /// Return open value
+    #[must_use]
     pub fn market_open(&self) -> &str {
         &self.market_open
     }
 
     /// Return close value
+    #[must_use]
     pub fn market_close(&self) -> &str {
         &self.market_close
     }
 
     /// Return time zone of symbol
+    #[must_use]
     pub fn time_zone(&self) -> &str {
         &self.time_zone
     }
 
     /// Return currency
+    #[must_use]
     pub fn currency(&self) -> &str {
         &self.currency
     }
 
     /// Return match score
+    #[must_use]
     pub fn match_score(&self) -> f64 {
         self.match_score
             .trim()
@@ -110,6 +119,7 @@ impl Search {
 ///
 /// Instead of using this function directly calling through [APIKey][APIKey]
 /// method is recommended
+#[must_use]
 pub fn search(keyword: &str, api_data: (&str, Option<u64>)) -> Search {
     let api;
     if let Some(timeout) = api_data.1 {

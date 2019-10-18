@@ -85,11 +85,13 @@ pub struct DataCollector {
 
 impl DataCollector {
     /// Return out a time
+    #[must_use]
     pub fn time(&self) -> &str {
         &self.time
     }
 
     /// Return values for Data
+    #[must_use]
     pub fn values(&self) -> &HashMap<String, f64> {
         &self.values
     }
@@ -99,6 +101,7 @@ impl DataCollector {
 ///
 /// Instead of using this function directly calling through [APIKey][APIKey]
 /// method is recommended
+#[must_use]
 pub fn technical_indicator(
     function: &str,
     symbol: &str,

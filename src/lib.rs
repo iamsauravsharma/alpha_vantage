@@ -1,6 +1,7 @@
 #![warn(bare_trait_objects, missing_docs, unreachable_pub)]
 #![deny(unsafe_code)]
-#![deny(clippy::all, clippy::pedantic)]
+#![deny(clippy::all)]
+#![warn(clippy::pedantic)]
 
 //! Rust Client/Wrapper built for [Alphavantage][alpha_vantage_link] API.
 //!
@@ -33,11 +34,13 @@ pub mod util;
 use self::user::APIKey;
 
 /// Set API value which can be used for calling different module
+#[must_use]
 pub fn set_api(api: &str) -> APIKey {
     APIKey::set_api(api)
 }
 
 /// Set API value with timeout period
+#[must_use]
 pub fn set_with_timeout(api: &str, timeout: u64) -> APIKey {
     APIKey::set_with_timeout(api, timeout)
 }

@@ -145,6 +145,7 @@ impl Exchange {
 ///
 /// Instead of using this function directly calling through [APIKey][APIKey]
 /// method is recommended
+#[must_use]
 pub fn exchange(from: &str, to: &str, api_data: (&str, Option<u64>)) -> Exchange {
     let api;
     if let Some(timeout) = api_data.1 {

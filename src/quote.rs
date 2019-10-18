@@ -156,6 +156,7 @@ impl Quote {
 ///
 /// Instead of using this function directly calling through [APIKey][APIKey]
 /// method is recommended
+#[must_use]
 pub fn quote(symbol: &str, api_data: (&str, Option<u64>)) -> Quote {
     let api;
     if let Some(timeout) = api_data.1 {

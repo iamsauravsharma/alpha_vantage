@@ -51,6 +51,7 @@ pub trait VecEntry {
 }
 
 impl VecEntry for Vec<Entry> {
+    #[must_use]
     fn find(&self, time: &str) -> Option<Entry> {
         for entry in self {
             if entry.time == time {
@@ -60,6 +61,7 @@ impl VecEntry for Vec<Entry> {
         None
     }
 
+    #[must_use]
     fn latest(&self) -> Entry {
         let mut latest = Entry::default();
         let mut new_time = String::new();
@@ -97,26 +99,31 @@ impl VecEntry for Vec<Entry> {
 
 impl Entry {
     /// Return time for entry
+    #[must_use]
     pub fn time(&self) -> &str {
         &self.time
     }
 
     /// Return open value
+    #[must_use]
     pub fn open(&self) -> f64 {
         return_f64(&self.open)
     }
 
     /// Return high value
+    #[must_use]
     pub fn high(&self) -> f64 {
         return_f64(&self.high)
     }
 
     /// Return low value
+    #[must_use]
     pub fn low(&self) -> f64 {
         return_f64(&self.low)
     }
 
     /// Return close value
+    #[must_use]
     pub fn close(&self) -> f64 {
         return_f64(&self.close)
     }
@@ -409,6 +416,7 @@ fn return_option_value(value: Option<&std::string::String>) -> Option<String> {
 ///
 /// Instead of using this function directly calling through [APIKey][APIKey]
 /// method is recommended
+#[must_use]
 pub fn forex(
     function: ForexFunction,
     from_symbol: &str,

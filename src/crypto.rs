@@ -135,6 +135,7 @@ pub trait VecEntry {
 }
 
 impl VecEntry for Vec<Entry> {
+    #[must_use]
     fn find(&self, time: &str) -> Option<Entry> {
         for entry in self {
             if entry.time == time {
@@ -144,6 +145,7 @@ impl VecEntry for Vec<Entry> {
         None
     }
 
+    #[must_use]
     fn latest(&self) -> Entry {
         let mut latest = Entry::default();
         let mut new_time = String::new();
@@ -181,56 +183,67 @@ impl VecEntry for Vec<Entry> {
 
 impl Entry {
     /// Return time
+    #[must_use]
     pub fn time(&self) -> &str {
         &self.time
     }
 
     /// Return market open value
+    #[must_use]
     pub fn market_open(&self) -> f64 {
         convert_to_f64(&self.market_open)
     }
 
     /// Return usd open value
+    #[must_use]
     pub fn usd_open(&self) -> f64 {
         convert_to_f64(&self.usd_open)
     }
 
     /// Return market high value
+    #[must_use]
     pub fn market_high(&self) -> f64 {
         convert_to_f64(&self.market_high)
     }
 
     /// Return usd high value
+    #[must_use]
     pub fn usd_high(&self) -> f64 {
         convert_to_f64(&self.usd_high)
     }
 
     /// Return market low value
+    #[must_use]
     pub fn market_low(&self) -> f64 {
         convert_to_f64(&self.market_low)
     }
 
     /// Return usd low value
+    #[must_use]
     pub fn usd_low(&self) -> f64 {
         convert_to_f64(&self.usd_low)
     }
 
     /// Return market close value
+    #[must_use]
     pub fn market_close(&self) -> f64 {
         convert_to_f64(&self.market_close)
     }
 
     /// Return usd close value
+    #[must_use]
     pub fn usd_close(&self) -> f64 {
         convert_to_f64(&self.usd_close)
     }
 
     /// Return volume
+    #[must_use]
     pub fn volume(&self) -> f64 {
         convert_to_f64(&self.volume)
     }
 
     /// Return market cap
+    #[must_use]
     pub fn market_cap(&self) -> f64 {
         convert_to_f64(&self.market_cap)
     }
@@ -375,6 +388,7 @@ impl Crypto {
 ///
 /// Instead of using this function directly calling through [APIKey][APIKey]
 /// method is recommended
+#[must_use]
 pub fn crypto(
     function: CryptoFunction,
     symbol: &str,

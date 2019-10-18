@@ -28,6 +28,7 @@ impl APIKey {
     /// use alpha_vantage::user::APIKey;
     /// let api = alpha_vantage::user::APIKey::set_api("some_key");
     /// ```
+    #[must_use]
     pub fn set_api(api: &str) -> Self {
         let client = ClientBuilder::new().build().unwrap();
         Self {
@@ -43,6 +44,7 @@ impl APIKey {
     /// use alpha_vantage::user::APIKey;
     /// let api_with_custom_timeout = APIKey::set_with_timeout("your_api_key", 45);
     /// ```
+    #[must_use]
     pub fn set_with_timeout(api: &str, timeout: u64) -> Self {
         let client = ClientBuilder::new()
             .timeout(Some(std::time::Duration::from_secs(timeout)))
@@ -63,6 +65,7 @@ impl APIKey {
     /// let api_from_env = APIKey::set_with_env("KEY_NAME");
     /// assert_eq!(api_from_env.get_api(), "some_key");
     /// ```
+    #[must_use]
     pub fn set_with_env(env_name: &str) -> Self {
         let api = std::env::var(env_name).expect("environment variable is not present");
         let client = ClientBuilder::new().build().unwrap();
@@ -93,6 +96,7 @@ impl APIKey {
     /// let api = alpha_vantage::user::APIKey::set_api("some_key");
     /// assert_eq!(api.get_api(), "some_key");
     /// ```
+    #[must_use]
     pub fn get_api(&self) -> &str {
         &self.api
     }
@@ -104,6 +108,7 @@ impl APIKey {
     /// let api_with_custom_timeout = APIKey::set_with_timeout("your_api_key", 45);
     /// assert_eq!(api_with_custom_timeout.get_timeout(), 45_u64);
     /// ```
+    #[must_use]
     pub fn get_timeout(&self) -> u64 {
         self.timeout
     }
@@ -117,8 +122,9 @@ impl APIKey {
     /// let digital_name = crypto.digital_name();
     /// assert_eq!(digital_name.unwrap(), String::from("Bitcoin"));
     /// ```
+    #[must_use]
     pub fn crypto(&self, function: CryptoFunction, symbol: &str, market: &str) -> Crypto {
-        let data: Url = create_url_crypto(function, symbol, market, &self.get_api());
+        let data: Url = create_url_crypto(function, symbol, market, self.get_api());
         let body = &self.client.get(data).send().unwrap().text().unwrap();
         let crypto_helper: CryptoHelper = serde_json::from_str(body).unwrap();
         crypto_helper.convert()
@@ -135,6 +141,7 @@ impl APIKey {
     ///     String::from("Bitcoin")
     /// );
     /// ```
+    #[must_use]
     pub fn exchange(&self, from_currency: &str, to_currency: &str) -> Exchange {
         let data: Url = format!(
             "{}CURRENCY_EXCHANGE_RATE&from_currency={}&to_currency={}&apikey={}",
@@ -165,6 +172,7 @@ impl APIKey {
     /// );
     /// assert_eq!(forex.symbol_from().unwrap(), "EUR".to_string());
     /// ```
+    #[must_use]
     pub fn forex(
         &self,
         function: ForexFunction,
@@ -179,7 +187,7 @@ impl APIKey {
             to_symbol,
             interval,
             output_size,
-            &self.get_api(),
+            self.get_api(),
         );
         let body = &self.client.get(data).send().unwrap().text().unwrap();
         let forex_helper: ForexHelper = serde_json::from_str(body).unwrap();
@@ -193,6 +201,7 @@ impl APIKey {
     /// let quote = api.quote("MSFT");
     /// assert_eq!(quote.open().is_ok(), true);
     /// ```
+    #[must_use]
     pub fn quote(&self, symbol: &str) -> Quote {
         let data: Url = format!(
             "{}GLOBAL_QUOTE&symbol={}&apikey={}",
@@ -214,6 +223,7 @@ impl APIKey {
     /// let search = api.search("BA");
     /// assert_eq!(search.result().is_ok(), true);
     /// ```
+    #[must_use]
     pub fn search(&self, keywords: &str) -> Search {
         let data: Url = format!(
             "{}SYMBOL_SEARCH&keywords={}&apikey={}",
@@ -234,12 +244,13 @@ impl APIKey {
     /// let sector = api.sector();
     /// assert_eq!(sector.information().is_ok(), true);
     /// ```
+    #[must_use]
     pub fn sector(&self) -> Sector {
         let data: Url = format!("{}SECTOR&apikey={}", LINK, self.get_api())
             .parse()
             .unwrap();
         let body = &self.client.get(data).send().unwrap().text().unwrap();
-        let sector_helper: SectorHelper = serde_json::from_str(&body).unwrap();
+        let sector_helper: SectorHelper = serde_json::from_str(body).unwrap();
         sector_helper.convert()
     }
 
@@ -256,6 +267,7 @@ impl APIKey {
     /// );
     /// assert_eq!(stock.symbol().unwrap(), "MSFT".to_string());
     /// ```
+    #[must_use]
     pub fn stock_time(
         &self,
         function: StockFunction,
@@ -264,7 +276,7 @@ impl APIKey {
         output_size: OutputSize,
     ) -> TimeSeries {
         let data: Url =
-            create_url_time_series(function, symbol, interval, output_size, &self.get_api());
+            create_url_time_series(function, symbol, interval, output_size, self.get_api());
         let body = &self.client.get(data).send().unwrap().text().unwrap();
         let time_series_helper: TimeSeriesHelper = serde_json::from_str(body).unwrap();
         time_series_helper.convert()
@@ -278,6 +290,7 @@ impl APIKey {
     ///     api.technical_indicator("SEMA", "MSFT", "1min", Some("open"), Some("10"), vec![]);
     /// assert_eq!(technical.data().is_ok(), true);
     /// ```
+    #[must_use]
     pub fn technical_indicator(
         &self,
         function: &str,
@@ -294,7 +307,7 @@ impl APIKey {
             series_type,
             time_period,
             temporary_value,
-            &self.get_api(),
+            self.get_api(),
         );
         let body = &self.client.get(data).send().unwrap().text().unwrap();
         serde_json::from_str(body).unwrap()

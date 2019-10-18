@@ -208,6 +208,7 @@ pub trait VecEntry {
 }
 
 impl VecEntry for Vec<Entry> {
+    #[must_use]
     fn find(&self, time: &str) -> Option<Entry> {
         for entry in self {
             if entry.time == time {
@@ -217,6 +218,7 @@ impl VecEntry for Vec<Entry> {
         None
     }
 
+    #[must_use]
     fn latest(&self) -> Entry {
         let mut latest = Entry::default();
         let mut new_time = String::new();
@@ -254,55 +256,64 @@ impl VecEntry for Vec<Entry> {
 
 impl Entry {
     /// Get time
+    #[must_use]
     pub fn time(&self) -> &str {
         &self.time
     }
 
     /// Return open
+    #[must_use]
     pub fn open(&self) -> f64 {
         return_f64(&self.open)
     }
 
     /// Return high
+    #[must_use]
     pub fn high(&self) -> f64 {
         return_f64(&self.high)
     }
 
     /// Return low
+    #[must_use]
     pub fn low(&self) -> f64 {
         return_f64(&self.low)
     }
 
     /// Return close
+    #[must_use]
     pub fn close(&self) -> f64 {
         return_f64(&self.close)
     }
 
     /// Return adjusted
+    #[must_use]
     pub fn adjusted(&self) -> Option<f64> {
         if let Some(data) = &self.adjusted_close {
-            return Some(return_f64(&data));
+            return Some(return_f64(data));
         }
         None
     }
 
     /// Return volume
+    #[must_use]
     pub fn volume(&self) -> f64 {
         return_f64(&self.volume)
     }
 
     /// Return dividend
+    #[must_use]
     pub fn dividend(&self) -> Option<f64> {
         if let Some(data) = &self.dividend_amount {
-            return Some(return_f64(&data));
+            return Some(return_f64(data));
         }
         None
     }
 
     /// Return split dividend
+    #[must_use]
     pub fn split(&self) -> Option<f64> {
         if let Some(data) = &self.split_coefficient {
-            return Some(return_f64(&data));
+            return Some(return_f64(data));
         }
         None
     }
@@ -456,6 +467,7 @@ fn return_value(value: Option<&std::string::String>) -> Option<String> {
 ///
 /// Instead of using this function directly calling through [APIKey][APIKey]
 /// method is recommended
+#[must_use]
 pub fn stock_time(
     function: StockFunction,
     symbol: &str,
