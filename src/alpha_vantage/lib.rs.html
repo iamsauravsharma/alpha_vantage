@@ -41,10 +41,14 @@
 <span id="41">41</span>
 <span id="42">42</span>
 <span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">bare_trait_objects</span>, <span class="ident">missing_docs</span>, <span class="ident">unreachable_pub</span>)]</span>
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">unsafe_code</span>)]</span>
-<span class="attribute">#![<span class="ident">deny</span>(<span class="ident">clippy</span>::<span class="ident">all</span>, <span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
+<span class="attribute">#![<span class="ident">deny</span>(<span class="ident">clippy</span>::<span class="ident">all</span>)]</span>
+<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
 
 <span class="doccomment">//! Rust Client/Wrapper built for [Alphavantage][alpha_vantage_link] API.</span>
 <span class="doccomment">//!</span>
@@ -77,11 +81,13 @@
 <span class="kw">use</span> <span class="self">self</span>::<span class="ident">user</span>::<span class="ident">APIKey</span>;
 
 <span class="doccomment">/// Set API value which can be used for calling different module</span>
+<span class="attribute">#[<span class="ident">must_use</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_api</span>(<span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">APIKey</span> {
     <span class="ident">APIKey</span>::<span class="ident">set_api</span>(<span class="ident">api</span>)
 }
 
 <span class="doccomment">/// Set API value with timeout period</span>
+<span class="attribute">#[<span class="ident">must_use</span>]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_with_timeout</span>(<span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">timeout</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="ident">APIKey</span> {
     <span class="ident">APIKey</span>::<span class="ident">set_with_timeout</span>(<span class="ident">api</span>, <span class="ident">timeout</span>)
 }
