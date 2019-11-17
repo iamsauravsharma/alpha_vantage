@@ -82,13 +82,13 @@
 
 <span class="doccomment">/// Set API value which can be used for calling different module</span>
 <span class="attribute">#[<span class="ident">must_use</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_api</span>(<span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">APIKey</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_api</span>(<span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">APIKey</span> {
     <span class="ident">APIKey</span>::<span class="ident">set_api</span>(<span class="ident">api</span>)
 }
 
 <span class="doccomment">/// Set API value with timeout period</span>
 <span class="attribute">#[<span class="ident">must_use</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_with_timeout</span>(<span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">timeout</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="ident">APIKey</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_with_timeout</span>(<span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">timeout</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">APIKey</span> {
     <span class="ident">APIKey</span>::<span class="ident">set_with_timeout</span>(<span class="ident">api</span>, <span class="ident">timeout</span>)
 }
 </pre></div>

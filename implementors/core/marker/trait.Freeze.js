@@ -6,5 +6,4 @@ implementors["alpha_vantage"] = [{text:"impl Freeze for <a class=\"struct\" href
             } else {
                 window.pending_implementors = implementors;
             }
-        
-})()
+        })()
