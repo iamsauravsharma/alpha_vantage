@@ -239,7 +239,7 @@ impl APIKey {
 
     /// Method for returning out a sector data as struct
     /// # Example
-    /// ```ignore
+    /// ```
     /// let api = alpha_vantage::set_api("demo");
     /// let sector = api.sector();
     /// assert_eq!(sector.information().is_ok(), true);
