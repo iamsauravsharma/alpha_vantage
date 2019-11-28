@@ -10,7 +10,7 @@
 
 use crate::{user::APIKey, util::CryptoFunction};
 use reqwest::Url;
-use serde_derive::Deserialize;
+use serde::Deserialize;
 use std::collections::HashMap;
 
 const LINK: &str = "https://www.alphavantage.co/query?function=";

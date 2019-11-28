@@ -11,7 +11,7 @@
 
 use crate::{user::APIKey, util::TechnicalIndicator as UtilIndicator};
 use reqwest::Url;
-use serde_derive::Deserialize;
+use serde::Deserialize;
 use std::collections::HashMap;
 
 type DataType = Option<HashMap<String, HashMap<String, HashMap<String, String>>>>;

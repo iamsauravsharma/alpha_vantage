@@ -9,7 +9,7 @@
 //! [exchange]: https://www.alphavantage.co/documentation/#currency-exchnage
 
 use crate::user::APIKey;
-use serde_derive::Deserialize;
+use serde::Deserialize;
 
 /// Struct used for exchanging currency
 #[derive(Debug, Deserialize)]

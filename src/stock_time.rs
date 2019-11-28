@@ -15,7 +15,7 @@ use crate::{
     util::{Interval, OutputSize, StockFunction},
 };
 use reqwest::Url;
-use serde_derive::Deserialize;
+use serde::Deserialize;
 use std::collections::HashMap;
 
 const LINK: &str = "https://www.alphavantage.co/query?function=";

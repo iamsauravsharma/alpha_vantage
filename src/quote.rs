@@ -9,7 +9,7 @@
 //! [quote]: https://www.alphavantage.co/documentation/#latestprice
 
 use crate::user::APIKey;
-use serde_derive::Deserialize;
+use serde::Deserialize;
 
 /// Struct for storing Quote related information
 #[derive(Debug, Deserialize)]

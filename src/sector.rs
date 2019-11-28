@@ -9,7 +9,7 @@
 //! [sector]: https://www.alphavantage.co/documentation/#sector
 
 use crate::user::APIKey;
-use serde_derive::Deserialize;
+use serde::Deserialize;
 use std::collections::HashMap;
 
 /// Stores Metadata

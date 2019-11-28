@@ -9,7 +9,7 @@
 //! [symbol_search]: https://www.alphavantage.co/documentation/#symbolsearch
 
 use crate::user::APIKey;
-use serde_derive::Deserialize;
+use serde::Deserialize;
 
 /// struct for storing search method data
 #[derive(Debug, Deserialize)]
