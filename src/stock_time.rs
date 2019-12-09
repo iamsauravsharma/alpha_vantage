@@ -420,7 +420,10 @@ impl TimeSeriesHelper {
                 for val in hash.keys() {
                     let mut entry: Entry = Entry::default();
                     entry.time = val.to_string();
-                    let entry_helper = hash.get(val).unwrap().clone();
+                    let entry_helper = hash
+                        .get(val)
+                        .expect("failed to get out val from hash for time series")
+                        .clone();
                     entry.open = entry_helper.open;
                     entry.high = entry_helper.high;
                     entry.low = entry_helper.low;
@@ -435,7 +438,10 @@ impl TimeSeriesHelper {
                 for val in hash.keys() {
                     let mut entry: Entry = Entry::default();
                     entry.time = val.to_string();
-                    let entry_helper = hash.get(val).unwrap().clone();
+                    let entry_helper = hash
+                        .get(val)
+                        .expect("failed to get out val from hash for adjusted series")
+                        .clone();
                     entry.open = entry_helper.open;
                     entry.high = entry_helper.high;
                     entry.low = entry_helper.low;

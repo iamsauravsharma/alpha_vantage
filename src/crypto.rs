@@ -75,11 +75,14 @@ impl CryptoHelper {
         crypto.meta_data = self.meta_data;
         if self.entry.is_some() {
             let mut vec_entry = Vec::new();
-            for value in self.entry.unwrap().values() {
+            for value in self.entry.expect("self.entry is None").values() {
                 for key in value.keys() {
                     let mut entry = Entry::default();
                     entry.time = key.to_string();
-                    let entry_helper = value.get(key).unwrap().clone();
+                    let entry_helper = value
+                        .get(key)
+                        .expect("failed to get out key from hashmap")
+                        .clone();
                     entry.usd_open = entry_helper.open_usd;
                     entry.usd_high = entry_helper.high_usd;
                     entry.usd_low = entry_helper.low_usd;

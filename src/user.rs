@@ -30,7 +30,9 @@ impl APIKey {
     /// ```
     #[must_use]
     pub fn set_api(api: &str) -> Self {
-        let client = ClientBuilder::new().build().unwrap();
+        let client = ClientBuilder::new()
+            .build()
+            .expect("Failed to build out Client Builder");
         Self {
             api: api.to_string(),
             timeout: 30,
@@ -49,7 +51,7 @@ impl APIKey {
         let client = ClientBuilder::new()
             .timeout(Some(std::time::Duration::from_secs(timeout)))
             .build()
-            .unwrap();
+            .expect("Failed to build out Client Builder with timeout");
         Self {
             api: api.to_string(),
             timeout,
@@ -68,7 +70,9 @@ impl APIKey {
     #[must_use]
     pub fn set_with_env(env_name: &str) -> Self {
         let api = std::env::var(env_name).expect("environment variable is not present");
-        let client = ClientBuilder::new().build().unwrap();
+        let client = ClientBuilder::new()
+            .build()
+            .expect("Failed to build out Client Builder");
         Self {
             api,
             timeout: 30,
@@ -125,8 +129,15 @@ impl APIKey {
     #[must_use]
     pub fn crypto(&self, function: CryptoFunction, symbol: &str, market: &str) -> Crypto {
         let data: Url = create_url_crypto(function, symbol, market, self.get_api());
-        let body = &self.client.get(data).send().unwrap().text().unwrap();
-        let crypto_helper: CryptoHelper = serde_json::from_str(body).unwrap();
+        let body = &self
+            .client
+            .get(data)
+            .send()
+            .expect("failed to send out request")
+            .text()
+            .expect("failed to get out text from Response");
+        let crypto_helper: CryptoHelper =
+            serde_json::from_str(body).expect("Cannot convert to CryptoHelper");
         crypto_helper.convert()
     }
 
@@ -151,10 +162,16 @@ impl APIKey {
             self.get_api()
         )
         .parse()
-        .unwrap();
+        .expect("Failed to parse string to url");
 
-        let body = &self.client.get(data).send().unwrap().text().unwrap();
-        serde_json::from_str(body).unwrap()
+        let body = &self
+            .client
+            .get(data)
+            .send()
+            .expect("failed to send out request")
+            .text()
+            .expect("failed to get out text from Response");
+        serde_json::from_str(body).expect("Cannot convert to Exchange")
     }
 
     /// Forex method for calling stock time series
@@ -189,8 +206,15 @@ impl APIKey {
             output_size,
             self.get_api(),
         );
-        let body = &self.client.get(data).send().unwrap().text().unwrap();
-        let forex_helper: ForexHelper = serde_json::from_str(body).unwrap();
+        let body = &self
+            .client
+            .get(data)
+            .send()
+            .expect("failed to send out request")
+            .text()
+            .expect("failed to get out text from Response");
+        let forex_helper: ForexHelper =
+            serde_json::from_str(body).expect("Cannot convert to ForexHelper");
         forex_helper.convert()
     }
 
@@ -210,10 +234,16 @@ impl APIKey {
             self.get_api()
         )
         .parse()
-        .unwrap();
+        .expect("Failed to parse quote str to URL");
 
-        let body = &self.client.get(data).send().unwrap().text().unwrap();
-        serde_json::from_str(body).unwrap()
+        let body = &self
+            .client
+            .get(data)
+            .send()
+            .expect("failed to send out request")
+            .text()
+            .expect("failed to get out text from Response");
+        serde_json::from_str(body).expect("Cannot convert to Quote")
     }
 
     /// Search method for searching keyword or company
@@ -232,9 +262,15 @@ impl APIKey {
             self.get_api()
         )
         .parse()
-        .unwrap();
-        let body = &self.client.get(data).send().unwrap().text().unwrap();
-        serde_json::from_str(body).unwrap()
+        .expect("Failed to parse search str to Url");
+        let body = &self
+            .client
+            .get(data)
+            .send()
+            .expect("failed to send out request")
+            .text()
+            .expect("failed to get out text from Response");
+        serde_json::from_str(body).expect("Cannot convert to Search")
     }
 
     /// Method for returning out a sector data as struct
@@ -248,9 +284,16 @@ impl APIKey {
     pub fn sector(&self) -> Sector {
         let data: Url = format!("{}SECTOR&apikey={}", LINK, self.get_api())
             .parse()
-            .unwrap();
-        let body = &self.client.get(data).send().unwrap().text().unwrap();
-        let sector_helper: SectorHelper = serde_json::from_str(body).unwrap();
+            .expect("failed to parse sector str to Url");
+        let body = &self
+            .client
+            .get(data)
+            .send()
+            .expect("failed to send out request")
+            .text()
+            .expect("failed to get out text from Response");
+        let sector_helper: SectorHelper =
+            serde_json::from_str(body).expect("cannot convert to SectorHelper");
         sector_helper.convert()
     }
 
@@ -277,8 +320,15 @@ impl APIKey {
     ) -> TimeSeries {
         let data: Url =
             create_url_time_series(function, symbol, interval, output_size, self.get_api());
-        let body = &self.client.get(data).send().unwrap().text().unwrap();
-        let time_series_helper: TimeSeriesHelper = serde_json::from_str(body).unwrap();
+        let body = &self
+            .client
+            .get(data)
+            .send()
+            .expect("failed to send out request")
+            .text()
+            .expect("failed to get out text from Response");
+        let time_series_helper: TimeSeriesHelper =
+            serde_json::from_str(body).expect("cannot convert to time series helper");
         time_series_helper.convert()
     }
 
@@ -309,8 +359,14 @@ impl APIKey {
             temporary_value,
             self.get_api(),
         );
-        let body = &self.client.get(data).send().unwrap().text().unwrap();
-        serde_json::from_str(body).unwrap()
+        let body = &self
+            .client
+            .get(data)
+            .send()
+            .expect("failed to send out request")
+            .text()
+            .expect("failed to get out text from Response");
+        serde_json::from_str(body).expect("cannot convert to Indicator")
     }
 }
 
