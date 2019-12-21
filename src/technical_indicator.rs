@@ -33,7 +33,7 @@ impl Indicator {
     /// Return out meta data in hash form
     pub fn meta_data(&self) -> Result<&HashMap<String, String>, &str> {
         if let Some(meta_data) = &self.metadata {
-            Ok(&meta_data)
+            Ok(meta_data)
         } else if let Some(error) = &self.error_message {
             Err(error)
         } else if let Some(information) = &self.information {
