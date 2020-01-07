@@ -9,7 +9,10 @@ use crate::{
     technical_indicator::{create_url as create_url_technical, Indicator},
     util::*,
 };
-use reqwest::{Client, ClientBuilder, Url};
+use reqwest::{
+    blocking::{Client, ClientBuilder},
+    Url,
+};
 
 const LINK: &str = "https://www.alphavantage.co/query?function=";
 
