@@ -53,12 +53,12 @@ script:
 deploy:
   - provider: script
     script: bash ci/create_index.sh
-    cleanup: true
+    skip_cleanup: true
     on:
       branch: master
       condition: $PUBLISH_DOC = true
   - provider: pages
-    cleanup: true
+    skip_cleanup: true
     token: $GITHUB_TOKEN
     keep_history: true
     local_dir: "target/doc"
@@ -73,7 +73,7 @@ deploy:
       condition: $PUBLISH_PACKAGE = true
   - provider: script
     script: bash ci/codecov_coverage.sh
-    cleanup: true
+    skip_cleanup: true
     on:
       all_branches: true
       condition: $CODECOV_COVERAGE = true
