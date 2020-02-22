@@ -29,7 +29,7 @@ impl APIKey {
     ///
     /// ```
     /// use alpha_vantage::user::APIKey;
-    /// let api = alpha_vantage::user::APIKey::set_api("some_key");
+    /// let api = APIKey::set_api("some_key");
     /// ```
     #[must_use]
     pub fn set_api(api: &str) -> Self {
