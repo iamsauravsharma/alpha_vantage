@@ -11,14 +11,32 @@
 use crate::user::APIKey;
 use serde::Deserialize;
 
-/// Struct for storing Quote related information
+/// Struct for helping creation of Quote
 #[derive(Debug, Deserialize)]
-pub struct Quote {
+pub(crate) struct QuoteHelper {
     #[serde(rename = "Error Message")]
     error_message: Option<String>,
     #[serde(rename = "Information")]
     information: Option<String>,
     #[serde(rename = "Global Quote")]
+    global_quote: Option<GlobalQuote>,
+}
+
+impl QuoteHelper {
+    pub(crate) fn convert(self) -> Quote {
+        let mut quote = Quote::default();
+        quote.error_message = self.error_message;
+        quote.information = self.information;
+        quote.global_quote = self.global_quote;
+        quote
+    }
+}
+
+/// Struct for storing Quote related information
+#[derive(Default)]
+pub struct Quote {
+    error_message: Option<String>,
+    information: Option<String>,
     global_quote: Option<GlobalQuote>,
 }
 

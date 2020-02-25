@@ -11,12 +11,28 @@
 use crate::user::APIKey;
 use serde::Deserialize;
 
-/// struct for storing search method data
+/// struct for helping creation of search struct
 #[derive(Debug, Deserialize)]
-pub struct Search {
+pub(crate) struct SearchHelper {
     #[serde(rename = "Information")]
     information: Option<String>,
     #[serde(rename = "bestMatches")]
+    matches: Option<Vec<DataValue>>,
+}
+
+impl SearchHelper {
+    pub(crate) fn convert(self) -> Search {
+        let mut search = Search::default();
+        search.information = self.information;
+        search.matches = self.matches;
+        search
+    }
+}
+
+/// struct for storing search method data
+#[derive(Default)]
+pub struct Search {
+    information: Option<String>,
     matches: Option<Vec<DataValue>>,
 }
 
