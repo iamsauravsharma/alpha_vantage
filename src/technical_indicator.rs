@@ -16,9 +16,9 @@ use std::collections::HashMap;
 
 type DataType = Option<HashMap<String, HashMap<String, HashMap<String, String>>>>;
 
-/// Struct for indicator
+/// Struct for helping indicator struct
 #[derive(Deserialize)]
-pub struct Indicator {
+pub(crate) struct IndicatorHelper {
     #[serde(rename = "Error Message")]
     error_message: Option<String>,
     #[serde(rename = "Information")]
@@ -26,6 +26,26 @@ pub struct Indicator {
     #[serde(rename = "Meta Data")]
     metadata: Option<HashMap<String, String>>,
     #[serde(flatten)]
+    data: DataType,
+}
+
+impl IndicatorHelper {
+    pub(crate) fn convert(self) -> Indicator {
+        let mut indicator = Indicator::default();
+        indicator.error_message = self.error_message;
+        indicator.information = self.information;
+        indicator.metadata = self.metadata;
+        indicator.data = self.data;
+        indicator
+    }
+}
+
+/// Struct for indicator
+#[derive(Default)]
+pub struct Indicator {
+    error_message: Option<String>,
+    information: Option<String>,
+    metadata: Option<HashMap<String, String>>,
     data: DataType,
 }
 

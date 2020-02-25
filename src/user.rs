@@ -1,13 +1,15 @@
 use crate::{
     crypto::{create_url as create_url_crypto, Crypto, CryptoHelper},
-    exchange::Exchange,
+    exchange::{Exchange, ExchangeHelper},
     forex::{create_url as create_url_forex, Forex, ForexHelper},
-    quote::Quote,
-    search::*,
+    quote::{Quote, QuoteHelper},
+    search::{Search, SearchHelper},
     sector::{Sector, SectorHelper},
     stock_time::{create_url as create_url_time_series, TimeSeries, TimeSeriesHelper},
-    technical_indicator::{create_url as create_url_technical, Indicator},
-    util::*,
+    technical_indicator::{create_url as create_url_technical, Indicator, IndicatorHelper},
+    util::{
+        CryptoFunction, ForexFunction, Interval, OutputSize, StockFunction, TechnicalIndicator,
+    },
 };
 use reqwest::{
     blocking::{Client, ClientBuilder},
@@ -174,7 +176,9 @@ impl APIKey {
             .expect("failed to send out request")
             .text()
             .expect("failed to get out text from Response");
-        serde_json::from_str(body).expect("Cannot convert to Exchange")
+        let exchange_helper: ExchangeHelper =
+            serde_json::from_str(body).expect("Cannot convert to Exchange");
+        exchange_helper.convert()
     }
 
     /// Forex method for calling stock time series
@@ -246,7 +250,9 @@ impl APIKey {
             .expect("failed to send out request")
             .text()
             .expect("failed to get out text from Response");
-        serde_json::from_str(body).expect("Cannot convert to Quote")
+        let quote_helper: QuoteHelper =
+            serde_json::from_str(body).expect("Cannot convert to Quote");
+        quote_helper.convert()
     }
 
     /// Search method for searching keyword or company
@@ -273,7 +279,9 @@ impl APIKey {
             .expect("failed to send out request")
             .text()
             .expect("failed to get out text from Response");
-        serde_json::from_str(body).expect("Cannot convert to Search")
+        let search_helper: SearchHelper =
+            serde_json::from_str(body).expect("Cannot convert to Search");
+        search_helper.convert()
     }
 
     /// Method for returning out a sector data as struct
@@ -369,7 +377,9 @@ impl APIKey {
             .expect("failed to send out request")
             .text()
             .expect("failed to get out text from Response");
-        serde_json::from_str(body).expect("cannot convert to Indicator")
+        let indicator_helper: IndicatorHelper =
+            serde_json::from_str(body).expect("cannot convert to Indicator");
+        indicator_helper.convert()
     }
 }
 

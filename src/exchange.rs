@@ -11,14 +11,32 @@
 use crate::user::APIKey;
 use serde::Deserialize;
 
-/// Struct used for exchanging currency
+/// Struct used for helping creation of Exchange
 #[derive(Debug, Deserialize)]
-pub struct Exchange {
+pub(crate) struct ExchangeHelper {
     #[serde(rename = "Error Message")]
     error_message: Option<String>,
     #[serde(rename = "Information")]
     information: Option<String>,
     #[serde(rename = "Realtime Currency Exchange Rate")]
+    real_time: Option<RealtimeExchangeRate>,
+}
+
+impl ExchangeHelper {
+    pub(crate) fn convert(self) -> Exchange {
+        let mut exchange = Exchange::default();
+        exchange.error_message = self.error_message;
+        exchange.information = self.information;
+        exchange.real_time = self.real_time;
+        exchange
+    }
+}
+
+/// Struct used for exchanging currency
+#[derive(Default)]
+pub struct Exchange {
+    error_message: Option<String>,
+    information: Option<String>,
     real_time: Option<RealtimeExchangeRate>,
 }
 
