@@ -166,6 +166,24 @@
 <span id="166">166</span>
 <span id="167">167</span>
 <span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Module for returning latest price and volume information</span>
 <span class="doccomment">//!</span>
@@ -180,14 +198,32 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">user</span>::<span class="ident">APIKey</span>;
 <span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">Deserialize</span>;
 
-<span class="doccomment">/// Struct for storing Quote related information</span>
+<span class="doccomment">/// Struct for helping creation of Quote</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Deserialize</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Quote</span> {
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">QuoteHelper</span> {
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Error Message&quot;</span>)]</span>
     <span class="ident">error_message</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Information&quot;</span>)]</span>
     <span class="ident">information</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Global Quote&quot;</span>)]</span>
+    <span class="ident">global_quote</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">GlobalQuote</span><span class="op">&gt;</span>,
+}
+
+<span class="kw">impl</span> <span class="ident">QuoteHelper</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">convert</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Quote</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">quote</span> <span class="op">=</span> <span class="ident">Quote</span>::<span class="ident">default</span>();
+        <span class="ident">quote</span>.<span class="ident">error_message</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">error_message</span>;
+        <span class="ident">quote</span>.<span class="ident">information</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">information</span>;
+        <span class="ident">quote</span>.<span class="ident">global_quote</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">global_quote</span>;
+        <span class="ident">quote</span>
+    }
+}
+
+<span class="doccomment">/// Struct for storing Quote related information</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Quote</span> {
+    <span class="ident">error_message</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="ident">information</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="ident">global_quote</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">GlobalQuote</span><span class="op">&gt;</span>,
 }
 

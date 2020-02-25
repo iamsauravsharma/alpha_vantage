@@ -155,6 +155,24 @@
 <span id="155">155</span>
 <span id="156">156</span>
 <span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Module for exchange currency (both digital &amp; physical currency exchange)</span>
 <span class="doccomment">//!</span>
@@ -169,14 +187,32 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">user</span>::<span class="ident">APIKey</span>;
 <span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">Deserialize</span>;
 
-<span class="doccomment">/// Struct used for exchanging currency</span>
+<span class="doccomment">/// Struct used for helping creation of Exchange</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Deserialize</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Exchange</span> {
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">ExchangeHelper</span> {
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Error Message&quot;</span>)]</span>
     <span class="ident">error_message</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Information&quot;</span>)]</span>
     <span class="ident">information</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Realtime Currency Exchange Rate&quot;</span>)]</span>
+    <span class="ident">real_time</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RealtimeExchangeRate</span><span class="op">&gt;</span>,
+}
+
+<span class="kw">impl</span> <span class="ident">ExchangeHelper</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">convert</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Exchange</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">exchange</span> <span class="op">=</span> <span class="ident">Exchange</span>::<span class="ident">default</span>();
+        <span class="ident">exchange</span>.<span class="ident">error_message</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">error_message</span>;
+        <span class="ident">exchange</span>.<span class="ident">information</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">information</span>;
+        <span class="ident">exchange</span>.<span class="ident">real_time</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">real_time</span>;
+        <span class="ident">exchange</span>
+    }
+}
+
+<span class="doccomment">/// Struct used for exchanging currency</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Exchange</span> {
+    <span class="ident">error_message</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="ident">information</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="ident">real_time</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RealtimeExchangeRate</span><span class="op">&gt;</span>,
 }
 

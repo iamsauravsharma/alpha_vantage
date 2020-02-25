@@ -400,17 +400,29 @@
 <span id="400">400</span>
 <span id="401">401</span>
 <span id="402">402</span>
+<span id="403">403</span>
+<span id="404">404</span>
+<span id="405">405</span>
+<span id="406">406</span>
+<span id="407">407</span>
+<span id="408">408</span>
+<span id="409">409</span>
+<span id="410">410</span>
+<span id="411">411</span>
+<span id="412">412</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">crypto</span>::{<span class="ident">create_url</span> <span class="kw">as</span> <span class="ident">create_url_crypto</span>, <span class="ident">Crypto</span>, <span class="ident">CryptoHelper</span>},
-    <span class="ident">exchange</span>::<span class="ident">Exchange</span>,
+    <span class="ident">exchange</span>::{<span class="ident">Exchange</span>, <span class="ident">ExchangeHelper</span>},
     <span class="ident">forex</span>::{<span class="ident">create_url</span> <span class="kw">as</span> <span class="ident">create_url_forex</span>, <span class="ident">Forex</span>, <span class="ident">ForexHelper</span>},
-    <span class="ident">quote</span>::<span class="ident">Quote</span>,
-    <span class="ident">search</span>::<span class="kw-2">*</span>,
+    <span class="ident">quote</span>::{<span class="ident">Quote</span>, <span class="ident">QuoteHelper</span>},
+    <span class="ident">search</span>::{<span class="ident">Search</span>, <span class="ident">SearchHelper</span>},
     <span class="ident">sector</span>::{<span class="ident">Sector</span>, <span class="ident">SectorHelper</span>},
     <span class="ident">stock_time</span>::{<span class="ident">create_url</span> <span class="kw">as</span> <span class="ident">create_url_time_series</span>, <span class="ident">TimeSeries</span>, <span class="ident">TimeSeriesHelper</span>},
-    <span class="ident">technical_indicator</span>::{<span class="ident">create_url</span> <span class="kw">as</span> <span class="ident">create_url_technical</span>, <span class="ident">Indicator</span>},
-    <span class="ident">util</span>::<span class="kw-2">*</span>,
+    <span class="ident">technical_indicator</span>::{<span class="ident">create_url</span> <span class="kw">as</span> <span class="ident">create_url_technical</span>, <span class="ident">Indicator</span>, <span class="ident">IndicatorHelper</span>},
+    <span class="ident">util</span>::{
+        <span class="ident">CryptoFunction</span>, <span class="ident">ForexFunction</span>, <span class="ident">Interval</span>, <span class="ident">OutputSize</span>, <span class="ident">StockFunction</span>, <span class="ident">TechnicalIndicator</span>,
+    },
 };
 <span class="kw">use</span> <span class="ident">reqwest</span>::{
     <span class="ident">blocking</span>::{<span class="ident">Client</span>, <span class="ident">ClientBuilder</span>},
@@ -577,7 +589,9 @@
             .<span class="ident">expect</span>(<span class="string">&quot;failed to send out request&quot;</span>)
             .<span class="ident">text</span>()
             .<span class="ident">expect</span>(<span class="string">&quot;failed to get out text from Response&quot;</span>);
-        <span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="ident">body</span>).<span class="ident">expect</span>(<span class="string">&quot;Cannot convert to Exchange&quot;</span>)
+        <span class="kw">let</span> <span class="ident">exchange_helper</span>: <span class="ident">ExchangeHelper</span> <span class="op">=</span>
+            <span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="ident">body</span>).<span class="ident">expect</span>(<span class="string">&quot;Cannot convert to Exchange&quot;</span>);
+        <span class="ident">exchange_helper</span>.<span class="ident">convert</span>()
     }
 
     <span class="doccomment">/// Forex method for calling stock time series</span>
@@ -649,7 +663,9 @@
             .<span class="ident">expect</span>(<span class="string">&quot;failed to send out request&quot;</span>)
             .<span class="ident">text</span>()
             .<span class="ident">expect</span>(<span class="string">&quot;failed to get out text from Response&quot;</span>);
-        <span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="ident">body</span>).<span class="ident">expect</span>(<span class="string">&quot;Cannot convert to Quote&quot;</span>)
+        <span class="kw">let</span> <span class="ident">quote_helper</span>: <span class="ident">QuoteHelper</span> <span class="op">=</span>
+            <span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="ident">body</span>).<span class="ident">expect</span>(<span class="string">&quot;Cannot convert to Quote&quot;</span>);
+        <span class="ident">quote_helper</span>.<span class="ident">convert</span>()
     }
 
     <span class="doccomment">/// Search method for searching keyword or company</span>
@@ -676,7 +692,9 @@
             .<span class="ident">expect</span>(<span class="string">&quot;failed to send out request&quot;</span>)
             .<span class="ident">text</span>()
             .<span class="ident">expect</span>(<span class="string">&quot;failed to get out text from Response&quot;</span>);
-        <span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="ident">body</span>).<span class="ident">expect</span>(<span class="string">&quot;Cannot convert to Search&quot;</span>)
+        <span class="kw">let</span> <span class="ident">search_helper</span>: <span class="ident">SearchHelper</span> <span class="op">=</span>
+            <span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="ident">body</span>).<span class="ident">expect</span>(<span class="string">&quot;Cannot convert to Search&quot;</span>);
+        <span class="ident">search_helper</span>.<span class="ident">convert</span>()
     }
 
     <span class="doccomment">/// Method for returning out a sector data as struct</span>
@@ -772,7 +790,9 @@
             .<span class="ident">expect</span>(<span class="string">&quot;failed to send out request&quot;</span>)
             .<span class="ident">text</span>()
             .<span class="ident">expect</span>(<span class="string">&quot;failed to get out text from Response&quot;</span>);
-        <span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="ident">body</span>).<span class="ident">expect</span>(<span class="string">&quot;cannot convert to Indicator&quot;</span>)
+        <span class="kw">let</span> <span class="ident">indicator_helper</span>: <span class="ident">IndicatorHelper</span> <span class="op">=</span>
+            <span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="ident">body</span>).<span class="ident">expect</span>(<span class="string">&quot;cannot convert to Indicator&quot;</span>);
+        <span class="ident">indicator_helper</span>.<span class="ident">convert</span>()
     }
 }
 

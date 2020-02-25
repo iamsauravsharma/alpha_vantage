@@ -212,6 +212,26 @@
 <span id="212">212</span>
 <span id="213">213</span>
 <span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Module for Technical Indicator</span>
 <span class="doccomment">//!</span>
@@ -231,9 +251,9 @@
 
 <span class="kw">type</span> <span class="ident">DataType</span> <span class="op">=</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
-<span class="doccomment">/// Struct for indicator</span>
+<span class="doccomment">/// Struct for helping indicator struct</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Deserialize</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Indicator</span> {
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">IndicatorHelper</span> {
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Error Message&quot;</span>)]</span>
     <span class="ident">error_message</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Information&quot;</span>)]</span>
@@ -241,6 +261,26 @@
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Meta Data&quot;</span>)]</span>
     <span class="ident">metadata</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">flatten</span>)]</span>
+    <span class="ident">data</span>: <span class="ident">DataType</span>,
+}
+
+<span class="kw">impl</span> <span class="ident">IndicatorHelper</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">convert</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Indicator</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">indicator</span> <span class="op">=</span> <span class="ident">Indicator</span>::<span class="ident">default</span>();
+        <span class="ident">indicator</span>.<span class="ident">error_message</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">error_message</span>;
+        <span class="ident">indicator</span>.<span class="ident">information</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">information</span>;
+        <span class="ident">indicator</span>.<span class="ident">metadata</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">metadata</span>;
+        <span class="ident">indicator</span>.<span class="ident">data</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">data</span>;
+        <span class="ident">indicator</span>
+    }
+}
+
+<span class="doccomment">/// Struct for indicator</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Indicator</span> {
+    <span class="ident">error_message</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="ident">information</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="ident">metadata</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="ident">data</span>: <span class="ident">DataType</span>,
 }
 
