@@ -12,7 +12,7 @@ keywords = ["alphavantage","currency","finance","stock","exchange"]
 categories = ["api-bindings","web-programming::http-client"]
 
 [dependencies]
-reqwest={version="0.10.3", features=["blocking"]}
+reqwest={version="0.10.4", features=["blocking"]}
 serde={version="1.0.104", features=["derive"]}
 serde_json="1.0.48"
 

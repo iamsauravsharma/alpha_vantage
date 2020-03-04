@@ -2,9 +2,9 @@
 
 **Project status & info:**
 
-| Travis Build Status | Dependency Status | Code Coverage | License | Crates Version |
-| :---: | :---: | :---: | :---: | :---: |
-| [![Travis Build Status][build_badge]][build_link] | [![Dependency status][deps_badge]][deps_link] | [![Code coverage][codecov_badge]][codecov_link] |[![License: MIT][license_badge]][license_link] | [![Crate][cratesio_badge]][cratesio_link] | 
+| Travis Build Status | Dependency Status | Code Coverage | License | Crates Version | Docs |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| [![Travis Build Status][build_badge]][build_link] | [![Dependency status][deps_badge]][deps_link] | [![Code coverage][codecov_badge]][codecov_link] |[![License: MIT][license_badge]][license_link] | [![Crate][cratesio_badge]][cratesio_link] | [![Docs][docsrs_badge]][docsrs_link] |
 
 **Rust & OS support:**
 
@@ -68,6 +68,9 @@ println!("{}",rate);
 
 [cratesio_badge]: https://img.shields.io/crates/v/alpha_vantage.svg
 [cratesio_link]: https://crates.io/crates/alpha_vantage
+
+[docsrs_badge]: https://docs.rs/alpha_vantage/badge.svg
+[docsrs_link]: https://docs.rs/alpha_vantage
 
 [stable_supported_badge]: https://img.shields.io/badge/stable-supported-brightgreen.svg?logo=rust
 [beta_supported_badge]: https://img.shields.io/badge/beta-supported-brightgreen.svg?logo=rust
