@@ -36,7 +36,7 @@ jobs:
           update: true
           packages: musl-tools
     - os: windows
-      env: TARGET=x86_64-pc-windows-gnu
+      env: TARGET=x86_64-pc-windows-msvc
 
 before_install:
   - chmod -R 777 ci
