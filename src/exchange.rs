@@ -23,25 +23,27 @@ pub(crate) struct ExchangeHelper {
 }
 
 impl ExchangeHelper {
-    pub(crate) fn convert(self) -> Exchange {
+    pub(crate) fn convert(self) -> Result<Exchange, String> {
         let mut exchange = Exchange::default();
-        exchange.error_message = self.error_message;
-        exchange.information = self.information;
-        exchange.real_time = self.real_time;
-        exchange
+        if let Some(information) = self.information {
+            return Err(information);
+        }
+        if let Some(error_message) = self.error_message {
+            return Err(error_message);
+        }
+        exchange.real_time = self.real_time.unwrap();
+        Ok(exchange)
     }
 }
 
 /// Struct used for exchanging currency
 #[derive(Default)]
 pub struct Exchange {
-    error_message: Option<String>,
-    information: Option<String>,
-    real_time: Option<RealtimeExchangeRate>,
+    real_time: RealtimeExchangeRate,
 }
 
 /// Struct Storing Real time Exchange Value
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Clone, Default)]
 struct RealtimeExchangeRate {
     #[serde(rename = "1. From_Currency Code")]
     from_code: String,
@@ -60,31 +62,25 @@ struct RealtimeExchangeRate {
 }
 
 impl Exchange {
-    /// Get Rate for exchange produce error if no rate is available
-    pub fn rate(&self) -> Result<f64, &str> {
-        if let Some(real) = &self.real_time {
-            Ok(real
-                .rate
-                .trim()
-                .parse::<f64>()
-                .expect("failed to parse real_time rate to f64"))
-        } else if let Some(error) = &self.error_message {
-            Err(error)
-        } else if let Some(information) = &self.information {
-            Err(information)
-        } else {
-            Err("Unknown error")
-        }
+    /// Get Rate for exchange
+    #[must_use]
+    pub fn rate(&self) -> f64 {
+        self.real_time
+            .rate
+            .trim()
+            .parse::<f64>()
+            .expect("failed to parse real_time rate to f64")
     }
 
     /// Get time when exchange rate was last refreshed along with time zone.
-    pub fn refreshed_time(&self) -> Result<&str, &str> {
+    #[must_use]
+    pub fn refreshed_time(&self) -> &str {
         self.get_result_string("Refreshed time")
     }
 
-    /// Return time zone of all data time produce error if API return
-    /// error message or information instead of meta data
-    pub fn time_zone(&self) -> Result<&str, &str> {
+    /// Return time zone of all data time
+    #[must_use]
+    pub fn time_zone(&self) -> &str {
         self.get_result_string("time zone")
     }
 
@@ -92,11 +88,12 @@ impl Exchange {
     ///
     /// ```
     /// let api = alpha_vantage::set_api("demo");
-    /// let exchange = api.exchange("BTC", "CNY");
+    /// let exchange = api.exchange("BTC", "CNY").unwrap();
     /// let code_from = exchange.code_from();
-    /// assert_eq!(code_from.unwrap(), "BTC");
+    /// assert_eq!(code_from, "BTC");
     /// ```
-    pub fn code_from(&self) -> Result<&str, &str> {
+    #[must_use]
+    pub fn code_from(&self) -> &str {
         self.get_result_string("from code")
     }
 
@@ -104,11 +101,12 @@ impl Exchange {
     ///
     /// ```
     /// let api = alpha_vantage::set_api("demo");
-    /// let exchange = api.exchange("BTC", "CNY");
+    /// let exchange = api.exchange("BTC", "CNY").unwrap();
     /// let name_from = exchange.name_from();
-    /// assert_eq!(name_from.unwrap(), "Bitcoin");
+    /// assert_eq!(name_from, "Bitcoin");
     /// ```
-    pub fn name_from(&self) -> Result<&str, &str> {
+    #[must_use]
+    pub fn name_from(&self) -> &str {
         self.get_result_string("from name")
     }
 
@@ -116,11 +114,12 @@ impl Exchange {
     ///
     /// ```
     /// let api = alpha_vantage::set_api("demo");
-    /// let exchange = api.exchange("BTC", "CNY");
+    /// let exchange = api.exchange("BTC", "CNY").unwrap();
     /// let code_to = exchange.code_to();
-    /// assert_eq!(code_to.unwrap(), "CNY");
+    /// assert_eq!(code_to, "CNY");
     /// ```
-    pub fn code_to(&self) -> Result<&str, &str> {
+    #[must_use]
+    pub fn code_to(&self) -> &str {
         self.get_result_string("to code")
     }
 
@@ -128,33 +127,25 @@ impl Exchange {
     ///
     /// ```
     /// let api = alpha_vantage::set_api("demo");
-    /// let exchange = api.exchange("BTC", "CNY");
+    /// let exchange = api.exchange("BTC", "CNY").unwrap();
     /// let name_to = exchange.name_to();
-    /// assert_eq!(name_to.unwrap(), "Chinese Yuan");
+    /// assert_eq!(name_to, "Chinese Yuan");
     /// ```
-    pub fn name_to(&self) -> Result<&str, &str> {
+    #[must_use]
+    pub fn name_to(&self) -> &str {
         self.get_result_string("to name")
     }
 
-    /// Collect out certain value from real time if present otherwise show error
-    fn get_result_string(&self, match_str: &str) -> Result<&str, &str> {
-        if let Some(real_time) = &self.real_time {
-            let value = match match_str {
-                "from code" => &real_time.from_code,
-                "from name" => &real_time.from_name,
-                "to code" => &real_time.to_code,
-                "to name" => &real_time.to_name,
-                "time zone" => &real_time.time_zone,
-                "refreshed time" => &real_time.last_refreshed,
-                _ => "",
-            };
-            Ok(value)
-        } else if let Some(error) = &self.error_message {
-            Err(error)
-        } else if let Some(information) = &self.information {
-            Err(information)
-        } else {
-            Err("Unknown error")
+    /// Collect out certain value from real time
+    fn get_result_string(&self, match_str: &str) -> &str {
+        match match_str {
+            "from code" => &self.real_time.from_code,
+            "from name" => &self.real_time.from_name,
+            "to code" => &self.real_time.to_code,
+            "to name" => &self.real_time.to_name,
+            "time zone" => &self.real_time.time_zone,
+            "refreshed time" => &self.real_time.last_refreshed,
+            _ => "",
         }
     }
 }
@@ -163,8 +154,7 @@ impl Exchange {
 ///
 /// Instead of using this function directly calling through [APIKey][APIKey]
 /// method is recommended
-#[must_use]
-pub fn exchange(from: &str, to: &str, api_data: (&str, Option<u64>)) -> Exchange {
+pub fn exchange(from: &str, to: &str, api_data: (&str, Option<u64>)) -> Result<Exchange, String> {
     let api;
     if let Some(timeout) = api_data.1 {
         api = APIKey::set_with_timeout(api_data.0, timeout);

@@ -37,23 +37,6 @@ pub enum ForexFunction {
     Monthly,
 }
 
-/// Enum for declaring interval for intraday time series
-#[derive(Copy, Clone)]
-pub enum Interval {
-    /// 1 min interval
-    OneMin,
-    /// 5 min interval
-    FiveMin,
-    /// 15 min interval
-    FifteenMin,
-    /// 30 min interval
-    ThirtyMin,
-    /// 60 min interval
-    SixtyMin,
-    /// no interval which applies for all time series expect intraday
-    None,
-}
-
 /// Enum for declaring output size of API call
 #[derive(Copy, Clone)]
 pub enum OutputSize {
@@ -205,4 +188,42 @@ pub enum TechnicalIndicator {
     /// The third time period for the indicator. Positive integers are accepted.
     /// By default, timeperiod3=28.
     Timeperiod3(u32),
+}
+
+/// Enum for declaring interval for technical indicator
+#[derive(Copy, Clone)]
+pub enum TechnicalIndicatorInterval {
+    /// 1 min interval
+    OneMin,
+    /// 5 min interval
+    FiveMin,
+    /// 15 min interval
+    FifteenMin,
+    /// 30 min interval
+    ThirtyMin,
+    /// 60 min interval
+    SixtyMin,
+    /// daily interval
+    Daily,
+    /// weekly interval
+    Weekly,
+    /// monthly interval
+    Monthly,
+}
+
+/// Enum for declaring interval for intraday time series
+#[derive(Copy, Clone)]
+pub enum TimeSeriesInterval {
+    /// 1 min interval
+    OneMin,
+    /// 5 min interval
+    FiveMin,
+    /// 15 min interval
+    FifteenMin,
+    /// 30 min interval
+    ThirtyMin,
+    /// 60 min interval
+    SixtyMin,
+    /// no interval which applies for all time series expect intraday
+    None,
 }

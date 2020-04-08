@@ -10,7 +10,7 @@
 
 use crate::{
     user::APIKey,
-    util::{ForexFunction, Interval, OutputSize},
+    util::{ForexFunction, OutputSize, TimeSeriesInterval},
 };
 use reqwest::Url;
 use serde::Deserialize;
@@ -19,7 +19,7 @@ use std::collections::HashMap;
 const LINK: &str = "https://www.alphavantage.co/query?function=";
 
 /// Struct used to store metadata value
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Default)]
 struct MetaData {
     information: String,
     from_symbol: String,
@@ -75,7 +75,7 @@ impl VecEntry for Vec<Entry> {
     }
 
     fn latestn(&self, n: usize) -> Result<Vec<Entry>, &str> {
-        let mut time_list = vec![];
+        let mut time_list = Vec::new();
         for entry in self {
             time_list.push(entry.time.clone());
         }
@@ -139,10 +139,8 @@ fn return_f64(data: &str) -> f64 {
 /// Struct to store Forex data after forex API call
 #[derive(Debug, Default)]
 pub struct Forex {
-    error_message: Option<String>,
-    information: Option<String>,
-    meta_data: Option<MetaData>,
-    forex: Option<Vec<Entry>>,
+    meta_data: MetaData,
+    forex: Vec<Entry>,
 }
 
 impl Forex {
@@ -151,17 +149,20 @@ impl Forex {
     /// ```
     /// use alpha_vantage::util::*;
     /// let api = alpha_vantage::set_api("demo");
-    /// let forex = api.forex(
-    ///     ForexFunction::IntraDay,
-    ///     "EUR",
-    ///     "USD",
-    ///     Interval::FiveMin,
-    ///     OutputSize::Full,
-    /// );
+    /// let forex = api
+    ///     .forex(
+    ///         ForexFunction::IntraDay,
+    ///         "EUR",
+    ///         "USD",
+    ///         TimeSeriesInterval::FiveMin,
+    ///         OutputSize::Full,
+    ///     )
+    ///     .unwrap();
     /// let information = forex.information();
-    /// assert_eq!(information.unwrap(), "FX Intraday (5min) Time Series");
+    /// assert_eq!(information, "FX Intraday (5min) Time Series");
     /// ```
-    pub fn information(&self) -> Result<&str, &str> {
+    #[must_use]
+    pub fn information(&self) -> &str {
         self.return_meta_string("information")
     }
 
@@ -170,17 +171,20 @@ impl Forex {
     /// ```
     /// use alpha_vantage::util::*;
     /// let api = alpha_vantage::set_api("demo");
-    /// let forex = api.forex(
-    ///     ForexFunction::IntraDay,
-    ///     "EUR",
-    ///     "USD",
-    ///     Interval::FiveMin,
-    ///     OutputSize::Full,
-    /// );
+    /// let forex = api
+    ///     .forex(
+    ///         ForexFunction::IntraDay,
+    ///         "EUR",
+    ///         "USD",
+    ///         TimeSeriesInterval::FiveMin,
+    ///         OutputSize::Full,
+    ///     )
+    ///     .unwrap();
     /// let symbol_from = forex.symbol_from();
-    /// assert_eq!(symbol_from.unwrap(), "EUR");
+    /// assert_eq!(symbol_from, "EUR");
     /// ```
-    pub fn symbol_from(&self) -> Result<&str, &str> {
+    #[must_use]
+    pub fn symbol_from(&self) -> &str {
         self.return_meta_string("from symbol")
     }
 
@@ -189,29 +193,32 @@ impl Forex {
     /// ```
     /// use alpha_vantage::util::*;
     /// let api = alpha_vantage::set_api("demo");
-    /// let forex = api.forex(
-    ///     ForexFunction::IntraDay,
-    ///     "EUR",
-    ///     "USD",
-    ///     Interval::FiveMin,
-    ///     OutputSize::Full,
-    /// );
+    /// let forex = api
+    ///     .forex(
+    ///         ForexFunction::IntraDay,
+    ///         "EUR",
+    ///         "USD",
+    ///         TimeSeriesInterval::FiveMin,
+    ///         OutputSize::Full,
+    ///     )
+    ///     .unwrap();
     /// let symbol_to = forex.symbol_to();
-    /// assert_eq!(symbol_to.unwrap(), "USD");
+    /// assert_eq!(symbol_to, "USD");
     /// ```
-    pub fn symbol_to(&self) -> Result<&str, &str> {
+    #[must_use]
+    pub fn symbol_to(&self) -> &str {
         self.return_meta_string("to symbol")
     }
 
-    /// Return last refreshed time produce error if API returns error message or
-    /// information instead of meta data
-    pub fn last_refreshed(&self) -> Result<&str, &str> {
+    /// Return last refreshed time
+    #[must_use]
+    pub fn last_refreshed(&self) -> &str {
         self.return_meta_string("last refreshed")
     }
 
-    /// Return time zone of all data time produce error if API return
-    /// error message or information instead of meta data
-    pub fn time_zone(&self) -> Result<&str, &str> {
+    /// Return time zone of all data time
+    #[must_use]
+    pub fn time_zone(&self) -> &str {
         self.return_meta_string("time zone")
     }
 
@@ -220,17 +227,20 @@ impl Forex {
     /// ```
     /// use alpha_vantage::util::*;
     /// let api = alpha_vantage::set_api("demo");
-    /// let forex = api.forex(
-    ///     ForexFunction::IntraDay,
-    ///     "EUR",
-    ///     "USD",
-    ///     Interval::FiveMin,
-    ///     OutputSize::Full,
-    /// );
+    /// let forex = api
+    ///     .forex(
+    ///         ForexFunction::IntraDay,
+    ///         "EUR",
+    ///         "USD",
+    ///         TimeSeriesInterval::FiveMin,
+    ///         OutputSize::Full,
+    ///     )
+    ///     .unwrap();
     /// let interval = forex.interval();
     /// assert_eq!(interval.unwrap(), "5min");
     /// ```
-    pub fn interval(&self) -> Result<&str, &str> {
+    #[must_use]
+    pub fn interval(&self) -> Option<&str> {
         self.operate_option_meta_value("interval")
     }
 
@@ -239,73 +249,49 @@ impl Forex {
     /// ```
     /// use alpha_vantage::util::*;
     /// let api = alpha_vantage::set_api("demo");
-    /// let forex = api.forex(
-    ///     ForexFunction::IntraDay,
-    ///     "EUR",
-    ///     "USD",
-    ///     Interval::FiveMin,
-    ///     OutputSize::Full,
-    /// );
+    /// let forex = api
+    ///     .forex(
+    ///         ForexFunction::IntraDay,
+    ///         "EUR",
+    ///         "USD",
+    ///         TimeSeriesInterval::FiveMin,
+    ///         OutputSize::Full,
+    ///     )
+    ///     .unwrap();
     /// let output_size = forex.output_size();
     /// assert_eq!(output_size.unwrap(), "Full size");
     /// ```
-    pub fn output_size(&self) -> Result<&str, &str> {
+    #[must_use]
+    pub fn output_size(&self) -> Option<&str> {
         self.operate_option_meta_value("output size")
     }
 
     /// Method return Entry
-    pub fn entry(&self) -> Result<Vec<Entry>, &str> {
-        if let Some(entry) = &self.forex {
-            Ok(entry.to_vec())
-        } else if let Some(error) = &self.error_message {
-            Err(error)
-        } else if let Some(information) = &self.information {
-            Err(information)
-        } else {
-            Err("Unknown error")
+    #[must_use]
+    pub fn entry(&self) -> &Vec<Entry> {
+        &self.forex
+    }
+
+    /// Return a meta data field
+    fn return_meta_string(&self, which_val: &str) -> &str {
+        match which_val {
+            "information" => &self.meta_data.information,
+            "from symbol" => &self.meta_data.from_symbol,
+            "to symbol" => &self.meta_data.to_symbol,
+            "time zone" => &self.meta_data.time_zone,
+            "last refreshed" => &self.meta_data.last_refreshed,
+            _ => "",
         }
     }
 
-    /// Return a meta data field in Result type
-    fn return_meta_string(&self, which_val: &str) -> Result<&str, &str> {
-        if let Some(meta_data) = &self.meta_data {
-            let value = match which_val {
-                "information" => &meta_data.information,
-                "from symbol" => &meta_data.from_symbol,
-                "to symbol" => &meta_data.to_symbol,
-                "time zone" => &meta_data.time_zone,
-                "last refreshed" => &meta_data.last_refreshed,
-                _ => "",
-            };
-            Ok(value)
-        } else if let Some(error) = &self.error_message {
-            Err(error)
-        } else if let Some(information) = &self.information {
-            Err(information)
-        } else {
-            Err("Unknown error")
-        }
-    }
-
-    /// Convert out Option meta data field as a Result field
-    fn operate_option_meta_value(&self, which_val: &str) -> Result<&str, &str> {
-        if let Some(meta_data) = &self.meta_data {
-            if let Some(value) = match which_val {
-                "interval" => &meta_data.interval,
-                "output size" => &meta_data.output_size,
-                _ => &None,
-            } {
-                Ok(value)
-            } else {
-                Err("No value present")
-            }
-        } else if let Some(error) = &self.error_message {
-            Err(error)
-        } else if let Some(information) = &self.information {
-            Err(information)
-        } else {
-            Err("Unknown error")
-        }
+    /// Convert out Option meta data field as a Option<&str>
+    fn operate_option_meta_value(&self, which_val: &str) -> Option<&str> {
+        let value = match which_val {
+            "interval" => &self.meta_data.interval,
+            "output size" => &self.meta_data.output_size,
+            _ => &None,
+        };
+        value.as_deref()
     }
 }
 
@@ -337,47 +323,54 @@ pub(crate) struct ForexHelper {
 
 impl ForexHelper {
     /// convert [ForexHelper][ForexHelper] to [Forex][Forex]
-    pub(crate) fn convert(self) -> Forex {
+    pub(crate) fn convert(self) -> Result<Forex, String> {
         let mut forex_struct = Forex::default();
-        forex_struct.error_message = self.error_message;
-        forex_struct.information = self.information;
+        if let Some(information) = self.information {
+            return Err(information);
+        }
+        if let Some(error_message) = self.error_message {
+            return Err(error_message);
+        }
         if let Some(meta_data) = self.meta_data {
             let information = &meta_data["1. Information"];
             let from_symbol = &meta_data["2. From Symbol"];
             let to_symbol = &meta_data["3. To Symbol"];
             let last_refreshed = meta_data.get("4. Last Refreshed");
-            let mut last_refreshed_value = return_option_value(last_refreshed);
+            let mut last_refreshed_value = last_refreshed.cloned();
             if last_refreshed_value.is_none() {
                 let last_refreshed = meta_data.get("5. Last Refreshed");
-                last_refreshed_value = return_option_value(last_refreshed);
+                last_refreshed_value = last_refreshed.cloned();
             }
+            let last_refreshed_value =
+                last_refreshed_value.expect("Last refreshed value contains None");
             let time_zone = meta_data.get("5. Time Zone");
-            let mut time_zone_value = return_option_value(time_zone);
+            let mut time_zone_value = time_zone.cloned();
             if time_zone_value.is_none() {
                 let time_zone = meta_data.get("6. Time Zone");
-                time_zone_value = return_option_value(time_zone);
+                time_zone_value = time_zone.cloned();
             }
             if time_zone_value.is_none() {
                 let time_zone = meta_data.get("7. Time Zone");
-                time_zone_value = return_option_value(time_zone);
+                time_zone_value = time_zone.cloned();
             }
+            let time_zone_value = time_zone_value.expect("Time zone contains None value");
             let output_size = meta_data.get("4. Output Size");
-            let mut output_size_value = return_option_value(output_size);
+            let mut output_size_value = output_size.cloned();
             if output_size_value.is_none() {
                 let output_size = meta_data.get("6. Output Size");
-                output_size_value = return_option_value(output_size);
+                output_size_value = output_size.cloned();
             }
             let interval = meta_data.get("5. Interval");
-            let interval_value = return_option_value(interval);
-            forex_struct.meta_data = Some(MetaData {
+            let interval_value = interval.cloned();
+            forex_struct.meta_data = MetaData {
                 information: information.to_string(),
                 from_symbol: from_symbol.to_string(),
                 to_symbol: to_symbol.to_string(),
-                last_refreshed: last_refreshed_value.expect("Last refreshed value contains None"),
+                last_refreshed: last_refreshed_value,
                 interval: interval_value,
                 output_size: output_size_value,
-                time_zone: time_zone_value.expect("Time zone contains None value"),
-            });
+                time_zone: time_zone_value,
+            };
         }
         let mut value: Vec<Entry> = Vec::new();
         if let Some(entry) = self.forex {
@@ -398,17 +391,9 @@ impl ForexHelper {
             }
         }
         if !value.is_empty() {
-            forex_struct.forex = Some(value);
+            forex_struct.forex = value;
         }
-        forex_struct
-    }
-}
-
-/// Convert Option(&String) to String
-fn return_option_value(value: Option<&std::string::String>) -> Option<String> {
-    match value {
-        Some(value) => Some(value.to_string()),
-        None => None,
+        Ok(forex_struct)
     }
 }
 
@@ -416,15 +401,14 @@ fn return_option_value(value: Option<&std::string::String>) -> Option<String> {
 ///
 /// Instead of using this function directly calling through [APIKey][APIKey]
 /// method is recommended
-#[must_use]
 pub fn forex(
     function: ForexFunction,
     from_symbol: &str,
     to_symbol: &str,
-    interval: Interval,
+    interval: TimeSeriesInterval,
     output_size: OutputSize,
     api_data: (&str, Option<u64>),
-) -> Forex {
+) -> Result<Forex, String> {
     let api;
     if let Some(timeout) = api_data.1 {
         api = APIKey::set_with_timeout(api_data.0, timeout);
@@ -439,7 +423,7 @@ pub(crate) fn create_url(
     function: ForexFunction,
     from_symbol: &str,
     to_symbol: &str,
-    interval: Interval,
+    interval: TimeSeriesInterval,
     output_size: OutputSize,
     api: &str,
 ) -> Url {
@@ -455,12 +439,12 @@ pub(crate) fn create_url(
         LINK, function, from_symbol, to_symbol
     );
     let interval = match interval {
-        Interval::OneMin => "1min",
-        Interval::FiveMin => "5min",
-        Interval::FifteenMin => "15min",
-        Interval::ThirtyMin => "30min",
-        Interval::SixtyMin => "60min",
-        Interval::None => "",
+        TimeSeriesInterval::OneMin => "1min",
+        TimeSeriesInterval::FiveMin => "5min",
+        TimeSeriesInterval::FifteenMin => "15min",
+        TimeSeriesInterval::ThirtyMin => "30min",
+        TimeSeriesInterval::SixtyMin => "60min",
+        TimeSeriesInterval::None => "",
     };
 
     if interval != "" {
@@ -489,7 +473,7 @@ mod test {
                 ForexFunction::Daily,
                 "USD",
                 "NPR",
-                Interval::None,
+                TimeSeriesInterval::None,
                 OutputSize::None,
                 "random"
             ),
@@ -506,7 +490,7 @@ mod test {
                 ForexFunction::Weekly,
                 "USD",
                 "NPR",
-                Interval::None,
+                TimeSeriesInterval::None,
                 OutputSize::None,
                 "random"
             ),
@@ -523,7 +507,7 @@ mod test {
                 ForexFunction::Monthly,
                 "USD",
                 "NPR",
-                Interval::None,
+                TimeSeriesInterval::None,
                 OutputSize::None,
                 "random"
             ),
@@ -540,7 +524,7 @@ mod test {
                 ForexFunction::IntraDay,
                 "USD",
                 "NPR",
-                Interval::FifteenMin,
+                TimeSeriesInterval::FifteenMin,
                 OutputSize::Full,
                 "random"
             ),

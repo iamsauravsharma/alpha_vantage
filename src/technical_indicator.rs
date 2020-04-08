@@ -9,12 +9,15 @@
 //!
 //! [technical_indicator]: https://www.alphavantage.co/documentation/#technical-indicators
 
-use crate::{user::APIKey, util::TechnicalIndicator as UtilIndicator};
+use crate::{
+    user::APIKey,
+    util::{TechnicalIndicator as UtilIndicator, TechnicalIndicatorInterval},
+};
 use reqwest::Url;
 use serde::Deserialize;
 use std::collections::HashMap;
 
-type DataType = Option<HashMap<String, HashMap<String, HashMap<String, String>>>>;
+type DataType = HashMap<String, HashMap<String, HashMap<String, String>>>;
 
 /// Struct for helping indicator struct
 #[derive(Deserialize)]
@@ -24,75 +27,79 @@ pub(crate) struct IndicatorHelper {
     #[serde(rename = "Information")]
     information: Option<String>,
     #[serde(rename = "Meta Data")]
-    metadata: Option<HashMap<String, String>>,
+    metadata: Option<HashMap<String, MetaDataValue>>,
     #[serde(flatten)]
-    data: DataType,
+    data: Option<DataType>,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(untagged)]
+/// Different representation of metadata value
+pub enum MetaDataValue {
+    /// Boolean representation
+    Bool(bool),
+    /// Unsigned integer representation
+    Unsigned(u64),
+    /// Signed integer representation
+    Signed(i64),
+    /// Float representation
+    Float(f64),
+    /// Text representation
+    Text(String),
 }
 
 impl IndicatorHelper {
-    pub(crate) fn convert(self) -> Indicator {
+    pub(crate) fn convert(self) -> Result<Indicator, String> {
         let mut indicator = Indicator::default();
-        indicator.error_message = self.error_message;
-        indicator.information = self.information;
-        indicator.metadata = self.metadata;
-        indicator.data = self.data;
-        indicator
+        if let Some(information) = self.information {
+            return Err(information);
+        }
+        if let Some(error_message) = self.error_message {
+            return Err(error_message);
+        }
+        indicator.metadata = self.metadata.unwrap();
+        indicator.data = self.data.unwrap();
+        Ok(indicator)
     }
 }
 
 /// Struct for indicator
-#[derive(Default)]
+#[derive(Default, Debug)]
 pub struct Indicator {
-    error_message: Option<String>,
-    information: Option<String>,
-    metadata: Option<HashMap<String, String>>,
+    metadata: HashMap<String, MetaDataValue>,
     data: DataType,
 }
 
 impl Indicator {
     /// Return out meta data in hash form
-    pub fn meta_data(&self) -> Result<&HashMap<String, String>, &str> {
-        if let Some(meta_data) = &self.metadata {
-            Ok(meta_data)
-        } else if let Some(error) = &self.error_message {
-            Err(error)
-        } else if let Some(information) = &self.information {
-            Err(information)
-        } else {
-            Err("Unknown error")
-        }
+    #[must_use]
+    pub fn meta_data(&self) -> &HashMap<String, MetaDataValue> {
+        &self.metadata
     }
 
-    /// Return data as a vector inside result
-    pub fn data(&self) -> Result<Vec<DataCollector>, &str> {
-        if let Some(data) = &self.data {
-            let mut vector = Vec::new();
-            for hash in data.values() {
-                for time in hash.keys() {
-                    let mut data_collector = DataCollector::default();
-                    data_collector.time = time.to_string();
-                    let hash_values = hash
-                        .get(time)
-                        .expect("cannot get out time key value from hash map")
-                        .to_owned();
-                    for (key, value) in &hash_values {
-                        let value_f64 = value
-                            .trim()
-                            .parse::<f64>()
-                            .expect("Cannot convert string to f64");
-                        data_collector.values.insert(key.to_string(), value_f64);
-                    }
-                    vector.push(data_collector);
+    /// Return data as a vector
+    #[must_use]
+    pub fn data(&self) -> Vec<DataCollector> {
+        let mut vector = Vec::new();
+        for hash in self.data.values() {
+            for time in hash.keys() {
+                let mut data_collector = DataCollector::default();
+                data_collector.time = time.to_string();
+                let hash_values = hash
+                    .get(time)
+                    .expect("cannot get out time key value from hash map")
+                    .to_owned();
+                for (key, value) in &hash_values {
+                    let value_f64 = value
+                        .trim()
+                        .parse::<f64>()
+                        .expect("Cannot convert string to f64");
+                    data_collector.values.insert(key.to_string(), value_f64);
                 }
+                vector.push(data_collector);
             }
-            Ok(vector)
-        } else if let Some(error) = &self.error_message {
-            Err(error)
-        } else if let Some(information) = &self.information {
-            Err(information)
-        } else {
-            Err("Unknown error")
         }
+        vector
     }
 }
 
@@ -121,16 +128,15 @@ impl DataCollector {
 ///
 /// Instead of using this function directly calling through [APIKey][APIKey]
 /// method is recommended
-#[must_use]
 pub fn technical_indicator(
     function: &str,
     symbol: &str,
-    interval: &str,
+    interval: TechnicalIndicatorInterval,
+    time_period: Option<u64>,
     series_type: Option<&str>,
-    time_period: Option<&str>,
     temporary_value: Vec<UtilIndicator>,
     api_data: (&str, Option<u64>),
-) -> Indicator {
+) -> Result<Indicator, String> {
     let api;
     if let Some(timeout) = api_data.1 {
         api = APIKey::set_with_timeout(api_data.0, timeout);
@@ -141,8 +147,8 @@ pub fn technical_indicator(
         function,
         symbol,
         interval,
-        series_type,
         time_period,
+        series_type,
         temporary_value,
     )
 }
@@ -151,21 +157,31 @@ pub fn technical_indicator(
 pub(crate) fn create_url(
     function: &str,
     symbol: &str,
-    interval: &str,
+    interval: TechnicalIndicatorInterval,
+    time_period: Option<u64>,
     series_type: Option<&str>,
-    time_period: Option<&str>,
     temporary_value: Vec<UtilIndicator>,
     apikey: &str,
 ) -> Url {
+    let interval_val = match interval {
+        TechnicalIndicatorInterval::OneMin => "1min",
+        TechnicalIndicatorInterval::FiveMin => "5min",
+        TechnicalIndicatorInterval::FifteenMin => "15min",
+        TechnicalIndicatorInterval::ThirtyMin => "30min",
+        TechnicalIndicatorInterval::SixtyMin => "60min",
+        TechnicalIndicatorInterval::Daily => "daily",
+        TechnicalIndicatorInterval::Weekly => "weekly",
+        TechnicalIndicatorInterval::Monthly => "monthly",
+    };
     let mut created_link = format!(
-        "https://www.alphavantage.co/query?function={}&symbol={}&interval={}&apikey={}",
-        function, symbol, interval, apikey
+        "https://www.alphavantage.co/query?function={}&symbol={}&interval={}",
+        function, symbol, interval_val
     );
-    if let Some(series_type) = series_type {
-        created_link.push_str(&format!("&series_type={}", series_type));
-    }
     if let Some(time_period) = time_period {
         created_link.push_str(&format!("&time_period={}", time_period));
+    }
+    if let Some(series_type) = series_type {
+        created_link.push_str(&format!("&series_type={}", series_type));
     }
     for values in temporary_value {
         match values {
@@ -228,7 +244,8 @@ pub(crate) fn create_url(
             }
         }
     }
+    created_link.push_str(&format!("&apikey={}", apikey));
     created_link
         .parse()
-        .expect("Cannot parse out created link ti url")
+        .expect("Cannot parse out created link url")
 }

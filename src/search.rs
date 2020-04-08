@@ -21,23 +21,24 @@ pub(crate) struct SearchHelper {
 }
 
 impl SearchHelper {
-    pub(crate) fn convert(self) -> Search {
+    pub(crate) fn convert(self) -> Result<Search, String> {
         let mut search = Search::default();
-        search.information = self.information;
-        search.matches = self.matches;
-        search
+        if let Some(information) = self.information {
+            return Err(information);
+        }
+        search.matches = self.matches.unwrap();
+        Ok(search)
     }
 }
 
 /// struct for storing search method data
 #[derive(Default)]
 pub struct Search {
-    information: Option<String>,
-    matches: Option<Vec<DataValue>>,
+    matches: Vec<DataValue>,
 }
 
 /// Struct which stores matches data for search keyword
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Deserialize, Default)]
 pub struct DataValue {
     #[serde(rename = "1. symbol")]
     symbol: String,
@@ -120,14 +121,9 @@ impl DataValue {
 
 impl Search {
     /// Return result of search
-    pub fn result(&self) -> Result<Vec<DataValue>, &str> {
-        if let Some(entry) = &self.matches {
-            Ok(entry.to_vec())
-        } else if let Some(information) = &self.information {
-            Err(information)
-        } else {
-            Err("Unknown error")
-        }
+    #[must_use]
+    pub fn result(&self) -> &Vec<DataValue> {
+        &self.matches
     }
 }
 
@@ -135,8 +131,7 @@ impl Search {
 ///
 /// Instead of using this function directly calling through [APIKey][APIKey]
 /// method is recommended
-#[must_use]
-pub fn search(keyword: &str, api_data: (&str, Option<u64>)) -> Search {
+pub fn search(keyword: &str, api_data: (&str, Option<u64>)) -> Result<Search, String> {
     let api;
     if let Some(timeout) = api_data.1 {
         api = APIKey::set_with_timeout(api_data.0, timeout);
