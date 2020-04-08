@@ -178,12 +178,6 @@
 <span id="178">178</span>
 <span id="179">179</span>
 <span id="180">180</span>
-<span id="181">181</span>
-<span id="182">182</span>
-<span id="183">183</span>
-<span id="184">184</span>
-<span id="185">185</span>
-<span id="186">186</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Module for returning latest price and volume information</span>
 <span class="doccomment">//!</span>
@@ -210,25 +204,27 @@
 }
 
 <span class="kw">impl</span> <span class="ident">QuoteHelper</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">convert</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Quote</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">convert</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Quote</span>, <span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">quote</span> <span class="op">=</span> <span class="ident">Quote</span>::<span class="ident">default</span>();
-        <span class="ident">quote</span>.<span class="ident">error_message</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">error_message</span>;
-        <span class="ident">quote</span>.<span class="ident">information</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">information</span>;
-        <span class="ident">quote</span>.<span class="ident">global_quote</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">global_quote</span>;
-        <span class="ident">quote</span>
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">information</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">information</span> {
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">information</span>);
+        }
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">error_message</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">error_message</span> {
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">error_message</span>);
+        }
+        <span class="ident">quote</span>.<span class="ident">global_quote</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">global_quote</span>.<span class="ident">unwrap</span>();
+        <span class="prelude-val">Ok</span>(<span class="ident">quote</span>)
     }
 }
 
 <span class="doccomment">/// Struct for storing Quote related information</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Quote</span> {
-    <span class="ident">error_message</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">information</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">global_quote</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">GlobalQuote</span><span class="op">&gt;</span>,
+    <span class="ident">global_quote</span>: <span class="ident">GlobalQuote</span>,
 }
 
 <span class="doccomment">/// Struct storing Global Quote Value</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Deserialize</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Deserialize</span>, <span class="ident">Clone</span>, <span class="ident">Default</span>)]</span>
 <span class="kw">struct</span> <span class="ident">GlobalQuote</span> {
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;01. symbol&quot;</span>)]</span>
     <span class="ident">symbol</span>: <span class="ident">String</span>,
@@ -254,75 +250,76 @@
 
 <span class="kw">impl</span> <span class="ident">Quote</span> {
     <span class="doccomment">/// return open value</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">open</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">open</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">return_f64_value</span>(<span class="string">&quot;open&quot;</span>)
     }
 
     <span class="doccomment">/// return high value</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">high</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">high</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">return_f64_value</span>(<span class="string">&quot;high&quot;</span>)
     }
 
     <span class="doccomment">/// return low value</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">low</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">low</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">return_f64_value</span>(<span class="string">&quot;low&quot;</span>)
     }
 
     <span class="doccomment">/// return price value</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">price</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">price</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">return_f64_value</span>(<span class="string">&quot;price&quot;</span>)
     }
 
     <span class="doccomment">/// return out a volume</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">volume</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">volume</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">return_f64_value</span>(<span class="string">&quot;volume&quot;</span>)
     }
 
     <span class="doccomment">/// return previous</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">previous</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">previous</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">return_f64_value</span>(<span class="string">&quot;previous&quot;</span>)
     }
 
     <span class="doccomment">/// return change</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">change</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">change</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">return_f64_value</span>(<span class="string">&quot;change&quot;</span>)
     }
 
     <span class="doccomment">/// return change percent</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">change_percent</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">previous</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">previous</span>()<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">price</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">price</span>()<span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>((<span class="ident">price</span> <span class="op">-</span> <span class="ident">previous</span>) <span class="op">/</span> <span class="ident">previous</span>)
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">change_percent</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
+        <span class="kw">let</span> <span class="ident">previous</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">previous</span>();
+        <span class="kw">let</span> <span class="ident">price</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">price</span>();
+        (<span class="ident">price</span> <span class="op">-</span> <span class="ident">previous</span>) <span class="op">/</span> <span class="ident">previous</span>
     }
 
     <span class="doccomment">/// general function used for returning f64 value of Quote method</span>
-    <span class="kw">fn</span> <span class="ident">return_f64_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">global</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">global_quote</span> {
-            <span class="kw">let</span> <span class="ident">price</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">value</span> {
-                <span class="string">&quot;open&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">global</span>.<span class="ident">open</span>,
-                <span class="string">&quot;high&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">global</span>.<span class="ident">high</span>,
-                <span class="string">&quot;low&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">global</span>.<span class="ident">low</span>,
-                <span class="string">&quot;price&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">global</span>.<span class="ident">price</span>,
-                <span class="string">&quot;previous&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">global</span>.<span class="ident">previous_close</span>,
-                <span class="string">&quot;change&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">global</span>.<span class="ident">change</span>,
-                <span class="string">&quot;volume&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">global</span>.<span class="ident">volume</span>,
-                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;&quot;</span>,
-            };
-            <span class="prelude-val">Ok</span>(<span class="ident">price</span>
-                .<span class="ident">trim</span>()
-                .<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>()
-                .<span class="ident">expect</span>(<span class="string">&quot;failed to convert String to f64&quot;</span>))
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">error</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">error_message</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">error</span>)
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">information</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">information</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">information</span>)
-        } <span class="kw">else</span> {
-            <span class="prelude-val">Err</span>(<span class="string">&quot;Unknown error&quot;</span>)
-        }
+    <span class="kw">fn</span> <span class="ident">return_f64_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
+        <span class="kw">let</span> <span class="ident">price</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">value</span> {
+            <span class="string">&quot;open&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">global_quote</span>.<span class="ident">open</span>,
+            <span class="string">&quot;high&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">global_quote</span>.<span class="ident">high</span>,
+            <span class="string">&quot;low&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">global_quote</span>.<span class="ident">low</span>,
+            <span class="string">&quot;price&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">global_quote</span>.<span class="ident">price</span>,
+            <span class="string">&quot;previous&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">global_quote</span>.<span class="ident">previous_close</span>,
+            <span class="string">&quot;change&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">global_quote</span>.<span class="ident">change</span>,
+            <span class="string">&quot;volume&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">global_quote</span>.<span class="ident">volume</span>,
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;&quot;</span>,
+        };
+        <span class="ident">price</span>
+            .<span class="ident">trim</span>()
+            .<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>()
+            .<span class="ident">expect</span>(<span class="string">&quot;failed to convert String to f64&quot;</span>)
     }
 
     <span class="doccomment">/// get last trading day</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">last_trading</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">last_trading</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="self">self</span>.<span class="ident">return_string_value</span>(<span class="string">&quot;trading&quot;</span>)
     }
 
@@ -330,29 +327,21 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
-    <span class="doccomment">/// let quote = api.quote(&quot;MSFT&quot;);</span>
+    <span class="doccomment">/// let quote = api.quote(&quot;MSFT&quot;).unwrap();</span>
     <span class="doccomment">/// let symbol = quote.symbol();</span>
-    <span class="doccomment">/// assert_eq!(symbol.unwrap(), &quot;MSFT&quot;);</span>
+    <span class="doccomment">/// assert_eq!(symbol, &quot;MSFT&quot;);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">symbol</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">symbol</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="self">self</span>.<span class="ident">return_string_value</span>(<span class="string">&quot;symbol&quot;</span>)
     }
 
     <span class="doccomment">/// general function used for returning String value</span>
-    <span class="kw">fn</span> <span class="ident">return_string_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">global</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">global_quote</span> {
-            <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">value</span> {
-                <span class="string">&quot;trading&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">global</span>.<span class="ident">last_day</span>,
-                <span class="string">&quot;symbol&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">global</span>.<span class="ident">symbol</span>,
-                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;&quot;</span>,
-            };
-            <span class="prelude-val">Ok</span>(<span class="ident">value</span>)
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">error</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">error_message</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">error</span>)
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">information</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">information</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">information</span>)
-        } <span class="kw">else</span> {
-            <span class="prelude-val">Err</span>(<span class="string">&quot;Unknown error&quot;</span>)
+    <span class="kw">fn</span> <span class="ident">return_string_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw">match</span> <span class="ident">value</span> {
+            <span class="string">&quot;trading&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">global_quote</span>.<span class="ident">last_day</span>,
+            <span class="string">&quot;symbol&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">global_quote</span>.<span class="ident">symbol</span>,
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;&quot;</span>,
         }
     }
 }
@@ -361,8 +350,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Instead of using this function directly calling through [APIKey][APIKey]</span>
 <span class="doccomment">/// method is recommended</span>
-<span class="attribute">#[<span class="ident">must_use</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">quote</span>(<span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">api_data</span>: (<span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>)) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Quote</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">quote</span>(<span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">api_data</span>: (<span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>)) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Quote</span>, <span class="ident">String</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">api</span>;
     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">timeout</span>) <span class="op">=</span> <span class="ident">api_data</span>.<span class="number">1</span> {
         <span class="ident">api</span> <span class="op">=</span> <span class="ident">APIKey</span>::<span class="ident">set_with_timeout</span>(<span class="ident">api_data</span>.<span class="number">0</span>, <span class="ident">timeout</span>);

@@ -410,6 +410,16 @@
 <span id="410">410</span>
 <span id="411">411</span>
 <span id="412">412</span>
+<span id="413">413</span>
+<span id="414">414</span>
+<span id="415">415</span>
+<span id="416">416</span>
+<span id="417">417</span>
+<span id="418">418</span>
+<span id="419">419</span>
+<span id="420">420</span>
+<span id="421">421</span>
+<span id="422">422</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">crypto</span>::{<span class="ident">create_url</span> <span class="kw">as</span> <span class="ident">create_url_crypto</span>, <span class="ident">Crypto</span>, <span class="ident">CryptoHelper</span>},
@@ -421,7 +431,8 @@
     <span class="ident">stock_time</span>::{<span class="ident">create_url</span> <span class="kw">as</span> <span class="ident">create_url_time_series</span>, <span class="ident">TimeSeries</span>, <span class="ident">TimeSeriesHelper</span>},
     <span class="ident">technical_indicator</span>::{<span class="ident">create_url</span> <span class="kw">as</span> <span class="ident">create_url_technical</span>, <span class="ident">Indicator</span>, <span class="ident">IndicatorHelper</span>},
     <span class="ident">util</span>::{
-        <span class="ident">CryptoFunction</span>, <span class="ident">ForexFunction</span>, <span class="ident">Interval</span>, <span class="ident">OutputSize</span>, <span class="ident">StockFunction</span>, <span class="ident">TechnicalIndicator</span>,
+        <span class="ident">CryptoFunction</span>, <span class="ident">ForexFunction</span>, <span class="ident">OutputSize</span>, <span class="ident">StockFunction</span>, <span class="ident">TechnicalIndicator</span>,
+        <span class="ident">TechnicalIndicatorInterval</span>, <span class="ident">TimeSeriesInterval</span>,
     },
 };
 <span class="kw">use</span> <span class="ident">reqwest</span>::{
@@ -540,12 +551,18 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
-    <span class="doccomment">/// let crypto = api.crypto(alpha_vantage::util::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;);</span>
+    <span class="doccomment">/// let crypto = api</span>
+    <span class="doccomment">///     .crypto(alpha_vantage::util::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
+    <span class="doccomment">///     .unwrap();</span>
     <span class="doccomment">/// let digital_name = crypto.digital_name();</span>
-    <span class="doccomment">/// assert_eq!(digital_name.unwrap(), String::from(&quot;Bitcoin&quot;));</span>
+    <span class="doccomment">/// assert_eq!(digital_name, &quot;Bitcoin&quot;);</span>
     <span class="doccomment">/// ```</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">crypto</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">function</span>: <span class="ident">CryptoFunction</span>, <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">market</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Crypto</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">crypto</span>(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="ident">function</span>: <span class="ident">CryptoFunction</span>,
+        <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">market</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Crypto</span>, <span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">data</span>: <span class="ident">Url</span> <span class="op">=</span> <span class="ident">create_url_crypto</span>(<span class="ident">function</span>, <span class="ident">symbol</span>, <span class="ident">market</span>, <span class="self">self</span>.<span class="ident">get_api</span>());
         <span class="kw">let</span> <span class="ident">body</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>
             .<span class="ident">client</span>
@@ -565,13 +582,9 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
-    <span class="doccomment">/// assert_eq!(</span>
-    <span class="doccomment">///     api.exchange(&quot;BTC&quot;, &quot;CNY&quot;).name_from().unwrap(),</span>
-    <span class="doccomment">///     String::from(&quot;Bitcoin&quot;)</span>
-    <span class="doccomment">/// );</span>
+    <span class="doccomment">/// assert_eq!(api.exchange(&quot;BTC&quot;, &quot;CNY&quot;).unwrap().name_from(), &quot;Bitcoin&quot;);</span>
     <span class="doccomment">/// ```</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">exchange</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">from_currency</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">to_currency</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Exchange</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">exchange</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">from_currency</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">to_currency</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Exchange</span>, <span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">data</span>: <span class="ident">Url</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
             <span class="string">&quot;{}CURRENCY_EXCHANGE_RATE&amp;from_currency={}&amp;to_currency={}&amp;apikey={}&quot;</span>,
             <span class="ident">LINK</span>,
@@ -604,20 +617,19 @@
     <span class="doccomment">///     ForexFunction::Weekly,</span>
     <span class="doccomment">///     &quot;EUR&quot;,</span>
     <span class="doccomment">///     &quot;USD&quot;,</span>
-    <span class="doccomment">///     Interval::None,</span>
+    <span class="doccomment">///     TimeSeriesInterval::None,</span>
     <span class="doccomment">///     OutputSize::None,</span>
     <span class="doccomment">/// );</span>
-    <span class="doccomment">/// assert_eq!(forex.symbol_from().unwrap(), &quot;EUR&quot;.to_string());</span>
+    <span class="doccomment">/// assert_eq!(forex.unwrap().symbol_from(), &quot;EUR&quot;);</span>
     <span class="doccomment">/// ```</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">forex</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">function</span>: <span class="ident">ForexFunction</span>,
         <span class="ident">from_symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">to_symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">interval</span>: <span class="ident">Interval</span>,
+        <span class="ident">interval</span>: <span class="ident">TimeSeriesInterval</span>,
         <span class="ident">output_size</span>: <span class="ident">OutputSize</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Forex</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Forex</span>, <span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">data</span>: <span class="ident">Url</span> <span class="op">=</span> <span class="ident">create_url_forex</span>(
             <span class="ident">function</span>,
             <span class="ident">from_symbol</span>,
@@ -639,14 +651,15 @@
     }
 
     <span class="doccomment">/// Method for returning Quote Struct</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
-    <span class="doccomment">/// let quote = api.quote(&quot;MSFT&quot;);</span>
-    <span class="doccomment">/// assert_eq!(quote.open().is_ok(), true);</span>
+    <span class="doccomment">/// let quote = api.quote(&quot;MSFT&quot;).unwrap();</span>
+    <span class="doccomment">/// let symbol = quote.symbol();</span>
+    <span class="doccomment">/// assert_eq!(symbol, &quot;MSFT&quot;);</span>
     <span class="doccomment">/// ```</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">quote</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Quote</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">quote</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Quote</span>, <span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">data</span>: <span class="ident">Url</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
             <span class="string">&quot;{}GLOBAL_QUOTE&amp;symbol={}&amp;apikey={}&quot;</span>,
             <span class="ident">LINK</span>,
@@ -672,11 +685,10 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
-    <span class="doccomment">/// let search = api.search(&quot;BA&quot;);</span>
-    <span class="doccomment">/// assert_eq!(search.result().is_ok(), true);</span>
+    <span class="doccomment">/// let search = api.search(&quot;BA&quot;).unwrap();</span>
+    <span class="doccomment">/// assert_eq!(search.result()[0].symbol(), &quot;BA&quot;);</span>
     <span class="doccomment">/// ```</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">search</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">keywords</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Search</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">search</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">keywords</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Search</span>, <span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">data</span>: <span class="ident">Url</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
             <span class="string">&quot;{}SYMBOL_SEARCH&amp;keywords={}&amp;apikey={}&quot;</span>,
             <span class="ident">LINK</span>,
@@ -701,11 +713,13 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
-    <span class="doccomment">/// let sector = api.sector();</span>
-    <span class="doccomment">/// assert_eq!(sector.information().is_ok(), true);</span>
+    <span class="doccomment">/// let sector = api.sector().unwrap();</span>
+    <span class="doccomment">/// assert_eq!(</span>
+    <span class="doccomment">///     sector.information(),</span>
+    <span class="doccomment">///     &quot;US Sector Performance (realtime &amp; historical)&quot;</span>
+    <span class="doccomment">/// );</span>
     <span class="doccomment">/// ```</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sector</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Sector</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sector</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Sector</span>, <span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">data</span>: <span class="ident">Url</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}SECTOR&amp;apikey={}&quot;</span>, <span class="ident">LINK</span>, <span class="self">self</span>.<span class="ident">get_api</span>())
             .<span class="ident">parse</span>()
             .<span class="ident">expect</span>(<span class="string">&quot;failed to parse sector str to Url&quot;</span>);
@@ -726,22 +740,23 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use alpha_vantage::util::*;</span>
     <span class="doccomment">/// let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
-    <span class="doccomment">/// let stock = api.stock_time(</span>
-    <span class="doccomment">///     StockFunction::Weekly,</span>
-    <span class="doccomment">///     &quot;MSFT&quot;,</span>
-    <span class="doccomment">///     Interval::None,</span>
-    <span class="doccomment">///     OutputSize::None,</span>
-    <span class="doccomment">/// );</span>
-    <span class="doccomment">/// assert_eq!(stock.symbol().unwrap(), &quot;MSFT&quot;.to_string());</span>
+    <span class="doccomment">/// let stock = api</span>
+    <span class="doccomment">///     .stock_time(</span>
+    <span class="doccomment">///         StockFunction::Weekly,</span>
+    <span class="doccomment">///         &quot;MSFT&quot;,</span>
+    <span class="doccomment">///         TimeSeriesInterval::None,</span>
+    <span class="doccomment">///         OutputSize::None,</span>
+    <span class="doccomment">///     )</span>
+    <span class="doccomment">///     .unwrap();</span>
+    <span class="doccomment">/// assert_eq!(stock.symbol(), &quot;MSFT&quot;.to_string());</span>
     <span class="doccomment">/// ```</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">stock_time</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">function</span>: <span class="ident">StockFunction</span>,
         <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">interval</span>: <span class="ident">Interval</span>,
+        <span class="ident">interval</span>: <span class="ident">TimeSeriesInterval</span>,
         <span class="ident">output_size</span>: <span class="ident">OutputSize</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TimeSeries</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TimeSeries</span>, <span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">data</span>: <span class="ident">Url</span> <span class="op">=</span>
             <span class="ident">create_url_time_series</span>(<span class="ident">function</span>, <span class="ident">symbol</span>, <span class="ident">interval</span>, <span class="ident">output_size</span>, <span class="self">self</span>.<span class="ident">get_api</span>());
         <span class="kw">let</span> <span class="ident">body</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>
@@ -760,26 +775,31 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
-    <span class="doccomment">/// let technical =</span>
-    <span class="doccomment">///     api.technical_indicator(&quot;SEMA&quot;, &quot;MSFT&quot;, &quot;1min&quot;, Some(&quot;open&quot;), Some(&quot;10&quot;), vec![]);</span>
-    <span class="doccomment">/// assert_eq!(technical.data().is_ok(), true);</span>
+    <span class="doccomment">/// let technical = api.technical_indicator(</span>
+    <span class="doccomment">///     &quot;SMA&quot;,</span>
+    <span class="doccomment">///     &quot;IBM&quot;,</span>
+    <span class="doccomment">///     alpha_vantage::util::TechnicalIndicatorInterval::Weekly,</span>
+    <span class="doccomment">///     Some(10),</span>
+    <span class="doccomment">///     Some(&quot;open&quot;),</span>
+    <span class="doccomment">///     vec![],</span>
+    <span class="doccomment">/// );</span>
+    <span class="doccomment">/// assert_eq!(technical.is_ok(), true);</span>
     <span class="doccomment">/// ```</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">technical_indicator</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">function</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">interval</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">interval</span>: <span class="ident">TechnicalIndicatorInterval</span>,
+        <span class="ident">time_period</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>,
         <span class="ident">series_type</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
-        <span class="ident">time_period</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
         <span class="ident">temporary_value</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">TechnicalIndicator</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Indicator</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Indicator</span>, <span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">create_url_technical</span>(
             <span class="ident">function</span>,
             <span class="ident">symbol</span>,
             <span class="ident">interval</span>,
-            <span class="ident">series_type</span>,
             <span class="ident">time_period</span>,
+            <span class="ident">series_type</span>,
             <span class="ident">temporary_value</span>,
             <span class="self">self</span>.<span class="ident">get_api</span>(),
         );

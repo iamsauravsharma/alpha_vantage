@@ -163,16 +163,6 @@
 <span id="163">163</span>
 <span id="164">164</span>
 <span id="165">165</span>
-<span id="166">166</span>
-<span id="167">167</span>
-<span id="168">168</span>
-<span id="169">169</span>
-<span id="170">170</span>
-<span id="171">171</span>
-<span id="172">172</span>
-<span id="173">173</span>
-<span id="174">174</span>
-<span id="175">175</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Module for exchange currency (both digital &amp; physical currency exchange)</span>
 <span class="doccomment">//!</span>
@@ -199,25 +189,27 @@
 }
 
 <span class="kw">impl</span> <span class="ident">ExchangeHelper</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">convert</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Exchange</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">convert</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Exchange</span>, <span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">exchange</span> <span class="op">=</span> <span class="ident">Exchange</span>::<span class="ident">default</span>();
-        <span class="ident">exchange</span>.<span class="ident">error_message</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">error_message</span>;
-        <span class="ident">exchange</span>.<span class="ident">information</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">information</span>;
-        <span class="ident">exchange</span>.<span class="ident">real_time</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">real_time</span>;
-        <span class="ident">exchange</span>
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">information</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">information</span> {
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">information</span>);
+        }
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">error_message</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">error_message</span> {
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">error_message</span>);
+        }
+        <span class="ident">exchange</span>.<span class="ident">real_time</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">real_time</span>.<span class="ident">unwrap</span>();
+        <span class="prelude-val">Ok</span>(<span class="ident">exchange</span>)
     }
 }
 
 <span class="doccomment">/// Struct used for exchanging currency</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Exchange</span> {
-    <span class="ident">error_message</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">information</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">real_time</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RealtimeExchangeRate</span><span class="op">&gt;</span>,
+    <span class="ident">real_time</span>: <span class="ident">RealtimeExchangeRate</span>,
 }
 
 <span class="doccomment">/// Struct Storing Real time Exchange Value</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Deserialize</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Deserialize</span>, <span class="ident">Clone</span>, <span class="ident">Default</span>)]</span>
 <span class="kw">struct</span> <span class="ident">RealtimeExchangeRate</span> {
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;1. From_Currency Code&quot;</span>)]</span>
     <span class="ident">from_code</span>: <span class="ident">String</span>,
@@ -236,31 +228,25 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Exchange</span> {
-    <span class="doccomment">/// Get Rate for exchange produce error if no rate is available</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">real</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">real_time</span> {
-            <span class="prelude-val">Ok</span>(<span class="ident">real</span>
-                .<span class="ident">rate</span>
-                .<span class="ident">trim</span>()
-                .<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>()
-                .<span class="ident">expect</span>(<span class="string">&quot;failed to parse real_time rate to f64&quot;</span>))
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">error</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">error_message</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">error</span>)
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">information</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">information</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">information</span>)
-        } <span class="kw">else</span> {
-            <span class="prelude-val">Err</span>(<span class="string">&quot;Unknown error&quot;</span>)
-        }
+    <span class="doccomment">/// Get Rate for exchange</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
+        <span class="self">self</span>.<span class="ident">real_time</span>
+            .<span class="ident">rate</span>
+            .<span class="ident">trim</span>()
+            .<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>()
+            .<span class="ident">expect</span>(<span class="string">&quot;failed to parse real_time rate to f64&quot;</span>)
     }
 
     <span class="doccomment">/// Get time when exchange rate was last refreshed along with time zone.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">refreshed_time</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">refreshed_time</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="self">self</span>.<span class="ident">get_result_string</span>(<span class="string">&quot;Refreshed time&quot;</span>)
     }
 
-    <span class="doccomment">/// Return time zone of all data time produce error if API return</span>
-    <span class="doccomment">/// error message or information instead of meta data</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">time_zone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Return time zone of all data time</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">time_zone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="self">self</span>.<span class="ident">get_result_string</span>(<span class="string">&quot;time zone&quot;</span>)
     }
 
@@ -268,11 +254,12 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
-    <span class="doccomment">/// let exchange = api.exchange(&quot;BTC&quot;, &quot;CNY&quot;);</span>
+    <span class="doccomment">/// let exchange = api.exchange(&quot;BTC&quot;, &quot;CNY&quot;).unwrap();</span>
     <span class="doccomment">/// let code_from = exchange.code_from();</span>
-    <span class="doccomment">/// assert_eq!(code_from.unwrap(), &quot;BTC&quot;);</span>
+    <span class="doccomment">/// assert_eq!(code_from, &quot;BTC&quot;);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">code_from</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">code_from</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="self">self</span>.<span class="ident">get_result_string</span>(<span class="string">&quot;from code&quot;</span>)
     }
 
@@ -280,11 +267,12 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
-    <span class="doccomment">/// let exchange = api.exchange(&quot;BTC&quot;, &quot;CNY&quot;);</span>
+    <span class="doccomment">/// let exchange = api.exchange(&quot;BTC&quot;, &quot;CNY&quot;).unwrap();</span>
     <span class="doccomment">/// let name_from = exchange.name_from();</span>
-    <span class="doccomment">/// assert_eq!(name_from.unwrap(), &quot;Bitcoin&quot;);</span>
+    <span class="doccomment">/// assert_eq!(name_from, &quot;Bitcoin&quot;);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">name_from</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">name_from</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="self">self</span>.<span class="ident">get_result_string</span>(<span class="string">&quot;from name&quot;</span>)
     }
 
@@ -292,11 +280,12 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
-    <span class="doccomment">/// let exchange = api.exchange(&quot;BTC&quot;, &quot;CNY&quot;);</span>
+    <span class="doccomment">/// let exchange = api.exchange(&quot;BTC&quot;, &quot;CNY&quot;).unwrap();</span>
     <span class="doccomment">/// let code_to = exchange.code_to();</span>
-    <span class="doccomment">/// assert_eq!(code_to.unwrap(), &quot;CNY&quot;);</span>
+    <span class="doccomment">/// assert_eq!(code_to, &quot;CNY&quot;);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">code_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">code_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="self">self</span>.<span class="ident">get_result_string</span>(<span class="string">&quot;to code&quot;</span>)
     }
 
@@ -304,33 +293,25 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
-    <span class="doccomment">/// let exchange = api.exchange(&quot;BTC&quot;, &quot;CNY&quot;);</span>
+    <span class="doccomment">/// let exchange = api.exchange(&quot;BTC&quot;, &quot;CNY&quot;).unwrap();</span>
     <span class="doccomment">/// let name_to = exchange.name_to();</span>
-    <span class="doccomment">/// assert_eq!(name_to.unwrap(), &quot;Chinese Yuan&quot;);</span>
+    <span class="doccomment">/// assert_eq!(name_to, &quot;Chinese Yuan&quot;);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">name_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">name_to</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="self">self</span>.<span class="ident">get_result_string</span>(<span class="string">&quot;to name&quot;</span>)
     }
 
-    <span class="doccomment">/// Collect out certain value from real time if present otherwise show error</span>
-    <span class="kw">fn</span> <span class="ident">get_result_string</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">match_str</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">real_time</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">real_time</span> {
-            <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">match_str</span> {
-                <span class="string">&quot;from code&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">real_time</span>.<span class="ident">from_code</span>,
-                <span class="string">&quot;from name&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">real_time</span>.<span class="ident">from_name</span>,
-                <span class="string">&quot;to code&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">real_time</span>.<span class="ident">to_code</span>,
-                <span class="string">&quot;to name&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">real_time</span>.<span class="ident">to_name</span>,
-                <span class="string">&quot;time zone&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">real_time</span>.<span class="ident">time_zone</span>,
-                <span class="string">&quot;refreshed time&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">real_time</span>.<span class="ident">last_refreshed</span>,
-                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;&quot;</span>,
-            };
-            <span class="prelude-val">Ok</span>(<span class="ident">value</span>)
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">error</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">error_message</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">error</span>)
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">information</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">information</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">information</span>)
-        } <span class="kw">else</span> {
-            <span class="prelude-val">Err</span>(<span class="string">&quot;Unknown error&quot;</span>)
+    <span class="doccomment">/// Collect out certain value from real time</span>
+    <span class="kw">fn</span> <span class="ident">get_result_string</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">match_str</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw">match</span> <span class="ident">match_str</span> {
+            <span class="string">&quot;from code&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">real_time</span>.<span class="ident">from_code</span>,
+            <span class="string">&quot;from name&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">real_time</span>.<span class="ident">from_name</span>,
+            <span class="string">&quot;to code&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">real_time</span>.<span class="ident">to_code</span>,
+            <span class="string">&quot;to name&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">real_time</span>.<span class="ident">to_name</span>,
+            <span class="string">&quot;time zone&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">real_time</span>.<span class="ident">time_zone</span>,
+            <span class="string">&quot;refreshed time&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">real_time</span>.<span class="ident">last_refreshed</span>,
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;&quot;</span>,
         }
     }
 }
@@ -339,8 +320,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Instead of using this function directly calling through [APIKey][APIKey]</span>
 <span class="doccomment">/// method is recommended</span>
-<span class="attribute">#[<span class="ident">must_use</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">exchange</span>(<span class="ident">from</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">to</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">api_data</span>: (<span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>)) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Exchange</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">exchange</span>(<span class="ident">from</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">to</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">api_data</span>: (<span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>)) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Exchange</span>, <span class="ident">String</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">api</span>;
     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">timeout</span>) <span class="op">=</span> <span class="ident">api_data</span>.<span class="number">1</span> {
         <span class="ident">api</span> <span class="op">=</span> <span class="ident">APIKey</span>::<span class="ident">set_with_timeout</span>(<span class="ident">api_data</span>.<span class="number">0</span>, <span class="ident">timeout</span>);
