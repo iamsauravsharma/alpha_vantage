@@ -8,7 +8,8 @@ use crate::{
     stock_time::{create_url as create_url_time_series, TimeSeries, TimeSeriesHelper},
     technical_indicator::{create_url as create_url_technical, Indicator, IndicatorHelper},
     util::{
-        CryptoFunction, ForexFunction, Interval, OutputSize, StockFunction, TechnicalIndicator,
+        CryptoFunction, ForexFunction, OutputSize, StockFunction, TechnicalIndicator,
+        TechnicalIndicatorInterval, TimeSeriesInterval,
     },
 };
 use reqwest::{
@@ -127,12 +128,18 @@ impl APIKey {
     /// # Example
     /// ```
     /// let api = alpha_vantage::set_api("demo");
-    /// let crypto = api.crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY");
+    /// let crypto = api
+    ///     .crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY")
+    ///     .unwrap();
     /// let digital_name = crypto.digital_name();
-    /// assert_eq!(digital_name.unwrap(), String::from("Bitcoin"));
+    /// assert_eq!(digital_name, "Bitcoin");
     /// ```
-    #[must_use]
-    pub fn crypto(&self, function: CryptoFunction, symbol: &str, market: &str) -> Crypto {
+    pub fn crypto(
+        &self,
+        function: CryptoFunction,
+        symbol: &str,
+        market: &str,
+    ) -> Result<Crypto, String> {
         let data: Url = create_url_crypto(function, symbol, market, self.get_api());
         let body = &self
             .client
@@ -152,13 +159,9 @@ impl APIKey {
     /// # Example
     /// ```
     /// let api = alpha_vantage::set_api("demo");
-    /// assert_eq!(
-    ///     api.exchange("BTC", "CNY").name_from().unwrap(),
-    ///     String::from("Bitcoin")
-    /// );
+    /// assert_eq!(api.exchange("BTC", "CNY").unwrap().name_from(), "Bitcoin");
     /// ```
-    #[must_use]
-    pub fn exchange(&self, from_currency: &str, to_currency: &str) -> Exchange {
+    pub fn exchange(&self, from_currency: &str, to_currency: &str) -> Result<Exchange, String> {
         let data: Url = format!(
             "{}CURRENCY_EXCHANGE_RATE&from_currency={}&to_currency={}&apikey={}",
             LINK,
@@ -191,20 +194,19 @@ impl APIKey {
     ///     ForexFunction::Weekly,
     ///     "EUR",
     ///     "USD",
-    ///     Interval::None,
+    ///     TimeSeriesInterval::None,
     ///     OutputSize::None,
     /// );
-    /// assert_eq!(forex.symbol_from().unwrap(), "EUR".to_string());
+    /// assert_eq!(forex.unwrap().symbol_from(), "EUR");
     /// ```
-    #[must_use]
     pub fn forex(
         &self,
         function: ForexFunction,
         from_symbol: &str,
         to_symbol: &str,
-        interval: Interval,
+        interval: TimeSeriesInterval,
         output_size: OutputSize,
-    ) -> Forex {
+    ) -> Result<Forex, String> {
         let data: Url = create_url_forex(
             function,
             from_symbol,
@@ -226,14 +228,15 @@ impl APIKey {
     }
 
     /// Method for returning Quote Struct
+    ///
     /// # Example
     /// ```
     /// let api = alpha_vantage::set_api("demo");
-    /// let quote = api.quote("MSFT");
-    /// assert_eq!(quote.open().is_ok(), true);
+    /// let quote = api.quote("MSFT").unwrap();
+    /// let symbol = quote.symbol();
+    /// assert_eq!(symbol, "MSFT");
     /// ```
-    #[must_use]
-    pub fn quote(&self, symbol: &str) -> Quote {
+    pub fn quote(&self, symbol: &str) -> Result<Quote, String> {
         let data: Url = format!(
             "{}GLOBAL_QUOTE&symbol={}&apikey={}",
             LINK,
@@ -259,11 +262,10 @@ impl APIKey {
     /// # Example
     /// ```
     /// let api = alpha_vantage::set_api("demo");
-    /// let search = api.search("BA");
-    /// assert_eq!(search.result().is_ok(), true);
+    /// let search = api.search("BA").unwrap();
+    /// assert_eq!(search.result()[0].symbol(), "BA");
     /// ```
-    #[must_use]
-    pub fn search(&self, keywords: &str) -> Search {
+    pub fn search(&self, keywords: &str) -> Result<Search, String> {
         let data: Url = format!(
             "{}SYMBOL_SEARCH&keywords={}&apikey={}",
             LINK,
@@ -288,11 +290,13 @@ impl APIKey {
     /// # Example
     /// ```
     /// let api = alpha_vantage::set_api("demo");
-    /// let sector = api.sector();
-    /// assert_eq!(sector.information().is_ok(), true);
+    /// let sector = api.sector().unwrap();
+    /// assert_eq!(
+    ///     sector.information(),
+    ///     "US Sector Performance (realtime & historical)"
+    /// );
     /// ```
-    #[must_use]
-    pub fn sector(&self) -> Sector {
+    pub fn sector(&self) -> Result<Sector, String> {
         let data: Url = format!("{}SECTOR&apikey={}", LINK, self.get_api())
             .parse()
             .expect("failed to parse sector str to Url");
@@ -313,22 +317,23 @@ impl APIKey {
     /// ```
     /// use alpha_vantage::util::*;
     /// let api = alpha_vantage::set_api("demo");
-    /// let stock = api.stock_time(
-    ///     StockFunction::Weekly,
-    ///     "MSFT",
-    ///     Interval::None,
-    ///     OutputSize::None,
-    /// );
-    /// assert_eq!(stock.symbol().unwrap(), "MSFT".to_string());
+    /// let stock = api
+    ///     .stock_time(
+    ///         StockFunction::Weekly,
+    ///         "MSFT",
+    ///         TimeSeriesInterval::None,
+    ///         OutputSize::None,
+    ///     )
+    ///     .unwrap();
+    /// assert_eq!(stock.symbol(), "MSFT".to_string());
     /// ```
-    #[must_use]
     pub fn stock_time(
         &self,
         function: StockFunction,
         symbol: &str,
-        interval: Interval,
+        interval: TimeSeriesInterval,
         output_size: OutputSize,
-    ) -> TimeSeries {
+    ) -> Result<TimeSeries, String> {
         let data: Url =
             create_url_time_series(function, symbol, interval, output_size, self.get_api());
         let body = &self
@@ -347,26 +352,31 @@ impl APIKey {
     /// # Example
     /// ```
     /// let api = alpha_vantage::set_api("demo");
-    /// let technical =
-    ///     api.technical_indicator("SEMA", "MSFT", "1min", Some("open"), Some("10"), vec![]);
-    /// assert_eq!(technical.data().is_ok(), true);
+    /// let technical = api.technical_indicator(
+    ///     "SMA",
+    ///     "IBM",
+    ///     alpha_vantage::util::TechnicalIndicatorInterval::Weekly,
+    ///     Some(10),
+    ///     Some("open"),
+    ///     vec![],
+    /// );
+    /// assert_eq!(technical.is_ok(), true);
     /// ```
-    #[must_use]
     pub fn technical_indicator(
         &self,
         function: &str,
         symbol: &str,
-        interval: &str,
+        interval: TechnicalIndicatorInterval,
+        time_period: Option<u64>,
         series_type: Option<&str>,
-        time_period: Option<&str>,
         temporary_value: Vec<TechnicalIndicator>,
-    ) -> Indicator {
+    ) -> Result<Indicator, String> {
         let data = create_url_technical(
             function,
             symbol,
             interval,
-            series_type,
             time_period,
+            series_type,
             temporary_value,
             self.get_api(),
         );

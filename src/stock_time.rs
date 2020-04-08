@@ -12,7 +12,7 @@
 
 use crate::{
     user::APIKey,
-    util::{Interval, OutputSize, StockFunction},
+    util::{OutputSize, StockFunction, TimeSeriesInterval},
 };
 use reqwest::Url;
 use serde::Deserialize;
@@ -23,10 +23,8 @@ const LINK: &str = "https://www.alphavantage.co/query?function=";
 /// Struct for storing time series data
 #[derive(Debug, Default)]
 pub struct TimeSeries {
-    error_message: Option<String>,
-    information: Option<String>,
-    meta_data: Option<MetaData>,
-    entry: Option<Vec<Entry>>,
+    meta_data: MetaData,
+    entry: Vec<Entry>,
 }
 
 impl TimeSeries {
@@ -35,19 +33,22 @@ impl TimeSeries {
     /// ```
     /// use alpha_vantage::util::*;
     /// let api = alpha_vantage::set_api("demo");
-    /// let stock_time = api.stock_time(
-    ///     StockFunction::IntraDay,
-    ///     "MSFT",
-    ///     Interval::FiveMin,
-    ///     OutputSize::Full,
-    /// );
+    /// let stock_time = api
+    ///     .stock_time(
+    ///         StockFunction::IntraDay,
+    ///         "MSFT",
+    ///         TimeSeriesInterval::FiveMin,
+    ///         OutputSize::Full,
+    ///     )
+    ///     .unwrap();
     /// let information = stock_time.information();
     /// assert_eq!(
-    ///     information.unwrap(),
+    ///     information,
     ///     "Intraday (5min) open, high, low, close prices and volume"
     /// );
     /// ```
-    pub fn information(&self) -> Result<&str, &str> {
+    #[must_use]
+    pub fn information(&self) -> &str {
         self.return_meta_string("information")
     }
 
@@ -56,46 +57,52 @@ impl TimeSeries {
     /// ```
     /// use alpha_vantage::util::*;
     /// let api = alpha_vantage::set_api("demo");
-    /// let stock_time = api.stock_time(
-    ///     StockFunction::IntraDay,
-    ///     "MSFT",
-    ///     Interval::FiveMin,
-    ///     OutputSize::Full,
-    /// );
+    /// let stock_time = api
+    ///     .stock_time(
+    ///         StockFunction::IntraDay,
+    ///         "MSFT",
+    ///         TimeSeriesInterval::FiveMin,
+    ///         OutputSize::Full,
+    ///     )
+    ///     .unwrap();
     /// let symbol = stock_time.symbol();
-    /// assert_eq!(symbol.unwrap(), "MSFT");
+    /// assert_eq!(symbol, "MSFT");
     /// ```
-    pub fn symbol(&self) -> Result<&str, &str> {
+    #[must_use]
+    pub fn symbol(&self) -> &str {
         self.return_meta_string("symbol")
     }
 
-    /// Return last refreshed time produce error if API returns error message or
-    /// information instead of meta data
-    pub fn last_refreshed(&self) -> Result<&str, &str> {
+    /// Return last refreshed time
+    #[must_use]
+    pub fn last_refreshed(&self) -> &str {
         self.return_meta_string("last refreshed")
     }
 
-    /// Return time zone of all data time produce error if API return
-    /// error message or information instead of meta data
-    pub fn time_zone(&self) -> Result<&str, &str> {
+    /// Return time zone of all data time
+    #[must_use]
+    pub fn time_zone(&self) -> &str {
         self.return_meta_string("time zone")
     }
 
-    /// Interval for which a time series intraday
+    /// Time series interval between two consecutive data
     ///
     /// ```
     /// use alpha_vantage::util::*;
     /// let api = alpha_vantage::set_api("demo");
-    /// let stock_time = api.stock_time(
-    ///     StockFunction::IntraDay,
-    ///     "MSFT",
-    ///     Interval::FiveMin,
-    ///     OutputSize::Full,
-    /// );
+    /// let stock_time = api
+    ///     .stock_time(
+    ///         StockFunction::IntraDay,
+    ///         "MSFT",
+    ///         TimeSeriesInterval::FiveMin,
+    ///         OutputSize::Full,
+    ///     )
+    ///     .unwrap();
     /// let interval = stock_time.interval();
     /// assert_eq!(interval.unwrap(), "5min");
     /// ```
-    pub fn interval(&self) -> Result<&str, &str> {
+    #[must_use]
+    pub fn interval(&self) -> Option<&str> {
         self.operate_option_meta_value("interval")
     }
 
@@ -104,76 +111,52 @@ impl TimeSeries {
     /// ```
     /// use alpha_vantage::util::*;
     /// let api = alpha_vantage::set_api("demo");
-    /// let stock_time = api.stock_time(
-    ///     StockFunction::IntraDay,
-    ///     "MSFT",
-    ///     Interval::FiveMin,
-    ///     OutputSize::Full,
-    /// );
+    /// let stock_time = api
+    ///     .stock_time(
+    ///         StockFunction::IntraDay,
+    ///         "MSFT",
+    ///         TimeSeriesInterval::FiveMin,
+    ///         OutputSize::Full,
+    ///     )
+    ///     .unwrap();
     /// let output_size = stock_time.output_size();
     /// assert_eq!(output_size.unwrap(), "Full size");
     /// ```
-    pub fn output_size(&self) -> Result<&str, &str> {
+    #[must_use]
+    pub fn output_size(&self) -> Option<&str> {
         self.operate_option_meta_value("output size")
     }
 
     /// Return Entry
-    pub fn entry(&self) -> Result<Vec<Entry>, &str> {
-        if let Some(entry) = &self.entry {
-            Ok(entry.to_vec())
-        } else if let Some(error) = &self.error_message {
-            Err(error)
-        } else if let Some(information) = &self.information {
-            Err(information)
-        } else {
-            Err("Unknown error")
-        }
+    #[must_use]
+    pub fn entry(&self) -> &Vec<Entry> {
+        &self.entry
     }
 
     /// Return a meta data value as a form of String
-    fn return_meta_string(&self, which_val: &str) -> Result<&str, &str> {
-        if let Some(meta_data) = &self.meta_data {
-            let value = match which_val {
-                "information" => &meta_data.information,
-                "symbol" => &meta_data.symbol,
-                "time zone" => &meta_data.time_zone,
-                "last refreshed" => &meta_data.last_refreshed,
-                _ => "",
-            };
-            Ok(value)
-        } else if let Some(error) = &self.error_message {
-            Err(error)
-        } else if let Some(information) = &self.information {
-            Err(information)
-        } else {
-            Err("Unknown error")
+    fn return_meta_string(&self, which_val: &str) -> &str {
+        match which_val {
+            "information" => &self.meta_data.information,
+            "symbol" => &self.meta_data.symbol,
+            "time zone" => &self.meta_data.time_zone,
+            "last refreshed" => &self.meta_data.last_refreshed,
+            _ => "",
         }
     }
 
     /// Return Option metadata value as a Result form of String
-    fn operate_option_meta_value(&self, which_val: &str) -> Result<&str, &str> {
-        if let Some(meta_data) = &self.meta_data {
-            if let Some(value) = match which_val {
-                "interval" => &meta_data.interval,
-                "output size" => &meta_data.output_size,
-                _ => &None,
-            } {
-                Ok(value)
-            } else {
-                Err("No value present")
-            }
-        } else if let Some(error) = &self.error_message {
-            Err(error)
-        } else if let Some(information) = &self.information {
-            Err(information)
-        } else {
-            Err("Unknown error")
-        }
+    fn operate_option_meta_value(&self, which_val: &str) -> Option<&str> {
+        let value = match which_val {
+            "interval" => &self.meta_data.interval,
+            "output size" => &self.meta_data.output_size,
+            _ => &None,
+        };
+        value.as_deref()
     }
 }
 
 /// Struct for storing Meta Data value
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Default)]
 pub struct MetaData {
     information: String,
     symbol: String,
@@ -232,7 +215,7 @@ impl VecEntry for Vec<Entry> {
     }
 
     fn latestn(&self, n: usize) -> Result<Vec<Entry>, &str> {
-        let mut time_list = vec![];
+        let mut time_list = Vec::new();
         for entry in self {
             time_list.push(entry.time.clone());
         }
@@ -379,40 +362,45 @@ pub(crate) struct TimeSeriesHelper {
 
 impl TimeSeriesHelper {
     /// Convert [TimeSeriesHelper][TimeSeriesHelper] to [TimeSeries][TimeSeries]
-    pub(crate) fn convert(self) -> TimeSeries {
+    pub(crate) fn convert(self) -> Result<TimeSeries, String> {
         let mut time_series = TimeSeries::default();
-        time_series.error_message = self.error_message;
-        time_series.information = self.information;
+        if let Some(information) = self.information {
+            return Err(information);
+        }
+        if let Some(error_message) = self.error_message {
+            return Err(error_message);
+        }
         if let Some(meta_data) = self.meta_data {
             let information = &meta_data["1. Information"];
             let symbol = &meta_data["2. Symbol"];
             let last_refreshed = &meta_data["3. Last Refreshed"];
             let interval = meta_data.get("4. Interval");
-            let interval = return_value(interval);
+            let interval = interval.cloned();
             let output_size = meta_data.get("4. Output Size");
-            let mut output_size_value = return_value(output_size);
+            let mut output_size_value = output_size.cloned();
             if output_size_value.is_none() {
                 let output_size = meta_data.get("5. Output Size");
-                output_size_value = return_value(output_size);
+                output_size_value = output_size.cloned();
             }
             let time_zone = meta_data.get("4. Time Zone");
-            let mut time_zone_value = return_value(time_zone);
+            let mut time_zone_value = time_zone.cloned();
             if time_zone_value.is_none() {
                 let time_zone = meta_data.get("5. Time Zone");
-                time_zone_value = return_value(time_zone)
+                time_zone_value = time_zone.cloned()
             }
             if time_zone_value.is_none() {
                 let time_zone = meta_data.get("6. Time Zone");
-                time_zone_value = return_value(time_zone)
+                time_zone_value = time_zone.cloned()
             }
-            time_series.meta_data = Some(MetaData {
+            let time_zone_value = time_zone_value.expect("time zone value is None");
+            time_series.meta_data = MetaData {
                 information: information.to_string(),
                 symbol: symbol.to_string(),
                 last_refreshed: last_refreshed.to_string(),
                 interval,
                 output_size: output_size_value,
-                time_zone: time_zone_value.expect("time zone value is None"),
-            });
+                time_zone: time_zone_value,
+            };
         }
         let mut value: Vec<Entry> = Vec::new();
         if let Some(entry) = self.time_series {
@@ -455,17 +443,9 @@ impl TimeSeriesHelper {
             }
         }
         if !value.is_empty() {
-            time_series.entry = Some(value);
+            time_series.entry = value;
         }
-        time_series
-    }
-}
-
-/// Convert Option<&String> to Option<String>
-fn return_value(value: Option<&std::string::String>) -> Option<String> {
-    match value {
-        Some(value) => Some(value.to_string()),
-        None => None,
+        Ok(time_series)
     }
 }
 
@@ -473,14 +453,13 @@ fn return_value(value: Option<&std::string::String>) -> Option<String> {
 ///
 /// Instead of using this function directly calling through [APIKey][APIKey]
 /// method is recommended
-#[must_use]
 pub fn stock_time(
     function: StockFunction,
     symbol: &str,
-    interval: Interval,
+    interval: TimeSeriesInterval,
     output_size: OutputSize,
     api_data: (&str, Option<u64>),
-) -> TimeSeries {
+) -> Result<TimeSeries, String> {
     let api;
     if let Some(timeout) = api_data.1 {
         api = APIKey::set_with_timeout(api_data.0, timeout);
@@ -494,7 +473,7 @@ pub fn stock_time(
 pub(crate) fn create_url(
     function: StockFunction,
     symbol: &str,
-    interval: Interval,
+    interval: TimeSeriesInterval,
     output_size: OutputSize,
     api: &str,
 ) -> Url {
@@ -510,12 +489,12 @@ pub(crate) fn create_url(
 
     let mut url = format!("{}{}&symbol={}", LINK, function, symbol);
     let interval = match interval {
-        Interval::OneMin => "1min",
-        Interval::FiveMin => "5min",
-        Interval::FifteenMin => "15min",
-        Interval::ThirtyMin => "30min",
-        Interval::SixtyMin => "60min",
-        Interval::None => "",
+        TimeSeriesInterval::OneMin => "1min",
+        TimeSeriesInterval::FiveMin => "5min",
+        TimeSeriesInterval::FifteenMin => "15min",
+        TimeSeriesInterval::ThirtyMin => "30min",
+        TimeSeriesInterval::SixtyMin => "60min",
+        TimeSeriesInterval::None => "",
     };
 
     if interval != "" {
@@ -540,7 +519,7 @@ mod test {
             super::create_url(
                 StockFunction::Daily,
                 "USD",
-                Interval::None,
+                TimeSeriesInterval::None,
                 OutputSize::None,
                 "random"
             ),
@@ -555,7 +534,7 @@ mod test {
             super::create_url(
                 StockFunction::Weekly,
                 "NPR",
-                Interval::None,
+                TimeSeriesInterval::None,
                 OutputSize::None,
                 "random"
             ),
@@ -570,7 +549,7 @@ mod test {
             super::create_url(
                 StockFunction::Monthly,
                 "NPR",
-                Interval::None,
+                TimeSeriesInterval::None,
                 OutputSize::None,
                 "random"
             ),
@@ -585,7 +564,7 @@ mod test {
             super::create_url(
                 StockFunction::IntraDay,
                 "MSFT",
-                Interval::SixtyMin,
+                TimeSeriesInterval::SixtyMin,
                 OutputSize::Full,
                 "random"
             ),

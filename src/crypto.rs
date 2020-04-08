@@ -16,7 +16,7 @@ use std::collections::HashMap;
 const LINK: &str = "https://www.alphavantage.co/query?function=";
 
 /// Store Meta Data Information
-#[derive(Deserialize, Clone)]
+#[derive(Deserialize, Clone, Default)]
 struct MetaData {
     #[serde(rename = "1. Information")]
     information: String,
@@ -68,11 +68,15 @@ pub(crate) struct CryptoHelper {
 
 impl CryptoHelper {
     /// Function which convert [CryptoHelper][CryptoHelper] to [Crypto][Crypto]
-    pub(crate) fn convert(self) -> Crypto {
+    pub(crate) fn convert(self) -> Result<Crypto, String> {
         let mut crypto = Crypto::default();
-        crypto.information = self.information;
-        crypto.error_message = self.error_message;
-        crypto.meta_data = self.meta_data;
+        if let Some(information) = self.information {
+            return Err(information);
+        }
+        if let Some(error_message) = self.error_message {
+            return Err(error_message);
+        }
+        crypto.meta_data = self.meta_data.unwrap();
         if self.entry.is_some() {
             let mut vec_entry = Vec::new();
             for value in self.entry.expect("self.entry is None").values() {
@@ -105,9 +109,9 @@ impl CryptoHelper {
                     vec_entry.push(entry);
                 }
             }
-            crypto.entry = Some(vec_entry);
+            crypto.entry = vec_entry;
         }
-        crypto
+        Ok(crypto)
     }
 }
 
@@ -162,7 +166,7 @@ impl VecEntry for Vec<Entry> {
     }
 
     fn latestn(&self, n: usize) -> Result<Vec<Entry>, &str> {
-        let mut time_list = vec![];
+        let mut time_list = Vec::new();
         for entry in self {
             time_list.push(entry.time.clone());
         }
@@ -262,127 +266,115 @@ fn convert_to_f64(val: &str) -> f64 {
 /// Struct which holds out Crypto currency information
 #[derive(Default)]
 pub struct Crypto {
-    information: Option<String>,
-    error_message: Option<String>,
-    meta_data: Option<MetaData>,
-    entry: Option<Vec<Entry>>,
+    meta_data: MetaData,
+    entry: Vec<Entry>,
 }
 
 impl Crypto {
-    /// Return meta data information produce error if API returns error message
-    /// or information instead of meta data
+    /// Return meta data information
     ///
     /// ```
     /// let api = alpha_vantage::set_api("demo");
-    /// let crypto = api.crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY");
+    /// let crypto = api
+    ///     .crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY")
+    ///     .unwrap();
     /// let information = crypto.information();
-    /// assert_eq!(
-    ///     information.unwrap(),
-    ///     "Daily Prices and Volumes for Digital Currency"
-    /// );
+    /// assert_eq!(information, "Daily Prices and Volumes for Digital Currency");
     /// ```
-    pub fn information(&self) -> Result<&str, &str> {
+    #[must_use]
+    pub fn information(&self) -> &str {
         self.return_meta_string("information")
     }
 
-    /// Return digital currency code produce error if API returns error message
-    /// or information instead of meta data
+    /// Return digital currency code
     ///
     /// ```
     /// let api = alpha_vantage::set_api("demo");
-    /// let crypto = api.crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY");
+    /// let crypto = api
+    ///     .crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY")
+    ///     .unwrap();
     /// let digital_code = crypto.digital_code();
-    /// assert_eq!(digital_code.unwrap(), "BTC");
+    /// assert_eq!(digital_code, "BTC");
     /// ```
-    pub fn digital_code(&self) -> Result<&str, &str> {
+    #[must_use]
+    pub fn digital_code(&self) -> &str {
         self.return_meta_string("digital code")
     }
 
-    /// Return digital currency name produce error if API returns error message
-    /// or information instead of meta data
+    /// Return digital currency name
     ///
     /// ```
     /// let api = alpha_vantage::set_api("demo");
-    /// let crypto = api.crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY");
+    /// let crypto = api
+    ///     .crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY")
+    ///     .unwrap();
     /// let digital_name = crypto.digital_name();
-    /// assert_eq!(digital_name.unwrap(), "Bitcoin");
+    /// assert_eq!(digital_name, "Bitcoin");
     /// ```
-    pub fn digital_name(&self) -> Result<&str, &str> {
+    #[must_use]
+    pub fn digital_name(&self) -> &str {
         self.return_meta_string("digital name")
     }
 
-    /// Return market code produce error if API returns error message
-    /// or information instead of meta data
+    /// Return market code
     ///
     /// ```
     /// let api = alpha_vantage::set_api("demo");
-    /// let crypto = api.crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY");
+    /// let crypto = api
+    ///     .crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY")
+    ///     .unwrap();
     /// let market_code = crypto.market_code();
-    /// assert_eq!(market_code.unwrap(), "CNY");
+    /// assert_eq!(market_code, "CNY");
     /// ```
-    pub fn market_code(&self) -> Result<&str, &str> {
+    #[must_use]
+    pub fn market_code(&self) -> &str {
         self.return_meta_string("market code")
     }
 
-    /// Return market name produce error if API returns error message
-    /// or information instead of meta data
+    /// Return market name
     ///
     /// ```
     /// let api = alpha_vantage::set_api("demo");
-    /// let crypto = api.crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY");
+    /// let crypto = api
+    ///     .crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY")
+    ///     .unwrap();
     /// let market_name = crypto.market_name();
-    /// assert_eq!(market_name.unwrap(), "Chinese Yuan");
+    /// assert_eq!(market_name, "Chinese Yuan");
     /// ```
-    pub fn market_name(&self) -> Result<&str, &str> {
+    #[must_use]
+    pub fn market_name(&self) -> &str {
         self.return_meta_string("market name")
     }
 
-    /// Return last refreshed time produce error if API returns error message or
-    /// information instead of meta data
-    pub fn last_refreshed(&self) -> Result<&str, &str> {
+    /// Return last refreshed time
+    #[must_use]
+    pub fn last_refreshed(&self) -> &str {
         self.return_meta_string("last refreshed")
     }
 
-    /// Return time zone of all data time produce error if API return error
-    /// message or information instead of meta data
-    pub fn time_zone(&self) -> Result<&str, &str> {
+    /// Return time zone of all data time
+    #[must_use]
+    pub fn time_zone(&self) -> &str {
         self.return_meta_string("time zone")
     }
 
-    /// Return out a entry produce error if API returns error message
-    /// or information instead of vector of entry
-    pub fn entry(&self) -> Result<Vec<Entry>, &str> {
-        if let Some(entry) = &self.entry {
-            Ok(entry.to_vec())
-        } else if let Some(error) = &self.error_message {
-            Err(error)
-        } else if let Some(information) = &self.information {
-            Err(information)
-        } else {
-            Err("Unknown error")
-        }
+    /// Return out a entry
+    #[must_use]
+    pub fn entry(&self) -> &Vec<Entry> {
+        &self.entry
     }
 
-    /// Return meta string if meta data is present otherwise show any two error
-    fn return_meta_string(&self, which_val: &str) -> Result<&str, &str> {
-        if let Some(meta_data) = &self.meta_data {
-            let value = match which_val {
-                "information" => &meta_data.information,
-                "digital code" => &meta_data.digital_code,
-                "digital name" => &meta_data.digital_name,
-                "market code" => &meta_data.market_code,
-                "market name" => &meta_data.market_name,
-                "time zone" => &meta_data.time_zone,
-                "last refreshed" => &meta_data.last_refreshed,
-                _ => "",
-            };
-            Ok(value)
-        } else if let Some(error) = &self.error_message {
-            Err(error)
-        } else if let Some(information) = &self.information {
-            Err(information)
-        } else {
-            Err("Unknown error")
+    /// Return meta string
+    fn return_meta_string(&self, which_val: &str) -> &str {
+        match which_val {
+            "information" => &self.meta_data.information,
+            "digital code" => &self.meta_data.digital_code,
+            "digital name" => &self.meta_data.digital_name,
+            "market code" => &self.meta_data.market_code,
+            "market name" => &self.meta_data.market_name,
+            "time zone" => &self.meta_data.time_zone,
+            "last refreshed" => &self.meta_data.last_refreshed,
+            _ => "",
         }
     }
 }
@@ -391,13 +383,12 @@ impl Crypto {
 ///
 /// Instead of using this function directly calling through [APIKey][APIKey]
 /// method is recommended
-#[must_use]
 pub fn crypto(
     function: CryptoFunction,
     symbol: &str,
     market: &str,
     api_data: (&str, Option<u64>),
-) -> Crypto {
+) -> Result<Crypto, String> {
     let api;
     if let Some(timeout) = api_data.1 {
         api = APIKey::set_with_timeout(api_data.0, timeout);

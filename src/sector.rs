@@ -13,7 +13,7 @@ use serde::Deserialize;
 use std::collections::HashMap;
 
 /// Stores Metadata
-#[derive(Deserialize, Clone)]
+#[derive(Deserialize, Clone, Default)]
 struct MetaData {
     #[serde(rename = "Information")]
     information: String,
@@ -115,10 +115,8 @@ impl Data {
 /// Stores sector data
 #[derive(Default)]
 pub struct Sector {
-    error_message: Option<String>,
-    information: Option<String>,
-    meta_data: Option<MetaData>,
-    data: Option<Vec<Data>>,
+    meta_data: MetaData,
+    data: Vec<Data>,
 }
 
 impl Sector {
@@ -126,50 +124,33 @@ impl Sector {
     ///
     /// ```
     /// let api = alpha_vantage::set_api("demo");
-    /// let sector = api.sector();
+    /// let sector = api.sector().unwrap();
     /// let information = sector.information();
-    /// assert_eq!(
-    ///     information.unwrap(),
-    ///     "US Sector Performance (realtime & historical)"
-    /// );
+    /// assert_eq!(information, "US Sector Performance (realtime & historical)");
     /// ```
-    pub fn information(&self) -> Result<&str, &str> {
-        self.check_meta_data("information")
+    #[must_use]
+    pub fn information(&self) -> &str {
+        self.return_meta_data_val("information")
     }
 
     /// Return last refreshed time
-    pub fn last_refreshed(&self) -> Result<&str, &str> {
-        self.check_meta_data("last refreshed")
+    #[must_use]
+    pub fn last_refreshed(&self) -> &str {
+        self.return_meta_data_val("last refreshed")
     }
 
-    /// Return vector of data in Result
-    pub fn data(&self) -> Result<Vec<Data>, &str> {
-        if let Some(data) = &self.data {
-            Ok(data.to_vec())
-        } else if let Some(error) = &self.error_message {
-            Err(error)
-        } else if let Some(information) = &self.information {
-            Err(information)
-        } else {
-            Err("Unknown error")
-        }
+    /// Return vector of data
+    #[must_use]
+    pub fn data(&self) -> &Vec<Data> {
+        &self.data
     }
 
-    /// Check a meta data is present or not
-    fn check_meta_data(&self, name: &str) -> Result<&str, &str> {
-        if let Some(meta_data) = &self.meta_data {
-            let value = match name {
-                "information" => &meta_data.information,
-                "last refreshed" => &meta_data.last_refreshed,
-                _ => "",
-            };
-            Ok(value)
-        } else if let Some(error) = &self.error_message {
-            Err(error)
-        } else if let Some(information) = &self.information {
-            Err(information)
-        } else {
-            Err("Unknown error")
+    /// Return metadata value
+    fn return_meta_data_val(&self, name: &str) -> &str {
+        match name {
+            "information" => &self.meta_data.information,
+            "last refreshed" => &self.meta_data.last_refreshed,
+            _ => "",
         }
     }
 }
@@ -189,11 +170,15 @@ pub(crate) struct SectorHelper {
 
 impl SectorHelper {
     /// Convert out [SectorHelper][SectorHelper] to [Sector][Sector]
-    pub(crate) fn convert(self) -> Sector {
+    pub(crate) fn convert(self) -> Result<Sector, String> {
         let mut sector = Sector::default();
-        sector.information = self.information;
-        sector.error_message = self.error_message;
-        sector.meta_data = self.meta_data;
+        if let Some(information) = self.information {
+            return Err(information);
+        }
+        if let Some(error_message) = self.error_message {
+            return Err(error_message);
+        }
+        sector.meta_data = self.meta_data.unwrap();
         if let Some(temp_data) = self.data {
             let mut final_data = Vec::new();
             for (key, val) in &temp_data {
@@ -231,9 +216,9 @@ impl SectorHelper {
                 }
                 final_data.push(data);
             }
-            sector.data = Some(final_data);
+            sector.data = final_data;
         }
-        sector
+        Ok(sector)
     }
 }
 
@@ -241,8 +226,7 @@ impl SectorHelper {
 ///
 /// Instead of using this function directly calling through [APIKey][APIKey]
 /// method is recommended
-#[must_use]
-pub fn sector(api_data: (&str, Option<u64>)) -> Sector {
+pub fn sector(api_data: (&str, Option<u64>)) -> Result<Sector, String> {
     let api;
     if let Some(timeout) = api_data.1 {
         api = APIKey::set_with_timeout(api_data.0, timeout);

@@ -1,8 +1,8 @@
 #![warn(bare_trait_objects, missing_docs, unreachable_pub)]
 #![deny(unsafe_code)]
 #![deny(clippy::all)]
-#![warn(clippy::pedantic, clippy::nursery)]
-#![allow(clippy::missing_errors_doc, clippy::missing_const_for_fn)]
+#![warn(clippy::pedantic)]
+#![allow(clippy::missing_errors_doc)]
 
 //! Rust Client/Wrapper built for [Alphavantage][alpha_vantage_link] API.
 //!

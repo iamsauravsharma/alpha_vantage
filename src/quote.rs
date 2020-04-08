@@ -23,25 +23,27 @@ pub(crate) struct QuoteHelper {
 }
 
 impl QuoteHelper {
-    pub(crate) fn convert(self) -> Quote {
+    pub(crate) fn convert(self) -> Result<Quote, String> {
         let mut quote = Quote::default();
-        quote.error_message = self.error_message;
-        quote.information = self.information;
-        quote.global_quote = self.global_quote;
-        quote
+        if let Some(information) = self.information {
+            return Err(information);
+        }
+        if let Some(error_message) = self.error_message {
+            return Err(error_message);
+        }
+        quote.global_quote = self.global_quote.unwrap();
+        Ok(quote)
     }
 }
 
 /// Struct for storing Quote related information
 #[derive(Default)]
 pub struct Quote {
-    error_message: Option<String>,
-    information: Option<String>,
-    global_quote: Option<GlobalQuote>,
+    global_quote: GlobalQuote,
 }
 
 /// Struct storing Global Quote Value
-#[derive(Debug, Deserialize, Clone)]
+#[derive(Debug, Deserialize, Clone, Default)]
 struct GlobalQuote {
     #[serde(rename = "01. symbol")]
     symbol: String,
@@ -67,75 +69,76 @@ struct GlobalQuote {
 
 impl Quote {
     /// return open value
-    pub fn open(&self) -> Result<f64, &str> {
+    #[must_use]
+    pub fn open(&self) -> f64 {
         self.return_f64_value("open")
     }
 
     /// return high value
-    pub fn high(&self) -> Result<f64, &str> {
+    #[must_use]
+    pub fn high(&self) -> f64 {
         self.return_f64_value("high")
     }
 
     /// return low value
-    pub fn low(&self) -> Result<f64, &str> {
+    #[must_use]
+    pub fn low(&self) -> f64 {
         self.return_f64_value("low")
     }
 
     /// return price value
-    pub fn price(&self) -> Result<f64, &str> {
+    #[must_use]
+    pub fn price(&self) -> f64 {
         self.return_f64_value("price")
     }
 
     /// return out a volume
-    pub fn volume(&self) -> Result<f64, &str> {
+    #[must_use]
+    pub fn volume(&self) -> f64 {
         self.return_f64_value("volume")
     }
 
     /// return previous
-    pub fn previous(&self) -> Result<f64, &str> {
+    #[must_use]
+    pub fn previous(&self) -> f64 {
         self.return_f64_value("previous")
     }
 
     /// return change
-    pub fn change(&self) -> Result<f64, &str> {
+    #[must_use]
+    pub fn change(&self) -> f64 {
         self.return_f64_value("change")
     }
 
     /// return change percent
-    pub fn change_percent(&self) -> Result<f64, &str> {
-        let previous = self.previous()?;
-        let price = self.price()?;
-        Ok((price - previous) / previous)
+    #[must_use]
+    pub fn change_percent(&self) -> f64 {
+        let previous = self.previous();
+        let price = self.price();
+        (price - previous) / previous
     }
 
     /// general function used for returning f64 value of Quote method
-    fn return_f64_value(&self, value: &str) -> Result<f64, &str> {
-        if let Some(global) = &self.global_quote {
-            let price = match value {
-                "open" => &global.open,
-                "high" => &global.high,
-                "low" => &global.low,
-                "price" => &global.price,
-                "previous" => &global.previous_close,
-                "change" => &global.change,
-                "volume" => &global.volume,
-                _ => "",
-            };
-            Ok(price
-                .trim()
-                .parse::<f64>()
-                .expect("failed to convert String to f64"))
-        } else if let Some(error) = &self.error_message {
-            Err(error)
-        } else if let Some(information) = &self.information {
-            Err(information)
-        } else {
-            Err("Unknown error")
-        }
+    fn return_f64_value(&self, value: &str) -> f64 {
+        let price = match value {
+            "open" => &self.global_quote.open,
+            "high" => &self.global_quote.high,
+            "low" => &self.global_quote.low,
+            "price" => &self.global_quote.price,
+            "previous" => &self.global_quote.previous_close,
+            "change" => &self.global_quote.change,
+            "volume" => &self.global_quote.volume,
+            _ => "",
+        };
+        price
+            .trim()
+            .parse::<f64>()
+            .expect("failed to convert String to f64")
     }
 
     /// get last trading day
-    pub fn last_trading(&self) -> Result<&str, &str> {
+    #[must_use]
+    pub fn last_trading(&self) -> &str {
         self.return_string_value("trading")
     }
 
@@ -143,29 +146,21 @@ impl Quote {
     ///
     /// ```
     /// let api = alpha_vantage::set_api("demo");
-    /// let quote = api.quote("MSFT");
+    /// let quote = api.quote("MSFT").unwrap();
     /// let symbol = quote.symbol();
-    /// assert_eq!(symbol.unwrap(), "MSFT");
+    /// assert_eq!(symbol, "MSFT");
     /// ```
-    pub fn symbol(&self) -> Result<&str, &str> {
+    #[must_use]
+    pub fn symbol(&self) -> &str {
         self.return_string_value("symbol")
     }
 
     /// general function used for returning String value
-    fn return_string_value(&self, value: &str) -> Result<&str, &str> {
-        if let Some(global) = &self.global_quote {
-            let value = match value {
-                "trading" => &global.last_day,
-                "symbol" => &global.symbol,
-                _ => "",
-            };
-            Ok(value)
-        } else if let Some(error) = &self.error_message {
-            Err(error)
-        } else if let Some(information) = &self.information {
-            Err(information)
-        } else {
-            Err("Unknown error")
+    fn return_string_value(&self, value: &str) -> &str {
+        match value {
+            "trading" => &self.global_quote.last_day,
+            "symbol" => &self.global_quote.symbol,
+            _ => "",
         }
     }
 }
@@ -174,8 +169,7 @@ impl Quote {
 ///
 /// Instead of using this function directly calling through [APIKey][APIKey]
 /// method is recommended
-#[must_use]
-pub fn quote(symbol: &str, api_data: (&str, Option<u64>)) -> Quote {
+pub fn quote(symbol: &str, api_data: (&str, Option<u64>)) -> Result<Quote, String> {
     let api;
     if let Some(timeout) = api_data.1 {
         api = APIKey::set_with_timeout(api_data.0, timeout);
