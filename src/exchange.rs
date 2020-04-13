@@ -87,10 +87,14 @@ impl Exchange {
     /// get from code from which exchange is performed
     ///
     /// ```
-    /// let api = alpha_vantage::set_api("demo");
-    /// let exchange = api.exchange("BTC", "CNY").unwrap();
-    /// let code_from = exchange.code_from();
-    /// assert_eq!(code_from, "BTC");
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let exchange = api.exchange("BTC", "CNY").await.unwrap();
+    ///     let code_from = exchange.code_from();
+    ///     assert_eq!(code_from, "BTC");
+    /// }
     /// ```
     #[must_use]
     pub fn code_from(&self) -> &str {
@@ -100,10 +104,14 @@ impl Exchange {
     /// get from name from which exchange is performed
     ///
     /// ```
-    /// let api = alpha_vantage::set_api("demo");
-    /// let exchange = api.exchange("BTC", "CNY").unwrap();
-    /// let name_from = exchange.name_from();
-    /// assert_eq!(name_from, "Bitcoin");
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let exchange = api.exchange("BTC", "CNY").await.unwrap();
+    ///     let name_from = exchange.name_from();
+    ///     assert_eq!(name_from, "Bitcoin");
+    /// }
     /// ```
     #[must_use]
     pub fn name_from(&self) -> &str {
@@ -113,10 +121,14 @@ impl Exchange {
     /// get to code from exchange
     ///
     /// ```
-    /// let api = alpha_vantage::set_api("demo");
-    /// let exchange = api.exchange("BTC", "CNY").unwrap();
-    /// let code_to = exchange.code_to();
-    /// assert_eq!(code_to, "CNY");
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let exchange = api.exchange("BTC", "CNY").await.unwrap();
+    ///     let code_to = exchange.code_to();
+    ///     assert_eq!(code_to, "CNY");
+    /// }
     /// ```
     #[must_use]
     pub fn code_to(&self) -> &str {
@@ -126,10 +138,14 @@ impl Exchange {
     /// get to name from exchange
     ///
     /// ```
-    /// let api = alpha_vantage::set_api("demo");
-    /// let exchange = api.exchange("BTC", "CNY").unwrap();
-    /// let name_to = exchange.name_to();
-    /// assert_eq!(name_to, "Chinese Yuan");
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let exchange = api.exchange("BTC", "CNY").await.unwrap();
+    ///     let name_to = exchange.name_to();
+    ///     assert_eq!(name_to, "Chinese Yuan");
+    /// }
     /// ```
     #[must_use]
     pub fn name_to(&self) -> &str {
@@ -154,12 +170,16 @@ impl Exchange {
 ///
 /// Instead of using this function directly calling through [APIKey][APIKey]
 /// method is recommended
-pub fn exchange(from: &str, to: &str, api_data: (&str, Option<u64>)) -> Result<Exchange, String> {
+pub async fn exchange(
+    from: &str,
+    to: &str,
+    api_data: (&str, Option<u64>),
+) -> Result<Exchange, String> {
     let api;
     if let Some(timeout) = api_data.1 {
         api = APIKey::set_with_timeout(api_data.0, timeout);
     } else {
         api = APIKey::set_api(api_data.0);
     }
-    api.exchange(from, to)
+    api.exchange(from, to).await
 }

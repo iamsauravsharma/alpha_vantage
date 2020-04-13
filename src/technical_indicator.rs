@@ -128,7 +128,7 @@ impl DataCollector {
 ///
 /// Instead of using this function directly calling through [APIKey][APIKey]
 /// method is recommended
-pub fn technical_indicator(
+pub async fn technical_indicator(
     function: &str,
     symbol: &str,
     interval: TechnicalIndicatorInterval,
@@ -151,6 +151,7 @@ pub fn technical_indicator(
         series_type,
         temporary_value,
     )
+    .await
 }
 
 /// Create url for reqwest

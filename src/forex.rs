@@ -148,18 +148,23 @@ impl Forex {
     ///
     /// ```
     /// use alpha_vantage::util::*;
-    /// let api = alpha_vantage::set_api("demo");
-    /// let forex = api
-    ///     .forex(
-    ///         ForexFunction::IntraDay,
-    ///         "EUR",
-    ///         "USD",
-    ///         TimeSeriesInterval::FiveMin,
-    ///         OutputSize::Full,
-    ///     )
-    ///     .unwrap();
-    /// let information = forex.information();
-    /// assert_eq!(information, "FX Intraday (5min) Time Series");
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let forex = api
+    ///         .forex(
+    ///             ForexFunction::IntraDay,
+    ///             "EUR",
+    ///             "USD",
+    ///             TimeSeriesInterval::FiveMin,
+    ///             OutputSize::Full,
+    ///         )
+    ///         .await
+    ///         .unwrap();
+    ///     let information = forex.information();
+    ///     assert_eq!(information, "FX Intraday (5min) Time Series");
+    /// }
     /// ```
     #[must_use]
     pub fn information(&self) -> &str {
@@ -170,18 +175,23 @@ impl Forex {
     ///
     /// ```
     /// use alpha_vantage::util::*;
-    /// let api = alpha_vantage::set_api("demo");
-    /// let forex = api
-    ///     .forex(
-    ///         ForexFunction::IntraDay,
-    ///         "EUR",
-    ///         "USD",
-    ///         TimeSeriesInterval::FiveMin,
-    ///         OutputSize::Full,
-    ///     )
-    ///     .unwrap();
-    /// let symbol_from = forex.symbol_from();
-    /// assert_eq!(symbol_from, "EUR");
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let forex = api
+    ///         .forex(
+    ///             ForexFunction::IntraDay,
+    ///             "EUR",
+    ///             "USD",
+    ///             TimeSeriesInterval::FiveMin,
+    ///             OutputSize::Full,
+    ///         )
+    ///         .await
+    ///         .unwrap();
+    ///     let symbol_from = forex.symbol_from();
+    ///     assert_eq!(symbol_from, "EUR");
+    /// }
     /// ```
     #[must_use]
     pub fn symbol_from(&self) -> &str {
@@ -191,19 +201,24 @@ impl Forex {
     /// Return to symbol
     ///
     /// ```
-    /// use alpha_vantage::util::*;
-    /// let api = alpha_vantage::set_api("demo");
-    /// let forex = api
-    ///     .forex(
-    ///         ForexFunction::IntraDay,
-    ///         "EUR",
-    ///         "USD",
-    ///         TimeSeriesInterval::FiveMin,
-    ///         OutputSize::Full,
-    ///     )
-    ///     .unwrap();
-    /// let symbol_to = forex.symbol_to();
-    /// assert_eq!(symbol_to, "USD");
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     use alpha_vantage::util::*;
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let forex = api
+    ///         .forex(
+    ///             ForexFunction::IntraDay,
+    ///             "EUR",
+    ///             "USD",
+    ///             TimeSeriesInterval::FiveMin,
+    ///             OutputSize::Full,
+    ///         )
+    ///         .await
+    ///         .unwrap();
+    ///     let symbol_to = forex.symbol_to();
+    ///     assert_eq!(symbol_to, "USD");
+    /// }
     /// ```
     #[must_use]
     pub fn symbol_to(&self) -> &str {
@@ -226,18 +241,23 @@ impl Forex {
     ///
     /// ```
     /// use alpha_vantage::util::*;
-    /// let api = alpha_vantage::set_api("demo");
-    /// let forex = api
-    ///     .forex(
-    ///         ForexFunction::IntraDay,
-    ///         "EUR",
-    ///         "USD",
-    ///         TimeSeriesInterval::FiveMin,
-    ///         OutputSize::Full,
-    ///     )
-    ///     .unwrap();
-    /// let interval = forex.interval();
-    /// assert_eq!(interval.unwrap(), "5min");
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let forex = api
+    ///         .forex(
+    ///             ForexFunction::IntraDay,
+    ///             "EUR",
+    ///             "USD",
+    ///             TimeSeriesInterval::FiveMin,
+    ///             OutputSize::Full,
+    ///         )
+    ///         .await
+    ///         .unwrap();
+    ///     let interval = forex.interval();
+    ///     assert_eq!(interval.unwrap(), "5min");
+    /// }
     /// ```
     #[must_use]
     pub fn interval(&self) -> Option<&str> {
@@ -248,18 +268,23 @@ impl Forex {
     ///
     /// ```
     /// use alpha_vantage::util::*;
-    /// let api = alpha_vantage::set_api("demo");
-    /// let forex = api
-    ///     .forex(
-    ///         ForexFunction::IntraDay,
-    ///         "EUR",
-    ///         "USD",
-    ///         TimeSeriesInterval::FiveMin,
-    ///         OutputSize::Full,
-    ///     )
-    ///     .unwrap();
-    /// let output_size = forex.output_size();
-    /// assert_eq!(output_size.unwrap(), "Full size");
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let forex = api
+    ///         .forex(
+    ///             ForexFunction::IntraDay,
+    ///             "EUR",
+    ///             "USD",
+    ///             TimeSeriesInterval::FiveMin,
+    ///             OutputSize::Full,
+    ///         )
+    ///         .await
+    ///         .unwrap();
+    ///     let output_size = forex.output_size();
+    ///     assert_eq!(output_size.unwrap(), "Full size");
+    /// }
     /// ```
     #[must_use]
     pub fn output_size(&self) -> Option<&str> {
@@ -401,7 +426,7 @@ impl ForexHelper {
 ///
 /// Instead of using this function directly calling through [APIKey][APIKey]
 /// method is recommended
-pub fn forex(
+pub async fn forex(
     function: ForexFunction,
     from_symbol: &str,
     to_symbol: &str,
@@ -416,6 +441,7 @@ pub fn forex(
         api = APIKey::set_api(api_data.0);
     }
     api.forex(function, from_symbol, to_symbol, interval, output_size)
+        .await
 }
 
 /// Create Url from given user parameter for reqwest crate

@@ -32,20 +32,25 @@ impl TimeSeries {
     ///
     /// ```
     /// use alpha_vantage::util::*;
-    /// let api = alpha_vantage::set_api("demo");
-    /// let stock_time = api
-    ///     .stock_time(
-    ///         StockFunction::IntraDay,
-    ///         "MSFT",
-    ///         TimeSeriesInterval::FiveMin,
-    ///         OutputSize::Full,
-    ///     )
-    ///     .unwrap();
-    /// let information = stock_time.information();
-    /// assert_eq!(
-    ///     information,
-    ///     "Intraday (5min) open, high, low, close prices and volume"
-    /// );
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let stock_time = api
+    ///         .stock_time(
+    ///             StockFunction::IntraDay,
+    ///             "MSFT",
+    ///             TimeSeriesInterval::FiveMin,
+    ///             OutputSize::Full,
+    ///         )
+    ///         .await
+    ///         .unwrap();
+    ///     let information = stock_time.information();
+    ///     assert_eq!(
+    ///         information,
+    ///         "Intraday (5min) open, high, low, close prices and volume"
+    ///     );
+    /// }
     /// ```
     #[must_use]
     pub fn information(&self) -> &str {
@@ -56,17 +61,22 @@ impl TimeSeries {
     ///
     /// ```
     /// use alpha_vantage::util::*;
-    /// let api = alpha_vantage::set_api("demo");
-    /// let stock_time = api
-    ///     .stock_time(
-    ///         StockFunction::IntraDay,
-    ///         "MSFT",
-    ///         TimeSeriesInterval::FiveMin,
-    ///         OutputSize::Full,
-    ///     )
-    ///     .unwrap();
-    /// let symbol = stock_time.symbol();
-    /// assert_eq!(symbol, "MSFT");
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let stock_time = api
+    ///         .stock_time(
+    ///             StockFunction::IntraDay,
+    ///             "MSFT",
+    ///             TimeSeriesInterval::FiveMin,
+    ///             OutputSize::Full,
+    ///         )
+    ///         .await
+    ///         .unwrap();
+    ///     let symbol = stock_time.symbol();
+    ///     assert_eq!(symbol, "MSFT");
+    /// }
     /// ```
     #[must_use]
     pub fn symbol(&self) -> &str {
@@ -89,17 +99,22 @@ impl TimeSeries {
     ///
     /// ```
     /// use alpha_vantage::util::*;
-    /// let api = alpha_vantage::set_api("demo");
-    /// let stock_time = api
-    ///     .stock_time(
-    ///         StockFunction::IntraDay,
-    ///         "MSFT",
-    ///         TimeSeriesInterval::FiveMin,
-    ///         OutputSize::Full,
-    ///     )
-    ///     .unwrap();
-    /// let interval = stock_time.interval();
-    /// assert_eq!(interval.unwrap(), "5min");
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let stock_time = api
+    ///         .stock_time(
+    ///             StockFunction::IntraDay,
+    ///             "MSFT",
+    ///             TimeSeriesInterval::FiveMin,
+    ///             OutputSize::Full,
+    ///         )
+    ///         .await
+    ///         .unwrap();
+    ///     let interval = stock_time.interval();
+    ///     assert_eq!(interval.unwrap(), "5min");
+    /// }
     /// ```
     #[must_use]
     pub fn interval(&self) -> Option<&str> {
@@ -110,17 +125,22 @@ impl TimeSeries {
     ///
     /// ```
     /// use alpha_vantage::util::*;
-    /// let api = alpha_vantage::set_api("demo");
-    /// let stock_time = api
-    ///     .stock_time(
-    ///         StockFunction::IntraDay,
-    ///         "MSFT",
-    ///         TimeSeriesInterval::FiveMin,
-    ///         OutputSize::Full,
-    ///     )
-    ///     .unwrap();
-    /// let output_size = stock_time.output_size();
-    /// assert_eq!(output_size.unwrap(), "Full size");
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let stock_time = api
+    ///         .stock_time(
+    ///             StockFunction::IntraDay,
+    ///             "MSFT",
+    ///             TimeSeriesInterval::FiveMin,
+    ///             OutputSize::Full,
+    ///         )
+    ///         .await
+    ///         .unwrap();
+    ///     let output_size = stock_time.output_size();
+    ///     assert_eq!(output_size.unwrap(), "Full size");
+    /// }
     /// ```
     #[must_use]
     pub fn output_size(&self) -> Option<&str> {
@@ -453,7 +473,7 @@ impl TimeSeriesHelper {
 ///
 /// Instead of using this function directly calling through [APIKey][APIKey]
 /// method is recommended
-pub fn stock_time(
+pub async fn stock_time(
     function: StockFunction,
     symbol: &str,
     interval: TimeSeriesInterval,
@@ -467,6 +487,7 @@ pub fn stock_time(
         api = APIKey::set_api(api_data.0);
     }
     api.stock_time(function, symbol, interval, output_size)
+        .await
 }
 
 /// create url from user provided data

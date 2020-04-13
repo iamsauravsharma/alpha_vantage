@@ -131,12 +131,12 @@ impl Search {
 ///
 /// Instead of using this function directly calling through [APIKey][APIKey]
 /// method is recommended
-pub fn search(keyword: &str, api_data: (&str, Option<u64>)) -> Result<Search, String> {
+pub async fn search(keyword: &str, api_data: (&str, Option<u64>)) -> Result<Search, String> {
     let api;
     if let Some(timeout) = api_data.1 {
         api = APIKey::set_with_timeout(api_data.0, timeout);
     } else {
         api = APIKey::set_api(api_data.0);
     }
-    api.search(keyword)
+    api.search(keyword).await
 }

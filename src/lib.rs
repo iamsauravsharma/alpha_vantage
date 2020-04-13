@@ -2,7 +2,11 @@
 #![deny(unsafe_code)]
 #![deny(clippy::all)]
 #![warn(clippy::pedantic)]
-#![allow(clippy::missing_errors_doc)]
+#![allow(
+    clippy::missing_errors_doc,
+    clippy::used_underscore_binding,
+    clippy::needless_doctest_main
+)]
 
 //! Rust Client/Wrapper built for [Alphavantage][alpha_vantage_link] API.
 //!

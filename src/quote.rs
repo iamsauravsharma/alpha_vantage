@@ -145,10 +145,14 @@ impl Quote {
     /// get symbol
     ///
     /// ```
-    /// let api = alpha_vantage::set_api("demo");
-    /// let quote = api.quote("MSFT").unwrap();
-    /// let symbol = quote.symbol();
-    /// assert_eq!(symbol, "MSFT");
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let quote = api.quote("MSFT").await.unwrap();
+    ///     let symbol = quote.symbol();
+    ///     assert_eq!(symbol, "MSFT");
+    /// }
     /// ```
     #[must_use]
     pub fn symbol(&self) -> &str {
@@ -169,12 +173,12 @@ impl Quote {
 ///
 /// Instead of using this function directly calling through [APIKey][APIKey]
 /// method is recommended
-pub fn quote(symbol: &str, api_data: (&str, Option<u64>)) -> Result<Quote, String> {
+pub async fn quote(symbol: &str, api_data: (&str, Option<u64>)) -> Result<Quote, String> {
     let api;
     if let Some(timeout) = api_data.1 {
         api = APIKey::set_with_timeout(api_data.0, timeout);
     } else {
         api = APIKey::set_api(api_data.0);
     }
-    api.quote(symbol)
+    api.quote(symbol).await
 }
