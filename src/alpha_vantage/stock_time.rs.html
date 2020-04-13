@@ -579,6 +579,27 @@
 <span id="579">579</span>
 <span id="580">580</span>
 <span id="581">581</span>
+<span id="582">582</span>
+<span id="583">583</span>
+<span id="584">584</span>
+<span id="585">585</span>
+<span id="586">586</span>
+<span id="587">587</span>
+<span id="588">588</span>
+<span id="589">589</span>
+<span id="590">590</span>
+<span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
+<span id="594">594</span>
+<span id="595">595</span>
+<span id="596">596</span>
+<span id="597">597</span>
+<span id="598">598</span>
+<span id="599">599</span>
+<span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Module for stock time series</span>
 <span class="doccomment">//!</span>
@@ -614,20 +635,25 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use alpha_vantage::util::*;</span>
-    <span class="doccomment">/// let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
-    <span class="doccomment">/// let stock_time = api</span>
-    <span class="doccomment">///     .stock_time(</span>
-    <span class="doccomment">///         StockFunction::IntraDay,</span>
-    <span class="doccomment">///         &quot;MSFT&quot;,</span>
-    <span class="doccomment">///         TimeSeriesInterval::FiveMin,</span>
-    <span class="doccomment">///         OutputSize::Full,</span>
-    <span class="doccomment">///     )</span>
-    <span class="doccomment">///     .unwrap();</span>
-    <span class="doccomment">/// let information = stock_time.information();</span>
-    <span class="doccomment">/// assert_eq!(</span>
-    <span class="doccomment">///     information,</span>
-    <span class="doccomment">///     &quot;Intraday (5min) open, high, low, close prices and volume&quot;</span>
-    <span class="doccomment">/// );</span>
+    <span class="doccomment">/// use tokio::prelude::*;</span>
+    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// async fn main() {</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
+    <span class="doccomment">///     let stock_time = api</span>
+    <span class="doccomment">///         .stock_time(</span>
+    <span class="doccomment">///             StockFunction::IntraDay,</span>
+    <span class="doccomment">///             &quot;MSFT&quot;,</span>
+    <span class="doccomment">///             TimeSeriesInterval::FiveMin,</span>
+    <span class="doccomment">///             OutputSize::Full,</span>
+    <span class="doccomment">///         )</span>
+    <span class="doccomment">///         .await</span>
+    <span class="doccomment">///         .unwrap();</span>
+    <span class="doccomment">///     let information = stock_time.information();</span>
+    <span class="doccomment">///     assert_eq!(</span>
+    <span class="doccomment">///         information,</span>
+    <span class="doccomment">///         &quot;Intraday (5min) open, high, low, close prices and volume&quot;</span>
+    <span class="doccomment">///     );</span>
+    <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">information</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
@@ -638,17 +664,22 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use alpha_vantage::util::*;</span>
-    <span class="doccomment">/// let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
-    <span class="doccomment">/// let stock_time = api</span>
-    <span class="doccomment">///     .stock_time(</span>
-    <span class="doccomment">///         StockFunction::IntraDay,</span>
-    <span class="doccomment">///         &quot;MSFT&quot;,</span>
-    <span class="doccomment">///         TimeSeriesInterval::FiveMin,</span>
-    <span class="doccomment">///         OutputSize::Full,</span>
-    <span class="doccomment">///     )</span>
-    <span class="doccomment">///     .unwrap();</span>
-    <span class="doccomment">/// let symbol = stock_time.symbol();</span>
-    <span class="doccomment">/// assert_eq!(symbol, &quot;MSFT&quot;);</span>
+    <span class="doccomment">/// use tokio::prelude::*;</span>
+    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// async fn main() {</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
+    <span class="doccomment">///     let stock_time = api</span>
+    <span class="doccomment">///         .stock_time(</span>
+    <span class="doccomment">///             StockFunction::IntraDay,</span>
+    <span class="doccomment">///             &quot;MSFT&quot;,</span>
+    <span class="doccomment">///             TimeSeriesInterval::FiveMin,</span>
+    <span class="doccomment">///             OutputSize::Full,</span>
+    <span class="doccomment">///         )</span>
+    <span class="doccomment">///         .await</span>
+    <span class="doccomment">///         .unwrap();</span>
+    <span class="doccomment">///     let symbol = stock_time.symbol();</span>
+    <span class="doccomment">///     assert_eq!(symbol, &quot;MSFT&quot;);</span>
+    <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">symbol</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
@@ -671,17 +702,22 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use alpha_vantage::util::*;</span>
-    <span class="doccomment">/// let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
-    <span class="doccomment">/// let stock_time = api</span>
-    <span class="doccomment">///     .stock_time(</span>
-    <span class="doccomment">///         StockFunction::IntraDay,</span>
-    <span class="doccomment">///         &quot;MSFT&quot;,</span>
-    <span class="doccomment">///         TimeSeriesInterval::FiveMin,</span>
-    <span class="doccomment">///         OutputSize::Full,</span>
-    <span class="doccomment">///     )</span>
-    <span class="doccomment">///     .unwrap();</span>
-    <span class="doccomment">/// let interval = stock_time.interval();</span>
-    <span class="doccomment">/// assert_eq!(interval.unwrap(), &quot;5min&quot;);</span>
+    <span class="doccomment">/// use tokio::prelude::*;</span>
+    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// async fn main() {</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
+    <span class="doccomment">///     let stock_time = api</span>
+    <span class="doccomment">///         .stock_time(</span>
+    <span class="doccomment">///             StockFunction::IntraDay,</span>
+    <span class="doccomment">///             &quot;MSFT&quot;,</span>
+    <span class="doccomment">///             TimeSeriesInterval::FiveMin,</span>
+    <span class="doccomment">///             OutputSize::Full,</span>
+    <span class="doccomment">///         )</span>
+    <span class="doccomment">///         .await</span>
+    <span class="doccomment">///         .unwrap();</span>
+    <span class="doccomment">///     let interval = stock_time.interval();</span>
+    <span class="doccomment">///     assert_eq!(interval.unwrap(), &quot;5min&quot;);</span>
+    <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interval</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
@@ -692,17 +728,22 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use alpha_vantage::util::*;</span>
-    <span class="doccomment">/// let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
-    <span class="doccomment">/// let stock_time = api</span>
-    <span class="doccomment">///     .stock_time(</span>
-    <span class="doccomment">///         StockFunction::IntraDay,</span>
-    <span class="doccomment">///         &quot;MSFT&quot;,</span>
-    <span class="doccomment">///         TimeSeriesInterval::FiveMin,</span>
-    <span class="doccomment">///         OutputSize::Full,</span>
-    <span class="doccomment">///     )</span>
-    <span class="doccomment">///     .unwrap();</span>
-    <span class="doccomment">/// let output_size = stock_time.output_size();</span>
-    <span class="doccomment">/// assert_eq!(output_size.unwrap(), &quot;Full size&quot;);</span>
+    <span class="doccomment">/// use tokio::prelude::*;</span>
+    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// async fn main() {</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
+    <span class="doccomment">///     let stock_time = api</span>
+    <span class="doccomment">///         .stock_time(</span>
+    <span class="doccomment">///             StockFunction::IntraDay,</span>
+    <span class="doccomment">///             &quot;MSFT&quot;,</span>
+    <span class="doccomment">///             TimeSeriesInterval::FiveMin,</span>
+    <span class="doccomment">///             OutputSize::Full,</span>
+    <span class="doccomment">///         )</span>
+    <span class="doccomment">///         .await</span>
+    <span class="doccomment">///         .unwrap();</span>
+    <span class="doccomment">///     let output_size = stock_time.output_size();</span>
+    <span class="doccomment">///     assert_eq!(output_size.unwrap(), &quot;Full size&quot;);</span>
+    <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">output_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
@@ -1035,7 +1076,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Instead of using this function directly calling through [APIKey][APIKey]</span>
 <span class="doccomment">/// method is recommended</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">stock_time</span>(
+<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">stock_time</span>(
     <span class="ident">function</span>: <span class="ident">StockFunction</span>,
     <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
     <span class="ident">interval</span>: <span class="ident">TimeSeriesInterval</span>,
@@ -1049,6 +1090,7 @@
         <span class="ident">api</span> <span class="op">=</span> <span class="ident">APIKey</span>::<span class="ident">set_api</span>(<span class="ident">api_data</span>.<span class="number">0</span>);
     }
     <span class="ident">api</span>.<span class="ident">stock_time</span>(<span class="ident">function</span>, <span class="ident">symbol</span>, <span class="ident">interval</span>, <span class="ident">output_size</span>)
+        .<span class="kw">await</span>
 }
 
 <span class="doccomment">/// create url from user provided data</span>

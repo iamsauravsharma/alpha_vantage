@@ -450,6 +450,31 @@
 <span id="450">450</span>
 <span id="451">451</span>
 <span id="452">452</span>
+<span id="453">453</span>
+<span id="454">454</span>
+<span id="455">455</span>
+<span id="456">456</span>
+<span id="457">457</span>
+<span id="458">458</span>
+<span id="459">459</span>
+<span id="460">460</span>
+<span id="461">461</span>
+<span id="462">462</span>
+<span id="463">463</span>
+<span id="464">464</span>
+<span id="465">465</span>
+<span id="466">466</span>
+<span id="467">467</span>
+<span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
+<span id="475">475</span>
+<span id="476">476</span>
+<span id="477">477</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Module for crypto real time data</span>
 <span class="doccomment">//!</span>
@@ -727,12 +752,17 @@
     <span class="doccomment">/// Return meta data information</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
-    <span class="doccomment">/// let crypto = api</span>
-    <span class="doccomment">///     .crypto(alpha_vantage::util::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
-    <span class="doccomment">///     .unwrap();</span>
-    <span class="doccomment">/// let information = crypto.information();</span>
-    <span class="doccomment">/// assert_eq!(information, &quot;Daily Prices and Volumes for Digital Currency&quot;);</span>
+    <span class="doccomment">/// use tokio::prelude::*;</span>
+    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// async fn main() {</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
+    <span class="doccomment">///     let crypto = api</span>
+    <span class="doccomment">///         .crypto(alpha_vantage::util::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
+    <span class="doccomment">///         .await</span>
+    <span class="doccomment">///         .unwrap();</span>
+    <span class="doccomment">///     let information = crypto.information();</span>
+    <span class="doccomment">///     assert_eq!(information, &quot;Daily Prices and Volumes for Digital Currency&quot;);</span>
+    <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">information</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
@@ -742,12 +772,17 @@
     <span class="doccomment">/// Return digital currency code</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
-    <span class="doccomment">/// let crypto = api</span>
-    <span class="doccomment">///     .crypto(alpha_vantage::util::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
-    <span class="doccomment">///     .unwrap();</span>
-    <span class="doccomment">/// let digital_code = crypto.digital_code();</span>
-    <span class="doccomment">/// assert_eq!(digital_code, &quot;BTC&quot;);</span>
+    <span class="doccomment">/// use tokio::prelude::*;</span>
+    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// async fn main() {</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
+    <span class="doccomment">///     let crypto = api</span>
+    <span class="doccomment">///         .crypto(alpha_vantage::util::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
+    <span class="doccomment">///         .await</span>
+    <span class="doccomment">///         .unwrap();</span>
+    <span class="doccomment">///     let digital_code = crypto.digital_code();</span>
+    <span class="doccomment">///     assert_eq!(digital_code, &quot;BTC&quot;);</span>
+    <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">digital_code</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
@@ -757,12 +792,17 @@
     <span class="doccomment">/// Return digital currency name</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
-    <span class="doccomment">/// let crypto = api</span>
-    <span class="doccomment">///     .crypto(alpha_vantage::util::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
-    <span class="doccomment">///     .unwrap();</span>
-    <span class="doccomment">/// let digital_name = crypto.digital_name();</span>
-    <span class="doccomment">/// assert_eq!(digital_name, &quot;Bitcoin&quot;);</span>
+    <span class="doccomment">/// use tokio::prelude::*;</span>
+    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// async fn main() {</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
+    <span class="doccomment">///     let crypto = api</span>
+    <span class="doccomment">///         .crypto(alpha_vantage::util::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
+    <span class="doccomment">///         .await</span>
+    <span class="doccomment">///         .unwrap();</span>
+    <span class="doccomment">///     let digital_name = crypto.digital_name();</span>
+    <span class="doccomment">///     assert_eq!(digital_name, &quot;Bitcoin&quot;);</span>
+    <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">digital_name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
@@ -772,12 +812,17 @@
     <span class="doccomment">/// Return market code</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
-    <span class="doccomment">/// let crypto = api</span>
-    <span class="doccomment">///     .crypto(alpha_vantage::util::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
-    <span class="doccomment">///     .unwrap();</span>
-    <span class="doccomment">/// let market_code = crypto.market_code();</span>
-    <span class="doccomment">/// assert_eq!(market_code, &quot;CNY&quot;);</span>
+    <span class="doccomment">/// use tokio::prelude::*;</span>
+    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// async fn main() {</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
+    <span class="doccomment">///     let crypto = api</span>
+    <span class="doccomment">///         .crypto(alpha_vantage::util::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
+    <span class="doccomment">///         .await</span>
+    <span class="doccomment">///         .unwrap();</span>
+    <span class="doccomment">///     let market_code = crypto.market_code();</span>
+    <span class="doccomment">///     assert_eq!(market_code, &quot;CNY&quot;);</span>
+    <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">market_code</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
@@ -787,12 +832,17 @@
     <span class="doccomment">/// Return market name</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
-    <span class="doccomment">/// let crypto = api</span>
-    <span class="doccomment">///     .crypto(alpha_vantage::util::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
-    <span class="doccomment">///     .unwrap();</span>
-    <span class="doccomment">/// let market_name = crypto.market_name();</span>
-    <span class="doccomment">/// assert_eq!(market_name, &quot;Chinese Yuan&quot;);</span>
+    <span class="doccomment">/// use tokio::prelude::*;</span>
+    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// async fn main() {</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
+    <span class="doccomment">///     let crypto = api</span>
+    <span class="doccomment">///         .crypto(alpha_vantage::util::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
+    <span class="doccomment">///         .await</span>
+    <span class="doccomment">///         .unwrap();</span>
+    <span class="doccomment">///     let market_name = crypto.market_name();</span>
+    <span class="doccomment">///     assert_eq!(market_name, &quot;Chinese Yuan&quot;);</span>
+    <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">market_name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
@@ -836,7 +886,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Instead of using this function directly calling through [APIKey][APIKey]</span>
 <span class="doccomment">/// method is recommended</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">crypto</span>(
+<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">crypto</span>(
     <span class="ident">function</span>: <span class="ident">CryptoFunction</span>,
     <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
     <span class="ident">market</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
@@ -848,7 +898,7 @@
     } <span class="kw">else</span> {
         <span class="ident">api</span> <span class="op">=</span> <span class="ident">APIKey</span>::<span class="ident">set_api</span>(<span class="ident">api_data</span>.<span class="number">0</span>);
     }
-    <span class="ident">api</span>.<span class="ident">crypto</span>(<span class="ident">function</span>, <span class="ident">symbol</span>, <span class="ident">market</span>)
+    <span class="ident">api</span>.<span class="ident">crypto</span>(<span class="ident">function</span>, <span class="ident">symbol</span>, <span class="ident">market</span>).<span class="kw">await</span>
 }
 
 <span class="doccomment">/// Create url from which JSON data is collected for Crypto</span>
