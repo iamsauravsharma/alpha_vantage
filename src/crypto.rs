@@ -274,12 +274,17 @@ impl Crypto {
     /// Return meta data information
     ///
     /// ```
-    /// let api = alpha_vantage::set_api("demo");
-    /// let crypto = api
-    ///     .crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY")
-    ///     .unwrap();
-    /// let information = crypto.information();
-    /// assert_eq!(information, "Daily Prices and Volumes for Digital Currency");
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let crypto = api
+    ///         .crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY")
+    ///         .await
+    ///         .unwrap();
+    ///     let information = crypto.information();
+    ///     assert_eq!(information, "Daily Prices and Volumes for Digital Currency");
+    /// }
     /// ```
     #[must_use]
     pub fn information(&self) -> &str {
@@ -289,12 +294,17 @@ impl Crypto {
     /// Return digital currency code
     ///
     /// ```
-    /// let api = alpha_vantage::set_api("demo");
-    /// let crypto = api
-    ///     .crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY")
-    ///     .unwrap();
-    /// let digital_code = crypto.digital_code();
-    /// assert_eq!(digital_code, "BTC");
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let crypto = api
+    ///         .crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY")
+    ///         .await
+    ///         .unwrap();
+    ///     let digital_code = crypto.digital_code();
+    ///     assert_eq!(digital_code, "BTC");
+    /// }
     /// ```
     #[must_use]
     pub fn digital_code(&self) -> &str {
@@ -304,12 +314,17 @@ impl Crypto {
     /// Return digital currency name
     ///
     /// ```
-    /// let api = alpha_vantage::set_api("demo");
-    /// let crypto = api
-    ///     .crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY")
-    ///     .unwrap();
-    /// let digital_name = crypto.digital_name();
-    /// assert_eq!(digital_name, "Bitcoin");
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let crypto = api
+    ///         .crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY")
+    ///         .await
+    ///         .unwrap();
+    ///     let digital_name = crypto.digital_name();
+    ///     assert_eq!(digital_name, "Bitcoin");
+    /// }
     /// ```
     #[must_use]
     pub fn digital_name(&self) -> &str {
@@ -319,12 +334,17 @@ impl Crypto {
     /// Return market code
     ///
     /// ```
-    /// let api = alpha_vantage::set_api("demo");
-    /// let crypto = api
-    ///     .crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY")
-    ///     .unwrap();
-    /// let market_code = crypto.market_code();
-    /// assert_eq!(market_code, "CNY");
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let crypto = api
+    ///         .crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY")
+    ///         .await
+    ///         .unwrap();
+    ///     let market_code = crypto.market_code();
+    ///     assert_eq!(market_code, "CNY");
+    /// }
     /// ```
     #[must_use]
     pub fn market_code(&self) -> &str {
@@ -334,12 +354,17 @@ impl Crypto {
     /// Return market name
     ///
     /// ```
-    /// let api = alpha_vantage::set_api("demo");
-    /// let crypto = api
-    ///     .crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY")
-    ///     .unwrap();
-    /// let market_name = crypto.market_name();
-    /// assert_eq!(market_name, "Chinese Yuan");
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let crypto = api
+    ///         .crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY")
+    ///         .await
+    ///         .unwrap();
+    ///     let market_name = crypto.market_name();
+    ///     assert_eq!(market_name, "Chinese Yuan");
+    /// }
     /// ```
     #[must_use]
     pub fn market_name(&self) -> &str {
@@ -383,7 +408,7 @@ impl Crypto {
 ///
 /// Instead of using this function directly calling through [APIKey][APIKey]
 /// method is recommended
-pub fn crypto(
+pub async fn crypto(
     function: CryptoFunction,
     symbol: &str,
     market: &str,
@@ -395,7 +420,7 @@ pub fn crypto(
     } else {
         api = APIKey::set_api(api_data.0);
     }
-    api.crypto(function, symbol, market)
+    api.crypto(function, symbol, market).await
 }
 
 /// Create url from which JSON data is collected for Crypto

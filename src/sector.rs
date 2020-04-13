@@ -123,10 +123,14 @@ impl Sector {
     /// Return sector information
     ///
     /// ```
-    /// let api = alpha_vantage::set_api("demo");
-    /// let sector = api.sector().unwrap();
-    /// let information = sector.information();
-    /// assert_eq!(information, "US Sector Performance (realtime & historical)");
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let sector = api.sector().await.unwrap();
+    ///     let information = sector.information();
+    ///     assert_eq!(information, "US Sector Performance (realtime & historical)");
+    /// }
     /// ```
     #[must_use]
     pub fn information(&self) -> &str {
@@ -226,12 +230,12 @@ impl SectorHelper {
 ///
 /// Instead of using this function directly calling through [APIKey][APIKey]
 /// method is recommended
-pub fn sector(api_data: (&str, Option<u64>)) -> Result<Sector, String> {
+pub async fn sector(api_data: (&str, Option<u64>)) -> Result<Sector, String> {
     let api;
     if let Some(timeout) = api_data.1 {
         api = APIKey::set_with_timeout(api_data.0, timeout);
     } else {
         api = APIKey::set_api(api_data.0);
     }
-    api.sector()
+    api.sector().await
 }
