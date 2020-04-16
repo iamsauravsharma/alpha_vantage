@@ -8,7 +8,10 @@
 //!
 //! [symbol_search]: https://www.alphavantage.co/documentation/#symbolsearch
 
-use crate::user::APIKey;
+use crate::{
+    error::{Error, Result},
+    user::APIKey,
+};
 use serde::Deserialize;
 
 /// struct for helping creation of search struct
@@ -21,10 +24,10 @@ pub(crate) struct SearchHelper {
 }
 
 impl SearchHelper {
-    pub(crate) fn convert(self) -> Result<Search, String> {
+    pub(crate) fn convert(self) -> Result<Search> {
         let mut search = Search::default();
         if let Some(information) = self.information {
-            return Err(information);
+            return Err(Error::AlphaVantageInformation(information));
         }
         search.matches = self.matches.unwrap();
         Ok(search)
@@ -131,7 +134,7 @@ impl Search {
 ///
 /// Instead of using this function directly calling through [APIKey][APIKey]
 /// method is recommended
-pub async fn search(keyword: &str, api_data: (&str, Option<u64>)) -> Result<Search, String> {
+pub async fn search(keyword: &str, api_data: (&str, Option<u64>)) -> Result<Search> {
     let api;
     if let Some(timeout) = api_data.1 {
         api = APIKey::set_with_timeout(api_data.0, timeout);

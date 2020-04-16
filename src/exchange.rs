@@ -8,7 +8,10 @@
 //!
 //! [exchange]: https://www.alphavantage.co/documentation/#currency-exchnage
 
-use crate::user::APIKey;
+use crate::{
+    error::{Error, Result},
+    user::APIKey,
+};
 use serde::Deserialize;
 
 /// Struct used for helping creation of Exchange
@@ -23,13 +26,13 @@ pub(crate) struct ExchangeHelper {
 }
 
 impl ExchangeHelper {
-    pub(crate) fn convert(self) -> Result<Exchange, String> {
+    pub(crate) fn convert(self) -> Result<Exchange> {
         let mut exchange = Exchange::default();
         if let Some(information) = self.information {
-            return Err(information);
+            return Err(Error::AlphaVantageInformation(information));
         }
         if let Some(error_message) = self.error_message {
-            return Err(error_message);
+            return Err(Error::AlphaVantageError(error_message));
         }
         exchange.real_time = self.real_time.unwrap();
         Ok(exchange)
@@ -170,11 +173,7 @@ impl Exchange {
 ///
 /// Instead of using this function directly calling through [APIKey][APIKey]
 /// method is recommended
-pub async fn exchange(
-    from: &str,
-    to: &str,
-    api_data: (&str, Option<u64>),
-) -> Result<Exchange, String> {
+pub async fn exchange(from: &str, to: &str, api_data: (&str, Option<u64>)) -> Result<Exchange> {
     let api;
     if let Some(timeout) = api_data.1 {
         api = APIKey::set_with_timeout(api_data.0, timeout);

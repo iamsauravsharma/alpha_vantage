@@ -14,6 +14,8 @@
 
 pub mod crypto;
 
+pub mod error;
+
 pub mod exchange;
 
 pub mod forex;

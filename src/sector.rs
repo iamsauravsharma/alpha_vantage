@@ -8,7 +8,10 @@
 //!
 //! [sector]: https://www.alphavantage.co/documentation/#sector
 
-use crate::user::APIKey;
+use crate::{
+    error::{Error, Result},
+    user::APIKey,
+};
 use serde::Deserialize;
 use std::collections::HashMap;
 
@@ -174,13 +177,13 @@ pub(crate) struct SectorHelper {
 
 impl SectorHelper {
     /// Convert out [SectorHelper][SectorHelper] to [Sector][Sector]
-    pub(crate) fn convert(self) -> Result<Sector, String> {
+    pub(crate) fn convert(self) -> Result<Sector> {
         let mut sector = Sector::default();
         if let Some(information) = self.information {
-            return Err(information);
+            return Err(Error::AlphaVantageInformation(information));
         }
         if let Some(error_message) = self.error_message {
-            return Err(error_message);
+            return Err(Error::AlphaVantageError(error_message));
         }
         sector.meta_data = self.meta_data.unwrap();
         if let Some(temp_data) = self.data {
@@ -230,7 +233,7 @@ impl SectorHelper {
 ///
 /// Instead of using this function directly calling through [APIKey][APIKey]
 /// method is recommended
-pub async fn sector(api_data: (&str, Option<u64>)) -> Result<Sector, String> {
+pub async fn sector(api_data: (&str, Option<u64>)) -> Result<Sector> {
     let api;
     if let Some(timeout) = api_data.1 {
         api = APIKey::set_with_timeout(api_data.0, timeout);

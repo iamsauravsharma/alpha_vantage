@@ -8,7 +8,10 @@
 //!
 //! [quote]: https://www.alphavantage.co/documentation/#latestprice
 
-use crate::user::APIKey;
+use crate::{
+    error::{Error, Result},
+    user::APIKey,
+};
 use serde::Deserialize;
 
 /// Struct for helping creation of Quote
@@ -23,13 +26,13 @@ pub(crate) struct QuoteHelper {
 }
 
 impl QuoteHelper {
-    pub(crate) fn convert(self) -> Result<Quote, String> {
+    pub(crate) fn convert(self) -> Result<Quote> {
         let mut quote = Quote::default();
         if let Some(information) = self.information {
-            return Err(information);
+            return Err(Error::AlphaVantageInformation(information));
         }
         if let Some(error_message) = self.error_message {
-            return Err(error_message);
+            return Err(Error::AlphaVantageError(error_message));
         }
         quote.global_quote = self.global_quote.unwrap();
         Ok(quote)
@@ -173,7 +176,7 @@ impl Quote {
 ///
 /// Instead of using this function directly calling through [APIKey][APIKey]
 /// method is recommended
-pub async fn quote(symbol: &str, api_data: (&str, Option<u64>)) -> Result<Quote, String> {
+pub async fn quote(symbol: &str, api_data: (&str, Option<u64>)) -> Result<Quote> {
     let api;
     if let Some(timeout) = api_data.1 {
         api = APIKey::set_with_timeout(api_data.0, timeout);

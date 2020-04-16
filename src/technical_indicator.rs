@@ -10,6 +10,7 @@
 //! [technical_indicator]: https://www.alphavantage.co/documentation/#technical-indicators
 
 use crate::{
+    error::{Error, Result},
     user::APIKey,
     util::{TechnicalIndicator as UtilIndicator, TechnicalIndicatorInterval},
 };
@@ -49,13 +50,13 @@ pub enum MetaDataValue {
 }
 
 impl IndicatorHelper {
-    pub(crate) fn convert(self) -> Result<Indicator, String> {
+    pub(crate) fn convert(self) -> Result<Indicator> {
         let mut indicator = Indicator::default();
         if let Some(information) = self.information {
-            return Err(information);
+            return Err(Error::AlphaVantageInformation(information));
         }
         if let Some(error_message) = self.error_message {
-            return Err(error_message);
+            return Err(Error::AlphaVantageError(error_message));
         }
         indicator.metadata = self.metadata.unwrap();
         indicator.data = self.data.unwrap();
@@ -136,7 +137,7 @@ pub async fn technical_indicator(
     series_type: Option<&str>,
     temporary_value: Vec<UtilIndicator>,
     api_data: (&str, Option<u64>),
-) -> Result<Indicator, String> {
+) -> Result<Indicator> {
     let api;
     if let Some(timeout) = api_data.1 {
         api = APIKey::set_with_timeout(api_data.0, timeout);

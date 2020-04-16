@@ -11,6 +11,7 @@
 //! [stock_time]: https://www.alphavantage.co/documentation/#time-series-data
 
 use crate::{
+    error::{Error, Result},
     user::APIKey,
     util::{OutputSize, StockFunction, TimeSeriesInterval},
 };
@@ -207,7 +208,7 @@ pub trait VecEntry {
     /// Return a entry which is of latest time period
     fn latest(&self) -> Entry;
     /// Return a top n latest Entry if n Entry is present else return Error
-    fn latestn(&self, n: usize) -> Result<Vec<Entry>, &str>;
+    fn latestn(&self, n: usize) -> Result<Vec<Entry>>;
 }
 
 impl VecEntry for Vec<Entry> {
@@ -234,23 +235,24 @@ impl VecEntry for Vec<Entry> {
         latest
     }
 
-    fn latestn(&self, n: usize) -> Result<Vec<Entry>, &str> {
+    fn latestn(&self, n: usize) -> Result<Vec<Entry>> {
         let mut time_list = Vec::new();
         for entry in self {
             time_list.push(entry.time.clone());
         }
         time_list.sort();
         time_list.reverse();
+        let time_list_count: usize = time_list.len();
         let mut full_list = Self::new();
         for i in 0..n {
             let time = time_list.get(i);
             if let Some(time) = time {
                 let entry = self
                     .find(time)
-                    .expect("cannot find out time for latestn stock time");
+                    .expect(&format!("Failed to find time value for index {}", i));
                 full_list.push(entry);
             } else {
-                return Err("desired number of latest Entry not found try using less value");
+                return Err(Error::DesiredNumberOfEntryNotPresent(time_list_count));
             }
         }
         Ok(full_list)
@@ -382,13 +384,13 @@ pub(crate) struct TimeSeriesHelper {
 
 impl TimeSeriesHelper {
     /// Convert [TimeSeriesHelper][TimeSeriesHelper] to [TimeSeries][TimeSeries]
-    pub(crate) fn convert(self) -> Result<TimeSeries, String> {
+    pub(crate) fn convert(self) -> Result<TimeSeries> {
         let mut time_series = TimeSeries::default();
         if let Some(information) = self.information {
-            return Err(information);
+            return Err(Error::AlphaVantageInformation(information));
         }
         if let Some(error_message) = self.error_message {
-            return Err(error_message);
+            return Err(Error::AlphaVantageError(error_message));
         }
         if let Some(meta_data) = self.meta_data {
             let information = &meta_data["1. Information"];
@@ -479,7 +481,7 @@ pub async fn stock_time(
     interval: TimeSeriesInterval,
     output_size: OutputSize,
     api_data: (&str, Option<u64>),
-) -> Result<TimeSeries, String> {
+) -> Result<TimeSeries> {
     let api;
     if let Some(timeout) = api_data.1 {
         api = APIKey::set_with_timeout(api_data.0, timeout);

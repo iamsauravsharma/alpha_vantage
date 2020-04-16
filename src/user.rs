@@ -1,5 +1,6 @@
 use crate::{
     crypto::{create_url as create_url_crypto, Crypto, CryptoHelper},
+    error::Result,
     exchange::{Exchange, ExchangeHelper},
     forex::{create_url as create_url_forex, Forex, ForexHelper},
     quote::{Quote, QuoteHelper},
@@ -141,7 +142,7 @@ impl APIKey {
         function: CryptoFunction,
         symbol: &str,
         market: &str,
-    ) -> Result<Crypto, String> {
+    ) -> Result<Crypto> {
         let data: Url = create_url_crypto(function, symbol, market, self.get_api());
         let body = &self
             .client
@@ -172,11 +173,7 @@ impl APIKey {
     ///     );
     /// }
     /// ```
-    pub async fn exchange(
-        &self,
-        from_currency: &str,
-        to_currency: &str,
-    ) -> Result<Exchange, String> {
+    pub async fn exchange(&self, from_currency: &str, to_currency: &str) -> Result<Exchange> {
         let data: Url = format!(
             "{}CURRENCY_EXCHANGE_RATE&from_currency={}&to_currency={}&apikey={}",
             LINK,
@@ -229,7 +226,7 @@ impl APIKey {
         to_symbol: &str,
         interval: TimeSeriesInterval,
         output_size: OutputSize,
-    ) -> Result<Forex, String> {
+    ) -> Result<Forex> {
         let data: Url = create_url_forex(
             function,
             from_symbol,
@@ -265,7 +262,7 @@ impl APIKey {
     ///     assert_eq!(symbol, "MSFT");
     /// }
     /// ```
-    pub async fn quote(&self, symbol: &str) -> Result<Quote, String> {
+    pub async fn quote(&self, symbol: &str) -> Result<Quote> {
         let data: Url = format!(
             "{}GLOBAL_QUOTE&symbol={}&apikey={}",
             LINK,
@@ -300,7 +297,7 @@ impl APIKey {
     ///     assert_eq!(search.result()[0].symbol(), "BA");
     /// }
     /// ```
-    pub async fn search(&self, keywords: &str) -> Result<Search, String> {
+    pub async fn search(&self, keywords: &str) -> Result<Search> {
         let data: Url = format!(
             "{}SYMBOL_SEARCH&keywords={}&apikey={}",
             LINK,
@@ -337,7 +334,7 @@ impl APIKey {
     ///     );
     /// }
     /// ```
-    pub async fn sector(&self) -> Result<Sector, String> {
+    pub async fn sector(&self) -> Result<Sector> {
         let data: Url = format!("{}SECTOR&apikey={}", LINK, self.get_api())
             .parse()
             .expect("failed to parse sector str to Url");
@@ -381,7 +378,7 @@ impl APIKey {
         symbol: &str,
         interval: TimeSeriesInterval,
         output_size: OutputSize,
-    ) -> Result<TimeSeries, String> {
+    ) -> Result<TimeSeries> {
         let data: Url =
             create_url_time_series(function, symbol, interval, output_size, self.get_api());
         let body = &self
@@ -426,7 +423,7 @@ impl APIKey {
         time_period: Option<u64>,
         series_type: Option<&str>,
         temporary_value: Vec<TechnicalIndicator>,
-    ) -> Result<Indicator, String> {
+    ) -> Result<Indicator> {
         let data = create_url_technical(
             function,
             symbol,

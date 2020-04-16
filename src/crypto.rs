@@ -8,7 +8,11 @@
 //!
 //! [crypto_currency]: https://www.alphavantage.co/documentation/#digital-currency
 
-use crate::{user::APIKey, util::CryptoFunction};
+use crate::{
+    error::{Error, Result},
+    user::APIKey,
+    util::CryptoFunction,
+};
 use reqwest::Url;
 use serde::Deserialize;
 use std::collections::HashMap;
@@ -68,13 +72,13 @@ pub(crate) struct CryptoHelper {
 
 impl CryptoHelper {
     /// Function which convert [CryptoHelper][CryptoHelper] to [Crypto][Crypto]
-    pub(crate) fn convert(self) -> Result<Crypto, String> {
+    pub(crate) fn convert(self) -> Result<Crypto> {
         let mut crypto = Crypto::default();
         if let Some(information) = self.information {
-            return Err(information);
+            return Err(Error::AlphaVantageInformation(information));
         }
         if let Some(error_message) = self.error_message {
-            return Err(error_message);
+            return Err(Error::AlphaVantageError(error_message));
         }
         crypto.meta_data = self.meta_data.unwrap();
         if self.entry.is_some() {
@@ -138,7 +142,7 @@ pub trait VecEntry {
     /// Return a entry which is of latest time period
     fn latest(&self) -> Entry;
     /// Return a top n latest Entry if n Entry is present else return Error
-    fn latestn(&self, n: usize) -> Result<Vec<Entry>, &str>;
+    fn latestn(&self, n: usize) -> Result<Vec<Entry>>;
 }
 
 impl VecEntry for Vec<Entry> {
@@ -165,23 +169,24 @@ impl VecEntry for Vec<Entry> {
         latest
     }
 
-    fn latestn(&self, n: usize) -> Result<Vec<Entry>, &str> {
+    fn latestn(&self, n: usize) -> Result<Vec<Entry>> {
         let mut time_list = Vec::new();
         for entry in self {
             time_list.push(entry.time.clone());
         }
         time_list.sort();
         time_list.reverse();
+        let time_list_count: usize = time_list.len();
         let mut full_list = Self::new();
         for i in 0..n {
             let time = time_list.get(i);
             if let Some(time) = time {
                 let entry = self
                     .find(time)
-                    .expect("Failed to find time value for latest n");
+                    .expect(&format!("Failed to find time value for index {}", i));
                 full_list.push(entry);
             } else {
-                return Err("desired number of latest Entry not found try using less value");
+                return Err(Error::DesiredNumberOfEntryNotPresent(time_list_count));
             }
         }
         Ok(full_list)
@@ -413,7 +418,7 @@ pub async fn crypto(
     symbol: &str,
     market: &str,
     api_data: (&str, Option<u64>),
-) -> Result<Crypto, String> {
+) -> Result<Crypto> {
     let api;
     if let Some(timeout) = api_data.1 {
         api = APIKey::set_with_timeout(api_data.0, timeout);
