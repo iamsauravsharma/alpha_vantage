@@ -1,7 +1,7 @@
-//! Module which contains all types of error for alpha_vantage crates
+//! Module which contains all types of error for alpha vantage crates
 use thiserror::Error;
 
-/// Result type for alpha_vantage crate
+/// Result type for alpha vantage crate
 pub type Result<T> = std::result::Result<T, Error>;
 
 #[derive(Error, Debug)]
@@ -15,7 +15,7 @@ pub enum Error {
     /// Error which is raised if error_message is raised instead of data from
     /// API
     #[error("error: {0}")]
-    AlphaVantageError(String),
+    AlphaVantageErrorMessage(String),
 
     /// Error which is raised when desired number of entry is not present
     #[error("desired number of latest entry not found try using less than {0} as n")]

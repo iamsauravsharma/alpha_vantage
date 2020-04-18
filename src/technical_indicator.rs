@@ -56,7 +56,7 @@ impl IndicatorHelper {
             return Err(Error::AlphaVantageInformation(information));
         }
         if let Some(error_message) = self.error_message {
-            return Err(Error::AlphaVantageError(error_message));
+            return Err(Error::AlphaVantageErrorMessage(error_message));
         }
         indicator.metadata = self.metadata.unwrap();
         indicator.data = self.data.unwrap();

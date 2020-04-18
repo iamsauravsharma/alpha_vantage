@@ -183,7 +183,7 @@ impl SectorHelper {
             return Err(Error::AlphaVantageInformation(information));
         }
         if let Some(error_message) = self.error_message {
-            return Err(Error::AlphaVantageError(error_message));
+            return Err(Error::AlphaVantageErrorMessage(error_message));
         }
         sector.meta_data = self.meta_data.unwrap();
         if let Some(temp_data) = self.data {

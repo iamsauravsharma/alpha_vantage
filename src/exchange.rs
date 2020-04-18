@@ -32,7 +32,7 @@ impl ExchangeHelper {
             return Err(Error::AlphaVantageInformation(information));
         }
         if let Some(error_message) = self.error_message {
-            return Err(Error::AlphaVantageError(error_message));
+            return Err(Error::AlphaVantageErrorMessage(error_message));
         }
         exchange.real_time = self.real_time.unwrap();
         Ok(exchange)

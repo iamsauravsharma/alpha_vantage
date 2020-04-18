@@ -78,7 +78,7 @@ impl CryptoHelper {
             return Err(Error::AlphaVantageInformation(information));
         }
         if let Some(error_message) = self.error_message {
-            return Err(Error::AlphaVantageError(error_message));
+            return Err(Error::AlphaVantageErrorMessage(error_message));
         }
         crypto.meta_data = self.meta_data.unwrap();
         if self.entry.is_some() {
@@ -183,7 +183,7 @@ impl VecEntry for Vec<Entry> {
             if let Some(time) = time {
                 let entry = self
                     .find(time)
-                    .expect(&format!("Failed to find time value for index {}", i));
+                    .unwrap_or_else(|| panic!("Failed to find time value for index {}", i));
                 full_list.push(entry);
             } else {
                 return Err(Error::DesiredNumberOfEntryNotPresent(time_list_count));
