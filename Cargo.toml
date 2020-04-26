@@ -19,7 +19,7 @@ thiserror = "1.0.15"
 
 
 [dev-dependencies]
-tokio = {version = "0.2.18", features = ["macros"]}
+tokio = {version = "0.2.19", features = ["macros"]}
 
 [features]
 vendored = ["reqwest/native-tls-vendored"]
