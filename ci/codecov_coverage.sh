@@ -1,22 +1,8 @@
 #!/usr/bin/env bash
 set -ex
 
-wget https://github.com/SimonKagstrom/kcov/archive/master.tar.gz 
-tar xzf master.tar.gz
-cd kcov-master || exit
-mkdir build
-cd build  || exit
-cmake ..
-make
-sudo make install
-cd ../..
-rm -rf kcov-master
-for file in target/debug/*-*[^\.d]
-do 
-    mkdir -p "target/cov/$(basename "$file")"
-    kcov --exclude-pattern=/.cargo,/usr/lib --verify "target/cov/$(basename "$file")" "$file"
-done
+cargo install cargo-tarpaulin
+cargo tarpaulin --all-features --verbose --run-types Tests Doctests --out Xml
 bash <(curl -s https://codecov.io/bash)
-echo "Uploaded code coverage";
 
 set +x
