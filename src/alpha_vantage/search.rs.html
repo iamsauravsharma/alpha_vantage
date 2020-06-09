@@ -143,6 +143,21 @@
 <span id="143">143</span>
 <span id="144">144</span>
 <span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Module for searching specific symbol or companies</span>
 <span class="doccomment">//!</span>
@@ -288,6 +303,21 @@
         <span class="ident">api</span> <span class="op">=</span> <span class="ident">APIKey</span>::<span class="ident">set_api</span>(<span class="ident">api_data</span>.<span class="number">0</span>);
     }
     <span class="ident">api</span>.<span class="ident">search</span>(<span class="ident">keyword</span>).<span class="kw">await</span>
+}
+
+<span class="doccomment">/// Function used to create a [Search][Search] struct using blocking client.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Instead of using this function directly calling through</span>
+<span class="doccomment">/// [APIKey][crate::blocking::APIKey] method is recommended</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;blocking&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">blocking_search</span>(<span class="ident">keyword</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">api_data</span>: (<span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>)) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Search</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">api</span>;
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">timeout</span>) <span class="op">=</span> <span class="ident">api_data</span>.<span class="number">1</span> {
+        <span class="ident">api</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">blocking</span>::<span class="ident">APIKey</span>::<span class="ident">set_with_timeout</span>(<span class="ident">api_data</span>.<span class="number">0</span>, <span class="ident">timeout</span>);
+    } <span class="kw">else</span> {
+        <span class="ident">api</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">blocking</span>::<span class="ident">APIKey</span>::<span class="ident">set_api</span>(<span class="ident">api_data</span>.<span class="number">0</span>);
+    }
+    <span class="ident">api</span>.<span class="ident">search</span>(<span class="ident">keyword</span>)
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "alpha_vantage";</script><script src="../../aliases.js"></script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>
