@@ -492,6 +492,28 @@ pub async fn stock_time(
         .await
 }
 
+/// Function used to create a [TimeSeries][TimeSeries] struct using blocking
+/// client.
+///
+/// Instead of using this function directly calling through
+/// [APIKey][crate::blocking::APIKey] method is recommended
+#[cfg(feature = "blocking")]
+pub fn blocking_stock_time(
+    function: StockFunction,
+    symbol: &str,
+    interval: TimeSeriesInterval,
+    output_size: OutputSize,
+    api_data: (&str, Option<u64>),
+) -> Result<TimeSeries> {
+    let api;
+    if let Some(timeout) = api_data.1 {
+        api = crate::blocking::APIKey::set_with_timeout(api_data.0, timeout);
+    } else {
+        api = crate::blocking::APIKey::set_api(api_data.0);
+    }
+    api.stock_time(function, symbol, interval, output_size)
+}
+
 /// create url from user provided data
 pub(crate) fn create_url(
     function: StockFunction,

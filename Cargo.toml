@@ -23,3 +23,7 @@ tokio = {version = "0.2.21", features = ["macros"]}
 
 [features]
 vendored = ["reqwest/native-tls-vendored"]
+blocking = ["reqwest/blocking"]
+
+[package.metadata.docs.rs]
+all-features=true

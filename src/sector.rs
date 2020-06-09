@@ -242,3 +242,18 @@ pub async fn sector(api_data: (&str, Option<u64>)) -> Result<Sector> {
     }
     api.sector().await
 }
+
+/// Function used to create a [Sector][Sector] struct using blocking client.
+///
+/// Instead of using this function directly calling through
+/// [APIKey][crate::blocking::APIKey] method is recommended
+#[cfg(feature = "blocking")]
+pub fn blocking_sector(api_data: (&str, Option<u64>)) -> Result<Sector> {
+    let api;
+    if let Some(timeout) = api_data.1 {
+        api = crate::blocking::APIKey::set_with_timeout(api_data.0, timeout);
+    } else {
+        api = crate::blocking::APIKey::set_api(api_data.0);
+    }
+    api.sector()
+}

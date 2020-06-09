@@ -446,6 +446,28 @@ pub async fn forex(
         .await
 }
 
+/// Function used to create a [Forex][Forex] struct using blocking client.
+///
+/// Instead of using this function directly calling through
+/// [APIKey][crate::blocking::APIKey] method is recommended
+#[cfg(feature = "blocking")]
+pub fn blocking_forex(
+    function: ForexFunction,
+    from_symbol: &str,
+    to_symbol: &str,
+    interval: TimeSeriesInterval,
+    output_size: OutputSize,
+    api_data: (&str, Option<u64>),
+) -> Result<Forex> {
+    let api;
+    if let Some(timeout) = api_data.1 {
+        api = crate::blocking::APIKey::set_with_timeout(api_data.0, timeout);
+    } else {
+        api = crate::blocking::APIKey::set_api(api_data.0);
+    }
+    api.forex(function, from_symbol, to_symbol, interval, output_size)
+}
+
 /// Create Url from given user parameter for reqwest crate
 pub(crate) fn create_url(
     function: ForexFunction,

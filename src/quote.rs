@@ -185,3 +185,18 @@ pub async fn quote(symbol: &str, api_data: (&str, Option<u64>)) -> Result<Quote>
     }
     api.quote(symbol).await
 }
+
+/// Function used to create a [Quote][Quote] struct using blocking client.
+///
+/// Instead of using this function directly calling through
+/// [APIKey][crate::blocking::APIKey] method is recommended
+#[cfg(feature = "blocking")]
+pub fn blocking_quote(symbol: &str, api_data: (&str, Option<u64>)) -> Result<Quote> {
+    let api;
+    if let Some(timeout) = api_data.1 {
+        api = crate::blocking::APIKey::set_with_timeout(api_data.0, timeout);
+    } else {
+        api = crate::blocking::APIKey::set_api(api_data.0);
+    }
+    api.quote(symbol)
+}

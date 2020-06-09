@@ -12,6 +12,11 @@
 //!
 //! [alpha_vantage_link]: https://alphavantage.co
 
+#[cfg(feature = "blocking")]
+/// Blocking module for basic definition of user information. To use this module
+/// blocking feature need to be enabled
+pub mod blocking;
+
 pub mod crypto;
 
 pub mod error;
@@ -70,4 +75,39 @@ pub fn set_with_timeout(api: &str, timeout: u64) -> APIKey {
 #[must_use]
 pub fn set_with_env(env_name: &str) -> APIKey {
     APIKey::set_with_env(env_name)
+}
+
+/// Set blocking API value which can be used for calling different module
+///
+/// ```
+/// let api = alpha_vantage::blocking_set_api("some_key");
+/// ```
+#[must_use]
+#[cfg(feature = "blocking")]
+pub fn blocking_set_api(api: &str) -> self::blocking::APIKey {
+    self::blocking::APIKey::set_api(api)
+}
+
+/// Set blocking API value with timeout period
+///
+/// ```
+/// let api_with_custom_timeout = alpha_vantage::blocking_set_with_timeout("your_api_key", 45);
+/// ```
+#[must_use]
+#[cfg(feature = "blocking")]
+pub fn blocking_set_with_timeout(api: &str, timeout: u64) -> self::blocking::APIKey {
+    self::blocking::APIKey::set_with_timeout(api, timeout)
+}
+
+/// Set out blocking API Key reading out environment variable
+///
+/// ```
+/// std::env::set_var("KEY_NAME", "some_key");
+/// let api_from_env = alpha_vantage::blocking_set_with_env("KEY_NAME");
+/// assert_eq!(api_from_env.get_api(), "some_key");
+/// ```
+#[must_use]
+#[cfg(feature = "blocking")]
+pub fn blocking_set_with_env(env_name: &str) -> self::blocking::APIKey {
+    self::blocking::APIKey::set_with_env(env_name)
 }
