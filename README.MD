@@ -50,6 +50,14 @@ let rate = exchange.rate();
 println!("{}",rate);
 ```
 
+Similarly using blocking api you can run above example which run same API
+```Rust
+let api_key = alpha_vantage::blocking::APIkey::set_api("YOUR-API-HERE");
+let exchange = api_key.exchange("USD","CNY").unwrap();
+let rate = exchange.rate();
+println!("{}",rate);
+```
+
 [git_link]: https://github.com/iamsauravsharma/alpha_vantage
 
 [build_badge]: https://img.shields.io/travis/com/iamsauravsharma/alpha_vantage.svg?logo=travis
