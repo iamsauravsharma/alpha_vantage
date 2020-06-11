@@ -11,12 +11,20 @@ jobs:
       env:
         - PUBLISH_DOC=true
         - PUBLISH_PACKAGE=true
+        - FEATURES=--all-features
     - os: osx
+      env:
+        - FEATURES=--all-features
     - os: windows
+      env:
+        - FEATURES=--all-features
     - rust: beta
+      env:
+        - FEATURES=--all-features
     - rust: nightly
       env:
         - CODECOV_COVERAGE=true
+        - FEATURES=--all-features
     - os: linux
       env:
         - TARGET=x86_64-unknown-linux-musl
