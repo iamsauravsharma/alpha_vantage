@@ -10,7 +10,6 @@
 
 use crate::{
     error::{Error, Result},
-    user::APIKey,
     util::{ForexFunction, OutputSize, TimeSeriesInterval},
 };
 use reqwest::Url;
@@ -422,50 +421,6 @@ impl ForexHelper {
         }
         Ok(forex_struct)
     }
-}
-
-/// Function used to create a [Forex][Forex] struct.
-///
-/// Instead of using this function directly calling through [APIKey][APIKey]
-/// method is recommended
-pub async fn forex(
-    function: ForexFunction,
-    from_symbol: &str,
-    to_symbol: &str,
-    interval: TimeSeriesInterval,
-    output_size: OutputSize,
-    api_data: (&str, Option<u64>),
-) -> Result<Forex> {
-    let api;
-    if let Some(timeout) = api_data.1 {
-        api = APIKey::set_with_timeout(api_data.0, timeout);
-    } else {
-        api = APIKey::set_api(api_data.0);
-    }
-    api.forex(function, from_symbol, to_symbol, interval, output_size)
-        .await
-}
-
-/// Function used to create a [Forex][Forex] struct using blocking client.
-///
-/// Instead of using this function directly calling through
-/// [APIKey][crate::blocking::APIKey] method is recommended
-#[cfg(feature = "blocking")]
-pub fn blocking_forex(
-    function: ForexFunction,
-    from_symbol: &str,
-    to_symbol: &str,
-    interval: TimeSeriesInterval,
-    output_size: OutputSize,
-    api_data: (&str, Option<u64>),
-) -> Result<Forex> {
-    let api;
-    if let Some(timeout) = api_data.1 {
-        api = crate::blocking::APIKey::set_with_timeout(api_data.0, timeout);
-    } else {
-        api = crate::blocking::APIKey::set_api(api_data.0);
-    }
-    api.forex(function, from_symbol, to_symbol, interval, output_size)
 }
 
 /// Create Url from given user parameter for reqwest crate

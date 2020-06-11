@@ -8,10 +8,7 @@
 //!
 //! [symbol_search]: https://www.alphavantage.co/documentation/#symbolsearch
 
-use crate::{
-    error::{Error, Result},
-    user::APIKey,
-};
+use crate::error::{Error, Result};
 use serde::Deserialize;
 
 /// struct for helping creation of search struct
@@ -128,33 +125,4 @@ impl Search {
     pub fn result(&self) -> &Vec<DataValue> {
         &self.matches
     }
-}
-
-/// Function used to create a [Search][Search] struct.
-///
-/// Instead of using this function directly calling through [APIKey][APIKey]
-/// method is recommended
-pub async fn search(keyword: &str, api_data: (&str, Option<u64>)) -> Result<Search> {
-    let api;
-    if let Some(timeout) = api_data.1 {
-        api = APIKey::set_with_timeout(api_data.0, timeout);
-    } else {
-        api = APIKey::set_api(api_data.0);
-    }
-    api.search(keyword).await
-}
-
-/// Function used to create a [Search][Search] struct using blocking client.
-///
-/// Instead of using this function directly calling through
-/// [APIKey][crate::blocking::APIKey] method is recommended
-#[cfg(feature = "blocking")]
-pub fn blocking_search(keyword: &str, api_data: (&str, Option<u64>)) -> Result<Search> {
-    let api;
-    if let Some(timeout) = api_data.1 {
-        api = crate::blocking::APIKey::set_with_timeout(api_data.0, timeout);
-    } else {
-        api = crate::blocking::APIKey::set_api(api_data.0);
-    }
-    api.search(keyword)
 }

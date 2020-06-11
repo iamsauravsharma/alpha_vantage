@@ -8,10 +8,7 @@
 //!
 //! [exchange]: https://www.alphavantage.co/documentation/#currency-exchnage
 
-use crate::{
-    error::{Error, Result},
-    user::APIKey,
-};
+use crate::error::{Error, Result};
 use serde::Deserialize;
 
 /// Struct used for helping creation of Exchange
@@ -167,33 +164,4 @@ impl Exchange {
             _ => "",
         }
     }
-}
-
-/// Function used to create a [Exchange][Exchange] struct.
-///
-/// Instead of using this function directly calling through [APIKey][APIKey]
-/// method is recommended
-pub async fn exchange(from: &str, to: &str, api_data: (&str, Option<u64>)) -> Result<Exchange> {
-    let api;
-    if let Some(timeout) = api_data.1 {
-        api = APIKey::set_with_timeout(api_data.0, timeout);
-    } else {
-        api = APIKey::set_api(api_data.0);
-    }
-    api.exchange(from, to).await
-}
-
-/// Function used to create a [Exchange][Exchange] struct using blocking client.
-///
-/// Instead of using this function directly calling through
-/// [APIKey][crate::blocking::APIKey] method is recommended
-#[cfg(feature = "blocking")]
-pub fn blocking_exchange(from: &str, to: &str, api_data: (&str, Option<u64>)) -> Result<Exchange> {
-    let api;
-    if let Some(timeout) = api_data.1 {
-        api = crate::blocking::APIKey::set_with_timeout(api_data.0, timeout);
-    } else {
-        api = crate::blocking::APIKey::set_api(api_data.0);
-    }
-    api.exchange(from, to)
 }

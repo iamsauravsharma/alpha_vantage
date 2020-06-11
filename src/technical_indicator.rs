@@ -11,7 +11,6 @@
 
 use crate::{
     error::{Error, Result},
-    user::APIKey,
     util::{TechnicalIndicator as UtilIndicator, TechnicalIndicatorInterval},
 };
 use reqwest::Url;
@@ -123,67 +122,6 @@ impl DataCollector {
     pub fn values(&self) -> &HashMap<String, f64> {
         &self.values
     }
-}
-
-/// Function used to create a [Indicator][Indicator] struct.
-///
-/// Instead of using this function directly calling through [APIKey][APIKey]
-/// method is recommended
-pub async fn technical_indicator(
-    function: &str,
-    symbol: &str,
-    interval: TechnicalIndicatorInterval,
-    time_period: Option<u64>,
-    series_type: Option<&str>,
-    temporary_value: Vec<UtilIndicator>,
-    api_data: (&str, Option<u64>),
-) -> Result<Indicator> {
-    let api;
-    if let Some(timeout) = api_data.1 {
-        api = APIKey::set_with_timeout(api_data.0, timeout);
-    } else {
-        api = APIKey::set_api(api_data.0);
-    }
-    api.technical_indicator(
-        function,
-        symbol,
-        interval,
-        time_period,
-        series_type,
-        temporary_value,
-    )
-    .await
-}
-
-/// Function used to create a [Indicator][Indicator] struct using blocking
-/// client.
-///
-/// Instead of using this function directly calling through
-/// [APIKey][crate::blocking::APIKey] method is recommended
-#[cfg(feature = "blocking")]
-pub fn blocking_technical_indicator(
-    function: &str,
-    symbol: &str,
-    interval: TechnicalIndicatorInterval,
-    time_period: Option<u64>,
-    series_type: Option<&str>,
-    temporary_value: Vec<UtilIndicator>,
-    api_data: (&str, Option<u64>),
-) -> Result<Indicator> {
-    let api;
-    if let Some(timeout) = api_data.1 {
-        api = crate::blocking::APIKey::set_with_timeout(api_data.0, timeout);
-    } else {
-        api = crate::blocking::APIKey::set_api(api_data.0);
-    }
-    api.technical_indicator(
-        function,
-        symbol,
-        interval,
-        time_period,
-        series_type,
-        temporary_value,
-    )
 }
 
 /// Create url for reqwest

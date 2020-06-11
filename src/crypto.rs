@@ -10,7 +10,6 @@
 
 use crate::{
     error::{Error, Result},
-    user::APIKey,
     util::CryptoFunction,
 };
 use reqwest::Url;
@@ -407,45 +406,6 @@ impl Crypto {
             _ => "",
         }
     }
-}
-
-/// Function used to create a [Crypto][Crypto] struct.
-///
-/// Instead of using this function directly calling through [APIKey][APIKey]
-/// method is recommended
-pub async fn crypto(
-    function: CryptoFunction,
-    symbol: &str,
-    market: &str,
-    api_data: (&str, Option<u64>),
-) -> Result<Crypto> {
-    let api;
-    if let Some(timeout) = api_data.1 {
-        api = APIKey::set_with_timeout(api_data.0, timeout);
-    } else {
-        api = APIKey::set_api(api_data.0);
-    }
-    api.crypto(function, symbol, market).await
-}
-
-/// Function used to create a [Crypto][Crypto] struct using blocking client.
-///
-/// Instead of using this function directly calling through
-/// [APIKey][crate::blocking::APIKey] method is recommended
-#[cfg(feature = "blocking")]
-pub fn blocking_crypto(
-    function: CryptoFunction,
-    symbol: &str,
-    market: &str,
-    api_data: (&str, Option<u64>),
-) -> Result<Crypto> {
-    let api;
-    if let Some(timeout) = api_data.1 {
-        api = crate::blocking::APIKey::set_with_timeout(api_data.0, timeout);
-    } else {
-        api = crate::blocking::APIKey::set_api(api_data.0);
-    }
-    api.crypto(function, symbol, market)
 }
 
 /// Create url from which JSON data is collected for Crypto
