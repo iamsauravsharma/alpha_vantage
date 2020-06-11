@@ -460,46 +460,6 @@
 <span id="460">460</span>
 <span id="461">461</span>
 <span id="462">462</span>
-<span id="463">463</span>
-<span id="464">464</span>
-<span id="465">465</span>
-<span id="466">466</span>
-<span id="467">467</span>
-<span id="468">468</span>
-<span id="469">469</span>
-<span id="470">470</span>
-<span id="471">471</span>
-<span id="472">472</span>
-<span id="473">473</span>
-<span id="474">474</span>
-<span id="475">475</span>
-<span id="476">476</span>
-<span id="477">477</span>
-<span id="478">478</span>
-<span id="479">479</span>
-<span id="480">480</span>
-<span id="481">481</span>
-<span id="482">482</span>
-<span id="483">483</span>
-<span id="484">484</span>
-<span id="485">485</span>
-<span id="486">486</span>
-<span id="487">487</span>
-<span id="488">488</span>
-<span id="489">489</span>
-<span id="490">490</span>
-<span id="491">491</span>
-<span id="492">492</span>
-<span id="493">493</span>
-<span id="494">494</span>
-<span id="495">495</span>
-<span id="496">496</span>
-<span id="497">497</span>
-<span id="498">498</span>
-<span id="499">499</span>
-<span id="500">500</span>
-<span id="501">501</span>
-<span id="502">502</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Module for crypto real time data</span>
 <span class="doccomment">//!</span>
@@ -513,7 +473,6 @@
 
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">error</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>},
-    <span class="ident">user</span>::<span class="ident">APIKey</span>,
     <span class="ident">util</span>::<span class="ident">CryptoFunction</span>,
 };
 <span class="kw">use</span> <span class="ident">reqwest</span>::<span class="ident">Url</span>;
@@ -910,45 +869,6 @@
             <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;&quot;</span>,
         }
     }
-}
-
-<span class="doccomment">/// Function used to create a [Crypto][Crypto] struct.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Instead of using this function directly calling through [APIKey][APIKey]</span>
-<span class="doccomment">/// method is recommended</span>
-<span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">crypto</span>(
-    <span class="ident">function</span>: <span class="ident">CryptoFunction</span>,
-    <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-    <span class="ident">market</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-    <span class="ident">api_data</span>: (<span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>),
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Crypto</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">api</span>;
-    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">timeout</span>) <span class="op">=</span> <span class="ident">api_data</span>.<span class="number">1</span> {
-        <span class="ident">api</span> <span class="op">=</span> <span class="ident">APIKey</span>::<span class="ident">set_with_timeout</span>(<span class="ident">api_data</span>.<span class="number">0</span>, <span class="ident">timeout</span>);
-    } <span class="kw">else</span> {
-        <span class="ident">api</span> <span class="op">=</span> <span class="ident">APIKey</span>::<span class="ident">set_api</span>(<span class="ident">api_data</span>.<span class="number">0</span>);
-    }
-    <span class="ident">api</span>.<span class="ident">crypto</span>(<span class="ident">function</span>, <span class="ident">symbol</span>, <span class="ident">market</span>).<span class="kw">await</span>
-}
-
-<span class="doccomment">/// Function used to create a [Crypto][Crypto] struct using blocking client.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Instead of using this function directly calling through</span>
-<span class="doccomment">/// [APIKey][crate::blocking::APIKey] method is recommended</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;blocking&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">blocking_crypto</span>(
-    <span class="ident">function</span>: <span class="ident">CryptoFunction</span>,
-    <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-    <span class="ident">market</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-    <span class="ident">api_data</span>: (<span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>),
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Crypto</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">api</span>;
-    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">timeout</span>) <span class="op">=</span> <span class="ident">api_data</span>.<span class="number">1</span> {
-        <span class="ident">api</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">blocking</span>::<span class="ident">APIKey</span>::<span class="ident">set_with_timeout</span>(<span class="ident">api_data</span>.<span class="number">0</span>, <span class="ident">timeout</span>);
-    } <span class="kw">else</span> {
-        <span class="ident">api</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">blocking</span>::<span class="ident">APIKey</span>::<span class="ident">set_api</span>(<span class="ident">api_data</span>.<span class="number">0</span>);
-    }
-    <span class="ident">api</span>.<span class="ident">crypto</span>(<span class="ident">function</span>, <span class="ident">symbol</span>, <span class="ident">market</span>)
 }
 
 <span class="doccomment">/// Create url from which JSON data is collected for Crypto</span>
