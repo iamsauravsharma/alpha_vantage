@@ -7,9 +7,9 @@ set -ex
 run_all_cargo_command(){
   if [[ $RUSTFMT_ADDED == "false" ]]
   then
-    cargo +nightly-"${LAST_AVAILABLE_FMT}" fmt $FEATURES -- --check
+    cargo +nightly-"${LAST_AVAILABLE_FMT}" fmt -- --check
   else
-    cargo fmt $FEATURES -- --check
+    cargo fmt -- --check
   fi
 
   if [[ $CLIPPY_ADDED == "false" ]]
