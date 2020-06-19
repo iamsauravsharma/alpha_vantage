@@ -48,7 +48,7 @@ pub struct DataValue {
     #[serde(rename = "2. name")]
     name: String,
     #[serde(rename = "3. type")]
-    data_type: String,
+    stock_type: String,
     #[serde(rename = "4. region")]
     region: String,
     #[serde(rename = "5. marketOpen")]
@@ -65,54 +65,146 @@ pub struct DataValue {
 
 impl DataValue {
     /// Return symbol
+    ///
+    /// ```
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let search = api.search("BA").await.unwrap();
+    ///     let symbol = search.result()[0].symbol();
+    ///     assert_eq!(symbol, "BA");
+    /// }
+    /// ```
     #[must_use]
     pub fn symbol(&self) -> &str {
         &self.symbol
     }
 
     /// Return name for symbol
+    ///
+    /// ```
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let search = api.search("BA").await.unwrap();
+    ///     let name = search.result()[0].name();
+    ///     assert_eq!(name, "The Boeing Company");
+    /// }
+    /// ```
     #[must_use]
     pub fn name(&self) -> &str {
         &self.name
     }
 
-    /// Return data type
+    /// Return stock type
+    ///
+    /// ```
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let search = api.search("BA").await.unwrap();
+    ///     let stock_type = search.result()[0].stock_type();
+    ///     assert_eq!(stock_type, "Equity");
+    /// }
     #[must_use]
-    pub fn data_type(&self) -> &str {
-        &self.data_type
+    pub fn stock_type(&self) -> &str {
+        &self.stock_type
     }
 
     /// Return region of search entry
+    ///
+    /// ```
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let search = api.search("BA").await.unwrap();
+    ///     let region = search.result()[0].region();
+    ///     assert_eq!(region, "United States");
+    /// }
     #[must_use]
     pub fn region(&self) -> &str {
         &self.region
     }
 
-    /// Return open value
+    /// Return market open time
+    ///
+    /// ```
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let search = api.search("BA").await.unwrap();
+    ///     let market_open = search.result()[0].market_open();
+    ///     assert_eq!(market_open, "09:30");
+    /// }
     #[must_use]
     pub fn market_open(&self) -> &str {
         &self.market_open
     }
 
-    /// Return close value
+    /// Return market close time
+    ///
+    /// ```
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let search = api.search("BA").await.unwrap();
+    ///     let market_close = search.result()[0].market_close();
+    ///     assert_eq!(market_close, "16:00");
+    /// }
     #[must_use]
     pub fn market_close(&self) -> &str {
         &self.market_close
     }
 
     /// Return time zone of symbol
+    ///
+    /// ```
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let search = api.search("BA").await.unwrap();
+    ///     let time_zone = search.result()[0].time_zone();
+    ///     assert_eq!(time_zone, "UTC-05");
+    /// }
     #[must_use]
     pub fn time_zone(&self) -> &str {
         &self.time_zone
     }
 
     /// Return currency
+    ///
+    /// ```
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let search = api.search("BA").await.unwrap();
+    ///     let currency = search.result()[0].currency();
+    ///     assert_eq!(currency, "USD");
+    /// }
     #[must_use]
     pub fn currency(&self) -> &str {
         &self.currency
     }
 
     /// Return match score
+    ///
+    /// ```
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let search = api.search("BA").await.unwrap();
+    ///     let match_score = search.result()[0].match_score();
+    ///     assert_eq!(match_score, 1.0);
+    /// }
     #[must_use]
     pub fn match_score(&self) -> f64 {
         self.match_score
