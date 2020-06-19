@@ -144,30 +144,6 @@
 <span id="144">144</span>
 <span id="145">145</span>
 <span id="146">146</span>
-<span id="147">147</span>
-<span id="148">148</span>
-<span id="149">149</span>
-<span id="150">150</span>
-<span id="151">151</span>
-<span id="152">152</span>
-<span id="153">153</span>
-<span id="154">154</span>
-<span id="155">155</span>
-<span id="156">156</span>
-<span id="157">157</span>
-<span id="158">158</span>
-<span id="159">159</span>
-<span id="160">160</span>
-<span id="161">161</span>
-<span id="162">162</span>
-<span id="163">163</span>
-<span id="164">164</span>
-<span id="165">165</span>
-<span id="166">166</span>
-<span id="167">167</span>
-<span id="168">168</span>
-<span id="169">169</span>
-<span id="170">170</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Module for returning latest price and volume information</span>
 <span class="doccomment">//!</span>
@@ -179,7 +155,10 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! [quote]: https://www.alphavantage.co/documentation/#latestprice</span>
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">error</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{
+    <span class="ident">deserialize</span>::<span class="ident">from_str</span>,
+    <span class="ident">error</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>},
+};
 <span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">Deserialize</span>;
 
 <span class="doccomment">/// Struct for helping creation of Quote</span>
@@ -218,22 +197,22 @@
 <span class="kw">struct</span> <span class="ident">GlobalQuote</span> {
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;01. symbol&quot;</span>)]</span>
     <span class="ident">symbol</span>: <span class="ident">String</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;02. open&quot;</span>)]</span>
-    <span class="ident">open</span>: <span class="ident">String</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;03. high&quot;</span>)]</span>
-    <span class="ident">high</span>: <span class="ident">String</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;04. low&quot;</span>)]</span>
-    <span class="ident">low</span>: <span class="ident">String</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;05. price&quot;</span>)]</span>
-    <span class="ident">price</span>: <span class="ident">String</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;06. volume&quot;</span>)]</span>
-    <span class="ident">volume</span>: <span class="ident">String</span>,
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;02. open&quot;</span>, <span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;from_str&quot;</span>)]</span>
+    <span class="ident">open</span>: <span class="ident">f64</span>,
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;03. high&quot;</span>, <span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;from_str&quot;</span>)]</span>
+    <span class="ident">high</span>: <span class="ident">f64</span>,
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;04. low&quot;</span>, <span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;from_str&quot;</span>)]</span>
+    <span class="ident">low</span>: <span class="ident">f64</span>,
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;05. price&quot;</span>, <span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;from_str&quot;</span>)]</span>
+    <span class="ident">price</span>: <span class="ident">f64</span>,
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;06. volume&quot;</span>, <span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;from_str&quot;</span>)]</span>
+    <span class="ident">volume</span>: <span class="ident">u64</span>,
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;07. latest trading day&quot;</span>)]</span>
     <span class="ident">last_day</span>: <span class="ident">String</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;08. previous close&quot;</span>)]</span>
-    <span class="ident">previous_close</span>: <span class="ident">String</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;09. change&quot;</span>)]</span>
-    <span class="ident">change</span>: <span class="ident">String</span>,
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;08. previous close&quot;</span>, <span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;from_str&quot;</span>)]</span>
+    <span class="ident">previous_close</span>: <span class="ident">f64</span>,
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;09. change&quot;</span>, <span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;from_str&quot;</span>)]</span>
+    <span class="ident">change</span>: <span class="ident">f64</span>,
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;10. change percent&quot;</span>)]</span>
     <span class="ident">change_percent</span>: <span class="ident">String</span>,
 }
@@ -242,43 +221,43 @@
     <span class="doccomment">/// return open value</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">open</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
-        <span class="self">self</span>.<span class="ident">return_f64_value</span>(<span class="string">&quot;open&quot;</span>)
+        <span class="self">self</span>.<span class="ident">global_quote</span>.<span class="ident">open</span>
     }
 
     <span class="doccomment">/// return high value</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">high</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
-        <span class="self">self</span>.<span class="ident">return_f64_value</span>(<span class="string">&quot;high&quot;</span>)
+        <span class="self">self</span>.<span class="ident">global_quote</span>.<span class="ident">high</span>
     }
 
     <span class="doccomment">/// return low value</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">low</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
-        <span class="self">self</span>.<span class="ident">return_f64_value</span>(<span class="string">&quot;low&quot;</span>)
+        <span class="self">self</span>.<span class="ident">global_quote</span>.<span class="ident">low</span>
     }
 
     <span class="doccomment">/// return price value</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">price</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
-        <span class="self">self</span>.<span class="ident">return_f64_value</span>(<span class="string">&quot;price&quot;</span>)
+        <span class="self">self</span>.<span class="ident">global_quote</span>.<span class="ident">price</span>
     }
 
     <span class="doccomment">/// return out a volume</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">volume</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
-        <span class="self">self</span>.<span class="ident">return_f64_value</span>(<span class="string">&quot;volume&quot;</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">volume</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span> {
+        <span class="self">self</span>.<span class="ident">global_quote</span>.<span class="ident">volume</span>
     }
 
     <span class="doccomment">/// return previous</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">previous</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
-        <span class="self">self</span>.<span class="ident">return_f64_value</span>(<span class="string">&quot;previous&quot;</span>)
+        <span class="self">self</span>.<span class="ident">global_quote</span>.<span class="ident">previous_close</span>
     }
 
     <span class="doccomment">/// return change</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">change</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
-        <span class="self">self</span>.<span class="ident">return_f64_value</span>(<span class="string">&quot;change&quot;</span>)
+        <span class="self">self</span>.<span class="ident">global_quote</span>.<span class="ident">change</span>
     }
 
     <span class="doccomment">/// return change percent</span>
@@ -289,28 +268,10 @@
         (<span class="ident">price</span> <span class="op">-</span> <span class="ident">previous</span>) <span class="op">/</span> <span class="ident">previous</span>
     }
 
-    <span class="doccomment">/// general function used for returning f64 value of Quote method</span>
-    <span class="kw">fn</span> <span class="ident">return_f64_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
-        <span class="kw">let</span> <span class="ident">price</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">value</span> {
-            <span class="string">&quot;open&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">global_quote</span>.<span class="ident">open</span>,
-            <span class="string">&quot;high&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">global_quote</span>.<span class="ident">high</span>,
-            <span class="string">&quot;low&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">global_quote</span>.<span class="ident">low</span>,
-            <span class="string">&quot;price&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">global_quote</span>.<span class="ident">price</span>,
-            <span class="string">&quot;previous&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">global_quote</span>.<span class="ident">previous_close</span>,
-            <span class="string">&quot;change&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">global_quote</span>.<span class="ident">change</span>,
-            <span class="string">&quot;volume&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">global_quote</span>.<span class="ident">volume</span>,
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;&quot;</span>,
-        };
-        <span class="ident">price</span>
-            .<span class="ident">trim</span>()
-            .<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>()
-            .<span class="ident">expect</span>(<span class="string">&quot;failed to convert String to f64&quot;</span>)
-    }
-
     <span class="doccomment">/// get last trading day</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">last_trading</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="self">self</span>.<span class="ident">return_string_value</span>(<span class="string">&quot;trading&quot;</span>)
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">global_quote</span>.<span class="ident">last_day</span>
     }
 
     <span class="doccomment">/// get symbol</span>
@@ -327,16 +288,7 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">symbol</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="self">self</span>.<span class="ident">return_string_value</span>(<span class="string">&quot;symbol&quot;</span>)
-    }
-
-    <span class="doccomment">/// general function used for returning String value</span>
-    <span class="kw">fn</span> <span class="ident">return_string_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="kw">match</span> <span class="ident">value</span> {
-            <span class="string">&quot;trading&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">global_quote</span>.<span class="ident">last_day</span>,
-            <span class="string">&quot;symbol&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">global_quote</span>.<span class="ident">symbol</span>,
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;&quot;</span>,
-        }
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">global_quote</span>.<span class="ident">symbol</span>
     }
 }
 </pre></div>
