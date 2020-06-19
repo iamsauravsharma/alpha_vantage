@@ -11,12 +11,13 @@
 //! [stock_time]: https://www.alphavantage.co/documentation/#time-series-data
 
 use crate::{
+    deserialize::from_str,
     error::{Error, Result},
     util::{OutputSize, StockFunction, TimeSeriesInterval},
 };
 use reqwest::Url;
 use serde::Deserialize;
-use std::collections::HashMap;
+use std::{collections::HashMap, str::FromStr};
 
 const LINK: &str = "https://www.alphavantage.co/query?function=";
 
@@ -190,14 +191,14 @@ pub struct MetaData {
 #[derive(Default, Debug, Clone)]
 pub struct Entry {
     time: String,
-    open: String,
-    high: String,
-    low: String,
-    close: String,
-    adjusted_close: Option<String>,
-    volume: String,
-    dividend_amount: Option<String>,
-    split_coefficient: Option<String>,
+    open: f64,
+    high: f64,
+    low: f64,
+    close: f64,
+    adjusted_close: Option<f64>,
+    volume: u64,
+    dividend_amount: Option<f64>,
+    split_coefficient: Option<f64>,
 }
 
 /// trait which helps for performing some common operation on Vec<Entry>
@@ -268,98 +269,82 @@ impl Entry {
     /// Return open
     #[must_use]
     pub fn open(&self) -> f64 {
-        return_f64(&self.open)
+        self.open
     }
 
     /// Return high
     #[must_use]
     pub fn high(&self) -> f64 {
-        return_f64(&self.high)
+        self.high
     }
 
     /// Return low
     #[must_use]
     pub fn low(&self) -> f64 {
-        return_f64(&self.low)
+        self.low
     }
 
     /// Return close
     #[must_use]
     pub fn close(&self) -> f64 {
-        return_f64(&self.close)
+        self.close
     }
 
     /// Return adjusted
     #[must_use]
     pub fn adjusted(&self) -> Option<f64> {
-        if let Some(data) = &self.adjusted_close {
-            return Some(return_f64(data));
-        }
-        None
+        self.adjusted_close
     }
 
     /// Return volume
     #[must_use]
-    pub fn volume(&self) -> f64 {
-        return_f64(&self.volume)
+    pub fn volume(&self) -> u64 {
+        self.volume
     }
 
     /// Return dividend
     #[must_use]
     pub fn dividend(&self) -> Option<f64> {
-        if let Some(data) = &self.dividend_amount {
-            return Some(return_f64(data));
-        }
-        None
+        self.dividend_amount
     }
 
     /// Return split dividend
     #[must_use]
     pub fn split(&self) -> Option<f64> {
-        if let Some(data) = &self.split_coefficient {
-            return Some(return_f64(data));
-        }
-        None
+        self.split_coefficient
     }
-}
-
-/// parse String to f64 and return value
-fn return_f64(data: &str) -> f64 {
-    data.trim()
-        .parse::<f64>()
-        .expect("Cannot convert out &str to f64")
 }
 
 /// Helper struct to store non adjusted data
 #[derive(Clone, Deserialize)]
 struct EntryHelper {
-    #[serde(rename = "1. open")]
-    open: String,
-    #[serde(rename = "2. high")]
-    high: String,
-    #[serde(rename = "3. low")]
-    low: String,
-    #[serde(rename = "4. close")]
-    close: String,
-    #[serde(rename = "5. volume")]
-    volume: String,
+    #[serde(rename = "1. open", deserialize_with = "from_str")]
+    open: f64,
+    #[serde(rename = "2. high", deserialize_with = "from_str")]
+    high: f64,
+    #[serde(rename = "3. low", deserialize_with = "from_str")]
+    low: f64,
+    #[serde(rename = "4. close", deserialize_with = "from_str")]
+    close: f64,
+    #[serde(rename = "5. volume", deserialize_with = "from_str")]
+    volume: u64,
 }
 
 /// Helper struct to store adjusted data
 #[derive(Deserialize, Clone)]
 struct AdjustedHelper {
-    #[serde(rename = "1. open")]
-    open: String,
-    #[serde(rename = "2. high")]
-    high: String,
-    #[serde(rename = "3. low")]
-    low: String,
-    #[serde(rename = "4. close")]
-    close: String,
+    #[serde(rename = "1. open", deserialize_with = "from_str")]
+    open: f64,
+    #[serde(rename = "2. high", deserialize_with = "from_str")]
+    high: f64,
+    #[serde(rename = "3. low", deserialize_with = "from_str")]
+    low: f64,
+    #[serde(rename = "4. close", deserialize_with = "from_str")]
+    close: f64,
     #[serde(rename = "5. adjusted close")]
     adjusted_close: Option<String>,
-    #[serde(rename = "6. volume")]
-    volume: String,
+    #[serde(rename = "6. volume", deserialize_with = "from_str")]
+    volume: u64,
     #[serde(rename = "7. dividend amount")]
     dividend_amount: Option<String>,
     #[serde(rename = "8. split coefficient")]
@@ -456,9 +441,9 @@ impl TimeSeriesHelper {
                     entry.low = entry_helper.low;
                     entry.close = entry_helper.close;
                     entry.volume = entry_helper.volume;
-                    entry.adjusted_close = entry_helper.adjusted_close;
-                    entry.split_coefficient = entry_helper.split_coefficient;
-                    entry.dividend_amount = entry_helper.dividend_amount;
+                    entry.adjusted_close = option_from_str(entry_helper.adjusted_close);
+                    entry.split_coefficient = option_from_str(entry_helper.split_coefficient);
+                    entry.dividend_amount = option_from_str(entry_helper.dividend_amount);
                     value.push(entry);
                 }
             }
@@ -468,6 +453,15 @@ impl TimeSeriesHelper {
         }
         Ok(time_series)
     }
+}
+
+// convert string to optional T
+fn option_from_str<T>(val: Option<String>) -> Option<T>
+where
+    T: FromStr,
+    T::Err: std::error::Error,
+{
+    val.map(|s| T::from_str(&s).unwrap())
 }
 
 /// create url from user provided data

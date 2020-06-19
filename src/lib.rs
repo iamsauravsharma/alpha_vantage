@@ -19,6 +19,8 @@ pub mod blocking;
 
 pub mod crypto;
 
+mod deserialize;
+
 pub mod error;
 
 pub mod exchange;

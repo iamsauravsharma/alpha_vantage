@@ -8,7 +8,10 @@
 //!
 //! [exchange]: https://www.alphavantage.co/documentation/#currency-exchnage
 
-use crate::error::{Error, Result};
+use crate::{
+    deserialize::from_str,
+    error::{Error, Result},
+};
 use serde::Deserialize;
 
 /// Struct used for helping creation of Exchange
@@ -53,8 +56,8 @@ struct RealtimeExchangeRate {
     to_code: String,
     #[serde(rename = "4. To_Currency Name")]
     to_name: String,
-    #[serde(rename = "5. Exchange Rate")]
-    rate: String,
+    #[serde(rename = "5. Exchange Rate", deserialize_with = "from_str")]
+    rate: f64,
     #[serde(rename = "6. Last Refreshed")]
     last_refreshed: String,
     #[serde(rename = "7. Time Zone")]
@@ -65,23 +68,19 @@ impl Exchange {
     /// Get Rate for exchange
     #[must_use]
     pub fn rate(&self) -> f64 {
-        self.real_time
-            .rate
-            .trim()
-            .parse::<f64>()
-            .expect("failed to parse real_time rate to f64")
+        self.real_time.rate
     }
 
     /// Get time when exchange rate was last refreshed along with time zone.
     #[must_use]
     pub fn refreshed_time(&self) -> &str {
-        self.get_result_string("Refreshed time")
+        &self.real_time.last_refreshed
     }
 
     /// Return time zone of all data time
     #[must_use]
     pub fn time_zone(&self) -> &str {
-        self.get_result_string("time zone")
+        &self.real_time.time_zone
     }
 
     /// get from code from which exchange is performed
@@ -98,7 +97,7 @@ impl Exchange {
     /// ```
     #[must_use]
     pub fn code_from(&self) -> &str {
-        self.get_result_string("from code")
+        &self.real_time.from_code
     }
 
     /// get from name from which exchange is performed
@@ -115,7 +114,7 @@ impl Exchange {
     /// ```
     #[must_use]
     pub fn name_from(&self) -> &str {
-        self.get_result_string("from name")
+        &self.real_time.from_name
     }
 
     /// get to code from exchange
@@ -132,7 +131,7 @@ impl Exchange {
     /// ```
     #[must_use]
     pub fn code_to(&self) -> &str {
-        self.get_result_string("to code")
+        &self.real_time.to_code
     }
 
     /// get to name from exchange
@@ -149,19 +148,6 @@ impl Exchange {
     /// ```
     #[must_use]
     pub fn name_to(&self) -> &str {
-        self.get_result_string("to name")
-    }
-
-    /// Collect out certain value from real time
-    fn get_result_string(&self, match_str: &str) -> &str {
-        match match_str {
-            "from code" => &self.real_time.from_code,
-            "from name" => &self.real_time.from_name,
-            "to code" => &self.real_time.to_code,
-            "to name" => &self.real_time.to_name,
-            "time zone" => &self.real_time.time_zone,
-            "refreshed time" => &self.real_time.last_refreshed,
-            _ => "",
-        }
+        &self.real_time.to_name
     }
 }

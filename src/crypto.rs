@@ -9,12 +9,13 @@
 //! [crypto_currency]: https://www.alphavantage.co/documentation/#digital-currency
 
 use crate::{
+    deserialize::from_str,
     error::{Error, Result},
     util::CryptoFunction,
 };
 use reqwest::Url;
 use serde::Deserialize;
-use std::collections::HashMap;
+use std::{collections::HashMap, str::FromStr};
 
 const LINK: &str = "https://www.alphavantage.co/query?function=";
 
@@ -40,18 +41,18 @@ struct MetaData {
 /// Struct to help out for creation of struct Entry
 #[derive(Deserialize, Clone)]
 struct EntryHelper {
-    #[serde(rename = "1b. open (USD)")]
-    open_usd: String,
-    #[serde(rename = "2b. high (USD)")]
-    high_usd: String,
-    #[serde(rename = "3b. low (USD)")]
-    low_usd: String,
-    #[serde(rename = "4b. close (USD)")]
-    close_usd: String,
-    #[serde(rename = "5. volume")]
-    volume: String,
-    #[serde(rename = "6. market cap (USD)")]
-    market_cap: String,
+    #[serde(rename = "1b. open (USD)", deserialize_with = "from_str")]
+    open_usd: f64,
+    #[serde(rename = "2b. high (USD)", deserialize_with = "from_str")]
+    high_usd: f64,
+    #[serde(rename = "3b. low (USD)", deserialize_with = "from_str")]
+    low_usd: f64,
+    #[serde(rename = "4b. close (USD)", deserialize_with = "from_str")]
+    close_usd: f64,
+    #[serde(rename = "5. volume", deserialize_with = "from_str")]
+    volume: f64,
+    #[serde(rename = "6. market cap (USD)", deserialize_with = "from_str")]
+    market_cap: f64,
     #[serde(flatten)]
     market_data: HashMap<String, String>,
 }
@@ -98,15 +99,15 @@ impl CryptoHelper {
                     entry.volume = entry_helper.volume;
                     for key in entry_helper.market_data.keys() {
                         let value = &entry_helper.market_data[key];
-                        let value = value.to_string();
+                        let f64_value = f64::from_str(value).unwrap();
                         if key.contains("1a") {
-                            entry.market_open = value;
+                            entry.market_open = f64_value;
                         } else if key.contains("2a") {
-                            entry.market_high = value;
+                            entry.market_high = f64_value;
                         } else if key.contains("3a") {
-                            entry.market_low = value;
+                            entry.market_low = f64_value;
                         } else if key.contains("4a") {
-                            entry.market_close = value;
+                            entry.market_close = f64_value;
                         }
                     }
                     vec_entry.push(entry);
@@ -122,16 +123,16 @@ impl CryptoHelper {
 #[derive(Default, Debug, Clone)]
 pub struct Entry {
     time: String,
-    market_open: String,
-    usd_open: String,
-    market_high: String,
-    usd_high: String,
-    market_low: String,
-    usd_low: String,
-    market_close: String,
-    usd_close: String,
-    volume: String,
-    market_cap: String,
+    market_open: f64,
+    usd_open: f64,
+    market_high: f64,
+    usd_high: f64,
+    market_low: f64,
+    usd_low: f64,
+    market_close: f64,
+    usd_close: f64,
+    volume: f64,
+    market_cap: f64,
 }
 
 /// trait which helps for performing some common operation on Vec<Entry>
@@ -202,69 +203,62 @@ impl Entry {
     /// Return market open value
     #[must_use]
     pub fn market_open(&self) -> f64 {
-        convert_to_f64(&self.market_open)
+        self.market_open
     }
 
     /// Return usd open value
     #[must_use]
     pub fn usd_open(&self) -> f64 {
-        convert_to_f64(&self.usd_open)
+        self.usd_open
     }
 
     /// Return market high value
     #[must_use]
     pub fn market_high(&self) -> f64 {
-        convert_to_f64(&self.market_high)
+        self.market_high
     }
 
     /// Return usd high value
     #[must_use]
     pub fn usd_high(&self) -> f64 {
-        convert_to_f64(&self.usd_high)
+        self.usd_high
     }
 
     /// Return market low value
     #[must_use]
     pub fn market_low(&self) -> f64 {
-        convert_to_f64(&self.market_low)
+        self.market_low
     }
 
     /// Return usd low value
     #[must_use]
     pub fn usd_low(&self) -> f64 {
-        convert_to_f64(&self.usd_low)
+        self.usd_low
     }
 
     /// Return market close value
     #[must_use]
     pub fn market_close(&self) -> f64 {
-        convert_to_f64(&self.market_close)
+        self.market_close
     }
 
     /// Return usd close value
     #[must_use]
     pub fn usd_close(&self) -> f64 {
-        convert_to_f64(&self.usd_close)
+        self.usd_close
     }
 
     /// Return volume
     #[must_use]
     pub fn volume(&self) -> f64 {
-        convert_to_f64(&self.volume)
+        self.volume
     }
 
     /// Return market cap
     #[must_use]
     pub fn market_cap(&self) -> f64 {
-        convert_to_f64(&self.market_cap)
+        self.market_cap
     }
-}
-
-/// Convert String to f64
-fn convert_to_f64(val: &str) -> f64 {
-    val.trim()
-        .parse::<f64>()
-        .expect("Failed to convert String to f64")
 }
 
 /// Struct which holds out Crypto currency information

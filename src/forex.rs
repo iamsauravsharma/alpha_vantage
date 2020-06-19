@@ -9,6 +9,7 @@
 //! [forex]: https://www.alphavantage.co/documentation/#fx
 
 use crate::{
+    deserialize::from_str,
     error::{Error, Result},
     util::{ForexFunction, OutputSize, TimeSeriesInterval},
 };
@@ -34,10 +35,10 @@ struct MetaData {
 #[derive(Default, Debug, Clone)]
 pub struct Entry {
     time: String,
-    open: String,
-    high: String,
-    low: String,
-    close: String,
+    open: f64,
+    high: f64,
+    low: f64,
+    close: f64,
 }
 
 /// trait which helps for performing some common operation on Vec<Entry>
@@ -108,33 +109,26 @@ impl Entry {
     /// Return open value
     #[must_use]
     pub fn open(&self) -> f64 {
-        return_f64(&self.open)
+        self.open
     }
 
     /// Return high value
     #[must_use]
     pub fn high(&self) -> f64 {
-        return_f64(&self.high)
+        self.high
     }
 
     /// Return low value
     #[must_use]
     pub fn low(&self) -> f64 {
-        return_f64(&self.low)
+        self.low
     }
 
     /// Return close value
     #[must_use]
     pub fn close(&self) -> f64 {
-        return_f64(&self.close)
+        self.close
     }
-}
-
-/// Return f64 from &str
-fn return_f64(data: &str) -> f64 {
-    data.trim()
-        .parse::<f64>()
-        .expect("Cannot convert string to f64")
 }
 
 /// Struct to store Forex data after forex API call
@@ -324,14 +318,14 @@ impl Forex {
 /// Entry Helper
 #[derive(Clone, Debug, Deserialize)]
 struct EntryHelper {
-    #[serde(rename = "1. open")]
-    open: String,
-    #[serde(rename = "2. high")]
-    high: String,
+    #[serde(rename = "1. open", deserialize_with = "from_str")]
+    open: f64,
+    #[serde(rename = "2. high", deserialize_with = "from_str")]
+    high: f64,
     #[serde(rename = "3. low")]
-    low: String,
+    low: f64,
     #[serde(rename = "4. close")]
-    close: String,
+    close: f64,
 }
 
 /// struct which helps for collecting forex data from website
@@ -402,7 +396,7 @@ impl ForexHelper {
         if let Some(entry) = self.forex {
             for hash in entry.values() {
                 for val in hash.keys() {
-                    let mut entry: Entry = crate::forex::Entry::default();
+                    let mut entry = Entry::default();
                     entry.time = val.to_string();
                     let entry_helper = hash
                         .get(val)

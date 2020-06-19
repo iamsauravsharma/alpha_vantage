@@ -8,7 +8,10 @@
 //!
 //! [quote]: https://www.alphavantage.co/documentation/#latestprice
 
-use crate::error::{Error, Result};
+use crate::{
+    deserialize::from_str,
+    error::{Error, Result},
+};
 use serde::Deserialize;
 
 /// Struct for helping creation of Quote
@@ -47,22 +50,22 @@ pub struct Quote {
 struct GlobalQuote {
     #[serde(rename = "01. symbol")]
     symbol: String,
-    #[serde(rename = "02. open")]
-    open: String,
-    #[serde(rename = "03. high")]
-    high: String,
-    #[serde(rename = "04. low")]
-    low: String,
-    #[serde(rename = "05. price")]
-    price: String,
-    #[serde(rename = "06. volume")]
-    volume: String,
+    #[serde(rename = "02. open", deserialize_with = "from_str")]
+    open: f64,
+    #[serde(rename = "03. high", deserialize_with = "from_str")]
+    high: f64,
+    #[serde(rename = "04. low", deserialize_with = "from_str")]
+    low: f64,
+    #[serde(rename = "05. price", deserialize_with = "from_str")]
+    price: f64,
+    #[serde(rename = "06. volume", deserialize_with = "from_str")]
+    volume: u64,
     #[serde(rename = "07. latest trading day")]
     last_day: String,
-    #[serde(rename = "08. previous close")]
-    previous_close: String,
-    #[serde(rename = "09. change")]
-    change: String,
+    #[serde(rename = "08. previous close", deserialize_with = "from_str")]
+    previous_close: f64,
+    #[serde(rename = "09. change", deserialize_with = "from_str")]
+    change: f64,
     #[serde(rename = "10. change percent")]
     change_percent: String,
 }
@@ -71,43 +74,43 @@ impl Quote {
     /// return open value
     #[must_use]
     pub fn open(&self) -> f64 {
-        self.return_f64_value("open")
+        self.global_quote.open
     }
 
     /// return high value
     #[must_use]
     pub fn high(&self) -> f64 {
-        self.return_f64_value("high")
+        self.global_quote.high
     }
 
     /// return low value
     #[must_use]
     pub fn low(&self) -> f64 {
-        self.return_f64_value("low")
+        self.global_quote.low
     }
 
     /// return price value
     #[must_use]
     pub fn price(&self) -> f64 {
-        self.return_f64_value("price")
+        self.global_quote.price
     }
 
     /// return out a volume
     #[must_use]
-    pub fn volume(&self) -> f64 {
-        self.return_f64_value("volume")
+    pub fn volume(&self) -> u64 {
+        self.global_quote.volume
     }
 
     /// return previous
     #[must_use]
     pub fn previous(&self) -> f64 {
-        self.return_f64_value("previous")
+        self.global_quote.previous_close
     }
 
     /// return change
     #[must_use]
     pub fn change(&self) -> f64 {
-        self.return_f64_value("change")
+        self.global_quote.change
     }
 
     /// return change percent
@@ -118,28 +121,10 @@ impl Quote {
         (price - previous) / previous
     }
 
-    /// general function used for returning f64 value of Quote method
-    fn return_f64_value(&self, value: &str) -> f64 {
-        let price = match value {
-            "open" => &self.global_quote.open,
-            "high" => &self.global_quote.high,
-            "low" => &self.global_quote.low,
-            "price" => &self.global_quote.price,
-            "previous" => &self.global_quote.previous_close,
-            "change" => &self.global_quote.change,
-            "volume" => &self.global_quote.volume,
-            _ => "",
-        };
-        price
-            .trim()
-            .parse::<f64>()
-            .expect("failed to convert String to f64")
-    }
-
     /// get last trading day
     #[must_use]
     pub fn last_trading(&self) -> &str {
-        self.return_string_value("trading")
+        &self.global_quote.last_day
     }
 
     /// get symbol
@@ -156,15 +141,6 @@ impl Quote {
     /// ```
     #[must_use]
     pub fn symbol(&self) -> &str {
-        self.return_string_value("symbol")
-    }
-
-    /// general function used for returning String value
-    fn return_string_value(&self, value: &str) -> &str {
-        match value {
-            "trading" => &self.global_quote.last_day,
-            "symbol" => &self.global_quote.symbol,
-            _ => "",
-        }
+        &self.global_quote.symbol
     }
 }

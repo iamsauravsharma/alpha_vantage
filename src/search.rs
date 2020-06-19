@@ -8,7 +8,10 @@
 //!
 //! [symbol_search]: https://www.alphavantage.co/documentation/#symbolsearch
 
-use crate::error::{Error, Result};
+use crate::{
+    deserialize::from_str,
+    error::{Error, Result},
+};
 use serde::Deserialize;
 
 /// struct for helping creation of search struct
@@ -56,8 +59,8 @@ pub struct DataValue {
     time_zone: String,
     #[serde(rename = "8. currency")]
     currency: String,
-    #[serde(rename = "9. matchScore")]
-    match_score: String,
+    #[serde(rename = "9. matchScore", deserialize_with = "from_str")]
+    match_score: f64,
 }
 
 impl DataValue {
@@ -113,9 +116,6 @@ impl DataValue {
     #[must_use]
     pub fn match_score(&self) -> f64 {
         self.match_score
-            .trim()
-            .parse::<f64>()
-            .expect("Failed to trim out string and convert to f64")
     }
 }
 
