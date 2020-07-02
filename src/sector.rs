@@ -25,17 +25,17 @@ struct MetaData {
 #[derive(Default, Clone)]
 pub struct Data {
     rank: String,
-    utilities: String,
-    health_care: String,
-    information_technology: String,
-    industrials: String,
-    real_estate: String,
-    consumer_staples: String,
-    consumer_discretionary: String,
-    financials: String,
-    communication_services: String,
-    materials: String,
-    energy: String,
+    utilities: f64,
+    health_care: f64,
+    information_technology: f64,
+    industrials: f64,
+    real_estate: f64,
+    consumer_staples: f64,
+    consumer_discretionary: f64,
+    financials: f64,
+    communication_services: f64,
+    materials: f64,
+    energy: f64,
 }
 
 impl Data {
@@ -47,68 +47,68 @@ impl Data {
 
     /// Return utilities score
     #[must_use]
-    pub fn utilities(&self) -> &str {
-        &self.utilities
+    pub fn utilities(&self) -> f64 {
+        self.utilities
     }
 
     /// Return health care score
     #[must_use]
-    pub fn health_care(&self) -> &str {
-        &self.health_care
+    pub fn health_care(&self) -> f64 {
+        self.health_care
     }
 
     /// Return out information technology
     #[must_use]
-    pub fn information_technology(&self) -> &str {
-        &self.information_technology
+    pub fn information_technology(&self) -> f64 {
+        self.information_technology
     }
 
     /// Return industrials scores
     #[must_use]
-    pub fn industrials(&self) -> &str {
-        &self.industrials
+    pub fn industrials(&self) -> f64 {
+        self.industrials
     }
 
     /// Return out real estate value
     #[must_use]
-    pub fn real_estate(&self) -> &str {
-        &self.real_estate
+    pub fn real_estate(&self) -> f64 {
+        self.real_estate
     }
 
     /// Return consumer staples value
     #[must_use]
-    pub fn consumer_staples(&self) -> &str {
-        &self.consumer_staples
+    pub fn consumer_staples(&self) -> f64 {
+        self.consumer_staples
     }
 
     /// Return out value for consumer discretionary
     #[must_use]
-    pub fn consumer_discretionary(&self) -> &str {
-        &self.consumer_discretionary
+    pub fn consumer_discretionary(&self) -> f64 {
+        self.consumer_discretionary
     }
 
     /// Return out for financials
     #[must_use]
-    pub fn financials(&self) -> &str {
-        &self.financials
+    pub fn financials(&self) -> f64 {
+        self.financials
     }
 
     /// Gives value of communication services
     #[must_use]
-    pub fn communication_services(&self) -> &str {
-        &self.communication_services
+    pub fn communication_services(&self) -> f64 {
+        self.communication_services
     }
 
     /// Gives materials value
     #[must_use]
-    pub fn materials(&self) -> &str {
-        &self.materials
+    pub fn materials(&self) -> f64 {
+        self.materials
     }
 
     /// Gives out energy data
     #[must_use]
-    pub fn energy(&self) -> &str {
-        &self.energy
+    pub fn energy(&self) -> f64 {
+        self.energy
     }
 }
 
@@ -204,17 +204,23 @@ impl SectorHelper {
                 }
                 for (key, val) in val.iter() {
                     match key.as_str() {
-                        "Utilities" => data.utilities = val.to_string(),
-                        "Health Care" => data.health_care = val.to_string(),
-                        "Information Technology" => data.information_technology = val.to_string(),
-                        "Industrials" => data.industrials = val.to_string(),
-                        "Real Estate" => data.real_estate = val.to_string(),
-                        "Consumer Staples" => data.consumer_staples = val.to_string(),
-                        "Consumer Discretionary" => data.consumer_discretionary = val.to_string(),
-                        "Financials" => data.financials = val.to_string(),
-                        "Communication Services" => data.communication_services = val.to_string(),
-                        "Materials" => data.materials = val.to_string(),
-                        "Energy" => data.energy = val.to_string(),
+                        "Utilities" => data.utilities = convert_str_percent_f64(val),
+                        "Health Care" => data.health_care = convert_str_percent_f64(val),
+                        "Information Technology" => {
+                            data.information_technology = convert_str_percent_f64(val)
+                        }
+                        "Industrials" => data.industrials = convert_str_percent_f64(val),
+                        "Real Estate" => data.real_estate = convert_str_percent_f64(val),
+                        "Consumer Staples" => data.consumer_staples = convert_str_percent_f64(val),
+                        "Consumer Discretionary" => {
+                            data.consumer_discretionary = convert_str_percent_f64(val)
+                        }
+                        "Financials" => data.financials = convert_str_percent_f64(val),
+                        "Communication Services" => {
+                            data.communication_services = convert_str_percent_f64(val)
+                        }
+                        "Materials" => data.materials = convert_str_percent_f64(val),
+                        "Energy" => data.energy = convert_str_percent_f64(val),
                         _ => {}
                     }
                 }
@@ -224,4 +230,11 @@ impl SectorHelper {
         }
         Ok(sector)
     }
+}
+
+// convert str which has percent form to f64 val
+fn convert_str_percent_f64(val: &str) -> f64 {
+    let mut s = val.to_owned();
+    s.pop();
+    s.trim().parse::<f64>().unwrap()
 }

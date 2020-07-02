@@ -9,7 +9,7 @@
 //! [quote]: https://www.alphavantage.co/documentation/#latestprice
 
 use crate::{
-    deserialize::from_str,
+    deserialize::{from_str, percent_f64},
     error::{Error, Result},
 };
 use serde::Deserialize;
@@ -66,8 +66,8 @@ struct GlobalQuote {
     previous_close: f64,
     #[serde(rename = "09. change", deserialize_with = "from_str")]
     change: f64,
-    #[serde(rename = "10. change percent")]
-    change_percent: String,
+    #[serde(rename = "10. change percent", deserialize_with = "percent_f64")]
+    change_percent: f64,
 }
 
 impl Quote {
@@ -116,9 +116,7 @@ impl Quote {
     /// return change percent
     #[must_use]
     pub fn change_percent(&self) -> f64 {
-        let previous = self.previous();
-        let price = self.price();
-        (price - previous) / previous
+        self.global_quote.change_percent
     }
 
     /// get last trading day
