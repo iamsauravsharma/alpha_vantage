@@ -179,7 +179,7 @@ impl Exchange {
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
-    ///     let exchange = api.exchange("USd", "JPY").await.unwrap();
+    ///     let exchange = api.exchange("USD", "JPY").await.unwrap();
     ///     let ask_price = exchange.ask_price();
     ///     assert_eq!(ask_price, None);
     /// }
