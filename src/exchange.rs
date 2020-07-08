@@ -62,6 +62,10 @@ struct RealtimeExchangeRate {
     last_refreshed: String,
     #[serde(rename = "7. Time Zone")]
     time_zone: String,
+    #[serde(rename = "8. Bid Price")]
+    bid_price: String,
+    #[serde(rename = "9. Ask Price")]
+    ask_price: String,
 }
 
 impl Exchange {
@@ -149,5 +153,39 @@ impl Exchange {
     #[must_use]
     pub fn name_to(&self) -> &str {
         &self.real_time.to_name
+    }
+
+    /// get bid price. Returns None if no bid price
+    ///
+    /// ```
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let exchange = api.exchange("USD", "JPY").await.unwrap();
+    ///     let bid_price = exchange.bid_price();
+    ///     assert_eq!(bid_price, None);
+    /// }
+    /// ```
+    #[must_use]
+    pub fn bid_price(&self) -> Option<f64> {
+        self.real_time.bid_price.trim().parse::<f64>().ok()
+    }
+
+    /// get ask price. Return None if no ask price
+    ///
+    /// ```
+    /// use tokio::prelude::*;
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let exchange = api.exchange("USd", "JPY").await.unwrap();
+    ///     let ask_price = exchange.ask_price();
+    ///     assert_eq!(ask_price, None);
+    /// }
+    /// ```
+    #[must_use]
+    pub fn ask_price(&self) -> Option<f64> {
+        self.real_time.ask_price.trim().parse::<f64>().ok()
     }
 }
