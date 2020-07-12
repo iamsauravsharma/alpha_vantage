@@ -128,7 +128,8 @@ impl APIKey {
     ///
     /// # Example
     /// ```
-    /// let api = alpha_vantage::set_api("demo");
+    /// use alpha_vantage::blocking::APIKey;
+    /// let api = APIKey::set_api("demo");
     /// assert_eq!(api.crypto_rating("BTC").unwrap().name(), "Bitcoin");
     /// ```
     pub fn crypto_rating(&self, symbol: &str) -> Result<CryptoRating> {
