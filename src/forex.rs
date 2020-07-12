@@ -41,64 +41,6 @@ pub struct Entry {
     close: f64,
 }
 
-/// trait which helps for performing some common operation on Vec<Entry>
-pub trait VecEntry {
-    /// Find a entry with a given time as a input return none if no entry found
-    fn find(&self, time: &str) -> Option<Entry>;
-    /// Return a entry which is of latest time period
-    fn latest(&self) -> Entry;
-    /// Return a top n latest Entry if n Entry is present else return Error
-    fn latestn(&self, n: usize) -> Result<Vec<Entry>>;
-}
-
-impl VecEntry for Vec<Entry> {
-    #[must_use]
-    fn find(&self, time: &str) -> Option<Entry> {
-        for entry in self {
-            if entry.time == time {
-                return Some(entry.clone());
-            }
-        }
-        None
-    }
-
-    #[must_use]
-    fn latest(&self) -> Entry {
-        let mut latest = Entry::default();
-        let mut new_time = String::new();
-        for entry in self {
-            if new_time < entry.time {
-                latest = entry.clone();
-                new_time = entry.time.clone();
-            }
-        }
-        latest
-    }
-
-    fn latestn(&self, n: usize) -> Result<Vec<Entry>> {
-        let mut time_list = Vec::new();
-        for entry in self {
-            time_list.push(entry.time.clone());
-        }
-        time_list.sort();
-        time_list.reverse();
-        let time_list_count: usize = time_list.len();
-        let mut full_list = Self::new();
-        for i in 0..n {
-            let time = time_list.get(i);
-            if let Some(time) = time {
-                let entry = self
-                    .find(time)
-                    .unwrap_or_else(|| panic!("Failed to find time value for index {}", i));
-                full_list.push(entry);
-            } else {
-                return Err(Error::DesiredNumberOfEntryNotPresent(time_list_count));
-            }
-        }
-        Ok(full_list)
-    }
-}
-
 impl Entry {
     /// Return time for entry
     #[must_use]
@@ -414,6 +356,64 @@ impl ForexHelper {
             forex_struct.forex = value;
         }
         Ok(forex_struct)
+    }
+}
+
+/// trait which helps for performing some common operation on Vec<Entry>
+pub trait VecEntry {
+    /// Find a entry with a given time as a input return none if no entry found
+    fn find(&self, time: &str) -> Option<Entry>;
+    /// Return a entry which is of latest time period
+    fn latest(&self) -> Entry;
+    /// Return a top n latest Entry if n Entry is present else return Error
+    fn latestn(&self, n: usize) -> Result<Vec<Entry>>;
+}
+
+impl VecEntry for Vec<Entry> {
+    #[must_use]
+    fn find(&self, time: &str) -> Option<Entry> {
+        for entry in self {
+            if entry.time == time {
+                return Some(entry.clone());
+            }
+        }
+        None
+    }
+
+    #[must_use]
+    fn latest(&self) -> Entry {
+        let mut latest = Entry::default();
+        let mut new_time = String::new();
+        for entry in self {
+            if new_time < entry.time {
+                latest = entry.clone();
+                new_time = entry.time.clone();
+            }
+        }
+        latest
+    }
+
+    fn latestn(&self, n: usize) -> Result<Vec<Entry>> {
+        let mut time_list = Vec::new();
+        for entry in self {
+            time_list.push(entry.time.clone());
+        }
+        time_list.sort();
+        time_list.reverse();
+        let time_list_count: usize = time_list.len();
+        let mut full_list = Self::new();
+        for i in 0..n {
+            let time = time_list.get(i);
+            if let Some(time) = time {
+                let entry = self
+                    .find(time)
+                    .unwrap_or_else(|| panic!("Failed to find time value for index {}", i));
+                full_list.push(entry);
+            } else {
+                return Err(Error::DesiredNumberOfEntryNotPresent(time_list_count));
+            }
+        }
+        Ok(full_list)
     }
 }
 

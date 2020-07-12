@@ -14,31 +14,6 @@ use crate::{
 };
 use serde::Deserialize;
 
-/// Struct used for helping creation of Exchange
-#[derive(Debug, Deserialize)]
-pub(crate) struct ExchangeHelper {
-    #[serde(rename = "Error Message")]
-    error_message: Option<String>,
-    #[serde(rename = "Information")]
-    information: Option<String>,
-    #[serde(rename = "Realtime Currency Exchange Rate")]
-    real_time: Option<RealtimeExchangeRate>,
-}
-
-impl ExchangeHelper {
-    pub(crate) fn convert(self) -> Result<Exchange> {
-        let mut exchange = Exchange::default();
-        if let Some(information) = self.information {
-            return Err(Error::AlphaVantageInformation(information));
-        }
-        if let Some(error_message) = self.error_message {
-            return Err(Error::AlphaVantageErrorMessage(error_message));
-        }
-        exchange.real_time = self.real_time.unwrap();
-        Ok(exchange)
-    }
-}
-
 /// Struct used for exchanging currency
 #[derive(Default)]
 pub struct Exchange {
@@ -165,5 +140,30 @@ impl Exchange {
     #[must_use]
     pub fn ask_price(&self) -> Option<f64> {
         self.real_time.ask_price.trim().parse::<f64>().ok()
+    }
+}
+
+/// Struct used for helping creation of Exchange
+#[derive(Debug, Deserialize)]
+pub(crate) struct ExchangeHelper {
+    #[serde(rename = "Error Message")]
+    error_message: Option<String>,
+    #[serde(rename = "Information")]
+    information: Option<String>,
+    #[serde(rename = "Realtime Currency Exchange Rate")]
+    real_time: Option<RealtimeExchangeRate>,
+}
+
+impl ExchangeHelper {
+    pub(crate) fn convert(self) -> Result<Exchange> {
+        let mut exchange = Exchange::default();
+        if let Some(information) = self.information {
+            return Err(Error::AlphaVantageInformation(information));
+        }
+        if let Some(error_message) = self.error_message {
+            return Err(Error::AlphaVantageErrorMessage(error_message));
+        }
+        exchange.real_time = self.real_time.unwrap();
+        Ok(exchange)
     }
 }

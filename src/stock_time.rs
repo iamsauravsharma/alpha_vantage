@@ -21,6 +21,87 @@ use std::{collections::HashMap, str::FromStr};
 
 const LINK: &str = "https://www.alphavantage.co/query?function=";
 
+/// Struct for storing Meta Data value
+#[derive(Debug, Clone, Default)]
+pub struct MetaData {
+    information: String,
+    symbol: String,
+    last_refreshed: String,
+    interval: Option<String>,
+    output_size: Option<String>,
+    time_zone: String,
+}
+
+/// Struct for Entry value
+#[derive(Default, Debug, Clone)]
+pub struct Entry {
+    time: String,
+    open: f64,
+    high: f64,
+    low: f64,
+    close: f64,
+    adjusted_close: Option<f64>,
+    volume: u64,
+    dividend_amount: Option<f64>,
+    split_coefficient: Option<f64>,
+}
+
+impl Entry {
+    /// Get time
+    #[must_use]
+    pub fn time(&self) -> &str {
+        &self.time
+    }
+
+    /// Return open
+    #[must_use]
+    pub fn open(&self) -> f64 {
+        self.open
+    }
+
+    /// Return high
+    #[must_use]
+    pub fn high(&self) -> f64 {
+        self.high
+    }
+
+    /// Return low
+    #[must_use]
+    pub fn low(&self) -> f64 {
+        self.low
+    }
+
+    /// Return close
+    #[must_use]
+    pub fn close(&self) -> f64 {
+        self.close
+    }
+
+    /// Return adjusted
+    #[must_use]
+    pub fn adjusted(&self) -> Option<f64> {
+        self.adjusted_close
+    }
+
+    /// Return volume
+    #[must_use]
+    pub fn volume(&self) -> u64 {
+        self.volume
+    }
+
+    /// Return dividend
+    #[must_use]
+    pub fn dividend(&self) -> Option<f64> {
+        self.dividend_amount
+    }
+
+    /// Return split dividend
+    #[must_use]
+    pub fn split(&self) -> Option<f64> {
+        self.split_coefficient
+    }
+}
+
 /// Struct for storing time series data
 #[derive(Debug, Default)]
 pub struct TimeSeries {
@@ -176,145 +257,6 @@ impl TimeSeries {
     }
 }
 
-/// Struct for storing Meta Data value
-#[derive(Debug, Clone, Default)]
-pub struct MetaData {
-    information: String,
-    symbol: String,
-    last_refreshed: String,
-    interval: Option<String>,
-    output_size: Option<String>,
-    time_zone: String,
-}
-
-/// Struct for Entry value
-#[derive(Default, Debug, Clone)]
-pub struct Entry {
-    time: String,
-    open: f64,
-    high: f64,
-    low: f64,
-    close: f64,
-    adjusted_close: Option<f64>,
-    volume: u64,
-    dividend_amount: Option<f64>,
-    split_coefficient: Option<f64>,
-}
-
-/// trait which helps for performing some common operation on Vec<Entry>
-pub trait VecEntry {
-    /// Find a entry with a given time as a input return none if no entry found
-    fn find(&self, time: &str) -> Option<Entry>;
-    /// Return a entry which is of latest time period
-    fn latest(&self) -> Entry;
-    /// Return a top n latest Entry if n Entry is present else return Error
-    fn latestn(&self, n: usize) -> Result<Vec<Entry>>;
-}
-
-impl VecEntry for Vec<Entry> {
-    #[must_use]
-    fn find(&self, time: &str) -> Option<Entry> {
-        for entry in self {
-            if entry.time == time {
-                return Some(entry.clone());
-            }
-        }
-        None
-    }
-
-    #[must_use]
-    fn latest(&self) -> Entry {
-        let mut latest = Entry::default();
-        let mut new_time = String::new();
-        for entry in self {
-            if new_time < entry.time {
-                latest = entry.clone();
-                new_time = entry.time.clone();
-            }
-        }
-        latest
-    }
-
-    fn latestn(&self, n: usize) -> Result<Vec<Entry>> {
-        let mut time_list = Vec::new();
-        for entry in self {
-            time_list.push(entry.time.clone());
-        }
-        time_list.sort();
-        time_list.reverse();
-        let time_list_count: usize = time_list.len();
-        let mut full_list = Self::new();
-        for i in 0..n {
-            let time = time_list.get(i);
-            if let Some(time) = time {
-                let entry = self
-                    .find(time)
-                    .unwrap_or_else(|| panic!("Failed to find time value for index {}", i));
-                full_list.push(entry);
-            } else {
-                return Err(Error::DesiredNumberOfEntryNotPresent(time_list_count));
-            }
-        }
-        Ok(full_list)
-    }
-}
-
-impl Entry {
-    /// Get time
-    #[must_use]
-    pub fn time(&self) -> &str {
-        &self.time
-    }
-
-    /// Return open
-    #[must_use]
-    pub fn open(&self) -> f64 {
-        self.open
-    }
-
-    /// Return high
-    #[must_use]
-    pub fn high(&self) -> f64 {
-        self.high
-    }
-
-    /// Return low
-    #[must_use]
-    pub fn low(&self) -> f64 {
-        self.low
-    }
-
-    /// Return close
-    #[must_use]
-    pub fn close(&self) -> f64 {
-        self.close
-    }
-
-    /// Return adjusted
-    #[must_use]
-    pub fn adjusted(&self) -> Option<f64> {
-        self.adjusted_close
-    }
-
-    /// Return volume
-    #[must_use]
-    pub fn volume(&self) -> u64 {
-        self.volume
-    }
-
-    /// Return dividend
-    #[must_use]
-    pub fn dividend(&self) -> Option<f64> {
-        self.dividend_amount
-    }
-
-    /// Return split dividend
-    #[must_use]
-    pub fn split(&self) -> Option<f64> {
-        self.split_coefficient
-    }
-}
-
 /// Helper struct to store non adjusted data
 #[derive(Clone, Deserialize)]
 struct EntryHelper {
@@ -452,6 +394,64 @@ impl TimeSeriesHelper {
             time_series.entry = value;
         }
         Ok(time_series)
+    }
+}
+
+/// trait which helps for performing some common operation on Vec<Entry>
+pub trait VecEntry {
+    /// Find a entry with a given time as a input return none if no entry found
+    fn find(&self, time: &str) -> Option<Entry>;
+    /// Return a entry which is of latest time period
+    fn latest(&self) -> Entry;
+    /// Return a top n latest Entry if n Entry is present else return Error
+    fn latestn(&self, n: usize) -> Result<Vec<Entry>>;
+}
+
+impl VecEntry for Vec<Entry> {
+    #[must_use]
+    fn find(&self, time: &str) -> Option<Entry> {
+        for entry in self {
+            if entry.time == time {
+                return Some(entry.clone());
+            }
+        }
+        None
+    }
+
+    #[must_use]
+    fn latest(&self) -> Entry {
+        let mut latest = Entry::default();
+        let mut new_time = String::new();
+        for entry in self {
+            if new_time < entry.time {
+                latest = entry.clone();
+                new_time = entry.time.clone();
+            }
+        }
+        latest
+    }
+
+    fn latestn(&self, n: usize) -> Result<Vec<Entry>> {
+        let mut time_list = Vec::new();
+        for entry in self {
+            time_list.push(entry.time.clone());
+        }
+        time_list.sort();
+        time_list.reverse();
+        let time_list_count: usize = time_list.len();
+        let mut full_list = Self::new();
+        for i in 0..n {
+            let time = time_list.get(i);
+            if let Some(time) = time {
+                let entry = self
+                    .find(time)
+                    .unwrap_or_else(|| panic!("Failed to find time value for index {}", i));
+                full_list.push(entry);
+            } else {
+                return Err(Error::DesiredNumberOfEntryNotPresent(time_list_count));
+            }
+        }
+        Ok(full_list)
     }
 }
 

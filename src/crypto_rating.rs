@@ -19,37 +19,6 @@ use crate::{
 };
 use serde::Deserialize;
 
-/// struct used for helping creation of crypto rating
-#[derive(Debug, Deserialize)]
-pub(crate) struct CryptoRatingHelper {
-    #[serde(rename = "Error Message")]
-    error_message: Option<String>,
-    #[serde(rename = "Information")]
-    information: Option<String>,
-    #[serde(rename = "Crypto Rating (FCAS)")]
-    rating_score: Option<RatingScore>,
-}
-
-impl CryptoRatingHelper {
-    pub(crate) fn convert(self) -> Result<CryptoRating> {
-        let mut crypto_rating = CryptoRating::default();
-        if let Some(information) = self.information {
-            return Err(Error::AlphaVantageInformation(information));
-        }
-        if let Some(error_message) = self.error_message {
-            return Err(Error::AlphaVantageErrorMessage(error_message));
-        }
-        crypto_rating.rating_score = self.rating_score.unwrap();
-        Ok(crypto_rating)
-    }
-}
-
-/// Struct used for health index rating
-#[derive(Default)]
-pub struct CryptoRating {
-    rating_score: RatingScore,
-}
-
 /// Struct Storing Health rating score
 #[derive(Debug, Deserialize, Clone, Default)]
 struct RatingScore {
@@ -71,6 +40,12 @@ struct RatingScore {
     last_refreshed: String,
     #[serde(rename = "9. timezone", deserialize_with = "from_str")]
     time_zone: String,
+}
+
+/// Struct used for health index rating
+#[derive(Default)]
+pub struct CryptoRating {
+    rating_score: RatingScore,
 }
 
 impl CryptoRating {
@@ -159,5 +134,30 @@ impl CryptoRating {
     #[must_use]
     pub fn utility_score(&self) -> u16 {
         self.rating_score.utility_score
+    }
+}
+
+/// struct used for helping creation of crypto rating
+#[derive(Debug, Deserialize)]
+pub(crate) struct CryptoRatingHelper {
+    #[serde(rename = "Error Message")]
+    error_message: Option<String>,
+    #[serde(rename = "Information")]
+    information: Option<String>,
+    #[serde(rename = "Crypto Rating (FCAS)")]
+    rating_score: Option<RatingScore>,
+}
+
+impl CryptoRatingHelper {
+    pub(crate) fn convert(self) -> Result<CryptoRating> {
+        let mut crypto_rating = CryptoRating::default();
+        if let Some(information) = self.information {
+            return Err(Error::AlphaVantageInformation(information));
+        }
+        if let Some(error_message) = self.error_message {
+            return Err(Error::AlphaVantageErrorMessage(error_message));
+        }
+        crypto_rating.rating_score = self.rating_score.unwrap();
+        Ok(crypto_rating)
     }
 }

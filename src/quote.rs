@@ -14,37 +14,6 @@ use crate::{
 };
 use serde::Deserialize;
 
-/// Struct for helping creation of Quote
-#[derive(Debug, Deserialize)]
-pub(crate) struct QuoteHelper {
-    #[serde(rename = "Error Message")]
-    error_message: Option<String>,
-    #[serde(rename = "Information")]
-    information: Option<String>,
-    #[serde(rename = "Global Quote")]
-    global_quote: Option<GlobalQuote>,
-}
-
-impl QuoteHelper {
-    pub(crate) fn convert(self) -> Result<Quote> {
-        let mut quote = Quote::default();
-        if let Some(information) = self.information {
-            return Err(Error::AlphaVantageInformation(information));
-        }
-        if let Some(error_message) = self.error_message {
-            return Err(Error::AlphaVantageErrorMessage(error_message));
-        }
-        quote.global_quote = self.global_quote.unwrap();
-        Ok(quote)
-    }
-}
-
-/// Struct for storing Quote related information
-#[derive(Default)]
-pub struct Quote {
-    global_quote: GlobalQuote,
-}
-
 /// Struct storing Global Quote Value
 #[derive(Debug, Deserialize, Clone, Default)]
 struct GlobalQuote {
@@ -68,6 +37,12 @@ struct GlobalQuote {
     change: f64,
     #[serde(rename = "10. change percent", deserialize_with = "percent_f64")]
     change_percent: f64,
+}
+
+/// Struct for storing Quote related information
+#[derive(Default)]
+pub struct Quote {
+    global_quote: GlobalQuote,
 }
 
 impl Quote {
@@ -140,5 +115,30 @@ impl Quote {
     #[must_use]
     pub fn symbol(&self) -> &str {
         &self.global_quote.symbol
+    }
+}
+
+/// Struct for helping creation of Quote
+#[derive(Debug, Deserialize)]
+pub(crate) struct QuoteHelper {
+    #[serde(rename = "Error Message")]
+    error_message: Option<String>,
+    #[serde(rename = "Information")]
+    information: Option<String>,
+    #[serde(rename = "Global Quote")]
+    global_quote: Option<GlobalQuote>,
+}
+
+impl QuoteHelper {
+    pub(crate) fn convert(self) -> Result<Quote> {
+        let mut quote = Quote::default();
+        if let Some(information) = self.information {
+            return Err(Error::AlphaVantageInformation(information));
+        }
+        if let Some(error_message) = self.error_message {
+            return Err(Error::AlphaVantageErrorMessage(error_message));
+        }
+        quote.global_quote = self.global_quote.unwrap();
+        Ok(quote)
     }
 }

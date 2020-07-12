@@ -14,32 +14,6 @@ use crate::{
 };
 use serde::Deserialize;
 
-/// struct for helping creation of search struct
-#[derive(Debug, Deserialize)]
-pub(crate) struct SearchHelper {
-    #[serde(rename = "Information")]
-    information: Option<String>,
-    #[serde(rename = "bestMatches")]
-    matches: Option<Vec<DataValue>>,
-}
-
-impl SearchHelper {
-    pub(crate) fn convert(self) -> Result<Search> {
-        let mut search = Search::default();
-        if let Some(information) = self.information {
-            return Err(Error::AlphaVantageInformation(information));
-        }
-        search.matches = self.matches.unwrap();
-        Ok(search)
-    }
-}
-
-/// struct for storing search method data
-#[derive(Default)]
-pub struct Search {
-    matches: Vec<DataValue>,
-}
-
 /// Struct which stores matches data for search keyword
 #[derive(Debug, Clone, Deserialize, Default)]
 pub struct DataValue {
@@ -211,10 +185,36 @@ impl DataValue {
     }
 }
 
+/// struct for storing search method data
+#[derive(Default)]
+pub struct Search {
+    matches: Vec<DataValue>,
+}
+
 impl Search {
     /// Return result of search
     #[must_use]
     pub fn result(&self) -> &Vec<DataValue> {
         &self.matches
+    }
+}
+
+/// struct for helping creation of search struct
+#[derive(Debug, Deserialize)]
+pub(crate) struct SearchHelper {
+    #[serde(rename = "Information")]
+    information: Option<String>,
+    #[serde(rename = "bestMatches")]
+    matches: Option<Vec<DataValue>>,
+}
+
+impl SearchHelper {
+    pub(crate) fn convert(self) -> Result<Search> {
+        let mut search = Search::default();
+        if let Some(information) = self.information {
+            return Err(Error::AlphaVantageInformation(information));
+        }
+        search.matches = self.matches.unwrap();
+        Ok(search)
     }
 }

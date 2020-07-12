@@ -19,19 +19,6 @@ use std::collections::HashMap;
 
 type DataType = HashMap<String, HashMap<String, HashMap<String, String>>>;
 
-/// Struct for helping indicator struct
-#[derive(Deserialize)]
-pub(crate) struct IndicatorHelper {
-    #[serde(rename = "Error Message")]
-    error_message: Option<String>,
-    #[serde(rename = "Information")]
-    information: Option<String>,
-    #[serde(rename = "Meta Data")]
-    metadata: Option<HashMap<String, MetaDataValue>>,
-    #[serde(flatten)]
-    data: Option<DataType>,
-}
-
 #[derive(Debug, Deserialize)]
 #[serde(untagged)]
 /// Different representation of metadata value
@@ -48,18 +35,24 @@ pub enum MetaDataValue {
     Text(String),
 }
 
-impl IndicatorHelper {
-    pub(crate) fn convert(self) -> Result<Indicator> {
-        let mut indicator = Indicator::default();
-        if let Some(information) = self.information {
-            return Err(Error::AlphaVantageInformation(information));
-        }
-        if let Some(error_message) = self.error_message {
-            return Err(Error::AlphaVantageErrorMessage(error_message));
-        }
-        indicator.metadata = self.metadata.unwrap();
-        indicator.data = self.data.unwrap();
-        Ok(indicator)
+/// Struct for storing a data values
+#[derive(Default)]
+pub struct DataCollector {
+    time: String,
+    values: HashMap<String, f64>,
+}
+
+impl DataCollector {
+    /// Return out a time
+    #[must_use]
+    pub fn time(&self) -> &str {
+        &self.time
+    }
+
+    /// Return values for Data
+    #[must_use]
+    pub fn values(&self) -> &HashMap<String, f64> {
+        &self.values
     }
 }
 
@@ -103,24 +96,31 @@ impl Indicator {
     }
 }
 
-/// Struct for storing a data values
-#[derive(Default)]
-pub struct DataCollector {
-    time: String,
-    values: HashMap<String, f64>,
+/// Struct for helping indicator struct
+#[derive(Deserialize)]
+pub(crate) struct IndicatorHelper {
+    #[serde(rename = "Error Message")]
+    error_message: Option<String>,
+    #[serde(rename = "Information")]
+    information: Option<String>,
+    #[serde(rename = "Meta Data")]
+    metadata: Option<HashMap<String, MetaDataValue>>,
+    #[serde(flatten)]
+    data: Option<DataType>,
 }
 
-impl DataCollector {
-    /// Return out a time
-    #[must_use]
-    pub fn time(&self) -> &str {
-        &self.time
-    }
-
-    /// Return values for Data
-    #[must_use]
-    pub fn values(&self) -> &HashMap<String, f64> {
-        &self.values
+impl IndicatorHelper {
+    pub(crate) fn convert(self) -> Result<Indicator> {
+        let mut indicator = Indicator::default();
+        if let Some(information) = self.information {
+            return Err(Error::AlphaVantageInformation(information));
+        }
+        if let Some(error_message) = self.error_message {
+            return Err(Error::AlphaVantageErrorMessage(error_message));
+        }
+        indicator.metadata = self.metadata.unwrap();
+        indicator.data = self.data.unwrap();
+        Ok(indicator)
     }
 }
 
