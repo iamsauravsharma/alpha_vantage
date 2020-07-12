@@ -1,5 +1,6 @@
 use crate::{
     crypto::{create_url as create_url_crypto, Crypto, CryptoHelper},
+    crypto_rating::{CryptoRating, CryptoRatingHelper},
     error::Result,
     exchange::{Exchange, ExchangeHelper},
     forex::{create_url as create_url_forex, Forex, ForexHelper},
