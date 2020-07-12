@@ -123,6 +123,34 @@ impl APIKey {
     pub fn get_timeout(&self) -> u64 {
         self.timeout
     }
+    /// Method for getting crypto health rating
+    ///
+    /// # Example
+    /// ```
+    /// let api = alpha_vantage::set_api("demo");
+    /// assert_eq!(api.crypto_rating("BTC").unwrap().name(), "Bitcoin");
+    /// ```
+    pub fn crypto_rating(&self, symbol: &str) -> Result<CryptoRating> {
+        let data: Url = format!(
+            "{}CRYPTO_RATING&symbol={}&apikey={}",
+            LINK,
+            symbol,
+            self.get_api()
+        )
+        .parse()
+        .expect("Failed to parse string to url");
+
+        let body = &self
+            .client
+            .get(data)
+            .send()
+            .expect("failed to send out request")
+            .text()
+            .expect("failed to get out text from Response");
+        let crypto_rating_helper: CryptoRatingHelper =
+            serde_json::from_str(body).expect("Cannot convert to crypto rating");
+        crypto_rating_helper.convert()
+    }
 
     /// Crypto method for calling cryptography function
     ///

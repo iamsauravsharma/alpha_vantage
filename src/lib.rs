@@ -17,6 +17,8 @@
 /// blocking feature need to be enabled
 pub mod blocking;
 
+pub mod crypto_rating;
+
 pub mod crypto;
 
 mod deserialize;

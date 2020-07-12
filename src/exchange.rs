@@ -156,34 +156,12 @@ impl Exchange {
     }
 
     /// get bid price. Returns None if no bid price
-    ///
-    /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
-    /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo");
-    ///     let exchange = api.exchange("USD", "JPY").await.unwrap();
-    ///     let bid_price = exchange.bid_price();
-    ///     assert_eq!(bid_price, None);
-    /// }
-    /// ```
     #[must_use]
     pub fn bid_price(&self) -> Option<f64> {
         self.real_time.bid_price.trim().parse::<f64>().ok()
     }
 
     /// get ask price. Return None if no ask price
-    ///
-    /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
-    /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo");
-    ///     let exchange = api.exchange("USD", "JPY").await.unwrap();
-    ///     let ask_price = exchange.ask_price();
-    ///     assert_eq!(ask_price, None);
-    /// }
-    /// ```
     #[must_use]
     pub fn ask_price(&self) -> Option<f64> {
         self.real_time.ask_price.trim().parse::<f64>().ok()
