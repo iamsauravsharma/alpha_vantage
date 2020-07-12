@@ -167,28 +167,6 @@
 <span id="167">167</span>
 <span id="168">168</span>
 <span id="169">169</span>
-<span id="170">170</span>
-<span id="171">171</span>
-<span id="172">172</span>
-<span id="173">173</span>
-<span id="174">174</span>
-<span id="175">175</span>
-<span id="176">176</span>
-<span id="177">177</span>
-<span id="178">178</span>
-<span id="179">179</span>
-<span id="180">180</span>
-<span id="181">181</span>
-<span id="182">182</span>
-<span id="183">183</span>
-<span id="184">184</span>
-<span id="185">185</span>
-<span id="186">186</span>
-<span id="187">187</span>
-<span id="188">188</span>
-<span id="189">189</span>
-<span id="190">190</span>
-<span id="191">191</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Module for exchange currency (both digital &amp; physical currency exchange)</span>
 <span class="doccomment">//!</span>
@@ -348,34 +326,12 @@
     }
 
     <span class="doccomment">/// get bid price. Returns None if no bid price</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use tokio::prelude::*;</span>
-    <span class="doccomment">/// #[tokio::main]</span>
-    <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
-    <span class="doccomment">///     let exchange = api.exchange(&quot;USD&quot;, &quot;JPY&quot;).await.unwrap();</span>
-    <span class="doccomment">///     let bid_price = exchange.bid_price();</span>
-    <span class="doccomment">///     assert_eq!(bid_price, None);</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">bid_price</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">real_time</span>.<span class="ident">bid_price</span>.<span class="ident">trim</span>().<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>().<span class="ident">ok</span>()
     }
 
     <span class="doccomment">/// get ask price. Return None if no ask price</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use tokio::prelude::*;</span>
-    <span class="doccomment">/// #[tokio::main]</span>
-    <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
-    <span class="doccomment">///     let exchange = api.exchange(&quot;USD&quot;, &quot;JPY&quot;).await.unwrap();</span>
-    <span class="doccomment">///     let ask_price = exchange.ask_price();</span>
-    <span class="doccomment">///     assert_eq!(ask_price, None);</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ask_price</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">real_time</span>.<span class="ident">ask_price</span>.<span class="ident">trim</span>().<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>().<span class="ident">ok</span>()

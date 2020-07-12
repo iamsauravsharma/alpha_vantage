@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["CryptoRating","Struct used for health index rating"]]});
