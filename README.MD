@@ -6,12 +6,6 @@
 | :---: | :---: | :---: | :---: | :---: |
 | [![Travis Build Status][build_badge]][build_link] | [![Code coverage][codecov_badge]][codecov_link] | [![License: MIT][license_badge]][license_link] | [![Crate][cratesio_badge]][cratesio_link] | [![Docs][docsrs_badge]][docsrs_link] |
 
-**Rust & OS support:**
-
-| Stable | Beta | Nightly | Linux | OSX | Windows |
-| :---: | :---: | :---: | :---: | :---: | :---: |
-| [![Stable support][stable_supported_badge]][git_link] | [![Beta support][beta_supported_badge]][git_link] | [![Nightly support][nightly_supported_badge]][git_link] | [![Linux support][linux_supported_badge]][git_link] | [![OSX support][osx_supported_badge]][git_link] | [![Windows support][windows_supported_badge]][git_link] |
-
 Rust Client library built for accessing [Alphavantage][alphavantage_link] API.
 
 ### Project Functionality
@@ -22,6 +16,7 @@ Rust Client library built for accessing [Alphavantage][alphavantage_link] API.
 - [X] Exchange Rate
 - [X] Forex
 - [X] Crypto Currency
+- [X] Crypto Health
 - [X] Technical Indicators
 - [X] Sector Performances
 
@@ -77,16 +72,3 @@ println!("{}",rate);
 [docsrs_badge]: https://docs.rs/alpha_vantage/badge.svg
 [docsrs_link]: https://docs.rs/alpha_vantage
 
-[stable_supported_badge]: https://img.shields.io/badge/stable-supported-brightgreen.svg?logo=rust
-[beta_supported_badge]: https://img.shields.io/badge/beta-supported-brightgreen.svg?logo=rust
-[nightly_supported_badge]: https://img.shields.io/badge/nightly-supported-brightgreen.svg?logo=rust
-[stable_not_supported_badge]: https://img.shields.io/badge/stable-not%20supported-red.svg?logo=rust
-[beta_not_supported_badge]: https://img.shields.io/badge/beta-not%20supported-red.svg?logo=rust
-[nightly_not_supported_badge]: https://img.shields.io/badge/nightly-not%20supported-red.svg?logo=rust
-
-[linux_supported_badge]: https://img.shields.io/badge/linux-supported-brightgreen.svg?logo=linux
-[osx_supported_badge]: https://img.shields.io/badge/osx-supported-brightgreen.svg?logo=apple
-[windows_supported_badge]: https://img.shields.io/badge/windows-supported-brightgreen.svg?logo=windows
-[linux_not_supported_badge]: https://img.shields.io/badge/linux-not%20supported-red.svg?logo=linux
-[osx_not_supported_badge]: https://img.shields.io/badge/osx-not%20supported-red.svg?logo=apple
-[windows_not_supported_badge]: https://img.shields.io/badge/windows-not%20supported-red.svg?logo=windows
