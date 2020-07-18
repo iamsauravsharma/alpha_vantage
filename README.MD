@@ -24,7 +24,13 @@ Rust Client library built for accessing [Alphavantage][alphavantage_link] API.
 Edit Cargo.toml file to add alpha_vantage as dependencies
 ```toml
 [dependencies]
-alpha_vantage = "0.4.0"
+alpha_vantage = "0.5.0"
+```
+
+If you would like to use blocking API instead of async api. You can add blocking feature.
+```toml
+[dependencies]
+alpha_vantage = {version = "0.5.0", features=["blocking"]}
 ```
 
 __OR__
@@ -71,4 +77,3 @@ println!("{}",rate);
 
 [docsrs_badge]: https://docs.rs/alpha_vantage/badge.svg
 [docsrs_link]: https://docs.rs/alpha_vantage
-
