@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["MetaDataValue","Different representation of metadata value"]],"struct":[["DataCollector","Struct for storing a data values"],["Indicator","Struct for indicator"]]});
+initSidebarItems({"struct":[["DataCollector","Struct for storing a data values"],["Indicator","Struct for indicator"]]});
