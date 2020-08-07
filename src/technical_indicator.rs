@@ -15,6 +15,7 @@ use crate::{
 };
 use reqwest::Url;
 use serde::Deserialize;
+use serde_json::value::Value;
 use std::collections::HashMap;
 
 type DataType = HashMap<String, HashMap<String, HashMap<String, String>>>;
@@ -43,14 +44,15 @@ impl DataCollector {
 /// Struct for indicator
 #[derive(Default, Debug)]
 pub struct Indicator {
-    metadata: HashMap<String, String>,
+    metadata: HashMap<String, Value>,
     data: DataType,
 }
 
 impl Indicator {
-    /// Return out meta data in hash form
+    /// Return out meta data in hash form with key as `String` and values as
+    /// `serde_json::value::Value`
     #[must_use]
-    pub fn meta_data(&self) -> &HashMap<String, String> {
+    pub fn meta_data(&self) -> &HashMap<String, Value> {
         &self.metadata
     }
 
@@ -88,7 +90,7 @@ pub(crate) struct IndicatorHelper {
     #[serde(rename = "Information")]
     information: Option<String>,
     #[serde(rename = "Meta Data")]
-    metadata: Option<HashMap<String, String>>,
+    metadata: Option<HashMap<String, Value>>,
     #[serde(flatten)]
     data: Option<DataType>,
 }
