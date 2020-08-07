@@ -19,22 +19,6 @@ use std::collections::HashMap;
 
 type DataType = HashMap<String, HashMap<String, HashMap<String, String>>>;
 
-#[derive(Debug, Deserialize)]
-#[serde(untagged)]
-/// Different representation of metadata value
-pub enum MetaDataValue {
-    /// Boolean representation
-    Bool(bool),
-    /// Unsigned integer representation
-    Unsigned(u64),
-    /// Signed integer representation
-    Signed(i64),
-    /// Float representation
-    Float(f64),
-    /// Text representation
-    Text(String),
-}
-
 /// Struct for storing a data values
 #[derive(Default)]
 pub struct DataCollector {
@@ -59,14 +43,14 @@ impl DataCollector {
 /// Struct for indicator
 #[derive(Default, Debug)]
 pub struct Indicator {
-    metadata: HashMap<String, MetaDataValue>,
+    metadata: HashMap<String, String>,
     data: DataType,
 }
 
 impl Indicator {
     /// Return out meta data in hash form
     #[must_use]
-    pub fn meta_data(&self) -> &HashMap<String, MetaDataValue> {
+    pub fn meta_data(&self) -> &HashMap<String, String> {
         &self.metadata
     }
 
@@ -104,7 +88,7 @@ pub(crate) struct IndicatorHelper {
     #[serde(rename = "Information")]
     information: Option<String>,
     #[serde(rename = "Meta Data")]
-    metadata: Option<HashMap<String, MetaDataValue>>,
+    metadata: Option<HashMap<String, String>>,
     #[serde(flatten)]
     data: Option<DataType>,
 }
