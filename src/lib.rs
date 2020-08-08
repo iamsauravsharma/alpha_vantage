@@ -7,12 +7,14 @@
     clippy::used_underscore_binding,
     clippy::needless_doctest_main
 )]
+#![cfg_attr(docsrs, feature(doc_cfg))]
 
 //! Rust Client/Wrapper built for [Alphavantage][alpha_vantage_link] API.
 //!
 //! [alpha_vantage_link]: https://alphavantage.co
 
 #[cfg(feature = "blocking")]
+#[cfg_attr(docsrs, doc(cfg(feature = "blocking")))]
 /// Blocking module for basic definition of user information. To use this module
 /// blocking feature need to be enabled
 pub mod blocking;
@@ -88,6 +90,7 @@ pub fn set_with_env(env_name: &str) -> APIKey {
 /// ```
 #[must_use]
 #[cfg(feature = "blocking")]
+#[cfg_attr(docsrs, doc(cfg(feature = "blocking")))]
 pub fn blocking_set_api(api: &str) -> self::blocking::APIKey {
     self::blocking::APIKey::set_api(api)
 }
@@ -99,6 +102,7 @@ pub fn blocking_set_api(api: &str) -> self::blocking::APIKey {
 /// ```
 #[must_use]
 #[cfg(feature = "blocking")]
+#[cfg_attr(docsrs, doc(cfg(feature = "blocking")))]
 pub fn blocking_set_with_timeout(api: &str, timeout: u64) -> self::blocking::APIKey {
     self::blocking::APIKey::set_with_timeout(api, timeout)
 }
@@ -112,6 +116,7 @@ pub fn blocking_set_with_timeout(api: &str, timeout: u64) -> self::blocking::API
 /// ```
 #[must_use]
 #[cfg(feature = "blocking")]
+#[cfg_attr(docsrs, doc(cfg(feature = "blocking")))]
 pub fn blocking_set_with_env(env_name: &str) -> self::blocking::APIKey {
     self::blocking::APIKey::set_with_env(env_name)
 }
