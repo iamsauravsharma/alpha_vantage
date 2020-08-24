@@ -22,7 +22,7 @@ run_all_cargo_command(){
   cargo build $FEATURES
   if [[ -n $PUBLISH_DOC ]]
   then
-    cargo doc --no-deps $FEATURES --cfg docsrs
+    cargo rustdoc $FEATURES -- --cfg docsrs
   else
     cargo doc --no-deps $FEATURES
   fi
