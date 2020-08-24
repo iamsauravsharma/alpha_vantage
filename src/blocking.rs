@@ -423,7 +423,10 @@ mod test {
     #[test]
     // Testing get api and set api function
     fn test_get_api() {
-        assert_eq!(super::APIKey::set_api("secret_key").get_api(), "secret_key".to_string());
+        assert_eq!(
+            super::APIKey::set_api("secret_key").get_api(),
+            "secret_key".to_string()
+        );
     }
 
     #[test]
