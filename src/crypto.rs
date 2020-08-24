@@ -443,12 +443,12 @@ mod test {
             .unwrap()
         );
         assert_eq!(
-            super::create_url(CryptoFunction::Monthly, "BTC", "CNY", "demo"),
+            super::create_url(CryptoFunction::Monthly, "BTC", "CNY", "secret_key"),
             Url::parse(
                 "https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_MONTHLY\
                  &symbol=BTC\
                  &market=CNY\
-                 &apikey=demo"
+                 &apikey=secret_key"
             )
             .unwrap()
         );

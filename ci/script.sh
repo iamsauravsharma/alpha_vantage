@@ -20,14 +20,19 @@ run_all_cargo_command(){
   fi
 
   cargo build $FEATURES
-  cargo doc --no-deps $FEATURES
+  if [[ -n $PUBLISH_DOC ]]
+  then
+    cargo doc --no-deps $FEATURES --cfg docsrs
+  else
+    cargo doc --no-deps $FEATURES
+  fi
   cargo test $FEATURES
 }
 
 # if $TARGET is present then run only build over that target else run_all_cargo_command
 if [[ -n $TARGET ]]
 then
-    cargo build --target="$TARGET" $FEATURES
+  cargo build --target="$TARGET" $FEATURES
 else
   run_all_cargo_command
 fi

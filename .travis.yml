@@ -9,7 +9,6 @@ jobs:
   include:
     - os: linux
       env:
-        - PUBLISH_DOC=true
         - PUBLISH_PACKAGE=true
         - FEATURES=--all-features
     - os: osx
@@ -23,7 +22,7 @@ jobs:
         - FEATURES=--all-features
     - rust: nightly
       env:
-        - CODECOV_COVERAGE=true
+        - PUBLISH_DOC=true
         - FEATURES=--all-features
     - os: linux
       env:
@@ -69,12 +68,6 @@ deploy:
     on:
       tags: true
       condition: $PUBLISH_PACKAGE = true
-  - provider: script
-    script: bash ci/codecov_coverage.sh
-    skip_cleanup: true
-    on:
-      all_branches: true
-      condition: $CODECOV_COVERAGE = true
 
 notifications:
   email: false

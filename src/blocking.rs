@@ -72,11 +72,11 @@ impl APIKey {
     /// ```
     /// use alpha_vantage::blocking::APIKey;
     /// std::env::set_var("KEY_NAME", "some_key");
-    /// let api_from_env = APIKey::set_with_env("KEY_NAME");
+    /// let api_from_env = APIKey::set_from_env("KEY_NAME");
     /// assert_eq!(api_from_env.get_api(), "some_key");
     /// ```
     #[must_use]
-    pub fn set_with_env(env_name: &str) -> Self {
+    pub fn set_from_env(env_name: &str) -> Self {
         let api = std::env::var(env_name).expect("environment variable is not present");
         let client = ClientBuilder::new()
             .build()
@@ -423,21 +423,21 @@ mod test {
     #[test]
     // Testing get api and set api function
     fn test_get_api() {
-        assert_eq!(super::APIKey::set_api("demo").get_api(), "demo".to_string());
+        assert_eq!(super::APIKey::set_api("secret_key").get_api(), "secret_key".to_string());
     }
 
     #[test]
     fn set_api_from_env() {
         std::env::set_var("ALPHA_VANTAGE_KEY", "some_random_key");
         assert_eq!(
-            super::APIKey::set_with_env("ALPHA_VANTAGE_KEY").get_api(),
+            super::APIKey::set_from_env("ALPHA_VANTAGE_KEY").get_api(),
             "some_random_key".to_string()
         );
     }
 
     #[test]
     fn test_set_get_timeout() {
-        assert_eq!(super::APIKey::set_api("demo").get_timeout(), 30_u64);
+        assert_eq!(super::APIKey::set_api("secret_key").get_timeout(), 30_u64);
         assert_eq!(
             super::APIKey::set_with_timeout("some_key", 45).get_timeout(),
             45_u64
