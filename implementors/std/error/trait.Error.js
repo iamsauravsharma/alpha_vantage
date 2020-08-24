@@ -1,3 +1,3 @@
 (function() {var implementors = {};
-implementors["alpha_vantage"] = [{"text":"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/std/error/trait.Error.html\" title=\"trait std::error::Error\">Error</a> for <a class=\"enum\" href=\"alpha_vantage/error/enum.Error.html\" title=\"enum alpha_vantage::error::Error\">Error</a>","synthetic":false,"types":["alpha_vantage::error::Error"]}];
+implementors["alpha_vantage"] = [{"text":"impl Error for Error","synthetic":false,"types":[]}];
 if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
