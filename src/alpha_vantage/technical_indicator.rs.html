@@ -205,8 +205,6 @@
 <span id="204">204</span>
 <span id="205">205</span>
 <span id="206">206</span>
-<span id="207">207</span>
-<span id="208">208</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Module for Technical Indicator</span>
 <span class="doccomment">//!</span>
@@ -238,7 +236,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">DataCollector</span> {
-    <span class="doccomment">/// Return out a time</span>
+    <span class="doccomment">/// Return time</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">time</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">time</span>
@@ -259,7 +257,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Indicator</span> {
-    <span class="doccomment">/// Return out meta data in hash form with key as `String` and values as</span>
+    <span class="doccomment">/// Return meta data in hash form with key as `String` and values as</span>
     <span class="doccomment">/// `serde_json::value::Value`</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">meta_data</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Value</span><span class="op">&gt;</span> {
@@ -276,7 +274,7 @@
                 <span class="ident">data_collector</span>.<span class="ident">time</span> <span class="op">=</span> <span class="ident">time</span>.<span class="ident">to_string</span>();
                 <span class="kw">let</span> <span class="ident">hash_values</span> <span class="op">=</span> <span class="ident">hash</span>
                     .<span class="ident">get</span>(<span class="ident">time</span>)
-                    .<span class="ident">expect</span>(<span class="string">&quot;cannot get out time key value from hash map&quot;</span>)
+                    .<span class="ident">expect</span>(<span class="string">&quot;cannot get time key value from hash map&quot;</span>)
                     .<span class="ident">to_owned</span>();
                 <span class="kw">for</span> (<span class="ident">key</span>, <span class="ident">value</span>) <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">hash_values</span> {
                     <span class="kw">let</span> <span class="ident">value_f64</span> <span class="op">=</span> <span class="ident">value</span>
@@ -412,9 +410,7 @@
         }
     }
     <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;apikey={}&quot;</span>, <span class="ident">apikey</span>));
-    <span class="ident">created_link</span>
-        .<span class="ident">parse</span>()
-        .<span class="ident">expect</span>(<span class="string">&quot;Cannot parse out created link url&quot;</span>)
+    <span class="ident">created_link</span>.<span class="ident">parse</span>().<span class="ident">expect</span>(<span class="string">&quot;Cannot parse created link url&quot;</span>)
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "alpha_vantage";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Crypto","Struct which holds out Crypto currency information"],["Entry","Struct which stores Crypto data"]],"trait":[["VecEntry","trait which helps for performing some common operation on Vec"]]});
+initSidebarItems({"struct":[["Crypto","Struct which holds Crypto currency information"],["Entry","Struct which stores Crypto data"]],"trait":[["VecEntry","trait which helps for performing some common operation on Vec"]]});

@@ -299,7 +299,7 @@
         <span class="self">self</span>.<span class="ident">health_care</span>
     }
 
-    <span class="doccomment">/// Return out information technology</span>
+    <span class="doccomment">/// Return information technology score</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">information_technology</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">information_technology</span>
@@ -311,7 +311,7 @@
         <span class="self">self</span>.<span class="ident">industrials</span>
     }
 
-    <span class="doccomment">/// Return out real estate value</span>
+    <span class="doccomment">/// Return real estate value</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">real_estate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">real_estate</span>
@@ -323,13 +323,13 @@
         <span class="self">self</span>.<span class="ident">consumer_staples</span>
     }
 
-    <span class="doccomment">/// Return out value for consumer discretionary</span>
+    <span class="doccomment">/// Return consumer discretionary score</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">consumer_discretionary</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">consumer_discretionary</span>
     }
 
-    <span class="doccomment">/// Return out for financials</span>
+    <span class="doccomment">/// Return financials score</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">financials</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">financials</span>
@@ -415,7 +415,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">SectorHelper</span> {
-    <span class="doccomment">/// Convert out [SectorHelper][SectorHelper] to [Sector][Sector]</span>
+    <span class="doccomment">/// Convert [SectorHelper][SectorHelper] to [Sector][Sector]</span>
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">convert</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Sector</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sector</span> <span class="op">=</span> <span class="ident">Sector</span>::<span class="ident">default</span>();
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">information</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">information</span> {
