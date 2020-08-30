@@ -71,7 +71,7 @@ pub fn set_with_timeout(api: &str, timeout: u64) -> APIKey {
     APIKey::set_with_timeout(api, timeout)
 }
 
-/// Set out API Key reading out environment variable
+/// Set API Key reading environment variable
 ///
 /// ```
 /// std::env::set_var("KEY_NAME", "some_key");
@@ -107,7 +107,7 @@ pub fn blocking_set_with_timeout(api: &str, timeout: u64) -> self::blocking::API
     self::blocking::APIKey::set_with_timeout(api, timeout)
 }
 
-/// Set out blocking API Key reading out environment variable
+/// Set blocking API Key reading environment variable
 ///
 /// ```
 /// std::env::set_var("KEY_NAME", "some_key");

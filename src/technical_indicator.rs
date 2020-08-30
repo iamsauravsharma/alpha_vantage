@@ -28,7 +28,7 @@ pub struct DataCollector {
 }
 
 impl DataCollector {
-    /// Return out a time
+    /// Return time
     #[must_use]
     pub fn time(&self) -> &str {
         &self.time
@@ -49,7 +49,7 @@ pub struct Indicator {
 }
 
 impl Indicator {
-    /// Return out meta data in hash form with key as `String` and values as
+    /// Return meta data in hash form with key as `String` and values as
     /// `serde_json::value::Value`
     #[must_use]
     pub fn meta_data(&self) -> &HashMap<String, Value> {
@@ -66,7 +66,7 @@ impl Indicator {
                 data_collector.time = time.to_string();
                 let hash_values = hash
                     .get(time)
-                    .expect("cannot get out time key value from hash map")
+                    .expect("cannot get time key value from hash map")
                     .to_owned();
                 for (key, value) in &hash_values {
                     let value_f64 = value
@@ -202,7 +202,5 @@ pub(crate) fn create_url(
         }
     }
     created_link.push_str(&format!("&apikey={}", apikey));
-    created_link
-        .parse()
-        .expect("Cannot parse out created link url")
+    created_link.parse().expect("Cannot parse created link url")
 }

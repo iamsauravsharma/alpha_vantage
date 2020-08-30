@@ -46,7 +46,7 @@ pub enum OutputSize {
     /// Returns full api data points recommended if a full historical data is
     /// required
     Full,
-    /// uses out default which is Compact
+    /// uses default which is Compact
     None,
 }
 

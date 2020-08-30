@@ -122,7 +122,7 @@ impl Entry {
     }
 }
 
-/// Struct which holds out Crypto currency information
+/// Struct which holds Crypto currency information
 #[derive(Default)]
 pub struct Crypto {
     meta_data: MetaData,
@@ -242,7 +242,7 @@ impl Crypto {
         self.return_meta_string("time zone")
     }
 
-    /// Return out a entry
+    /// Return a entry
     #[must_use]
     pub fn entry(&self) -> &Vec<Entry> {
         &self.entry
@@ -314,7 +314,7 @@ impl CryptoHelper {
                     entry.time = key.to_string();
                     let entry_helper = value
                         .get(key)
-                        .expect("failed to get out key from hashmap")
+                        .expect("failed to get key from hashmap")
                         .clone();
                     entry.usd_open = entry_helper.open_usd;
                     entry.usd_high = entry_helper.high_usd;

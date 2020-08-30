@@ -40,7 +40,7 @@ impl APIKey {
     pub fn set_api(api: &str) -> Self {
         let client = ClientBuilder::new()
             .build()
-            .expect("Failed to build out Client Builder");
+            .expect("Failed to build Client Builder");
         Self {
             api: api.to_string(),
             timeout: 30,
@@ -59,7 +59,7 @@ impl APIKey {
         let client = ClientBuilder::new()
             .timeout(std::time::Duration::from_secs(timeout))
             .build()
-            .expect("Failed to build out Client Builder with timeout");
+            .expect("Failed to build Client Builder with timeout");
         Self {
             api: api.to_string(),
             timeout,
@@ -67,7 +67,7 @@ impl APIKey {
         }
     }
 
-    /// Set out [APIKey][APIKey] by reading out environment variable
+    /// Set [APIKey][APIKey] by reading environment variable
     ///
     /// ```
     /// use alpha_vantage::blocking::APIKey;
@@ -80,7 +80,7 @@ impl APIKey {
         let api = std::env::var(env_name).expect("environment variable is not present");
         let client = ClientBuilder::new()
             .build()
-            .expect("Failed to build out Client Builder");
+            .expect("Failed to build Client Builder");
         Self {
             api,
             timeout: 30,
@@ -146,9 +146,9 @@ impl APIKey {
             .client
             .get(data)
             .send()
-            .expect("failed to send out request")
+            .expect("failed to send request")
             .text()
-            .expect("failed to get out text from Response");
+            .expect("failed to get text from Response");
         let crypto_rating_helper: CryptoRatingHelper =
             serde_json::from_str(body).expect("Cannot convert to crypto rating");
         crypto_rating_helper.convert()
@@ -171,9 +171,9 @@ impl APIKey {
             .client
             .get(data)
             .send()
-            .expect("failed to send out request")
+            .expect("failed to send request")
             .text()
-            .expect("failed to get out text from Response");
+            .expect("failed to get text from Response");
         let crypto_helper: CryptoHelper =
             serde_json::from_str(body).expect("Cannot convert to CryptoHelper");
         crypto_helper.convert()
@@ -202,9 +202,9 @@ impl APIKey {
             .client
             .get(data)
             .send()
-            .expect("failed to send out request")
+            .expect("failed to send request")
             .text()
-            .expect("failed to get out text from Response");
+            .expect("failed to get text from Response");
         let exchange_helper: ExchangeHelper =
             serde_json::from_str(body).expect("Cannot convert to Exchange");
         exchange_helper.convert()
@@ -244,9 +244,9 @@ impl APIKey {
             .client
             .get(data)
             .send()
-            .expect("failed to send out request")
+            .expect("failed to send request")
             .text()
-            .expect("failed to get out text from Response");
+            .expect("failed to get text from Response");
         let forex_helper: ForexHelper =
             serde_json::from_str(body).expect("Cannot convert to ForexHelper");
         forex_helper.convert()
@@ -275,9 +275,9 @@ impl APIKey {
             .client
             .get(data)
             .send()
-            .expect("failed to send out request")
+            .expect("failed to send request")
             .text()
-            .expect("failed to get out text from Response");
+            .expect("failed to get text from Response");
         let quote_helper: QuoteHelper =
             serde_json::from_str(body).expect("Cannot convert to Quote");
         quote_helper.convert()
@@ -303,15 +303,15 @@ impl APIKey {
             .client
             .get(data)
             .send()
-            .expect("failed to send out request")
+            .expect("failed to send request")
             .text()
-            .expect("failed to get out text from Response");
+            .expect("failed to get text from Response");
         let search_helper: SearchHelper =
             serde_json::from_str(body).expect("Cannot convert to Search");
         search_helper.convert()
     }
 
-    /// Method for returning out a sector data as struct
+    /// Method for returning a sector data as struct
     /// # Example
     /// ```
     /// let api = alpha_vantage::blocking::APIKey::set_api("demo");
@@ -329,9 +329,9 @@ impl APIKey {
             .client
             .get(data)
             .send()
-            .expect("failed to send out request")
+            .expect("failed to send request")
             .text()
-            .expect("failed to get out text from Response");
+            .expect("failed to get text from Response");
         let sector_helper: SectorHelper =
             serde_json::from_str(body).expect("cannot convert to SectorHelper");
         sector_helper.convert()
@@ -364,9 +364,9 @@ impl APIKey {
             .client
             .get(data)
             .send()
-            .expect("failed to send out request")
+            .expect("failed to send request")
             .text()
-            .expect("failed to get out text from Response");
+            .expect("failed to get text from Response");
         let time_series_helper: TimeSeriesHelper =
             serde_json::from_str(body).expect("cannot convert to time series helper");
         time_series_helper.convert()
@@ -408,9 +408,9 @@ impl APIKey {
             .client
             .get(data)
             .send()
-            .expect("failed to send out request")
+            .expect("failed to send request")
             .text()
-            .expect("failed to get out text from Response");
+            .expect("failed to get text from Response");
         let indicator_helper: IndicatorHelper =
             serde_json::from_str(body).expect("cannot convert to Indicator");
         indicator_helper.convert()

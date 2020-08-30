@@ -70,7 +70,7 @@ impl Quote {
         self.global_quote.price
     }
 
-    /// return out a volume
+    /// return volume
     #[must_use]
     pub fn volume(&self) -> u64 {
         self.global_quote.volume

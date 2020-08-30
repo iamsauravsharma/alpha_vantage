@@ -42,7 +42,7 @@ alpha_vantage = {git = "https://github.com/iamsauravsharma/alpha_vantage"}
 ```
 
 ## Usage
-Sample code to find out exchange rate between two currency(both physical & digital supported)
+Sample code to find exchange rate between two currency(both physical & digital supported)
 
 ```Rust
 let api_key = alpha_vantage::set_api("YOUR-API-HERE");

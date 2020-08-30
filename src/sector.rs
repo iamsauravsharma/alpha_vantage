@@ -57,7 +57,7 @@ impl Data {
         self.health_care
     }
 
-    /// Return out information technology
+    /// Return information technology score
     #[must_use]
     pub fn information_technology(&self) -> f64 {
         self.information_technology
@@ -69,7 +69,7 @@ impl Data {
         self.industrials
     }
 
-    /// Return out real estate value
+    /// Return real estate value
     #[must_use]
     pub fn real_estate(&self) -> f64 {
         self.real_estate
@@ -81,13 +81,13 @@ impl Data {
         self.consumer_staples
     }
 
-    /// Return out value for consumer discretionary
+    /// Return consumer discretionary score
     #[must_use]
     pub fn consumer_discretionary(&self) -> f64 {
         self.consumer_discretionary
     }
 
-    /// Return out for financials
+    /// Return financials score
     #[must_use]
     pub fn financials(&self) -> f64 {
         self.financials
@@ -173,7 +173,7 @@ pub(crate) struct SectorHelper {
 }
 
 impl SectorHelper {
-    /// Convert out [SectorHelper][SectorHelper] to [Sector][Sector]
+    /// Convert [SectorHelper][SectorHelper] to [Sector][Sector]
     pub(crate) fn convert(self) -> Result<Sector> {
         let mut sector = Sector::default();
         if let Some(information) = self.information {

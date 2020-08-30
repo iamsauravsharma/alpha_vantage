@@ -174,7 +174,7 @@ impl Forex {
         self.return_meta_string("time zone")
     }
 
-    /// Return out interval for intraday
+    /// Return interval for intraday
     ///
     /// ```
     /// use alpha_vantage::util::*;
@@ -246,7 +246,7 @@ impl Forex {
         }
     }
 
-    /// Convert out Option meta data field as a Option<&str>
+    /// Convert Option meta data field as a Option<&str>
     fn operate_option_meta_value(&self, which_val: &str) -> Option<&str> {
         let value = match which_val {
             "interval" => &self.meta_data.interval,

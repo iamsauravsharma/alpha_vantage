@@ -358,7 +358,7 @@ impl TimeSeriesHelper {
                     entry.time = val.to_string();
                     let entry_helper = hash
                         .get(val)
-                        .expect("failed to get out val from hash for time series")
+                        .expect("failed to get val from hash for time series")
                         .clone();
                     entry.open = entry_helper.open;
                     entry.high = entry_helper.high;
@@ -376,7 +376,7 @@ impl TimeSeriesHelper {
                     entry.time = val.to_string();
                     let entry_helper = hash
                         .get(val)
-                        .expect("failed to get out val from hash for adjusted series")
+                        .expect("failed to get val from hash for adjusted series")
                         .clone();
                     entry.open = entry_helper.open;
                     entry.high = entry_helper.high;
