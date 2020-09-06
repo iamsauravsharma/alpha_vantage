@@ -575,6 +575,11 @@
 <span id="574">574</span>
 <span id="575">575</span>
 <span id="576">576</span>
+<span id="577">577</span>
+<span id="578">578</span>
+<span id="579">579</span>
+<span id="580">580</span>
+<span id="581">581</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Module for stock time series</span>
 <span class="doccomment">//!</span>
@@ -627,55 +632,55 @@
 <span class="kw">impl</span> <span class="ident">Entry</span> {
     <span class="doccomment">/// Get time</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">time</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">time</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">time</span>
     }
 
     <span class="doccomment">/// Return open</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">open</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">open</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">open</span>
     }
 
     <span class="doccomment">/// Return high</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">high</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">high</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">high</span>
     }
 
     <span class="doccomment">/// Return low</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">low</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">low</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">low</span>
     }
 
     <span class="doccomment">/// Return close</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">close</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">close</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">close</span>
     }
 
     <span class="doccomment">/// Return adjusted</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">adjusted</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">adjusted</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">adjusted_close</span>
     }
 
     <span class="doccomment">/// Return volume</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">volume</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">volume</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span> {
         <span class="self">self</span>.<span class="ident">volume</span>
     }
 
     <span class="doccomment">/// Return dividend</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dividend</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dividend</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">dividend_amount</span>
     }
 
     <span class="doccomment">/// Return split dividend</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">split</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">split</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">split_coefficient</span>
     }
 }
@@ -713,7 +718,7 @@
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">information</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">information</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="self">self</span>.<span class="ident">return_meta_string</span>(<span class="string">&quot;information&quot;</span>)
     }
 
@@ -739,19 +744,19 @@
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">symbol</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">symbol</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="self">self</span>.<span class="ident">return_meta_string</span>(<span class="string">&quot;symbol&quot;</span>)
     }
 
     <span class="doccomment">/// Return last refreshed time</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">last_refreshed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">last_refreshed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="self">self</span>.<span class="ident">return_meta_string</span>(<span class="string">&quot;last refreshed&quot;</span>)
     }
 
     <span class="doccomment">/// Return time zone of all data time</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">time_zone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">time_zone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="self">self</span>.<span class="ident">return_meta_string</span>(<span class="string">&quot;time zone&quot;</span>)
     }
 
@@ -777,7 +782,7 @@
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interval</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interval</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">operate_option_meta_value</span>(<span class="string">&quot;interval&quot;</span>)
     }
 
@@ -803,33 +808,33 @@
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">output_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">output_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">operate_option_meta_value</span>(<span class="string">&quot;output size&quot;</span>)
     }
 
     <span class="doccomment">/// Return Entry</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">entry</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">entry</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&gt;</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">entry</span>
     }
 
     <span class="doccomment">/// Return a meta data value as a form of String</span>
-    <span class="kw">fn</span> <span class="ident">return_meta_string</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">which_val</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">fn</span> <span class="ident">return_meta_string</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">which_val</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="kw">match</span> <span class="ident">which_val</span> {
-            <span class="string">&quot;information&quot;</span> <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">information</span>,
-            <span class="string">&quot;symbol&quot;</span> <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">symbol</span>,
-            <span class="string">&quot;time zone&quot;</span> <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">time_zone</span>,
-            <span class="string">&quot;last refreshed&quot;</span> <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">last_refreshed</span>,
-            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>,
+            <span class="string">&quot;information&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">information</span>,
+            <span class="string">&quot;symbol&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">symbol</span>,
+            <span class="string">&quot;time zone&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">time_zone</span>,
+            <span class="string">&quot;last refreshed&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">last_refreshed</span>,
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;&quot;</span>,
         }
     }
 
     <span class="doccomment">/// Return Option metadata value as a Result form of String</span>
-    <span class="kw">fn</span> <span class="ident">operate_option_meta_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">which_val</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">operate_option_meta_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">which_val</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">which_val</span> {
-            <span class="string">&quot;interval&quot;</span> <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">interval</span>,
-            <span class="string">&quot;output size&quot;</span> <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">output_size</span>,
-            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="prelude-val">None</span>,
+            <span class="string">&quot;interval&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">interval</span>,
+            <span class="string">&quot;output size&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">output_size</span>,
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="prelude-val">None</span>,
         };
         <span class="ident">value</span>.<span class="ident">as_deref</span>()
     }
@@ -878,23 +883,28 @@
     <span class="ident">error_message</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Information&quot;</span>)]</span>
     <span class="ident">information</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Note&quot;</span>)]</span>
+    <span class="ident">note</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Meta Data&quot;</span>)]</span>
-    <span class="ident">meta_data</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">meta_data</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">flatten</span>)]</span>
-    <span class="ident">time_series</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">EntryHelper</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">time_series</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">EntryHelper</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">flatten</span>)]</span>
-    <span class="ident">adjusted_series</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">AdjustedHelper</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">adjusted_series</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">AdjustedHelper</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">TimeSeriesHelper</span> {
     <span class="doccomment">/// Convert [TimeSeriesHelper][TimeSeriesHelper] to [TimeSeries][TimeSeries]</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">convert</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TimeSeries</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">convert</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TimeSeries</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">time_series</span> <span class="op">=</span> <span class="ident">TimeSeries</span>::<span class="ident">default</span>();
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">information</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">information</span> {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">AlphaVantageInformation</span>(<span class="ident">information</span>));
         }
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">error_message</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">error_message</span> {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">AlphaVantageErrorMessage</span>(<span class="ident">error_message</span>));
+        }
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">note</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">note</span> {
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">AlphaVantageNote</span>(<span class="ident">note</span>));
         }
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">meta_data</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">meta_data</span> {
             <span class="kw">let</span> <span class="ident">information</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">meta_data</span>[<span class="string">&quot;1. Information&quot;</span>];
@@ -978,18 +988,18 @@
 <span class="doccomment">/// trait which helps for performing some common operation on Vec&lt;Entry&gt;</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">VecEntry</span> {
     <span class="doccomment">/// Find a entry with a given time as a input return none if no entry found</span>
-    <span class="kw">fn</span> <span class="ident">find</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">time</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">find</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">time</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&gt;</span>;
     <span class="doccomment">/// Return a entry which is of latest time period</span>
-    <span class="kw">fn</span> <span class="ident">latest</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Entry</span>;
+    <span class="kw">fn</span> <span class="ident">latest</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Entry</span>;
     <span class="doccomment">/// Return a top n latest Entry if n Entry is present else return Error</span>
-    <span class="kw">fn</span> <span class="ident">latestn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">n</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&gt;&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">latestn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">n</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 }
 
 <span class="kw">impl</span> <span class="ident">VecEntry</span> <span class="kw">for</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">fn</span> <span class="ident">find</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">time</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">find</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">time</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&gt;</span> {
         <span class="kw">for</span> <span class="ident">entry</span> <span class="kw">in</span> <span class="self">self</span> {
-            <span class="kw">if</span> <span class="ident">entry</span>.<span class="ident">time</span> <span class="op">==</span> <span class="ident">time</span> {
+            <span class="kw">if</span> <span class="ident">entry</span>.<span class="ident">time</span> <span class="op">=</span><span class="op">=</span> <span class="ident">time</span> {
                 <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">entry</span>.<span class="ident">clone</span>());
             }
         }
@@ -997,7 +1007,7 @@
     }
 
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">fn</span> <span class="ident">latest</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Entry</span> {
+    <span class="kw">fn</span> <span class="ident">latest</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Entry</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">latest</span> <span class="op">=</span> <span class="ident">Entry</span>::<span class="ident">default</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">new_time</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
         <span class="kw">for</span> <span class="ident">entry</span> <span class="kw">in</span> <span class="self">self</span> {
@@ -1009,7 +1019,7 @@
         <span class="ident">latest</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">latestn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">n</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&gt;&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">latestn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">n</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">time_list</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
         <span class="kw">for</span> <span class="ident">entry</span> <span class="kw">in</span> <span class="self">self</span> {
             <span class="ident">time_list</span>.<span class="ident">push</span>(<span class="ident">entry</span>.<span class="ident">time</span>.<span class="ident">clone</span>());
@@ -1023,7 +1033,7 @@
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">time</span>) <span class="op">=</span> <span class="ident">time</span> {
                 <span class="kw">let</span> <span class="ident">entry</span> <span class="op">=</span> <span class="self">self</span>
                     .<span class="ident">find</span>(<span class="ident">time</span>)
-                    .<span class="ident">unwrap_or_else</span>(<span class="op">||</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Failed to find time value for index {}&quot;</span>, <span class="ident">i</span>));
+                    .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Failed to find time value for index {}&quot;</span>, <span class="ident">i</span>));
                 <span class="ident">full_list</span>.<span class="ident">push</span>(<span class="ident">entry</span>);
             } <span class="kw">else</span> {
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">DesiredNumberOfEntryNotPresent</span>(<span class="ident">time_list_count</span>));
@@ -1034,7 +1044,7 @@
 }
 
 <span class="comment">// convert string to optional T</span>
-<span class="kw">fn</span> <span class="ident">option_from_str</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">val</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">fn</span> <span class="ident">option_from_str</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">val</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">FromStr</span>,
     <span class="ident">T</span>::<span class="prelude-val">Err</span>: <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>,
@@ -1049,34 +1059,34 @@
     <span class="ident">interval</span>: <span class="ident">TimeSeriesInterval</span>,
     <span class="ident">output_size</span>: <span class="ident">OutputSize</span>,
     <span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-) <span class="op">-&gt;</span> <span class="ident">Url</span> {
+) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Url</span> {
     <span class="kw">let</span> <span class="ident">function</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">function</span> {
-        <span class="ident">StockFunction</span>::<span class="ident">IntraDay</span> <span class="op">=&gt;</span> <span class="string">&quot;TIME_SERIES_INTRADAY&quot;</span>,
-        <span class="ident">StockFunction</span>::<span class="ident">Daily</span> <span class="op">=&gt;</span> <span class="string">&quot;TIME_SERIES_DAILY&quot;</span>,
-        <span class="ident">StockFunction</span>::<span class="ident">DailyAdjusted</span> <span class="op">=&gt;</span> <span class="string">&quot;TIME_SERIES_DAILY_ADJUSTED&quot;</span>,
-        <span class="ident">StockFunction</span>::<span class="ident">Weekly</span> <span class="op">=&gt;</span> <span class="string">&quot;TIME_SERIES_WEEKLY&quot;</span>,
-        <span class="ident">StockFunction</span>::<span class="ident">WeeklyAdjusted</span> <span class="op">=&gt;</span> <span class="string">&quot;TIME_SERIES_WEEKLY_ADJUSTED&quot;</span>,
-        <span class="ident">StockFunction</span>::<span class="ident">Monthly</span> <span class="op">=&gt;</span> <span class="string">&quot;TIME_SERIES_MONTHLY&quot;</span>,
-        <span class="ident">StockFunction</span>::<span class="ident">MonthlyAdjusted</span> <span class="op">=&gt;</span> <span class="string">&quot;TIME_SERIES_MONTHLY_ADJUSTED&quot;</span>,
+        <span class="ident">StockFunction</span>::<span class="ident">IntraDay</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;TIME_SERIES_INTRADAY&quot;</span>,
+        <span class="ident">StockFunction</span>::<span class="ident">Daily</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;TIME_SERIES_DAILY&quot;</span>,
+        <span class="ident">StockFunction</span>::<span class="ident">DailyAdjusted</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;TIME_SERIES_DAILY_ADJUSTED&quot;</span>,
+        <span class="ident">StockFunction</span>::<span class="ident">Weekly</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;TIME_SERIES_WEEKLY&quot;</span>,
+        <span class="ident">StockFunction</span>::<span class="ident">WeeklyAdjusted</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;TIME_SERIES_WEEKLY_ADJUSTED&quot;</span>,
+        <span class="ident">StockFunction</span>::<span class="ident">Monthly</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;TIME_SERIES_MONTHLY&quot;</span>,
+        <span class="ident">StockFunction</span>::<span class="ident">MonthlyAdjusted</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;TIME_SERIES_MONTHLY_ADJUSTED&quot;</span>,
     };
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">url</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}{}&amp;symbol={}&quot;</span>, <span class="ident">LINK</span>, <span class="ident">function</span>, <span class="ident">symbol</span>);
     <span class="kw">let</span> <span class="ident">interval</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">interval</span> {
-        <span class="ident">TimeSeriesInterval</span>::<span class="ident">OneMin</span> <span class="op">=&gt;</span> <span class="string">&quot;1min&quot;</span>,
-        <span class="ident">TimeSeriesInterval</span>::<span class="ident">FiveMin</span> <span class="op">=&gt;</span> <span class="string">&quot;5min&quot;</span>,
-        <span class="ident">TimeSeriesInterval</span>::<span class="ident">FifteenMin</span> <span class="op">=&gt;</span> <span class="string">&quot;15min&quot;</span>,
-        <span class="ident">TimeSeriesInterval</span>::<span class="ident">ThirtyMin</span> <span class="op">=&gt;</span> <span class="string">&quot;30min&quot;</span>,
-        <span class="ident">TimeSeriesInterval</span>::<span class="ident">SixtyMin</span> <span class="op">=&gt;</span> <span class="string">&quot;60min&quot;</span>,
-        <span class="ident">TimeSeriesInterval</span>::<span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>,
+        <span class="ident">TimeSeriesInterval</span>::<span class="ident">OneMin</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;1min&quot;</span>,
+        <span class="ident">TimeSeriesInterval</span>::<span class="ident">FiveMin</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;5min&quot;</span>,
+        <span class="ident">TimeSeriesInterval</span>::<span class="ident">FifteenMin</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;15min&quot;</span>,
+        <span class="ident">TimeSeriesInterval</span>::<span class="ident">ThirtyMin</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;30min&quot;</span>,
+        <span class="ident">TimeSeriesInterval</span>::<span class="ident">SixtyMin</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;60min&quot;</span>,
+        <span class="ident">TimeSeriesInterval</span>::<span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;&quot;</span>,
     };
 
-    <span class="kw">if</span> <span class="ident">interval</span> <span class="op">!=</span> <span class="string">&quot;&quot;</span> {
+    <span class="kw">if</span> <span class="ident">interval</span> <span class="op">!</span><span class="op">=</span> <span class="string">&quot;&quot;</span> {
         <span class="ident">url</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;interval={}&quot;</span>, <span class="ident">interval</span>));
     }
 
     <span class="ident">url</span>.<span class="ident">push_str</span>(<span class="kw">match</span> <span class="ident">output_size</span> {
-        <span class="ident">OutputSize</span>::<span class="ident">Full</span> <span class="op">=&gt;</span> <span class="string">&quot;&amp;outputsize=full&quot;</span>,
-        <span class="kw">_</span> <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>,
+        <span class="ident">OutputSize</span>::<span class="ident">Full</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;&amp;outputsize=full&quot;</span>,
+        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;&quot;</span>,
     });
     <span class="ident">url</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;apikey={}&quot;</span>, <span class="ident">api</span>));
     <span class="ident">url</span>.<span class="ident">parse</span>().<span class="ident">expect</span>(<span class="string">&quot;Cannot parse out url&quot;</span>)

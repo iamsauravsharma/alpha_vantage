@@ -552,7 +552,7 @@
     <span class="doccomment">/// let api = APIKey::set_api(&quot;some_key&quot;);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_api</span>(<span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_api</span>(<span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">client</span> <span class="op">=</span> <span class="ident">ClientBuilder</span>::<span class="ident">new</span>()
             .<span class="ident">build</span>()
             .<span class="ident">expect</span>(<span class="string">&quot;Failed to build Client Builder&quot;</span>);
@@ -570,7 +570,7 @@
     <span class="doccomment">/// let api_with_custom_timeout = APIKey::set_with_timeout(&quot;your_api_key&quot;, 45);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_with_timeout</span>(<span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">timeout</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_with_timeout</span>(<span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">timeout</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">client</span> <span class="op">=</span> <span class="ident">ClientBuilder</span>::<span class="ident">new</span>()
             .<span class="ident">timeout</span>(<span class="ident">std</span>::<span class="ident">time</span>::<span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="ident">timeout</span>))
             .<span class="ident">build</span>()
@@ -591,7 +591,7 @@
     <span class="doccomment">/// assert_eq!(api_from_env.get_api(), &quot;some_key&quot;);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_from_env</span>(<span class="ident">env_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_from_env</span>(<span class="ident">env_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">env</span>::<span class="ident">var</span>(<span class="ident">env_name</span>).<span class="ident">expect</span>(<span class="string">&quot;environment variable is not present&quot;</span>);
         <span class="kw">let</span> <span class="ident">client</span> <span class="op">=</span> <span class="ident">ClientBuilder</span>::<span class="ident">new</span>()
             .<span class="ident">build</span>()
@@ -624,7 +624,7 @@
     <span class="doccomment">/// assert_eq!(api.get_api(), &quot;some_key&quot;);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_api</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_api</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">api</span>
     }
 
@@ -636,7 +636,7 @@
     <span class="doccomment">/// assert_eq!(api_with_custom_timeout.get_timeout(), 45_u64);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_timeout</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_timeout</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span> {
         <span class="self">self</span>.<span class="ident">timeout</span>
     }
 
@@ -651,7 +651,7 @@
     <span class="doccomment">///     assert_eq!(api.crypto_rating(&quot;BTC&quot;).await.unwrap().name(), &quot;Bitcoin&quot;);</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">crypto_rating</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">CryptoRating</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="ident">async</span> <span class="kw">fn</span> <span class="ident">crypto_rating</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">CryptoRating</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">data</span>: <span class="ident">Url</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
             <span class="string">&quot;{}CRYPTO_RATING&amp;symbol={}&amp;apikey={}&quot;</span>,
             <span class="ident">LINK</span>,
@@ -665,10 +665,10 @@
             .<span class="ident">client</span>
             .<span class="ident">get</span>(<span class="ident">data</span>)
             .<span class="ident">send</span>()
-            .<span class="kw">await</span>
+            .<span class="ident">await</span>
             .<span class="ident">expect</span>(<span class="string">&quot;failed to send request&quot;</span>)
             .<span class="ident">text</span>()
-            .<span class="kw">await</span>
+            .<span class="ident">await</span>
             .<span class="ident">expect</span>(<span class="string">&quot;failed to get text from Response&quot;</span>);
         <span class="kw">let</span> <span class="ident">crypto_rating_helper</span>: <span class="ident">CryptoRatingHelper</span> <span class="op">=</span>
             <span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="ident">body</span>).<span class="ident">expect</span>(<span class="string">&quot;Cannot convert to crypto rating&quot;</span>);
@@ -691,21 +691,21 @@
     <span class="doccomment">///     assert_eq!(digital_name, &quot;Bitcoin&quot;);</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">crypto</span>(
+    <span class="kw">pub</span> <span class="ident">async</span> <span class="kw">fn</span> <span class="ident">crypto</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">function</span>: <span class="ident">CryptoFunction</span>,
         <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">market</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Crypto</span><span class="op">&gt;</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Crypto</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">data</span>: <span class="ident">Url</span> <span class="op">=</span> <span class="ident">create_url_crypto</span>(<span class="ident">function</span>, <span class="ident">symbol</span>, <span class="ident">market</span>, <span class="self">self</span>.<span class="ident">get_api</span>());
         <span class="kw">let</span> <span class="ident">body</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>
             .<span class="ident">client</span>
             .<span class="ident">get</span>(<span class="ident">data</span>)
             .<span class="ident">send</span>()
-            .<span class="kw">await</span>
+            .<span class="ident">await</span>
             .<span class="ident">expect</span>(<span class="string">&quot;failed to send request&quot;</span>)
             .<span class="ident">text</span>()
-            .<span class="kw">await</span>
+            .<span class="ident">await</span>
             .<span class="ident">expect</span>(<span class="string">&quot;failed to get text from Response&quot;</span>);
         <span class="kw">let</span> <span class="ident">crypto_helper</span>: <span class="ident">CryptoHelper</span> <span class="op">=</span>
             <span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="ident">body</span>).<span class="ident">expect</span>(<span class="string">&quot;Cannot convert to CryptoHelper&quot;</span>);
@@ -727,7 +727,7 @@
     <span class="doccomment">///     );</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">exchange</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">from_currency</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">to_currency</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Exchange</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="ident">async</span> <span class="kw">fn</span> <span class="ident">exchange</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">from_currency</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">to_currency</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Exchange</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">data</span>: <span class="ident">Url</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
             <span class="string">&quot;{}CURRENCY_EXCHANGE_RATE&amp;from_currency={}&amp;to_currency={}&amp;apikey={}&quot;</span>,
             <span class="ident">LINK</span>,
@@ -742,10 +742,10 @@
             .<span class="ident">client</span>
             .<span class="ident">get</span>(<span class="ident">data</span>)
             .<span class="ident">send</span>()
-            .<span class="kw">await</span>
+            .<span class="ident">await</span>
             .<span class="ident">expect</span>(<span class="string">&quot;failed to send request&quot;</span>)
             .<span class="ident">text</span>()
-            .<span class="kw">await</span>
+            .<span class="ident">await</span>
             .<span class="ident">expect</span>(<span class="string">&quot;failed to get text from Response&quot;</span>);
         <span class="kw">let</span> <span class="ident">exchange_helper</span>: <span class="ident">ExchangeHelper</span> <span class="op">=</span>
             <span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="ident">body</span>).<span class="ident">expect</span>(<span class="string">&quot;Cannot convert to Exchange&quot;</span>);
@@ -773,14 +773,14 @@
     <span class="doccomment">///     assert_eq!(forex.unwrap().symbol_from(), &quot;EUR&quot;);</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">forex</span>(
+    <span class="kw">pub</span> <span class="ident">async</span> <span class="kw">fn</span> <span class="ident">forex</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">function</span>: <span class="ident">ForexFunction</span>,
         <span class="ident">from_symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">to_symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">interval</span>: <span class="ident">TimeSeriesInterval</span>,
         <span class="ident">output_size</span>: <span class="ident">OutputSize</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Forex</span><span class="op">&gt;</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Forex</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">data</span>: <span class="ident">Url</span> <span class="op">=</span> <span class="ident">create_url_forex</span>(
             <span class="ident">function</span>,
             <span class="ident">from_symbol</span>,
@@ -793,10 +793,10 @@
             .<span class="ident">client</span>
             .<span class="ident">get</span>(<span class="ident">data</span>)
             .<span class="ident">send</span>()
-            .<span class="kw">await</span>
+            .<span class="ident">await</span>
             .<span class="ident">expect</span>(<span class="string">&quot;failed to send request&quot;</span>)
             .<span class="ident">text</span>()
-            .<span class="kw">await</span>
+            .<span class="ident">await</span>
             .<span class="ident">expect</span>(<span class="string">&quot;failed to get text from Response&quot;</span>);
         <span class="kw">let</span> <span class="ident">forex_helper</span>: <span class="ident">ForexHelper</span> <span class="op">=</span>
             <span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="ident">body</span>).<span class="ident">expect</span>(<span class="string">&quot;Cannot convert to ForexHelper&quot;</span>);
@@ -816,7 +816,7 @@
     <span class="doccomment">///     assert_eq!(symbol, &quot;MSFT&quot;);</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">quote</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Quote</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="ident">async</span> <span class="kw">fn</span> <span class="ident">quote</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Quote</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">data</span>: <span class="ident">Url</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
             <span class="string">&quot;{}GLOBAL_QUOTE&amp;symbol={}&amp;apikey={}&quot;</span>,
             <span class="ident">LINK</span>,
@@ -830,10 +830,10 @@
             .<span class="ident">client</span>
             .<span class="ident">get</span>(<span class="ident">data</span>)
             .<span class="ident">send</span>()
-            .<span class="kw">await</span>
+            .<span class="ident">await</span>
             .<span class="ident">expect</span>(<span class="string">&quot;failed to send request&quot;</span>)
             .<span class="ident">text</span>()
-            .<span class="kw">await</span>
+            .<span class="ident">await</span>
             .<span class="ident">expect</span>(<span class="string">&quot;failed to get text from Response&quot;</span>);
         <span class="kw">let</span> <span class="ident">quote_helper</span>: <span class="ident">QuoteHelper</span> <span class="op">=</span>
             <span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="ident">body</span>).<span class="ident">expect</span>(<span class="string">&quot;Cannot convert to Quote&quot;</span>);
@@ -851,7 +851,7 @@
     <span class="doccomment">///     assert_eq!(search.result()[0].symbol(), &quot;BA&quot;);</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">search</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">keywords</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Search</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="ident">async</span> <span class="kw">fn</span> <span class="ident">search</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">keywords</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Search</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">data</span>: <span class="ident">Url</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
             <span class="string">&quot;{}SYMBOL_SEARCH&amp;keywords={}&amp;apikey={}&quot;</span>,
             <span class="ident">LINK</span>,
@@ -864,10 +864,10 @@
             .<span class="ident">client</span>
             .<span class="ident">get</span>(<span class="ident">data</span>)
             .<span class="ident">send</span>()
-            .<span class="kw">await</span>
+            .<span class="ident">await</span>
             .<span class="ident">expect</span>(<span class="string">&quot;failed to send request&quot;</span>)
             .<span class="ident">text</span>()
-            .<span class="kw">await</span>
+            .<span class="ident">await</span>
             .<span class="ident">expect</span>(<span class="string">&quot;failed to get text from Response&quot;</span>);
         <span class="kw">let</span> <span class="ident">search_helper</span>: <span class="ident">SearchHelper</span> <span class="op">=</span>
             <span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="ident">body</span>).<span class="ident">expect</span>(<span class="string">&quot;Cannot convert to Search&quot;</span>);
@@ -888,7 +888,7 @@
     <span class="doccomment">///     );</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">sector</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Sector</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="ident">async</span> <span class="kw">fn</span> <span class="ident">sector</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Sector</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">data</span>: <span class="ident">Url</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}SECTOR&amp;apikey={}&quot;</span>, <span class="ident">LINK</span>, <span class="self">self</span>.<span class="ident">get_api</span>())
             .<span class="ident">parse</span>()
             .<span class="ident">expect</span>(<span class="string">&quot;failed to parse sector str to Url&quot;</span>);
@@ -896,10 +896,10 @@
             .<span class="ident">client</span>
             .<span class="ident">get</span>(<span class="ident">data</span>)
             .<span class="ident">send</span>()
-            .<span class="kw">await</span>
+            .<span class="ident">await</span>
             .<span class="ident">expect</span>(<span class="string">&quot;failed to send request&quot;</span>)
             .<span class="ident">text</span>()
-            .<span class="kw">await</span>
+            .<span class="ident">await</span>
             .<span class="ident">expect</span>(<span class="string">&quot;failed to get text from Response&quot;</span>);
         <span class="kw">let</span> <span class="ident">sector_helper</span>: <span class="ident">SectorHelper</span> <span class="op">=</span>
             <span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="ident">body</span>).<span class="ident">expect</span>(<span class="string">&quot;cannot convert to SectorHelper&quot;</span>);
@@ -926,23 +926,23 @@
     <span class="doccomment">///     assert_eq!(stock.symbol(), &quot;MSFT&quot;.to_string());</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">stock_time</span>(
+    <span class="kw">pub</span> <span class="ident">async</span> <span class="kw">fn</span> <span class="ident">stock_time</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">function</span>: <span class="ident">StockFunction</span>,
         <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">interval</span>: <span class="ident">TimeSeriesInterval</span>,
         <span class="ident">output_size</span>: <span class="ident">OutputSize</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TimeSeries</span><span class="op">&gt;</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TimeSeries</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">data</span>: <span class="ident">Url</span> <span class="op">=</span>
             <span class="ident">create_url_time_series</span>(<span class="ident">function</span>, <span class="ident">symbol</span>, <span class="ident">interval</span>, <span class="ident">output_size</span>, <span class="self">self</span>.<span class="ident">get_api</span>());
         <span class="kw">let</span> <span class="ident">body</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>
             .<span class="ident">client</span>
             .<span class="ident">get</span>(<span class="ident">data</span>)
             .<span class="ident">send</span>()
-            .<span class="kw">await</span>
+            .<span class="ident">await</span>
             .<span class="ident">expect</span>(<span class="string">&quot;failed to send request&quot;</span>)
             .<span class="ident">text</span>()
-            .<span class="kw">await</span>
+            .<span class="ident">await</span>
             .<span class="ident">expect</span>(<span class="string">&quot;failed to get text from Response&quot;</span>);
         <span class="kw">let</span> <span class="ident">time_series_helper</span>: <span class="ident">TimeSeriesHelper</span> <span class="op">=</span>
             <span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="ident">body</span>).<span class="ident">expect</span>(<span class="string">&quot;cannot convert to time series helper&quot;</span>);
@@ -969,7 +969,7 @@
     <span class="doccomment">///     assert_eq!(technical.is_ok(), true);</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">technical_indicator</span>(
+    <span class="kw">pub</span> <span class="ident">async</span> <span class="kw">fn</span> <span class="ident">technical_indicator</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">function</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
@@ -977,7 +977,7 @@
         <span class="ident">time_period</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>,
         <span class="ident">series_type</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
         <span class="ident">temporary_value</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">TechnicalIndicator</span><span class="op">&gt;</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Indicator</span><span class="op">&gt;</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Indicator</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">create_url_technical</span>(
             <span class="ident">function</span>,
             <span class="ident">symbol</span>,
@@ -991,10 +991,10 @@
             .<span class="ident">client</span>
             .<span class="ident">get</span>(<span class="ident">data</span>)
             .<span class="ident">send</span>()
-            .<span class="kw">await</span>
+            .<span class="ident">await</span>
             .<span class="ident">expect</span>(<span class="string">&quot;failed to send request&quot;</span>)
             .<span class="ident">text</span>()
-            .<span class="kw">await</span>
+            .<span class="ident">await</span>
             .<span class="ident">expect</span>(<span class="string">&quot;failed to get text from Response&quot;</span>);
         <span class="kw">let</span> <span class="ident">indicator_helper</span>: <span class="ident">IndicatorHelper</span> <span class="op">=</span>
             <span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="ident">body</span>).<span class="ident">expect</span>(<span class="string">&quot;cannot convert to Indicator&quot;</span>);

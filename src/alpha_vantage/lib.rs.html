@@ -181,7 +181,7 @@
 <span class="doccomment">/// let api = alpha_vantage::set_api(&quot;some_key&quot;);</span>
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">must_use</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_api</span>(<span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">APIKey</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_api</span>(<span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">APIKey</span> {
     <span class="ident">APIKey</span>::<span class="ident">set_api</span>(<span class="ident">api</span>)
 }
 
@@ -191,7 +191,7 @@
 <span class="doccomment">/// let api_with_custom_timeout = alpha_vantage::set_with_timeout(&quot;your_api_key&quot;, 45);</span>
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">must_use</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_with_timeout</span>(<span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">timeout</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="ident">APIKey</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_with_timeout</span>(<span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">timeout</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">APIKey</span> {
     <span class="ident">APIKey</span>::<span class="ident">set_with_timeout</span>(<span class="ident">api</span>, <span class="ident">timeout</span>)
 }
 
@@ -203,7 +203,7 @@
 <span class="doccomment">/// assert_eq!(api_from_env.get_api(), &quot;some_key&quot;);</span>
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">must_use</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_from_env</span>(<span class="ident">env_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">APIKey</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_from_env</span>(<span class="ident">env_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">APIKey</span> {
     <span class="ident">APIKey</span>::<span class="ident">set_from_env</span>(<span class="ident">env_name</span>)
 }
 
@@ -215,7 +215,7 @@
 <span class="attribute">#[<span class="ident">must_use</span>]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;blocking&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;blocking&quot;</span>)))]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">blocking_set_api</span>(<span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="self">self</span>::<span class="ident">blocking</span>::<span class="ident">APIKey</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">blocking_set_api</span>(<span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">self</span>::<span class="ident">blocking</span>::<span class="ident">APIKey</span> {
     <span class="self">self</span>::<span class="ident">blocking</span>::<span class="ident">APIKey</span>::<span class="ident">set_api</span>(<span class="ident">api</span>)
 }
 
@@ -227,7 +227,7 @@
 <span class="attribute">#[<span class="ident">must_use</span>]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;blocking&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;blocking&quot;</span>)))]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">blocking_set_with_timeout</span>(<span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">timeout</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="self">self</span>::<span class="ident">blocking</span>::<span class="ident">APIKey</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">blocking_set_with_timeout</span>(<span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">timeout</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">self</span>::<span class="ident">blocking</span>::<span class="ident">APIKey</span> {
     <span class="self">self</span>::<span class="ident">blocking</span>::<span class="ident">APIKey</span>::<span class="ident">set_with_timeout</span>(<span class="ident">api</span>, <span class="ident">timeout</span>)
 }
 
@@ -241,7 +241,7 @@
 <span class="attribute">#[<span class="ident">must_use</span>]</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;blocking&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;blocking&quot;</span>)))]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">blocking_set_from_env</span>(<span class="ident">env_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="self">self</span>::<span class="ident">blocking</span>::<span class="ident">APIKey</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">blocking_set_from_env</span>(<span class="ident">env_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">self</span>::<span class="ident">blocking</span>::<span class="ident">APIKey</span> {
     <span class="self">self</span>::<span class="ident">blocking</span>::<span class="ident">APIKey</span>::<span class="ident">set_from_env</span>(<span class="ident">env_name</span>)
 }
 </pre></div>

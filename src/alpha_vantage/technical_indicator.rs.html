@@ -205,6 +205,11 @@
 <span id="204">204</span>
 <span id="205">205</span>
 <span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Module for Technical Indicator</span>
 <span class="doccomment">//!</span>
@@ -226,7 +231,7 @@
 <span class="kw">use</span> <span class="ident">serde_json</span>::<span class="ident">value</span>::<span class="ident">Value</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashMap</span>;
 
-<span class="kw">type</span> <span class="ident">DataType</span> <span class="op">=</span> <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>;
+<span class="kw">type</span> <span class="ident">DataType</span> <span class="op">=</span> <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
 <span class="doccomment">/// Struct for storing a data values</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>)]</span>
@@ -238,13 +243,13 @@
 <span class="kw">impl</span> <span class="ident">DataCollector</span> {
     <span class="doccomment">/// Return time</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">time</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">time</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">time</span>
     }
 
     <span class="doccomment">/// Return values for Data</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">values</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">f64</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">values</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">f64</span><span class="op">&gt;</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">values</span>
     }
 }
@@ -260,13 +265,13 @@
     <span class="doccomment">/// Return meta data in hash form with key as `String` and values as</span>
     <span class="doccomment">/// `serde_json::value::Value`</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">meta_data</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Value</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">meta_data</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Value</span><span class="op">&gt;</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">metadata</span>
     }
 
     <span class="doccomment">/// Return data as a vector</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">data</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">DataCollector</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">data</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">DataCollector</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">vector</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
         <span class="kw">for</span> <span class="ident">hash</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">values</span>() {
             <span class="kw">for</span> <span class="ident">time</span> <span class="kw">in</span> <span class="ident">hash</span>.<span class="ident">keys</span>() {
@@ -297,20 +302,25 @@
     <span class="ident">error_message</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Information&quot;</span>)]</span>
     <span class="ident">information</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Note&quot;</span>)]</span>
+    <span class="ident">note</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Meta Data&quot;</span>)]</span>
-    <span class="ident">metadata</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Value</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">metadata</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Value</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">flatten</span>)]</span>
     <span class="ident">data</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">DataType</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">IndicatorHelper</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">convert</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Indicator</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">convert</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Indicator</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">indicator</span> <span class="op">=</span> <span class="ident">Indicator</span>::<span class="ident">default</span>();
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">information</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">information</span> {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">AlphaVantageInformation</span>(<span class="ident">information</span>));
         }
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">error_message</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">error_message</span> {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">AlphaVantageErrorMessage</span>(<span class="ident">error_message</span>));
+        }
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">note</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">note</span> {
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">AlphaVantageNote</span>(<span class="ident">note</span>));
         }
         <span class="ident">indicator</span>.<span class="ident">metadata</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">metadata</span>.<span class="ident">unwrap</span>();
         <span class="ident">indicator</span>.<span class="ident">data</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">unwrap</span>();
@@ -327,16 +337,16 @@
     <span class="ident">series_type</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
     <span class="ident">temporary_value</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">UtilIndicator</span><span class="op">&gt;</span>,
     <span class="ident">apikey</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-) <span class="op">-&gt;</span> <span class="ident">Url</span> {
+) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Url</span> {
     <span class="kw">let</span> <span class="ident">interval_val</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">interval</span> {
-        <span class="ident">TechnicalIndicatorInterval</span>::<span class="ident">OneMin</span> <span class="op">=&gt;</span> <span class="string">&quot;1min&quot;</span>,
-        <span class="ident">TechnicalIndicatorInterval</span>::<span class="ident">FiveMin</span> <span class="op">=&gt;</span> <span class="string">&quot;5min&quot;</span>,
-        <span class="ident">TechnicalIndicatorInterval</span>::<span class="ident">FifteenMin</span> <span class="op">=&gt;</span> <span class="string">&quot;15min&quot;</span>,
-        <span class="ident">TechnicalIndicatorInterval</span>::<span class="ident">ThirtyMin</span> <span class="op">=&gt;</span> <span class="string">&quot;30min&quot;</span>,
-        <span class="ident">TechnicalIndicatorInterval</span>::<span class="ident">SixtyMin</span> <span class="op">=&gt;</span> <span class="string">&quot;60min&quot;</span>,
-        <span class="ident">TechnicalIndicatorInterval</span>::<span class="ident">Daily</span> <span class="op">=&gt;</span> <span class="string">&quot;daily&quot;</span>,
-        <span class="ident">TechnicalIndicatorInterval</span>::<span class="ident">Weekly</span> <span class="op">=&gt;</span> <span class="string">&quot;weekly&quot;</span>,
-        <span class="ident">TechnicalIndicatorInterval</span>::<span class="ident">Monthly</span> <span class="op">=&gt;</span> <span class="string">&quot;monthly&quot;</span>,
+        <span class="ident">TechnicalIndicatorInterval</span>::<span class="ident">OneMin</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;1min&quot;</span>,
+        <span class="ident">TechnicalIndicatorInterval</span>::<span class="ident">FiveMin</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;5min&quot;</span>,
+        <span class="ident">TechnicalIndicatorInterval</span>::<span class="ident">FifteenMin</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;15min&quot;</span>,
+        <span class="ident">TechnicalIndicatorInterval</span>::<span class="ident">ThirtyMin</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;30min&quot;</span>,
+        <span class="ident">TechnicalIndicatorInterval</span>::<span class="ident">SixtyMin</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;60min&quot;</span>,
+        <span class="ident">TechnicalIndicatorInterval</span>::<span class="ident">Daily</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;daily&quot;</span>,
+        <span class="ident">TechnicalIndicatorInterval</span>::<span class="ident">Weekly</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;weekly&quot;</span>,
+        <span class="ident">TechnicalIndicatorInterval</span>::<span class="ident">Monthly</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;monthly&quot;</span>,
     };
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">created_link</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
         <span class="string">&quot;https://www.alphavantage.co/query?function={}&amp;symbol={}&amp;interval={}&quot;</span>,
@@ -350,61 +360,61 @@
     }
     <span class="kw">for</span> <span class="ident">values</span> <span class="kw">in</span> <span class="ident">temporary_value</span> {
         <span class="kw">match</span> <span class="ident">values</span> {
-            <span class="ident">UtilIndicator</span>::<span class="ident">Acceleration</span>(<span class="ident">val</span>) <span class="op">=&gt;</span> {
+            <span class="ident">UtilIndicator</span>::<span class="ident">Acceleration</span>(<span class="ident">val</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;acceleration={}&quot;</span>, <span class="ident">val</span>))
             }
-            <span class="ident">UtilIndicator</span>::<span class="ident">Fastdmatype</span>(<span class="ident">val</span>) <span class="op">=&gt;</span> {
+            <span class="ident">UtilIndicator</span>::<span class="ident">Fastdmatype</span>(<span class="ident">val</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;fastdmatype={}&quot;</span>, <span class="ident">val</span>))
             }
-            <span class="ident">UtilIndicator</span>::<span class="ident">Fastdperiod</span>(<span class="ident">val</span>) <span class="op">=&gt;</span> {
+            <span class="ident">UtilIndicator</span>::<span class="ident">Fastdperiod</span>(<span class="ident">val</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;fastdperiod={}&quot;</span>, <span class="ident">val</span>))
             }
-            <span class="ident">UtilIndicator</span>::<span class="ident">Fastkperiod</span>(<span class="ident">val</span>) <span class="op">=&gt;</span> {
+            <span class="ident">UtilIndicator</span>::<span class="ident">Fastkperiod</span>(<span class="ident">val</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;fastkperiod={}&quot;</span>, <span class="ident">val</span>))
             }
-            <span class="ident">UtilIndicator</span>::<span class="ident">Fastlimit</span>(<span class="ident">val</span>) <span class="op">=&gt;</span> <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;fastlimit={}&quot;</span>, <span class="ident">val</span>)),
-            <span class="ident">UtilIndicator</span>::<span class="ident">Fastmatype</span>(<span class="ident">val</span>) <span class="op">=&gt;</span> {
+            <span class="ident">UtilIndicator</span>::<span class="ident">Fastlimit</span>(<span class="ident">val</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;fastlimit={}&quot;</span>, <span class="ident">val</span>)),
+            <span class="ident">UtilIndicator</span>::<span class="ident">Fastmatype</span>(<span class="ident">val</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;fastmatype={}&quot;</span>, <span class="ident">val</span>))
             }
-            <span class="ident">UtilIndicator</span>::<span class="ident">Fastperiod</span>(<span class="ident">val</span>) <span class="op">=&gt;</span> {
+            <span class="ident">UtilIndicator</span>::<span class="ident">Fastperiod</span>(<span class="ident">val</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;fastperiod={}&quot;</span>, <span class="ident">val</span>))
             }
-            <span class="ident">UtilIndicator</span>::<span class="ident">Matype</span>(<span class="ident">val</span>) <span class="op">=&gt;</span> <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;matype={}&quot;</span>, <span class="ident">val</span>)),
-            <span class="ident">UtilIndicator</span>::<span class="ident">Maximum</span>(<span class="ident">val</span>) <span class="op">=&gt;</span> <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;maximum={}&quot;</span>, <span class="ident">val</span>)),
-            <span class="ident">UtilIndicator</span>::<span class="ident">Nbdevdn</span>(<span class="ident">val</span>) <span class="op">=&gt;</span> <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;nbdevdn={}&quot;</span>, <span class="ident">val</span>)),
-            <span class="ident">UtilIndicator</span>::<span class="ident">Nbdevup</span>(<span class="ident">val</span>) <span class="op">=&gt;</span> <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;nbdevup={}&quot;</span>, <span class="ident">val</span>)),
-            <span class="ident">UtilIndicator</span>::<span class="ident">Signalmatype</span>(<span class="ident">val</span>) <span class="op">=&gt;</span> {
+            <span class="ident">UtilIndicator</span>::<span class="ident">Matype</span>(<span class="ident">val</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;matype={}&quot;</span>, <span class="ident">val</span>)),
+            <span class="ident">UtilIndicator</span>::<span class="ident">Maximum</span>(<span class="ident">val</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;maximum={}&quot;</span>, <span class="ident">val</span>)),
+            <span class="ident">UtilIndicator</span>::<span class="ident">Nbdevdn</span>(<span class="ident">val</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;nbdevdn={}&quot;</span>, <span class="ident">val</span>)),
+            <span class="ident">UtilIndicator</span>::<span class="ident">Nbdevup</span>(<span class="ident">val</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;nbdevup={}&quot;</span>, <span class="ident">val</span>)),
+            <span class="ident">UtilIndicator</span>::<span class="ident">Signalmatype</span>(<span class="ident">val</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;signalmatype={}&quot;</span>, <span class="ident">val</span>))
             }
-            <span class="ident">UtilIndicator</span>::<span class="ident">Signalperiod</span>(<span class="ident">val</span>) <span class="op">=&gt;</span> {
+            <span class="ident">UtilIndicator</span>::<span class="ident">Signalperiod</span>(<span class="ident">val</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;signalperiod={}&quot;</span>, <span class="ident">val</span>))
             }
-            <span class="ident">UtilIndicator</span>::<span class="ident">Slowdmatype</span>(<span class="ident">val</span>) <span class="op">=&gt;</span> {
+            <span class="ident">UtilIndicator</span>::<span class="ident">Slowdmatype</span>(<span class="ident">val</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;slowdmatype={}&quot;</span>, <span class="ident">val</span>))
             }
-            <span class="ident">UtilIndicator</span>::<span class="ident">Slowdperiod</span>(<span class="ident">val</span>) <span class="op">=&gt;</span> {
+            <span class="ident">UtilIndicator</span>::<span class="ident">Slowdperiod</span>(<span class="ident">val</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;slowdperiod={}&quot;</span>, <span class="ident">val</span>))
             }
-            <span class="ident">UtilIndicator</span>::<span class="ident">Slowkmatype</span>(<span class="ident">val</span>) <span class="op">=&gt;</span> {
+            <span class="ident">UtilIndicator</span>::<span class="ident">Slowkmatype</span>(<span class="ident">val</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;slowkmatype={}&quot;</span>, <span class="ident">val</span>))
             }
-            <span class="ident">UtilIndicator</span>::<span class="ident">Slowkperiod</span>(<span class="ident">val</span>) <span class="op">=&gt;</span> {
+            <span class="ident">UtilIndicator</span>::<span class="ident">Slowkperiod</span>(<span class="ident">val</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;slowkperiod={}&quot;</span>, <span class="ident">val</span>))
             }
-            <span class="ident">UtilIndicator</span>::<span class="ident">Slowlimit</span>(<span class="ident">val</span>) <span class="op">=&gt;</span> <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;slowlimit={}&quot;</span>, <span class="ident">val</span>)),
-            <span class="ident">UtilIndicator</span>::<span class="ident">Slowmatype</span>(<span class="ident">val</span>) <span class="op">=&gt;</span> {
+            <span class="ident">UtilIndicator</span>::<span class="ident">Slowlimit</span>(<span class="ident">val</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;slowlimit={}&quot;</span>, <span class="ident">val</span>)),
+            <span class="ident">UtilIndicator</span>::<span class="ident">Slowmatype</span>(<span class="ident">val</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;slowmatype={}&quot;</span>, <span class="ident">val</span>))
             }
-            <span class="ident">UtilIndicator</span>::<span class="ident">Slowperiod</span>(<span class="ident">val</span>) <span class="op">=&gt;</span> {
+            <span class="ident">UtilIndicator</span>::<span class="ident">Slowperiod</span>(<span class="ident">val</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;slowperiod={}&quot;</span>, <span class="ident">val</span>))
             }
-            <span class="ident">UtilIndicator</span>::<span class="ident">Timeperiod1</span>(<span class="ident">val</span>) <span class="op">=&gt;</span> {
+            <span class="ident">UtilIndicator</span>::<span class="ident">Timeperiod1</span>(<span class="ident">val</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;timeperiod1={}&quot;</span>, <span class="ident">val</span>))
             }
-            <span class="ident">UtilIndicator</span>::<span class="ident">Timeperiod2</span>(<span class="ident">val</span>) <span class="op">=&gt;</span> {
+            <span class="ident">UtilIndicator</span>::<span class="ident">Timeperiod2</span>(<span class="ident">val</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;timeperiod2={}&quot;</span>, <span class="ident">val</span>))
             }
-            <span class="ident">UtilIndicator</span>::<span class="ident">Timeperiod3</span>(<span class="ident">val</span>) <span class="op">=&gt;</span> {
+            <span class="ident">UtilIndicator</span>::<span class="ident">Timeperiod3</span>(<span class="ident">val</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;&amp;timeperiod3={}&quot;</span>, <span class="ident">val</span>))
             }
         }

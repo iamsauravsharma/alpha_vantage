@@ -239,6 +239,11 @@
 <span id="238">238</span>
 <span id="239">239</span>
 <span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Module for sector</span>
 <span class="doccomment">//!</span>
@@ -283,73 +288,73 @@
 <span class="kw">impl</span> <span class="ident">Data</span> {
     <span class="doccomment">/// Return rank</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rank</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rank</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">rank</span>
     }
 
     <span class="doccomment">/// Return utilities score</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">utilities</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">utilities</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">utilities</span>
     }
 
     <span class="doccomment">/// Return health care score</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">health_care</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">health_care</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">health_care</span>
     }
 
     <span class="doccomment">/// Return information technology score</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">information_technology</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">information_technology</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">information_technology</span>
     }
 
     <span class="doccomment">/// Return industrials scores</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">industrials</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">industrials</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">industrials</span>
     }
 
     <span class="doccomment">/// Return real estate value</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">real_estate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">real_estate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">real_estate</span>
     }
 
     <span class="doccomment">/// Return consumer staples value</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">consumer_staples</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">consumer_staples</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">consumer_staples</span>
     }
 
     <span class="doccomment">/// Return consumer discretionary score</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">consumer_discretionary</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">consumer_discretionary</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">consumer_discretionary</span>
     }
 
     <span class="doccomment">/// Return financials score</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">financials</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">financials</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">financials</span>
     }
 
     <span class="doccomment">/// Gives value of communication services</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">communication_services</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">communication_services</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">communication_services</span>
     }
 
     <span class="doccomment">/// Gives materials value</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">materials</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">materials</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">materials</span>
     }
 
     <span class="doccomment">/// Gives out energy data</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">energy</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">energy</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
         <span class="self">self</span>.<span class="ident">energy</span>
     }
 }
@@ -375,28 +380,28 @@
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">information</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">information</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="self">self</span>.<span class="ident">return_meta_data_val</span>(<span class="string">&quot;information&quot;</span>)
     }
 
     <span class="doccomment">/// Return last refreshed time</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">last_refreshed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">last_refreshed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="self">self</span>.<span class="ident">return_meta_data_val</span>(<span class="string">&quot;last refreshed&quot;</span>)
     }
 
     <span class="doccomment">/// Return vector of data</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">data</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Data</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">data</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Data</span><span class="op">&gt;</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">data</span>
     }
 
     <span class="doccomment">/// Return metadata value</span>
-    <span class="kw">fn</span> <span class="ident">return_meta_data_val</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">fn</span> <span class="ident">return_meta_data_val</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="kw">match</span> <span class="ident">name</span> {
-            <span class="string">&quot;information&quot;</span> <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">information</span>,
-            <span class="string">&quot;last refreshed&quot;</span> <span class="op">=&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">last_refreshed</span>,
-            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="string">&quot;&quot;</span>,
+            <span class="string">&quot;information&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">information</span>,
+            <span class="string">&quot;last refreshed&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">last_refreshed</span>,
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;&quot;</span>,
         }
     }
 }
@@ -408,15 +413,17 @@
     <span class="ident">information</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Error Message&quot;</span>)]</span>
     <span class="ident">error_message</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Note&quot;</span>)]</span>
+    <span class="ident">note</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Meta Data&quot;</span>)]</span>
     <span class="ident">meta_data</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">MetaData</span><span class="op">&gt;</span>,
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">flatten</span>)]</span>
-    <span class="ident">data</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">data</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">SectorHelper</span> {
     <span class="doccomment">/// Convert [SectorHelper][SectorHelper] to [Sector][Sector]</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">convert</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Sector</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">convert</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Sector</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sector</span> <span class="op">=</span> <span class="ident">Sector</span>::<span class="ident">default</span>();
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">information</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">information</span> {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">AlphaVantageInformation</span>(<span class="ident">information</span>));
@@ -424,46 +431,49 @@
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">error_message</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">error_message</span> {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">AlphaVantageErrorMessage</span>(<span class="ident">error_message</span>));
         }
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">note</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">note</span> {
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">AlphaVantageNote</span>(<span class="ident">note</span>));
+        }
         <span class="ident">sector</span>.<span class="ident">meta_data</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">unwrap</span>();
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">temp_data</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">data</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">final_data</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
             <span class="kw">for</span> (<span class="ident">key</span>, <span class="ident">val</span>) <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">temp_data</span> {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">Data</span>::<span class="ident">default</span>();
                 <span class="kw">match</span> <span class="ident">key</span>.<span class="ident">as_str</span>() {
-                    <span class="string">&quot;Rank A: Real-Time Performance&quot;</span> <span class="op">=&gt;</span> <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;real-time&quot;</span>.<span class="ident">to_string</span>(),
-                    <span class="string">&quot;Rank B: 1 Day Performance&quot;</span> <span class="op">=&gt;</span> <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;1-day&quot;</span>.<span class="ident">to_string</span>(),
-                    <span class="string">&quot;Rank C: 5 Day Performance&quot;</span> <span class="op">=&gt;</span> <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;5-day&quot;</span>.<span class="ident">to_string</span>(),
-                    <span class="string">&quot;Rank D: 1 Month Performance&quot;</span> <span class="op">=&gt;</span> <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;1-month&quot;</span>.<span class="ident">to_string</span>(),
-                    <span class="string">&quot;Rank E: 3 Month Performance&quot;</span> <span class="op">=&gt;</span> <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;3-month&quot;</span>.<span class="ident">to_string</span>(),
-                    <span class="string">&quot;Rank F: Year-to-Date (YTD) Performance&quot;</span> <span class="op">=&gt;</span> {
+                    <span class="string">&quot;Rank A: Real-Time Performance&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;real-time&quot;</span>.<span class="ident">to_string</span>(),
+                    <span class="string">&quot;Rank B: 1 Day Performance&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;1-day&quot;</span>.<span class="ident">to_string</span>(),
+                    <span class="string">&quot;Rank C: 5 Day Performance&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;5-day&quot;</span>.<span class="ident">to_string</span>(),
+                    <span class="string">&quot;Rank D: 1 Month Performance&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;1-month&quot;</span>.<span class="ident">to_string</span>(),
+                    <span class="string">&quot;Rank E: 3 Month Performance&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;3-month&quot;</span>.<span class="ident">to_string</span>(),
+                    <span class="string">&quot;Rank F: Year-to-Date (YTD) Performance&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;year-to-date&quot;</span>.<span class="ident">to_string</span>()
                     }
-                    <span class="string">&quot;Rank G: 1 Year Performance&quot;</span> <span class="op">=&gt;</span> <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;1-year&quot;</span>.<span class="ident">to_string</span>(),
-                    <span class="string">&quot;Rank H: 3 Year Performance&quot;</span> <span class="op">=&gt;</span> <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;3-year&quot;</span>.<span class="ident">to_string</span>(),
-                    <span class="string">&quot;Rank I: 5 Year Performance&quot;</span> <span class="op">=&gt;</span> <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;5-year&quot;</span>.<span class="ident">to_string</span>(),
-                    <span class="string">&quot;Rank J: 10 Year Performance&quot;</span> <span class="op">=&gt;</span> <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;10-year&quot;</span>.<span class="ident">to_string</span>(),
-                    <span class="kw">_</span> <span class="op">=&gt;</span> <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
+                    <span class="string">&quot;Rank G: 1 Year Performance&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;1-year&quot;</span>.<span class="ident">to_string</span>(),
+                    <span class="string">&quot;Rank H: 3 Year Performance&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;3-year&quot;</span>.<span class="ident">to_string</span>(),
+                    <span class="string">&quot;Rank I: 5 Year Performance&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;5-year&quot;</span>.<span class="ident">to_string</span>(),
+                    <span class="string">&quot;Rank J: 10 Year Performance&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;10-year&quot;</span>.<span class="ident">to_string</span>(),
+                    <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
                 }
                 <span class="kw">for</span> (<span class="ident">key</span>, <span class="ident">val</span>) <span class="kw">in</span> <span class="ident">val</span>.<span class="ident">iter</span>() {
                     <span class="kw">match</span> <span class="ident">key</span>.<span class="ident">as_str</span>() {
-                        <span class="string">&quot;Utilities&quot;</span> <span class="op">=&gt;</span> <span class="ident">data</span>.<span class="ident">utilities</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
-                        <span class="string">&quot;Health Care&quot;</span> <span class="op">=&gt;</span> <span class="ident">data</span>.<span class="ident">health_care</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
-                        <span class="string">&quot;Information Technology&quot;</span> <span class="op">=&gt;</span> {
+                        <span class="string">&quot;Utilities&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">data</span>.<span class="ident">utilities</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
+                        <span class="string">&quot;Health Care&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">data</span>.<span class="ident">health_care</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
+                        <span class="string">&quot;Information Technology&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
                             <span class="ident">data</span>.<span class="ident">information_technology</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>)
                         }
-                        <span class="string">&quot;Industrials&quot;</span> <span class="op">=&gt;</span> <span class="ident">data</span>.<span class="ident">industrials</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
-                        <span class="string">&quot;Real Estate&quot;</span> <span class="op">=&gt;</span> <span class="ident">data</span>.<span class="ident">real_estate</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
-                        <span class="string">&quot;Consumer Staples&quot;</span> <span class="op">=&gt;</span> <span class="ident">data</span>.<span class="ident">consumer_staples</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
-                        <span class="string">&quot;Consumer Discretionary&quot;</span> <span class="op">=&gt;</span> {
+                        <span class="string">&quot;Industrials&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">data</span>.<span class="ident">industrials</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
+                        <span class="string">&quot;Real Estate&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">data</span>.<span class="ident">real_estate</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
+                        <span class="string">&quot;Consumer Staples&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">data</span>.<span class="ident">consumer_staples</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
+                        <span class="string">&quot;Consumer Discretionary&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
                             <span class="ident">data</span>.<span class="ident">consumer_discretionary</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>)
                         }
-                        <span class="string">&quot;Financials&quot;</span> <span class="op">=&gt;</span> <span class="ident">data</span>.<span class="ident">financials</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
-                        <span class="string">&quot;Communication Services&quot;</span> <span class="op">=&gt;</span> {
+                        <span class="string">&quot;Financials&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">data</span>.<span class="ident">financials</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
+                        <span class="string">&quot;Communication Services&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
                             <span class="ident">data</span>.<span class="ident">communication_services</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>)
                         }
-                        <span class="string">&quot;Materials&quot;</span> <span class="op">=&gt;</span> <span class="ident">data</span>.<span class="ident">materials</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
-                        <span class="string">&quot;Energy&quot;</span> <span class="op">=&gt;</span> <span class="ident">data</span>.<span class="ident">energy</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
-                        <span class="kw">_</span> <span class="op">=&gt;</span> {}
+                        <span class="string">&quot;Materials&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">data</span>.<span class="ident">materials</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
+                        <span class="string">&quot;Energy&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">data</span>.<span class="ident">energy</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
+                        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {}
                     }
                 }
                 <span class="ident">final_data</span>.<span class="ident">push</span>(<span class="ident">data</span>);
@@ -475,7 +485,7 @@
 }
 
 <span class="comment">// convert str which has percent form to f64 val</span>
-<span class="kw">fn</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+<span class="kw">fn</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">val</span>.<span class="ident">to_owned</span>();
     <span class="ident">s</span>.<span class="ident">pop</span>();
     <span class="ident">s</span>.<span class="ident">trim</span>().<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>()
