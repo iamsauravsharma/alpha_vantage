@@ -3,7 +3,7 @@
 **Project status & info:**
 
 | Travis Build Status | License | Crates Version | Docs |
-| :---: | :---: | :---: | :---: | :---: |
+| :---: | :---: | :---: | :---: |
 | [![Travis Build Status][build_badge]][build_link] | [![License: MIT][license_badge]][license_link] | [![Crate][cratesio_badge]][cratesio_link] | [![Docs][docsrs_badge]][docsrs_link] |
 
 Rust Client library built for accessing [Alphavantage][alphavantage_link] API.
