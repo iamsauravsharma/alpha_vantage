@@ -204,6 +204,8 @@ impl Search {
 pub(crate) struct SearchHelper {
     #[serde(rename = "Information")]
     information: Option<String>,
+    #[serde(rename = "Note")]
+    note: Option<String>,
     #[serde(rename = "bestMatches")]
     matches: Option<Vec<DataValue>>,
 }
@@ -213,6 +215,9 @@ impl SearchHelper {
         let mut search = Search::default();
         if let Some(information) = self.information {
             return Err(Error::AlphaVantageInformation(information));
+        }
+        if let Some(note) = self.note {
+            return Err(Error::AlphaVantageNote(note));
         }
         search.matches = self.matches.unwrap();
         Ok(search)

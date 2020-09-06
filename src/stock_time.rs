@@ -300,6 +300,8 @@ pub(crate) struct TimeSeriesHelper {
     error_message: Option<String>,
     #[serde(rename = "Information")]
     information: Option<String>,
+    #[serde(rename = "Note")]
+    note: Option<String>,
     #[serde(rename = "Meta Data")]
     meta_data: Option<HashMap<String, String>>,
     #[serde(flatten)]
@@ -317,6 +319,9 @@ impl TimeSeriesHelper {
         }
         if let Some(error_message) = self.error_message {
             return Err(Error::AlphaVantageErrorMessage(error_message));
+        }
+        if let Some(note) = self.note {
+            return Err(Error::AlphaVantageNote(note));
         }
         if let Some(meta_data) = self.meta_data {
             let information = &meta_data["1. Information"];

@@ -289,6 +289,8 @@ pub(crate) struct CryptoHelper {
     information: Option<String>,
     #[serde(rename = "Error Message")]
     error_message: Option<String>,
+    #[serde(rename = "Note")]
+    note: Option<String>,
     #[serde(rename = "Meta Data")]
     meta_data: Option<MetaData>,
     #[serde(flatten)]
@@ -304,6 +306,9 @@ impl CryptoHelper {
         }
         if let Some(error_message) = self.error_message {
             return Err(Error::AlphaVantageErrorMessage(error_message));
+        }
+        if let Some(note) = self.note {
+            return Err(Error::AlphaVantageNote(note));
         }
         crypto.meta_data = self.meta_data.unwrap();
         if self.entry.is_some() {

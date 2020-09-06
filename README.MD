@@ -2,9 +2,9 @@
 
 **Project status & info:**
 
-| Travis Build Status | Code Coverage | License | Crates Version | Docs |
+| Travis Build Status | License | Crates Version | Docs |
 | :---: | :---: | :---: | :---: | :---: |
-| [![Travis Build Status][build_badge]][build_link] | [![Code coverage][codecov_badge]][codecov_link] | [![License: MIT][license_badge]][license_link] | [![Crate][cratesio_badge]][cratesio_link] | [![Docs][docsrs_badge]][docsrs_link] |
+| [![Travis Build Status][build_badge]][build_link] | [![License: MIT][license_badge]][license_link] | [![Crate][cratesio_badge]][cratesio_link] | [![Docs][docsrs_badge]][docsrs_link] |
 
 Rust Client library built for accessing [Alphavantage][alphavantage_link] API.
 
@@ -63,9 +63,6 @@ println!("{}",rate);
 
 [build_badge]: https://img.shields.io/travis/com/iamsauravsharma/alpha_vantage.svg?logo=travis
 [build_link]: https://travis-ci.com/iamsauravsharma/alpha_vantage
-
-[codecov_badge]: https://img.shields.io/codecov/c/github/iamsauravsharma/alpha_vantage.svg?logo=codecov
-[codecov_link]: https://codecov.io/gh/iamsauravsharma/alpha_vantage
 
 [license_badge]: https://img.shields.io/github/license/iamsauravsharma/alpha_vantage.svg
 [license_link]: LICENSE

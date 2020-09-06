@@ -89,6 +89,8 @@ pub(crate) struct IndicatorHelper {
     error_message: Option<String>,
     #[serde(rename = "Information")]
     information: Option<String>,
+    #[serde(rename = "Note")]
+    note: Option<String>,
     #[serde(rename = "Meta Data")]
     metadata: Option<HashMap<String, Value>>,
     #[serde(flatten)]
@@ -103,6 +105,9 @@ impl IndicatorHelper {
         }
         if let Some(error_message) = self.error_message {
             return Err(Error::AlphaVantageErrorMessage(error_message));
+        }
+        if let Some(note) = self.note {
+            return Err(Error::AlphaVantageNote(note));
         }
         indicator.metadata = self.metadata.unwrap();
         indicator.data = self.data.unwrap();

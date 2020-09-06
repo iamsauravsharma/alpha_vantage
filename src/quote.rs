@@ -125,6 +125,8 @@ pub(crate) struct QuoteHelper {
     error_message: Option<String>,
     #[serde(rename = "Information")]
     information: Option<String>,
+    #[serde(rename = "Note")]
+    note: Option<String>,
     #[serde(rename = "Global Quote")]
     global_quote: Option<GlobalQuote>,
 }
@@ -137,6 +139,9 @@ impl QuoteHelper {
         }
         if let Some(error_message) = self.error_message {
             return Err(Error::AlphaVantageErrorMessage(error_message));
+        }
+        if let Some(note) = self.note {
+            return Err(Error::AlphaVantageNote(note));
         }
         quote.global_quote = self.global_quote.unwrap();
         Ok(quote)

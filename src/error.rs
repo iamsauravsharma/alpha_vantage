@@ -7,15 +7,20 @@ pub type Result<T> = std::result::Result<T, Error>;
 #[derive(Error, Debug)]
 /// Main error/failure enum
 pub enum Error {
-    /// Error which is raised if information is returned instead of data from
-    /// API
+    /// Error which is raised if information is returned by API instead of data
+    /// from API
     #[error("information: {0}")]
     AlphaVantageInformation(String),
 
-    /// Error which is raised if error_message is raised instead of data from
-    /// API
-    #[error("error: {0}")]
+    /// Error which is raised if error_message is returned by API instead of
+    /// data from API
+    #[error("error_message: {0}")]
     AlphaVantageErrorMessage(String),
+
+    /// Error which is raised if note is returned by API instead of data from
+    /// API
+    #[error("note: {0}")]
+    AlphaVantageNote(String),
 
     /// Error which is raised when desired number of entry is not present
     #[error("desired number of latest entry not found try using less than {0} as n")]
