@@ -35,6 +35,13 @@ jobs:
     - os: windows
       env: TARGET=x86_64-pc-windows-msvc
 
+branches:
+  only:
+    - staging
+    - trying
+    - master
+    - /^v\d+\.\d+\.\d+(-\S*)?$/
+
 before_install:
   - chmod -R 777 ci
 
