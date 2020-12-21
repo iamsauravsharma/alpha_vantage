@@ -38,4 +38,4 @@ jobs:
         with:
           SSH: true
           BRANCH: gh-pages
-          FOLDER: site
+          FOLDER: target/doc
