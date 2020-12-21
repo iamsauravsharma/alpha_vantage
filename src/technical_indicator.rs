@@ -62,8 +62,10 @@ impl Indicator {
         let mut vector = Vec::new();
         for hash in self.data.values() {
             for time in hash.keys() {
-                let mut data_collector = DataCollector::default();
-                data_collector.time = time.to_string();
+                let mut data_collector = DataCollector {
+                    time: time.to_string(),
+                    ..DataCollector::default()
+                };
                 let hash_values = hash
                     .get(time)
                     .expect("cannot get time key value from hash map")

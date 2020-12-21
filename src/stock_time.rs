@@ -359,8 +359,10 @@ impl TimeSeriesHelper {
         if let Some(entry) = self.time_series {
             for hash in entry.values() {
                 for val in hash.keys() {
-                    let mut entry: Entry = Entry::default();
-                    entry.time = val.to_string();
+                    let mut entry = Entry {
+                        time: val.to_string(),
+                        ..Entry::default()
+                    };
                     let entry_helper = hash
                         .get(val)
                         .expect("failed to get val from hash for time series")
@@ -377,8 +379,10 @@ impl TimeSeriesHelper {
         if let Some(entry) = self.adjusted_series {
             for hash in entry.values() {
                 for val in hash.keys() {
-                    let mut entry: Entry = Entry::default();
-                    entry.time = val.to_string();
+                    let mut entry = Entry {
+                        time: val.to_string(),
+                        ..Entry::default()
+                    };
                     let entry_helper = hash
                         .get(val)
                         .expect("failed to get val from hash for adjusted series")
@@ -497,7 +501,7 @@ pub(crate) fn create_url(
         TimeSeriesInterval::None => "",
     };
 
-    if interval != "" {
+    if !interval.is_empty() {
         url.push_str(&format!("&interval={}", interval));
     }
 
