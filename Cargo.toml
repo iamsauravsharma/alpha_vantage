@@ -1,29 +1,38 @@
 [package]
 name = "alpha_vantage"
 version = "0.5.0"
-authors = ["Saurav Sharma <appdroiddeveloper@gmail.com>"]
+authors = [ "Saurav Sharma <appdroiddeveloper@gmail.com>" ]
 homepage = "https://github.com/iamsauravsharma/alpha_vantage"
 repository = "https://github.com/iamsauravsharma/alpha_vantage"
 description = "Rust Wrapper/Crate built for AlphaVantage API"
 license = "MIT"
 readme = "README.MD"
 edition = "2018"
-keywords = ["alphavantage","currency","finance","stock","exchange"]
-categories = ["api-bindings","web-programming::http-client"]
+keywords = [
+    "alphavantage",
+    "currency",
+    "finance",
+    "stock",
+    "exchange"
+]
+categories = [
+    "api-bindings",
+    "web-programming::http-client"
+]
 
 [dependencies]
-reqwest = {version = "0.10.10"}
-serde = {version = "1.0.118", features = ["derive"]}
+reqwest = { version = "0.10.10" }
+serde = { version = "1.0.118", features = [ "derive" ] }
 serde_json = "1.0.60"
 thiserror = "1.0.22"
 
 [dev-dependencies]
-tokio = {version = "0.2.24", features = ["macros"]}
+tokio = { version = "0.2.24", features = [ "macros" ] }
 
 [features]
-vendored = ["reqwest/native-tls-vendored"]
-blocking = ["reqwest/blocking"]
+vendored = [ "reqwest/native-tls-vendored" ]
+blocking = [ "reqwest/blocking" ]
 
 [package.metadata.docs.rs]
 all-features = true
-rustdoc-args = ["--cfg", "docsrs"]
+rustdoc-args = [ "--cfg", "docsrs" ]
