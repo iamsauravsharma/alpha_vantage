@@ -383,140 +383,6 @@
 <span id="380">380</span>
 <span id="381">381</span>
 <span id="382">382</span>
-<span id="383">383</span>
-<span id="384">384</span>
-<span id="385">385</span>
-<span id="386">386</span>
-<span id="387">387</span>
-<span id="388">388</span>
-<span id="389">389</span>
-<span id="390">390</span>
-<span id="391">391</span>
-<span id="392">392</span>
-<span id="393">393</span>
-<span id="394">394</span>
-<span id="395">395</span>
-<span id="396">396</span>
-<span id="397">397</span>
-<span id="398">398</span>
-<span id="399">399</span>
-<span id="400">400</span>
-<span id="401">401</span>
-<span id="402">402</span>
-<span id="403">403</span>
-<span id="404">404</span>
-<span id="405">405</span>
-<span id="406">406</span>
-<span id="407">407</span>
-<span id="408">408</span>
-<span id="409">409</span>
-<span id="410">410</span>
-<span id="411">411</span>
-<span id="412">412</span>
-<span id="413">413</span>
-<span id="414">414</span>
-<span id="415">415</span>
-<span id="416">416</span>
-<span id="417">417</span>
-<span id="418">418</span>
-<span id="419">419</span>
-<span id="420">420</span>
-<span id="421">421</span>
-<span id="422">422</span>
-<span id="423">423</span>
-<span id="424">424</span>
-<span id="425">425</span>
-<span id="426">426</span>
-<span id="427">427</span>
-<span id="428">428</span>
-<span id="429">429</span>
-<span id="430">430</span>
-<span id="431">431</span>
-<span id="432">432</span>
-<span id="433">433</span>
-<span id="434">434</span>
-<span id="435">435</span>
-<span id="436">436</span>
-<span id="437">437</span>
-<span id="438">438</span>
-<span id="439">439</span>
-<span id="440">440</span>
-<span id="441">441</span>
-<span id="442">442</span>
-<span id="443">443</span>
-<span id="444">444</span>
-<span id="445">445</span>
-<span id="446">446</span>
-<span id="447">447</span>
-<span id="448">448</span>
-<span id="449">449</span>
-<span id="450">450</span>
-<span id="451">451</span>
-<span id="452">452</span>
-<span id="453">453</span>
-<span id="454">454</span>
-<span id="455">455</span>
-<span id="456">456</span>
-<span id="457">457</span>
-<span id="458">458</span>
-<span id="459">459</span>
-<span id="460">460</span>
-<span id="461">461</span>
-<span id="462">462</span>
-<span id="463">463</span>
-<span id="464">464</span>
-<span id="465">465</span>
-<span id="466">466</span>
-<span id="467">467</span>
-<span id="468">468</span>
-<span id="469">469</span>
-<span id="470">470</span>
-<span id="471">471</span>
-<span id="472">472</span>
-<span id="473">473</span>
-<span id="474">474</span>
-<span id="475">475</span>
-<span id="476">476</span>
-<span id="477">477</span>
-<span id="478">478</span>
-<span id="479">479</span>
-<span id="480">480</span>
-<span id="481">481</span>
-<span id="482">482</span>
-<span id="483">483</span>
-<span id="484">484</span>
-<span id="485">485</span>
-<span id="486">486</span>
-<span id="487">487</span>
-<span id="488">488</span>
-<span id="489">489</span>
-<span id="490">490</span>
-<span id="491">491</span>
-<span id="492">492</span>
-<span id="493">493</span>
-<span id="494">494</span>
-<span id="495">495</span>
-<span id="496">496</span>
-<span id="497">497</span>
-<span id="498">498</span>
-<span id="499">499</span>
-<span id="500">500</span>
-<span id="501">501</span>
-<span id="502">502</span>
-<span id="503">503</span>
-<span id="504">504</span>
-<span id="505">505</span>
-<span id="506">506</span>
-<span id="507">507</span>
-<span id="508">508</span>
-<span id="509">509</span>
-<span id="510">510</span>
-<span id="511">511</span>
-<span id="512">512</span>
-<span id="513">513</span>
-<span id="514">514</span>
-<span id="515">515</span>
-<span id="516">516</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">crypto</span>::{<span class="ident">create_url</span> <span class="kw">as</span> <span class="ident">create_url_crypto</span>, <span class="ident">Crypto</span>, <span class="ident">CryptoHelper</span>},
@@ -534,15 +400,13 @@
         <span class="ident">TechnicalIndicatorInterval</span>, <span class="ident">TimeSeriesInterval</span>,
     },
 };
-<span class="kw">use</span> <span class="ident">reqwest</span>::{<span class="ident">Client</span>, <span class="ident">ClientBuilder</span>, <span class="ident">Url</span>};
-
-<span class="kw">const</span> <span class="ident">LINK</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;https://www.alphavantage.co/query?function=&quot;</span>;
+<span class="kw">use</span> <span class="ident">surf</span>::{<span class="ident">Client</span>, <span class="ident">Url</span>};
+<span class="kw">const</span> <span class="ident">BASE_URL</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;https://www.alphavantage.co/&quot;</span>;
 
 <span class="doccomment">/// Struct for initializing api key value as well as contain different method</span>
 <span class="doccomment">/// for API call</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">APIKey</span> {
     <span class="ident">api</span>: <span class="ident">String</span>,
-    <span class="ident">timeout</span>: <span class="ident">u64</span>,
     <span class="ident">client</span>: <span class="ident">Client</span>,
 }
 
@@ -555,31 +419,10 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_api</span>(<span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">client</span> <span class="op">=</span> <span class="ident">ClientBuilder</span>::<span class="ident">new</span>()
-            .<span class="ident">build</span>()
-            .<span class="ident">expect</span>(<span class="string">&quot;Failed to build Client Builder&quot;</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">client</span> <span class="op">=</span> <span class="ident">Client</span>::<span class="ident">new</span>();
+        <span class="ident">client</span>.<span class="ident">set_base_url</span>(<span class="ident">Url</span>::<span class="ident">parse</span>(<span class="ident">BASE_URL</span>).<span class="ident">unwrap</span>());
         <span class="self">Self</span> {
             <span class="ident">api</span>: <span class="ident">api</span>.<span class="ident">to_string</span>(),
-            <span class="ident">timeout</span>: <span class="number">30</span>,
-            <span class="ident">client</span>,
-        }
-    }
-
-    <span class="doccomment">/// Set API value with timeout period</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use alpha_vantage::user::APIKey;</span>
-    <span class="doccomment">/// let api_with_custom_timeout = APIKey::set_with_timeout(&quot;your_api_key&quot;, 45);</span>
-    <span class="doccomment">/// ```</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_with_timeout</span>(<span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">timeout</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">client</span> <span class="op">=</span> <span class="ident">ClientBuilder</span>::<span class="ident">new</span>()
-            .<span class="ident">timeout</span>(<span class="ident">std</span>::<span class="ident">time</span>::<span class="ident">Duration</span>::<span class="ident">from_secs</span>(<span class="ident">timeout</span>))
-            .<span class="ident">build</span>()
-            .<span class="ident">expect</span>(<span class="string">&quot;Failed to build Client Builder with timeout&quot;</span>);
-        <span class="self">Self</span> {
-            <span class="ident">api</span>: <span class="ident">api</span>.<span class="ident">to_string</span>(),
-            <span class="ident">timeout</span>,
             <span class="ident">client</span>,
         }
     }
@@ -595,27 +438,9 @@
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_from_env</span>(<span class="ident">env_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">env</span>::<span class="ident">var</span>(<span class="ident">env_name</span>).<span class="ident">expect</span>(<span class="string">&quot;environment variable is not present&quot;</span>);
-        <span class="kw">let</span> <span class="ident">client</span> <span class="op">=</span> <span class="ident">ClientBuilder</span>::<span class="ident">new</span>()
-            .<span class="ident">build</span>()
-            .<span class="ident">expect</span>(<span class="string">&quot;Failed to build Client Builder&quot;</span>);
-        <span class="self">Self</span> {
-            <span class="ident">api</span>,
-            <span class="ident">timeout</span>: <span class="number">30</span>,
-            <span class="ident">client</span>,
-        }
-    }
-
-    <span class="doccomment">/// Update timeout for API key</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use alpha_vantage::user::APIKey;</span>
-    <span class="doccomment">/// let mut api = alpha_vantage::user::APIKey::set_api(&quot;some_key&quot;);</span>
-    <span class="doccomment">/// assert_eq!(api.get_timeout(), 30_u64);</span>
-    <span class="doccomment">/// api.update_timeout(60_u64);</span>
-    <span class="doccomment">/// assert_eq!(api.get_timeout(), 60_u64);</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">update_timeout</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">timeout</span>: <span class="ident">u64</span>) {
-        <span class="self">self</span>.<span class="ident">timeout</span> <span class="op">=</span> <span class="ident">timeout</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">client</span> <span class="op">=</span> <span class="ident">Client</span>::<span class="ident">new</span>();
+        <span class="ident">client</span>.<span class="ident">set_base_url</span>(<span class="ident">Url</span>::<span class="ident">parse</span>(<span class="ident">BASE_URL</span>).<span class="ident">unwrap</span>());
+        <span class="self">Self</span> { <span class="ident">api</span>, <span class="ident">client</span> }
     }
 
     <span class="doccomment">/// Method to get api key</span>
@@ -630,50 +455,28 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">api</span>
     }
 
-    <span class="doccomment">/// Get API timeout period</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use alpha_vantage::user::APIKey;</span>
-    <span class="doccomment">/// let api_with_custom_timeout = APIKey::set_with_timeout(&quot;your_api_key&quot;, 45);</span>
-    <span class="doccomment">/// assert_eq!(api_with_custom_timeout.get_timeout(), 45_u64);</span>
-    <span class="doccomment">/// ```</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_timeout</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span> {
-        <span class="self">self</span>.<span class="ident">timeout</span>
-    }
-
     <span class="doccomment">/// Method for getting crypto health rating</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use tokio::prelude::*;</span>
-    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
     <span class="doccomment">///     assert_eq!(api.crypto_rating(&quot;BTC&quot;).await.unwrap().name(), &quot;Bitcoin&quot;);</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="ident">async</span> <span class="kw">fn</span> <span class="ident">crypto_rating</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">CryptoRating</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">data</span>: <span class="ident">Url</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
-            <span class="string">&quot;{}CRYPTO_RATING&amp;symbol={}&amp;apikey={}&quot;</span>,
-            <span class="ident">LINK</span>,
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">crypto_rating</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">CryptoRating</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
+            <span class="string">&quot;query?function=CRYPTO_RATING&amp;symbol={}&amp;apikey={}&quot;</span>,
             <span class="ident">symbol</span>,
             <span class="self">self</span>.<span class="ident">get_api</span>()
-        )
-        .<span class="ident">parse</span>()
-        .<span class="ident">expect</span>(<span class="string">&quot;Failed to parse string to url&quot;</span>);
-
-        <span class="kw">let</span> <span class="ident">body</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>
+        );
+        <span class="kw">let</span> <span class="ident">crypto_rating_helper</span>: <span class="ident">CryptoRatingHelper</span> <span class="op">=</span> <span class="self">self</span>
             .<span class="ident">client</span>
-            .<span class="ident">get</span>(<span class="ident">data</span>)
-            .<span class="ident">send</span>()
-            .<span class="ident">await</span>
-            .<span class="ident">expect</span>(<span class="string">&quot;failed to send request&quot;</span>)
-            .<span class="ident">text</span>()
-            .<span class="ident">await</span>
-            .<span class="ident">expect</span>(<span class="string">&quot;failed to get text from Response&quot;</span>);
-        <span class="kw">let</span> <span class="ident">crypto_rating_helper</span>: <span class="ident">CryptoRatingHelper</span> <span class="op">=</span>
-            <span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="ident">body</span>).<span class="ident">expect</span>(<span class="string">&quot;Cannot convert to crypto rating&quot;</span>);
+            .<span class="ident">get</span>(<span class="ident">path</span>)
+            .<span class="ident">recv_json</span>()
+            .<span class="kw">await</span>
+            .<span class="ident">expect</span>(<span class="string">&quot;fail to get json&quot;</span>);
         <span class="ident">crypto_rating_helper</span>.<span class="ident">convert</span>()
     }
 
@@ -681,8 +484,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use tokio::prelude::*;</span>
-    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
     <span class="doccomment">///     let crypto = api</span>
@@ -693,24 +495,19 @@
     <span class="doccomment">///     assert_eq!(digital_name, &quot;Bitcoin&quot;);</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="ident">async</span> <span class="kw">fn</span> <span class="ident">crypto</span>(
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">crypto</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">function</span>: <span class="ident">CryptoFunction</span>,
         <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">market</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Crypto</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">data</span>: <span class="ident">Url</span> <span class="op">=</span> <span class="ident">create_url_crypto</span>(<span class="ident">function</span>, <span class="ident">symbol</span>, <span class="ident">market</span>, <span class="self">self</span>.<span class="ident">get_api</span>());
-        <span class="kw">let</span> <span class="ident">body</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>
+        <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">create_url_crypto</span>(<span class="ident">function</span>, <span class="ident">symbol</span>, <span class="ident">market</span>, <span class="self">self</span>.<span class="ident">get_api</span>());
+        <span class="kw">let</span> <span class="ident">crypto_helper</span>: <span class="ident">CryptoHelper</span> <span class="op">=</span> <span class="self">self</span>
             .<span class="ident">client</span>
-            .<span class="ident">get</span>(<span class="ident">data</span>)
-            .<span class="ident">send</span>()
-            .<span class="ident">await</span>
-            .<span class="ident">expect</span>(<span class="string">&quot;failed to send request&quot;</span>)
-            .<span class="ident">text</span>()
-            .<span class="ident">await</span>
-            .<span class="ident">expect</span>(<span class="string">&quot;failed to get text from Response&quot;</span>);
-        <span class="kw">let</span> <span class="ident">crypto_helper</span>: <span class="ident">CryptoHelper</span> <span class="op">=</span>
-            <span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="ident">body</span>).<span class="ident">expect</span>(<span class="string">&quot;Cannot convert to CryptoHelper&quot;</span>);
+            .<span class="ident">get</span>(<span class="ident">path</span>)
+            .<span class="ident">recv_json</span>()
+            .<span class="kw">await</span>
+            .<span class="ident">expect</span>(<span class="string">&quot;fail to get json&quot;</span>);
         <span class="ident">crypto_helper</span>.<span class="ident">convert</span>()
     }
 
@@ -719,8 +516,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use tokio::prelude::*;</span>
-    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
     <span class="doccomment">///     assert_eq!(</span>
@@ -729,28 +525,19 @@
     <span class="doccomment">///     );</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="ident">async</span> <span class="kw">fn</span> <span class="ident">exchange</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">from_currency</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">to_currency</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Exchange</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">data</span>: <span class="ident">Url</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
-            <span class="string">&quot;{}CURRENCY_EXCHANGE_RATE&amp;from_currency={}&amp;to_currency={}&amp;apikey={}&quot;</span>,
-            <span class="ident">LINK</span>,
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">exchange</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">from_currency</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">to_currency</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Exchange</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
+            <span class="string">&quot;query?function=CURRENCY_EXCHANGE_RATE&amp;from_currency={}&amp;to_currency={}&amp;apikey={}&quot;</span>,
             <span class="ident">from_currency</span>,
             <span class="ident">to_currency</span>,
             <span class="self">self</span>.<span class="ident">get_api</span>()
-        )
-        .<span class="ident">parse</span>()
-        .<span class="ident">expect</span>(<span class="string">&quot;Failed to parse string to url&quot;</span>);
-
-        <span class="kw">let</span> <span class="ident">body</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>
+        );
+        <span class="kw">let</span> <span class="ident">exchange_helper</span>: <span class="ident">ExchangeHelper</span> <span class="op">=</span> <span class="self">self</span>
             .<span class="ident">client</span>
-            .<span class="ident">get</span>(<span class="ident">data</span>)
-            .<span class="ident">send</span>()
-            .<span class="ident">await</span>
-            .<span class="ident">expect</span>(<span class="string">&quot;failed to send request&quot;</span>)
-            .<span class="ident">text</span>()
-            .<span class="ident">await</span>
-            .<span class="ident">expect</span>(<span class="string">&quot;failed to get text from Response&quot;</span>);
-        <span class="kw">let</span> <span class="ident">exchange_helper</span>: <span class="ident">ExchangeHelper</span> <span class="op">=</span>
-            <span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="ident">body</span>).<span class="ident">expect</span>(<span class="string">&quot;Cannot convert to Exchange&quot;</span>);
+            .<span class="ident">get</span>(<span class="ident">path</span>)
+            .<span class="ident">recv_json</span>()
+            .<span class="kw">await</span>
+            .<span class="ident">expect</span>(<span class="string">&quot;fail to get json&quot;</span>);
         <span class="ident">exchange_helper</span>.<span class="ident">convert</span>()
     }
 
@@ -759,8 +546,7 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use alpha_vantage::util::*;</span>
-    <span class="doccomment">/// use tokio::prelude::*;</span>
-    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
     <span class="doccomment">///     let forex = api</span>
@@ -775,7 +561,7 @@
     <span class="doccomment">///     assert_eq!(forex.unwrap().symbol_from(), &quot;EUR&quot;);</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="ident">async</span> <span class="kw">fn</span> <span class="ident">forex</span>(
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">forex</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">function</span>: <span class="ident">ForexFunction</span>,
         <span class="ident">from_symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
@@ -783,7 +569,7 @@
         <span class="ident">interval</span>: <span class="ident">TimeSeriesInterval</span>,
         <span class="ident">output_size</span>: <span class="ident">OutputSize</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Forex</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">data</span>: <span class="ident">Url</span> <span class="op">=</span> <span class="ident">create_url_forex</span>(
+        <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">create_url_forex</span>(
             <span class="ident">function</span>,
             <span class="ident">from_symbol</span>,
             <span class="ident">to_symbol</span>,
@@ -791,17 +577,12 @@
             <span class="ident">output_size</span>,
             <span class="self">self</span>.<span class="ident">get_api</span>(),
         );
-        <span class="kw">let</span> <span class="ident">body</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>
+        <span class="kw">let</span> <span class="ident">forex_helper</span>: <span class="ident">ForexHelper</span> <span class="op">=</span> <span class="self">self</span>
             .<span class="ident">client</span>
-            .<span class="ident">get</span>(<span class="ident">data</span>)
-            .<span class="ident">send</span>()
-            .<span class="ident">await</span>
-            .<span class="ident">expect</span>(<span class="string">&quot;failed to send request&quot;</span>)
-            .<span class="ident">text</span>()
-            .<span class="ident">await</span>
-            .<span class="ident">expect</span>(<span class="string">&quot;failed to get text from Response&quot;</span>);
-        <span class="kw">let</span> <span class="ident">forex_helper</span>: <span class="ident">ForexHelper</span> <span class="op">=</span>
-            <span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="ident">body</span>).<span class="ident">expect</span>(<span class="string">&quot;Cannot convert to ForexHelper&quot;</span>);
+            .<span class="ident">get</span>(<span class="ident">path</span>)
+            .<span class="ident">recv_json</span>()
+            .<span class="kw">await</span>
+            .<span class="ident">expect</span>(<span class="string">&quot;fail to get json&quot;</span>);
         <span class="ident">forex_helper</span>.<span class="ident">convert</span>()
     }
 
@@ -809,8 +590,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use tokio::prelude::*;</span>
-    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
     <span class="doccomment">///     let quote = api.quote(&quot;MSFT&quot;).await.unwrap();</span>
@@ -818,69 +598,50 @@
     <span class="doccomment">///     assert_eq!(symbol, &quot;MSFT&quot;);</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="ident">async</span> <span class="kw">fn</span> <span class="ident">quote</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Quote</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">data</span>: <span class="ident">Url</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
-            <span class="string">&quot;{}GLOBAL_QUOTE&amp;symbol={}&amp;apikey={}&quot;</span>,
-            <span class="ident">LINK</span>,
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">quote</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Quote</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
+            <span class="string">&quot;query?function=GLOBAL_QUOTE&amp;symbol={}&amp;apikey={}&quot;</span>,
             <span class="ident">symbol</span>,
             <span class="self">self</span>.<span class="ident">get_api</span>()
-        )
-        .<span class="ident">parse</span>()
-        .<span class="ident">expect</span>(<span class="string">&quot;Failed to parse quote str to URL&quot;</span>);
-
-        <span class="kw">let</span> <span class="ident">body</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>
+        );
+        <span class="kw">let</span> <span class="ident">quote_helper</span>: <span class="ident">QuoteHelper</span> <span class="op">=</span> <span class="self">self</span>
             .<span class="ident">client</span>
-            .<span class="ident">get</span>(<span class="ident">data</span>)
-            .<span class="ident">send</span>()
-            .<span class="ident">await</span>
-            .<span class="ident">expect</span>(<span class="string">&quot;failed to send request&quot;</span>)
-            .<span class="ident">text</span>()
-            .<span class="ident">await</span>
-            .<span class="ident">expect</span>(<span class="string">&quot;failed to get text from Response&quot;</span>);
-        <span class="kw">let</span> <span class="ident">quote_helper</span>: <span class="ident">QuoteHelper</span> <span class="op">=</span>
-            <span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="ident">body</span>).<span class="ident">expect</span>(<span class="string">&quot;Cannot convert to Quote&quot;</span>);
+            .<span class="ident">get</span>(<span class="ident">path</span>)
+            .<span class="ident">recv_json</span>()
+            .<span class="kw">await</span>
+            .<span class="ident">expect</span>(<span class="string">&quot;fail to get json&quot;</span>);
         <span class="ident">quote_helper</span>.<span class="ident">convert</span>()
     }
 
     <span class="doccomment">/// Search method for searching keyword or company</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use tokio::prelude::*;</span>
-    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
     <span class="doccomment">///     let search = api.search(&quot;BA&quot;).await.unwrap();</span>
     <span class="doccomment">///     assert_eq!(search.result()[0].symbol(), &quot;BA&quot;);</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="ident">async</span> <span class="kw">fn</span> <span class="ident">search</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">keywords</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Search</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">data</span>: <span class="ident">Url</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
-            <span class="string">&quot;{}SYMBOL_SEARCH&amp;keywords={}&amp;apikey={}&quot;</span>,
-            <span class="ident">LINK</span>,
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">search</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">keywords</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Search</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
+            <span class="string">&quot;query?function=SYMBOL_SEARCH&amp;keywords={}&amp;apikey={}&quot;</span>,
             <span class="ident">keywords</span>,
             <span class="self">self</span>.<span class="ident">get_api</span>()
-        )
-        .<span class="ident">parse</span>()
-        .<span class="ident">expect</span>(<span class="string">&quot;Failed to parse search str to Url&quot;</span>);
-        <span class="kw">let</span> <span class="ident">body</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>
+        );
+        <span class="kw">let</span> <span class="ident">search_helper</span>: <span class="ident">SearchHelper</span> <span class="op">=</span> <span class="self">self</span>
             .<span class="ident">client</span>
-            .<span class="ident">get</span>(<span class="ident">data</span>)
-            .<span class="ident">send</span>()
-            .<span class="ident">await</span>
-            .<span class="ident">expect</span>(<span class="string">&quot;failed to send request&quot;</span>)
-            .<span class="ident">text</span>()
-            .<span class="ident">await</span>
-            .<span class="ident">expect</span>(<span class="string">&quot;failed to get text from Response&quot;</span>);
-        <span class="kw">let</span> <span class="ident">search_helper</span>: <span class="ident">SearchHelper</span> <span class="op">=</span>
-            <span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="ident">body</span>).<span class="ident">expect</span>(<span class="string">&quot;Cannot convert to Search&quot;</span>);
+            .<span class="ident">get</span>(<span class="ident">path</span>)
+            .<span class="ident">recv_json</span>()
+            .<span class="kw">await</span>
+            .<span class="ident">expect</span>(<span class="string">&quot;fail to get json&quot;</span>);
         <span class="ident">search_helper</span>.<span class="ident">convert</span>()
     }
 
     <span class="doccomment">/// Method for returning a sector data as struct</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use tokio::prelude::*;</span>
-    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
     <span class="doccomment">///     let sector = api.sector().await.unwrap();</span>
@@ -890,21 +651,14 @@
     <span class="doccomment">///     );</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="ident">async</span> <span class="kw">fn</span> <span class="ident">sector</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Sector</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">data</span>: <span class="ident">Url</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}SECTOR&amp;apikey={}&quot;</span>, <span class="ident">LINK</span>, <span class="self">self</span>.<span class="ident">get_api</span>())
-            .<span class="ident">parse</span>()
-            .<span class="ident">expect</span>(<span class="string">&quot;failed to parse sector str to Url&quot;</span>);
-        <span class="kw">let</span> <span class="ident">body</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">sector</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Sector</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;query?function=SECTOR&amp;apikey={}&quot;</span>, <span class="self">self</span>.<span class="ident">get_api</span>());
+        <span class="kw">let</span> <span class="ident">sector_helper</span>: <span class="ident">SectorHelper</span> <span class="op">=</span> <span class="self">self</span>
             .<span class="ident">client</span>
-            .<span class="ident">get</span>(<span class="ident">data</span>)
-            .<span class="ident">send</span>()
-            .<span class="ident">await</span>
-            .<span class="ident">expect</span>(<span class="string">&quot;failed to send request&quot;</span>)
-            .<span class="ident">text</span>()
-            .<span class="ident">await</span>
-            .<span class="ident">expect</span>(<span class="string">&quot;failed to get text from Response&quot;</span>);
-        <span class="kw">let</span> <span class="ident">sector_helper</span>: <span class="ident">SectorHelper</span> <span class="op">=</span>
-            <span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="ident">body</span>).<span class="ident">expect</span>(<span class="string">&quot;cannot convert to SectorHelper&quot;</span>);
+            .<span class="ident">get</span>(<span class="ident">path</span>)
+            .<span class="ident">recv_json</span>()
+            .<span class="kw">await</span>
+            .<span class="ident">expect</span>(<span class="string">&quot;fail to get json&quot;</span>);
         <span class="ident">sector_helper</span>.<span class="ident">convert</span>()
     }
 
@@ -912,8 +666,7 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use alpha_vantage::util::*;</span>
-    <span class="doccomment">/// use tokio::prelude::*;</span>
-    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
     <span class="doccomment">///     let stock = api</span>
@@ -928,34 +681,27 @@
     <span class="doccomment">///     assert_eq!(stock.symbol(), &quot;MSFT&quot;.to_string());</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="ident">async</span> <span class="kw">fn</span> <span class="ident">stock_time</span>(
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">stock_time</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">function</span>: <span class="ident">StockFunction</span>,
         <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">interval</span>: <span class="ident">TimeSeriesInterval</span>,
         <span class="ident">output_size</span>: <span class="ident">OutputSize</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TimeSeries</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">data</span>: <span class="ident">Url</span> <span class="op">=</span>
-            <span class="ident">create_url_time_series</span>(<span class="ident">function</span>, <span class="ident">symbol</span>, <span class="ident">interval</span>, <span class="ident">output_size</span>, <span class="self">self</span>.<span class="ident">get_api</span>());
-        <span class="kw">let</span> <span class="ident">body</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>
+        <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">create_url_time_series</span>(<span class="ident">function</span>, <span class="ident">symbol</span>, <span class="ident">interval</span>, <span class="ident">output_size</span>, <span class="self">self</span>.<span class="ident">get_api</span>());
+        <span class="kw">let</span> <span class="ident">time_series_helper</span>: <span class="ident">TimeSeriesHelper</span> <span class="op">=</span> <span class="self">self</span>
             .<span class="ident">client</span>
-            .<span class="ident">get</span>(<span class="ident">data</span>)
-            .<span class="ident">send</span>()
-            .<span class="ident">await</span>
-            .<span class="ident">expect</span>(<span class="string">&quot;failed to send request&quot;</span>)
-            .<span class="ident">text</span>()
-            .<span class="ident">await</span>
-            .<span class="ident">expect</span>(<span class="string">&quot;failed to get text from Response&quot;</span>);
-        <span class="kw">let</span> <span class="ident">time_series_helper</span>: <span class="ident">TimeSeriesHelper</span> <span class="op">=</span>
-            <span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="ident">body</span>).<span class="ident">expect</span>(<span class="string">&quot;cannot convert to time series helper&quot;</span>);
+            .<span class="ident">get</span>(<span class="ident">path</span>)
+            .<span class="ident">recv_json</span>()
+            .<span class="kw">await</span>
+            .<span class="ident">expect</span>(<span class="string">&quot;fail to get json&quot;</span>);
         <span class="ident">time_series_helper</span>.<span class="ident">convert</span>()
     }
 
     <span class="doccomment">/// Technical indicator API caller method</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use tokio::prelude::*;</span>
-    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
     <span class="doccomment">///     let technical = api</span>
@@ -971,7 +717,7 @@
     <span class="doccomment">///     assert_eq!(technical.is_ok(), true);</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="ident">async</span> <span class="kw">fn</span> <span class="ident">technical_indicator</span>(
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">technical_indicator</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">function</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
         <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
@@ -980,7 +726,7 @@
         <span class="ident">series_type</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
         <span class="ident">temporary_value</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">TechnicalIndicator</span><span class="op">&gt;</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Indicator</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">create_url_technical</span>(
+        <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">create_url_technical</span>(
             <span class="ident">function</span>,
             <span class="ident">symbol</span>,
             <span class="ident">interval</span>,
@@ -989,17 +735,12 @@
             <span class="ident">temporary_value</span>,
             <span class="self">self</span>.<span class="ident">get_api</span>(),
         );
-        <span class="kw">let</span> <span class="ident">body</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>
+        <span class="kw">let</span> <span class="ident">indicator_helper</span>: <span class="ident">IndicatorHelper</span> <span class="op">=</span> <span class="self">self</span>
             .<span class="ident">client</span>
-            .<span class="ident">get</span>(<span class="ident">data</span>)
-            .<span class="ident">send</span>()
-            .<span class="ident">await</span>
-            .<span class="ident">expect</span>(<span class="string">&quot;failed to send request&quot;</span>)
-            .<span class="ident">text</span>()
-            .<span class="ident">await</span>
-            .<span class="ident">expect</span>(<span class="string">&quot;failed to get text from Response&quot;</span>);
-        <span class="kw">let</span> <span class="ident">indicator_helper</span>: <span class="ident">IndicatorHelper</span> <span class="op">=</span>
-            <span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="ident">body</span>).<span class="ident">expect</span>(<span class="string">&quot;cannot convert to Indicator&quot;</span>);
+            .<span class="ident">get</span>(<span class="ident">path</span>)
+            .<span class="ident">recv_json</span>()
+            .<span class="kw">await</span>
+            .<span class="ident">expect</span>(<span class="string">&quot;fail to get json&quot;</span>);
         <span class="ident">indicator_helper</span>.<span class="ident">convert</span>()
     }
 }
@@ -1022,15 +763,6 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(
             <span class="kw">super</span>::<span class="ident">APIKey</span>::<span class="ident">set_from_env</span>(<span class="string">&quot;ALPHA_VANTAGE_KEY&quot;</span>).<span class="ident">get_api</span>(),
             <span class="string">&quot;some_random_key&quot;</span>.<span class="ident">to_string</span>()
-        );
-    }
-
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_set_get_timeout</span>() {
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="kw">super</span>::<span class="ident">APIKey</span>::<span class="ident">set_api</span>(<span class="string">&quot;secret_key&quot;</span>).<span class="ident">get_timeout</span>(), <span class="number">30_u64</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(
-            <span class="kw">super</span>::<span class="ident">APIKey</span>::<span class="ident">set_with_timeout</span>(<span class="string">&quot;some_key&quot;</span>, <span class="number">45</span>).<span class="ident">get_timeout</span>(),
-            <span class="number">45_u64</span>
         );
     }
 }

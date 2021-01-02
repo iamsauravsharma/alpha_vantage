@@ -217,15 +217,6 @@
 <span id="214">214</span>
 <span id="215">215</span>
 <span id="216">216</span>
-<span id="217">217</span>
-<span id="218">218</span>
-<span id="219">219</span>
-<span id="220">220</span>
-<span id="221">221</span>
-<span id="222">222</span>
-<span id="223">223</span>
-<span id="224">224</span>
-<span id="225">225</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Module for searching specific symbol or companies</span>
 <span class="doccomment">//!</span>
@@ -270,8 +261,7 @@
     <span class="doccomment">/// Return symbol</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use tokio::prelude::*;</span>
-    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
     <span class="doccomment">///     let search = api.search(&quot;BA&quot;).await.unwrap();</span>
@@ -287,13 +277,12 @@
     <span class="doccomment">/// Return name for symbol</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use tokio::prelude::*;</span>
-    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
     <span class="doccomment">///     let search = api.search(&quot;BA&quot;).await.unwrap();</span>
     <span class="doccomment">///     let name = search.result()[0].name();</span>
-    <span class="doccomment">///     assert_eq!(name, &quot;The Boeing Company&quot;);</span>
+    <span class="doccomment">///     assert_eq!(name, &quot;Boeing Company&quot;);</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
@@ -304,8 +293,7 @@
     <span class="doccomment">/// Return stock type</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use tokio::prelude::*;</span>
-    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
     <span class="doccomment">///     let search = api.search(&quot;BA&quot;).await.unwrap();</span>
@@ -320,8 +308,7 @@
     <span class="doccomment">/// Return region of search entry</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use tokio::prelude::*;</span>
-    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
     <span class="doccomment">///     let search = api.search(&quot;BA&quot;).await.unwrap();</span>
@@ -336,8 +323,7 @@
     <span class="doccomment">/// Return market open time</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use tokio::prelude::*;</span>
-    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
     <span class="doccomment">///     let search = api.search(&quot;BA&quot;).await.unwrap();</span>
@@ -352,8 +338,7 @@
     <span class="doccomment">/// Return market close time</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use tokio::prelude::*;</span>
-    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
     <span class="doccomment">///     let search = api.search(&quot;BA&quot;).await.unwrap();</span>
@@ -368,8 +353,7 @@
     <span class="doccomment">/// Return time zone of symbol</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use tokio::prelude::*;</span>
-    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
     <span class="doccomment">///     let search = api.search(&quot;BA&quot;).await.unwrap();</span>
@@ -384,8 +368,7 @@
     <span class="doccomment">/// Return currency</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use tokio::prelude::*;</span>
-    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
     <span class="doccomment">///     let search = api.search(&quot;BA&quot;).await.unwrap();</span>
@@ -400,8 +383,7 @@
     <span class="doccomment">/// Return match score</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use tokio::prelude::*;</span>
-    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
     <span class="doccomment">///     let search = api.search(&quot;BA&quot;).await.unwrap();</span>

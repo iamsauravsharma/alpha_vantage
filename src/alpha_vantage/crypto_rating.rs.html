@@ -166,9 +166,6 @@
 <span id="163">163</span>
 <span id="164">164</span>
 <span id="165">165</span>
-<span id="166">166</span>
-<span id="167">167</span>
-<span id="168">168</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Module for getting crypto health rating provided by FCAS metric</span>
 <span class="doccomment">//!</span>
@@ -224,8 +221,7 @@
     <span class="doccomment">/// Get symbol from which crypto rating was determined</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use tokio::prelude::*;</span>
-    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
     <span class="doccomment">///     let crypto_rating = api.crypto_rating(&quot;BTC&quot;).await.unwrap();</span>
@@ -241,8 +237,7 @@
     <span class="doccomment">/// Get name for which crypto rating was determined</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use tokio::prelude::*;</span>
-    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
     <span class="doccomment">///     let crypto_rating = api.crypto_rating(&quot;BTC&quot;).await.unwrap();</span>
@@ -264,8 +259,7 @@
     <span class="doccomment">/// Return time zone of last refreshed time</span>
 
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use tokio::prelude::*;</span>
-    <span class="doccomment">/// #[tokio::main]</span>
+    <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
     <span class="doccomment">///     let crypto_rating = api.crypto_rating(&quot;BTC&quot;).await.unwrap();</span>
