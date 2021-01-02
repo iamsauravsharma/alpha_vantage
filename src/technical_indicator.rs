@@ -13,7 +13,6 @@ use crate::{
     error::{Error, Result},
     util::{TechnicalIndicator as UtilIndicator, TechnicalIndicatorInterval},
 };
-use reqwest::Url;
 use serde::Deserialize;
 use serde_json::value::Value;
 use std::collections::HashMap;
@@ -126,7 +125,7 @@ pub(crate) fn create_url(
     series_type: Option<&str>,
     temporary_value: Vec<UtilIndicator>,
     apikey: &str,
-) -> Url {
+) -> String {
     let interval_val = match interval {
         TechnicalIndicatorInterval::OneMin => "1min",
         TechnicalIndicatorInterval::FiveMin => "5min",
@@ -138,7 +137,7 @@ pub(crate) fn create_url(
         TechnicalIndicatorInterval::Monthly => "monthly",
     };
     let mut created_link = format!(
-        "https://www.alphavantage.co/query?function={}&symbol={}&interval={}",
+        "query?function={}&symbol={}&interval={}",
         function, symbol, interval_val
     );
     if let Some(time_period) = time_period {
@@ -209,5 +208,5 @@ pub(crate) fn create_url(
         }
     }
     created_link.push_str(&format!("&apikey={}", apikey));
-    created_link.parse().expect("Cannot parse created link url")
+    created_link
 }

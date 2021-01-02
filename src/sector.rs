@@ -123,8 +123,7 @@ impl Sector {
     /// Return sector information
     ///
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let sector = api.sector().await.unwrap();

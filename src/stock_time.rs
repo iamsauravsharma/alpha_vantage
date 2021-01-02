@@ -15,11 +15,8 @@ use crate::{
     error::{Error, Result},
     util::{OutputSize, StockFunction, TimeSeriesInterval},
 };
-use reqwest::Url;
 use serde::Deserialize;
 use std::{collections::HashMap, str::FromStr};
-
-const LINK: &str = "https://www.alphavantage.co/query?function=";
 
 /// Struct for storing Meta Data value
 #[derive(Debug, Clone, Default)]
@@ -114,8 +111,7 @@ impl TimeSeries {
     ///
     /// ```
     /// use alpha_vantage::util::*;
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let stock_time = api
@@ -143,8 +139,7 @@ impl TimeSeries {
     ///
     /// ```
     /// use alpha_vantage::util::*;
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let stock_time = api
@@ -181,8 +176,7 @@ impl TimeSeries {
     ///
     /// ```
     /// use alpha_vantage::util::*;
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let stock_time = api
@@ -207,8 +201,7 @@ impl TimeSeries {
     ///
     /// ```
     /// use alpha_vantage::util::*;
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let stock_time = api
@@ -480,7 +473,7 @@ pub(crate) fn create_url(
     interval: TimeSeriesInterval,
     output_size: OutputSize,
     api: &str,
-) -> Url {
+) -> String {
     let function = match function {
         StockFunction::IntraDay => "TIME_SERIES_INTRADAY",
         StockFunction::Daily => "TIME_SERIES_DAILY",
@@ -491,7 +484,7 @@ pub(crate) fn create_url(
         StockFunction::MonthlyAdjusted => "TIME_SERIES_MONTHLY_ADJUSTED",
     };
 
-    let mut url = format!("{}{}&symbol={}", LINK, function, symbol);
+    let mut url = format!("query?function={}&symbol={}", function, symbol);
     let interval = match interval {
         TimeSeriesInterval::OneMin => "1min",
         TimeSeriesInterval::FiveMin => "5min",
@@ -510,13 +503,12 @@ pub(crate) fn create_url(
         _ => "",
     });
     url.push_str(&format!("&apikey={}", api));
-    url.parse().expect("Cannot parse out url")
+    url
 }
 
 #[cfg(test)]
 mod test {
     use crate::util::*;
-    use reqwest::Url;
     #[test]
     fn test_stock_time_create_url() {
         assert_eq!(
@@ -527,12 +519,7 @@ mod test {
                 OutputSize::None,
                 "random"
             ),
-            Url::parse(
-                "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY\
-                 &symbol=USD\
-                 &apikey=random"
-            )
-            .unwrap()
+            String::from("query?function=TIME_SERIES_DAILY&symbol=USD&apikey=random")
         );
         assert_eq!(
             super::create_url(
@@ -542,12 +529,7 @@ mod test {
                 OutputSize::None,
                 "random"
             ),
-            Url::parse(
-                "https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY\
-                 &symbol=NPR\
-                 &apikey=random"
-            )
-            .unwrap()
+            String::from("query?function=TIME_SERIES_WEEKLY&symbol=NPR&apikey=random")
         );
         assert_eq!(
             super::create_url(
@@ -557,12 +539,7 @@ mod test {
                 OutputSize::None,
                 "random"
             ),
-            Url::parse(
-                "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY\
-                 &symbol=NPR\
-                 &apikey=random"
-            )
-            .unwrap()
+            String::from("query?function=TIME_SERIES_MONTHLY&symbol=NPR&apikey=random")
         );
         assert_eq!(
             super::create_url(
@@ -572,14 +549,10 @@ mod test {
                 OutputSize::Full,
                 "random"
             ),
-            Url::parse(
-                "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY\
-                 &symbol=MSFT\
-                 &interval=60min\
-                 &outputsize=full\
-                 &apikey=random"
+            String::from(
+                "query?function=TIME_SERIES_INTRADAY&symbol=MSFT&interval=60min&outputsize=full&\
+                 apikey=random"
             )
-            .unwrap()
         );
     }
 }

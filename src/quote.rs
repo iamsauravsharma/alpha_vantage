@@ -103,8 +103,7 @@ impl Quote {
     /// get symbol
     ///
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let quote = api.quote("MSFT").await.unwrap();
