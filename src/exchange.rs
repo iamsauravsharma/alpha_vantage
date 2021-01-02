@@ -65,8 +65,7 @@ impl Exchange {
     /// get from code from which exchange is performed
     ///
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let exchange = api.exchange("BTC", "CNY").await.unwrap();
@@ -82,8 +81,7 @@ impl Exchange {
     /// get from name from which exchange is performed
     ///
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let exchange = api.exchange("BTC", "CNY").await.unwrap();
@@ -99,8 +97,7 @@ impl Exchange {
     /// get to code from exchange
     ///
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let exchange = api.exchange("BTC", "CNY").await.unwrap();
@@ -116,8 +113,7 @@ impl Exchange {
     /// get to name from exchange
     ///
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let exchange = api.exchange("BTC", "CNY").await.unwrap();

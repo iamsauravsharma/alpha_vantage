@@ -13,11 +13,8 @@ use crate::{
     error::{Error, Result},
     util::{ForexFunction, OutputSize, TimeSeriesInterval},
 };
-use reqwest::Url;
 use serde::Deserialize;
 use std::collections::HashMap;
-
-const LINK: &str = "https://www.alphavantage.co/query?function=";
 
 /// Struct used to store metadata value
 #[derive(Debug, Clone, Default)]
@@ -85,8 +82,7 @@ impl Forex {
     ///
     /// ```
     /// use alpha_vantage::util::*;
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let forex = api
@@ -112,8 +108,7 @@ impl Forex {
     ///
     /// ```
     /// use alpha_vantage::util::*;
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let forex = api
@@ -138,8 +133,7 @@ impl Forex {
     /// Return to symbol
     ///
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     use alpha_vantage::util::*;
     ///     let api = alpha_vantage::set_api("demo");
@@ -178,8 +172,7 @@ impl Forex {
     ///
     /// ```
     /// use alpha_vantage::util::*;
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let forex = api
@@ -205,8 +198,7 @@ impl Forex {
     ///
     /// ```
     /// use alpha_vantage::util::*;
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let forex = api
@@ -432,7 +424,7 @@ pub(crate) fn create_url(
     interval: TimeSeriesInterval,
     output_size: OutputSize,
     api: &str,
-) -> Url {
+) -> String {
     let function = match function {
         ForexFunction::IntraDay => "FX_INTRADAY",
         ForexFunction::Daily => "FX_DAILY",
@@ -441,8 +433,8 @@ pub(crate) fn create_url(
     };
 
     let mut url = format!(
-        "{}{}&from_symbol={}&to_symbol={}",
-        LINK, function, from_symbol, to_symbol
+        "query?function={}&from_symbol={}&to_symbol={}",
+        function, from_symbol, to_symbol
     );
     let interval = match interval {
         TimeSeriesInterval::OneMin => "1min",
@@ -463,14 +455,13 @@ pub(crate) fn create_url(
     });
 
     url.push_str(&format!("&apikey={}", api));
-    url.parse().expect("Fail to parse url")
+    url
 }
 
 // Test module
 #[cfg(test)]
 mod test {
     use crate::util::*;
-    use reqwest::Url;
     #[test]
     // Testing forex create_url() function
     fn test_forex_create_url() {
@@ -483,13 +474,7 @@ mod test {
                 OutputSize::None,
                 "random"
             ),
-            Url::parse(
-                "https://www.alphavantage.co/query?function=FX_DAILY\
-                 &from_symbol=USD\
-                 &to_symbol=NPR\
-                 &apikey=random"
-            )
-            .unwrap()
+            String::from("query?function=FX_DAILY&from_symbol=USD&to_symbol=NPR&apikey=random")
         );
         assert_eq!(
             super::create_url(
@@ -500,13 +485,7 @@ mod test {
                 OutputSize::None,
                 "random"
             ),
-            Url::parse(
-                "https://www.alphavantage.co/query?function=FX_WEEKLY\
-                 &from_symbol=USD\
-                 &to_symbol=NPR\
-                 &apikey=random"
-            )
-            .unwrap()
+            String::from("query?function=FX_WEEKLY&from_symbol=USD&to_symbol=NPR&apikey=random")
         );
         assert_eq!(
             super::create_url(
@@ -517,13 +496,7 @@ mod test {
                 OutputSize::None,
                 "random"
             ),
-            Url::parse(
-                "https://www.alphavantage.co/query?function=FX_MONTHLY\
-                 &from_symbol=USD\
-                 &to_symbol=NPR\
-                 &apikey=random"
-            )
-            .unwrap()
+            String::from("query?function=FX_MONTHLY&from_symbol=USD&to_symbol=NPR&apikey=random")
         );
         assert_eq!(
             super::create_url(
@@ -534,15 +507,10 @@ mod test {
                 OutputSize::Full,
                 "random"
             ),
-            Url::parse(
-                "https://www.alphavantage.co/query?function=FX_INTRADAY\
-                 &from_symbol=USD\
-                 &to_symbol=NPR\
-                 &interval=15min\
-                 &outputsize=full\
-                 &apikey=random"
+            String::from(
+                "query?function=FX_INTRADAY&from_symbol=USD&to_symbol=NPR&interval=15min&\
+                 outputsize=full&apikey=random"
             )
-            .unwrap()
         );
     }
 }

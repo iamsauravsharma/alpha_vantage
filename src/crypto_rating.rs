@@ -52,8 +52,7 @@ impl CryptoRating {
     /// Get symbol from which crypto rating was determined
     ///
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let crypto_rating = api.crypto_rating("BTC").await.unwrap();
@@ -69,8 +68,7 @@ impl CryptoRating {
     /// Get name for which crypto rating was determined
     ///
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let crypto_rating = api.crypto_rating("BTC").await.unwrap();
@@ -92,8 +90,7 @@ impl CryptoRating {
     /// Return time zone of last refreshed time
 
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let crypto_rating = api.crypto_rating("BTC").await.unwrap();

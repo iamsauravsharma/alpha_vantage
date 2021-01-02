@@ -41,8 +41,7 @@ impl DataValue {
     /// Return symbol
     ///
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let search = api.search("BA").await.unwrap();
@@ -58,13 +57,12 @@ impl DataValue {
     /// Return name for symbol
     ///
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let search = api.search("BA").await.unwrap();
     ///     let name = search.result()[0].name();
-    ///     assert_eq!(name, "The Boeing Company");
+    ///     assert_eq!(name, "Boeing Company");
     /// }
     /// ```
     #[must_use]
@@ -75,8 +73,7 @@ impl DataValue {
     /// Return stock type
     ///
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let search = api.search("BA").await.unwrap();
@@ -91,8 +88,7 @@ impl DataValue {
     /// Return region of search entry
     ///
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let search = api.search("BA").await.unwrap();
@@ -107,8 +103,7 @@ impl DataValue {
     /// Return market open time
     ///
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let search = api.search("BA").await.unwrap();
@@ -123,8 +118,7 @@ impl DataValue {
     /// Return market close time
     ///
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let search = api.search("BA").await.unwrap();
@@ -139,8 +133,7 @@ impl DataValue {
     /// Return time zone of symbol
     ///
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let search = api.search("BA").await.unwrap();
@@ -155,8 +148,7 @@ impl DataValue {
     /// Return currency
     ///
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let search = api.search("BA").await.unwrap();
@@ -171,8 +163,7 @@ impl DataValue {
     /// Return match score
     ///
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let search = api.search("BA").await.unwrap();

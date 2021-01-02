@@ -13,11 +13,8 @@ use crate::{
     error::{Error, Result},
     util::CryptoFunction,
 };
-use reqwest::Url;
 use serde::Deserialize;
 use std::{collections::HashMap, str::FromStr};
-
-const LINK: &str = "https://www.alphavantage.co/query?function=";
 
 /// Store Meta Data Information
 #[derive(Deserialize, Clone, Default)]
@@ -133,8 +130,7 @@ impl Crypto {
     /// Return meta data information
     ///
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let crypto = api
@@ -153,8 +149,7 @@ impl Crypto {
     /// Return digital currency code
     ///
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let crypto = api
@@ -173,8 +168,7 @@ impl Crypto {
     /// Return digital currency name
     ///
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let crypto = api
@@ -193,8 +187,7 @@ impl Crypto {
     /// Return market code
     ///
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let crypto = api
@@ -213,8 +206,7 @@ impl Crypto {
     /// Return market name
     ///
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let crypto = api
@@ -410,54 +402,45 @@ impl VecEntry for Vec<Entry> {
 }
 
 /// Create url from which JSON data is collected for Crypto
-pub(crate) fn create_url(function: CryptoFunction, symbol: &str, market: &str, api: &str) -> Url {
+pub(crate) fn create_url(
+    function: CryptoFunction,
+    symbol: &str,
+    market: &str,
+    api: &str,
+) -> String {
     let function_name = match function {
         CryptoFunction::Daily => "DIGITAL_CURRENCY_DAILY",
         CryptoFunction::Weekly => "DIGITAL_CURRENCY_WEEKLY",
         CryptoFunction::Monthly => "DIGITAL_CURRENCY_MONTHLY",
     };
-    let url = format!(
-        "{}{}&symbol={}&market={}&apikey={}",
-        LINK, function_name, symbol, market, api
-    );
-    url.parse().expect("Failed to parse an url")
+    format!(
+        "query?function={}&symbol={}&market={}&apikey={}",
+        function_name, symbol, market, api
+    )
 }
 
 #[cfg(test)]
 mod test {
     use crate::util::*;
-    use reqwest::Url;
     #[test]
     fn test_crypto_create_url() {
         assert_eq!(
             super::create_url(CryptoFunction::Daily, "BTC", "USD", "random"),
-            Url::parse(
-                "https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_DAILY\
-                 &symbol=BTC\
-                 &market=USD\
-                 &apikey=random"
+            String::from(
+                "query?function=DIGITAL_CURRENCY_DAILY&symbol=BTC&market=USD&apikey=random"
             )
-            .unwrap()
         );
         assert_eq!(
             super::create_url(CryptoFunction::Weekly, "ETH", "EUR", "randomkey"),
-            Url::parse(
-                "https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_WEEKLY\
-                 &symbol=ETH\
-                 &market=EUR\
-                 &apikey=randomkey"
+            String::from(
+                "query?function=DIGITAL_CURRENCY_WEEKLY&symbol=ETH&market=EUR&apikey=randomkey"
             )
-            .unwrap()
         );
         assert_eq!(
             super::create_url(CryptoFunction::Monthly, "BTC", "CNY", "secret_key"),
-            Url::parse(
-                "https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_MONTHLY\
-                 &symbol=BTC\
-                 &market=CNY\
-                 &apikey=secret_key"
+            String::from(
+                "query?function=DIGITAL_CURRENCY_MONTHLY&symbol=BTC&market=CNY&apikey=secret_key"
             )
-            .unwrap()
         );
     }
 }

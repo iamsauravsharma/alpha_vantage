@@ -14,15 +14,13 @@ use crate::{
         TechnicalIndicatorInterval, TimeSeriesInterval,
     },
 };
-use reqwest::{Client, ClientBuilder, Url};
-
-const LINK: &str = "https://www.alphavantage.co/query?function=";
+use surf::{Client, Url};
+const BASE_URL: &str = "https://www.alphavantage.co/";
 
 /// Struct for initializing api key value as well as contain different method
 /// for API call
 pub struct APIKey {
     api: String,
-    timeout: u64,
     client: Client,
 }
 
@@ -35,31 +33,10 @@ impl APIKey {
     /// ```
     #[must_use]
     pub fn set_api(api: &str) -> Self {
-        let client = ClientBuilder::new()
-            .build()
-            .expect("Failed to build Client Builder");
+        let mut client = Client::new();
+        client.set_base_url(Url::parse(BASE_URL).unwrap());
         Self {
             api: api.to_string(),
-            timeout: 30,
-            client,
-        }
-    }
-
-    /// Set API value with timeout period
-    ///
-    /// ```
-    /// use alpha_vantage::user::APIKey;
-    /// let api_with_custom_timeout = APIKey::set_with_timeout("your_api_key", 45);
-    /// ```
-    #[must_use]
-    pub fn set_with_timeout(api: &str, timeout: u64) -> Self {
-        let client = ClientBuilder::new()
-            .timeout(std::time::Duration::from_secs(timeout))
-            .build()
-            .expect("Failed to build Client Builder with timeout");
-        Self {
-            api: api.to_string(),
-            timeout,
             client,
         }
     }
@@ -75,27 +52,9 @@ impl APIKey {
     #[must_use]
     pub fn set_from_env(env_name: &str) -> Self {
         let api = std::env::var(env_name).expect("environment variable is not present");
-        let client = ClientBuilder::new()
-            .build()
-            .expect("Failed to build Client Builder");
-        Self {
-            api,
-            timeout: 30,
-            client,
-        }
-    }
-
-    /// Update timeout for API key
-    ///
-    /// ```
-    /// use alpha_vantage::user::APIKey;
-    /// let mut api = alpha_vantage::user::APIKey::set_api("some_key");
-    /// assert_eq!(api.get_timeout(), 30_u64);
-    /// api.update_timeout(60_u64);
-    /// assert_eq!(api.get_timeout(), 60_u64);
-    /// ```
-    pub fn update_timeout(&mut self, timeout: u64) {
-        self.timeout = timeout;
+        let mut client = Client::new();
+        client.set_base_url(Url::parse(BASE_URL).unwrap());
+        Self { api, client }
     }
 
     /// Method to get api key
@@ -110,50 +69,28 @@ impl APIKey {
         &self.api
     }
 
-    /// Get API timeout period
-    ///
-    /// ```
-    /// use alpha_vantage::user::APIKey;
-    /// let api_with_custom_timeout = APIKey::set_with_timeout("your_api_key", 45);
-    /// assert_eq!(api_with_custom_timeout.get_timeout(), 45_u64);
-    /// ```
-    #[must_use]
-    pub fn get_timeout(&self) -> u64 {
-        self.timeout
-    }
-
     /// Method for getting crypto health rating
     ///
     /// # Example
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     assert_eq!(api.crypto_rating("BTC").await.unwrap().name(), "Bitcoin");
     /// }
     /// ```
     pub async fn crypto_rating(&self, symbol: &str) -> Result<CryptoRating> {
-        let data: Url = format!(
-            "{}CRYPTO_RATING&symbol={}&apikey={}",
-            LINK,
+        let path = format!(
+            "query?function=CRYPTO_RATING&symbol={}&apikey={}",
             symbol,
             self.get_api()
-        )
-        .parse()
-        .expect("Failed to parse string to url");
-
-        let body = &self
+        );
+        let crypto_rating_helper: CryptoRatingHelper = self
             .client
-            .get(data)
-            .send()
+            .get(path)
+            .recv_json()
             .await
-            .expect("failed to send request")
-            .text()
-            .await
-            .expect("failed to get text from Response");
-        let crypto_rating_helper: CryptoRatingHelper =
-            serde_json::from_str(body).expect("Cannot convert to crypto rating");
+            .expect("fail to get json");
         crypto_rating_helper.convert()
     }
 
@@ -161,8 +98,7 @@ impl APIKey {
     ///
     /// # Example
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let crypto = api
@@ -179,18 +115,13 @@ impl APIKey {
         symbol: &str,
         market: &str,
     ) -> Result<Crypto> {
-        let data: Url = create_url_crypto(function, symbol, market, self.get_api());
-        let body = &self
+        let path = create_url_crypto(function, symbol, market, self.get_api());
+        let crypto_helper: CryptoHelper = self
             .client
-            .get(data)
-            .send()
+            .get(path)
+            .recv_json()
             .await
-            .expect("failed to send request")
-            .text()
-            .await
-            .expect("failed to get text from Response");
-        let crypto_helper: CryptoHelper =
-            serde_json::from_str(body).expect("Cannot convert to CryptoHelper");
+            .expect("fail to get json");
         crypto_helper.convert()
     }
 
@@ -199,8 +130,7 @@ impl APIKey {
     ///
     /// # Example
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     assert_eq!(
@@ -210,27 +140,18 @@ impl APIKey {
     /// }
     /// ```
     pub async fn exchange(&self, from_currency: &str, to_currency: &str) -> Result<Exchange> {
-        let data: Url = format!(
-            "{}CURRENCY_EXCHANGE_RATE&from_currency={}&to_currency={}&apikey={}",
-            LINK,
+        let path = format!(
+            "query?function=CURRENCY_EXCHANGE_RATE&from_currency={}&to_currency={}&apikey={}",
             from_currency,
             to_currency,
             self.get_api()
-        )
-        .parse()
-        .expect("Failed to parse string to url");
-
-        let body = &self
+        );
+        let exchange_helper: ExchangeHelper = self
             .client
-            .get(data)
-            .send()
+            .get(path)
+            .recv_json()
             .await
-            .expect("failed to send request")
-            .text()
-            .await
-            .expect("failed to get text from Response");
-        let exchange_helper: ExchangeHelper =
-            serde_json::from_str(body).expect("Cannot convert to Exchange");
+            .expect("fail to get json");
         exchange_helper.convert()
     }
 
@@ -239,8 +160,7 @@ impl APIKey {
     /// # Example
     /// ```
     /// use alpha_vantage::util::*;
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let forex = api
@@ -263,7 +183,7 @@ impl APIKey {
         interval: TimeSeriesInterval,
         output_size: OutputSize,
     ) -> Result<Forex> {
-        let data: Url = create_url_forex(
+        let path = create_url_forex(
             function,
             from_symbol,
             to_symbol,
@@ -271,17 +191,12 @@ impl APIKey {
             output_size,
             self.get_api(),
         );
-        let body = &self
+        let forex_helper: ForexHelper = self
             .client
-            .get(data)
-            .send()
+            .get(path)
+            .recv_json()
             .await
-            .expect("failed to send request")
-            .text()
-            .await
-            .expect("failed to get text from Response");
-        let forex_helper: ForexHelper =
-            serde_json::from_str(body).expect("Cannot convert to ForexHelper");
+            .expect("fail to get json");
         forex_helper.convert()
     }
 
@@ -289,8 +204,7 @@ impl APIKey {
     ///
     /// # Example
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let quote = api.quote("MSFT").await.unwrap();
@@ -299,34 +213,24 @@ impl APIKey {
     /// }
     /// ```
     pub async fn quote(&self, symbol: &str) -> Result<Quote> {
-        let data: Url = format!(
-            "{}GLOBAL_QUOTE&symbol={}&apikey={}",
-            LINK,
+        let path = format!(
+            "query?function=GLOBAL_QUOTE&symbol={}&apikey={}",
             symbol,
             self.get_api()
-        )
-        .parse()
-        .expect("Failed to parse quote str to URL");
-
-        let body = &self
+        );
+        let quote_helper: QuoteHelper = self
             .client
-            .get(data)
-            .send()
+            .get(path)
+            .recv_json()
             .await
-            .expect("failed to send request")
-            .text()
-            .await
-            .expect("failed to get text from Response");
-        let quote_helper: QuoteHelper =
-            serde_json::from_str(body).expect("Cannot convert to Quote");
+            .expect("fail to get json");
         quote_helper.convert()
     }
 
     /// Search method for searching keyword or company
     /// # Example
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let search = api.search("BA").await.unwrap();
@@ -334,33 +238,24 @@ impl APIKey {
     /// }
     /// ```
     pub async fn search(&self, keywords: &str) -> Result<Search> {
-        let data: Url = format!(
-            "{}SYMBOL_SEARCH&keywords={}&apikey={}",
-            LINK,
+        let path = format!(
+            "query?function=SYMBOL_SEARCH&keywords={}&apikey={}",
             keywords,
             self.get_api()
-        )
-        .parse()
-        .expect("Failed to parse search str to Url");
-        let body = &self
+        );
+        let search_helper: SearchHelper = self
             .client
-            .get(data)
-            .send()
+            .get(path)
+            .recv_json()
             .await
-            .expect("failed to send request")
-            .text()
-            .await
-            .expect("failed to get text from Response");
-        let search_helper: SearchHelper =
-            serde_json::from_str(body).expect("Cannot convert to Search");
+            .expect("fail to get json");
         search_helper.convert()
     }
 
     /// Method for returning a sector data as struct
     /// # Example
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let sector = api.sector().await.unwrap();
@@ -371,20 +266,13 @@ impl APIKey {
     /// }
     /// ```
     pub async fn sector(&self) -> Result<Sector> {
-        let data: Url = format!("{}SECTOR&apikey={}", LINK, self.get_api())
-            .parse()
-            .expect("failed to parse sector str to Url");
-        let body = &self
+        let path = format!("query?function=SECTOR&apikey={}", self.get_api());
+        let sector_helper: SectorHelper = self
             .client
-            .get(data)
-            .send()
+            .get(path)
+            .recv_json()
             .await
-            .expect("failed to send request")
-            .text()
-            .await
-            .expect("failed to get text from Response");
-        let sector_helper: SectorHelper =
-            serde_json::from_str(body).expect("cannot convert to SectorHelper");
+            .expect("fail to get json");
         sector_helper.convert()
     }
 
@@ -392,8 +280,7 @@ impl APIKey {
     /// # Example
     /// ```
     /// use alpha_vantage::util::*;
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let stock = api
@@ -415,27 +302,20 @@ impl APIKey {
         interval: TimeSeriesInterval,
         output_size: OutputSize,
     ) -> Result<TimeSeries> {
-        let data: Url =
-            create_url_time_series(function, symbol, interval, output_size, self.get_api());
-        let body = &self
+        let path = create_url_time_series(function, symbol, interval, output_size, self.get_api());
+        let time_series_helper: TimeSeriesHelper = self
             .client
-            .get(data)
-            .send()
+            .get(path)
+            .recv_json()
             .await
-            .expect("failed to send request")
-            .text()
-            .await
-            .expect("failed to get text from Response");
-        let time_series_helper: TimeSeriesHelper =
-            serde_json::from_str(body).expect("cannot convert to time series helper");
+            .expect("fail to get json");
         time_series_helper.convert()
     }
 
     /// Technical indicator API caller method
     /// # Example
     /// ```
-    /// use tokio::prelude::*;
-    /// #[tokio::main]
+    /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let technical = api
@@ -460,7 +340,7 @@ impl APIKey {
         series_type: Option<&str>,
         temporary_value: Vec<TechnicalIndicator>,
     ) -> Result<Indicator> {
-        let data = create_url_technical(
+        let path = create_url_technical(
             function,
             symbol,
             interval,
@@ -469,17 +349,12 @@ impl APIKey {
             temporary_value,
             self.get_api(),
         );
-        let body = &self
+        let indicator_helper: IndicatorHelper = self
             .client
-            .get(data)
-            .send()
+            .get(path)
+            .recv_json()
             .await
-            .expect("failed to send request")
-            .text()
-            .await
-            .expect("failed to get text from Response");
-        let indicator_helper: IndicatorHelper =
-            serde_json::from_str(body).expect("cannot convert to Indicator");
+            .expect("fail to get json");
         indicator_helper.convert()
     }
 }
@@ -502,15 +377,6 @@ mod test {
         assert_eq!(
             super::APIKey::set_from_env("ALPHA_VANTAGE_KEY").get_api(),
             "some_random_key".to_string()
-        );
-    }
-
-    #[test]
-    fn test_set_get_timeout() {
-        assert_eq!(super::APIKey::set_api("secret_key").get_timeout(), 30_u64);
-        assert_eq!(
-            super::APIKey::set_with_timeout("some_key", 45).get_timeout(),
-            45_u64
         );
     }
 }
