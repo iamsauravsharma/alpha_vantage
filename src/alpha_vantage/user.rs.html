@@ -383,10 +383,13 @@
 <span id="380">380</span>
 <span id="381">381</span>
 <span id="382">382</span>
+<span id="383">383</span>
+<span id="384">384</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">crypto</span>::{<span class="ident">create_url</span> <span class="kw">as</span> <span class="ident">create_url_crypto</span>, <span class="ident">Crypto</span>, <span class="ident">CryptoHelper</span>},
     <span class="ident">crypto_rating</span>::{<span class="ident">CryptoRating</span>, <span class="ident">CryptoRatingHelper</span>},
+    <span class="ident">earning</span>::{<span class="ident">Earning</span>, <span class="ident">EarningHelper</span>},
     <span class="ident">error</span>::<span class="prelude-ty">Result</span>,
     <span class="ident">exchange</span>::{<span class="ident">Exchange</span>, <span class="ident">ExchangeHelper</span>},
     <span class="ident">forex</span>::{<span class="ident">create_url</span> <span class="kw">as</span> <span class="ident">create_url_forex</span>, <span class="ident">Forex</span>, <span class="ident">ForexHelper</span>},
@@ -425,22 +428,6 @@
             <span class="ident">api</span>: <span class="ident">api</span>.<span class="ident">to_string</span>(),
             <span class="ident">client</span>,
         }
-    }
-
-    <span class="doccomment">/// Set [APIKey][APIKey] by reading environment variable</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use alpha_vantage::user::APIKey;</span>
-    <span class="doccomment">/// std::env::set_var(&quot;KEY_NAME&quot;, &quot;some_key&quot;);</span>
-    <span class="doccomment">/// let api_from_env = APIKey::set_from_env(&quot;KEY_NAME&quot;);</span>
-    <span class="doccomment">/// assert_eq!(api_from_env.get_api(), &quot;some_key&quot;);</span>
-    <span class="doccomment">/// ```</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_from_env</span>(<span class="ident">env_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">env</span>::<span class="ident">var</span>(<span class="ident">env_name</span>).<span class="ident">expect</span>(<span class="string">&quot;environment variable is not present&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">client</span> <span class="op">=</span> <span class="ident">Client</span>::<span class="ident">new</span>();
-        <span class="ident">client</span>.<span class="ident">set_base_url</span>(<span class="ident">Url</span>::<span class="ident">parse</span>(<span class="ident">BASE_URL</span>).<span class="ident">unwrap</span>());
-        <span class="self">Self</span> { <span class="ident">api</span>, <span class="ident">client</span> }
     }
 
     <span class="doccomment">/// Method to get api key</span>
@@ -511,6 +498,32 @@
         <span class="ident">crypto_helper</span>.<span class="ident">convert</span>()
     }
 
+    <span class="doccomment">/// Earning method for returning company earning</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Example</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// #[async_std::main]</span>
+    <span class="doccomment">/// async fn main() {</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
+    <span class="doccomment">///     let earning = api.earning(&quot;IBM&quot;).await.unwrap();</span>
+    <span class="doccomment">///     let symbol = earning.symbol();</span>
+    <span class="doccomment">///     assert_eq!(symbol, &quot;IBM&quot;);</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">earning</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Earning</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(
+            <span class="string">&quot;query?function=EARNINGS&amp;symbol={}&amp;apikey={}&quot;</span>,
+            <span class="ident">symbol</span>,
+            <span class="self">self</span>.<span class="ident">get_api</span>()
+        );
+        <span class="kw">let</span> <span class="ident">earning_helper</span>: <span class="ident">EarningHelper</span> <span class="op">=</span> <span class="self">self</span>
+            .<span class="ident">client</span>
+            .<span class="ident">get</span>(<span class="ident">path</span>)
+            .<span class="ident">recv_json</span>()
+            .<span class="kw">await</span>
+            .<span class="ident">expect</span>(<span class="string">&quot;fail to get json&quot;</span>);
+        <span class="ident">earning_helper</span>.<span class="ident">convert</span>()
+    }
     <span class="doccomment">/// Method for exchanging currency value from one currency to another</span>
     <span class="doccomment">/// currency.</span>
     <span class="doccomment">///</span>
@@ -756,15 +769,7 @@
             <span class="string">&quot;secret_key&quot;</span>.<span class="ident">to_string</span>()
         );
     }
-
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">set_api_from_env</span>() {
-        <span class="ident">std</span>::<span class="ident">env</span>::<span class="ident">set_var</span>(<span class="string">&quot;ALPHA_VANTAGE_KEY&quot;</span>, <span class="string">&quot;some_random_key&quot;</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(
-            <span class="kw">super</span>::<span class="ident">APIKey</span>::<span class="ident">set_from_env</span>(<span class="string">&quot;ALPHA_VANTAGE_KEY&quot;</span>).<span class="ident">get_api</span>(),
-            <span class="string">&quot;some_random_key&quot;</span>.<span class="ident">to_string</span>()
-        );
-    }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "alpha_vantage";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage"></div>
+    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>
