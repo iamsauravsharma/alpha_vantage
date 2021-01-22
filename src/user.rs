@@ -1,6 +1,7 @@
 use crate::{
     crypto::{create_url as create_url_crypto, Crypto, CryptoHelper},
     crypto_rating::{CryptoRating, CryptoRatingHelper},
+    earning::{Earning, EarningHelper},
     error::Result,
     exchange::{Exchange, ExchangeHelper},
     forex::{create_url as create_url_forex, Forex, ForexHelper},
@@ -39,22 +40,6 @@ impl APIKey {
             api: api.to_string(),
             client,
         }
-    }
-
-    /// Set [APIKey][APIKey] by reading environment variable
-    ///
-    /// ```
-    /// use alpha_vantage::user::APIKey;
-    /// std::env::set_var("KEY_NAME", "some_key");
-    /// let api_from_env = APIKey::set_from_env("KEY_NAME");
-    /// assert_eq!(api_from_env.get_api(), "some_key");
-    /// ```
-    #[must_use]
-    pub fn set_from_env(env_name: &str) -> Self {
-        let api = std::env::var(env_name).expect("environment variable is not present");
-        let mut client = Client::new();
-        client.set_base_url(Url::parse(BASE_URL).unwrap());
-        Self { api, client }
     }
 
     /// Method to get api key
@@ -125,6 +110,32 @@ impl APIKey {
         crypto_helper.convert()
     }
 
+    /// Earning method for returning company earning
+    ///
+    /// # Example
+    /// ```
+    /// #[async_std::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let earning = api.earning("IBM").await.unwrap();
+    ///     let symbol = earning.symbol();
+    ///     assert_eq!(symbol, "IBM");
+    /// }
+    /// ```
+    pub async fn earning(&self, symbol: &str) -> Result<Earning> {
+        let path = format!(
+            "query?function=EARNINGS&symbol={}&apikey={}",
+            symbol,
+            self.get_api()
+        );
+        let earning_helper: EarningHelper = self
+            .client
+            .get(path)
+            .recv_json()
+            .await
+            .expect("fail to get json");
+        earning_helper.convert()
+    }
     /// Method for exchanging currency value from one currency to another
     /// currency.
     ///
@@ -368,15 +379,6 @@ mod test {
         assert_eq!(
             super::APIKey::set_api("secret_key").get_api(),
             "secret_key".to_string()
-        );
-    }
-
-    #[test]
-    fn set_api_from_env() {
-        std::env::set_var("ALPHA_VANTAGE_KEY", "some_random_key");
-        assert_eq!(
-            super::APIKey::set_from_env("ALPHA_VANTAGE_KEY").get_api(),
-            "some_random_key".to_string()
         );
     }
 }

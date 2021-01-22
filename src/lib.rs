@@ -19,6 +19,8 @@ pub mod crypto;
 
 mod deserialize;
 
+pub mod earning;
+
 pub mod error;
 
 pub mod exchange;
@@ -53,16 +55,4 @@ use self::user::APIKey;
 #[must_use]
 pub fn set_api(api: &str) -> APIKey {
     APIKey::set_api(api)
-}
-
-/// Set API Key reading environment variable
-///
-/// ```
-/// std::env::set_var("KEY_NAME", "some_key");
-/// let api_from_env = alpha_vantage::set_from_env("KEY_NAME");
-/// assert_eq!(api_from_env.get_api(), "some_key");
-/// ```
-#[must_use]
-pub fn set_from_env(env_name: &str) -> APIKey {
-    APIKey::set_from_env(env_name)
 }

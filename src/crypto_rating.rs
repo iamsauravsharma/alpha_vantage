@@ -36,9 +36,9 @@ struct RatingScore {
     market_maturity_score: u16,
     #[serde(rename = "7. utility score", deserialize_with = "from_str")]
     utility_score: u16,
-    #[serde(rename = "8. last refreshed", deserialize_with = "from_str")]
+    #[serde(rename = "8. last refreshed")]
     last_refreshed: String,
-    #[serde(rename = "9. timezone", deserialize_with = "from_str")]
+    #[serde(rename = "9. timezone")]
     time_zone: String,
 }
 
