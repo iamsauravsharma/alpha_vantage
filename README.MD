@@ -28,12 +28,6 @@ Edit Cargo.toml file to add alpha_vantage as dependencies
 alpha_vantage = "0.5.0"
 ```
 
-If you would like to use blocking API instead of async api. You can add blocking feature.
-```toml
-[dependencies]
-alpha_vantage = {version = "0.5.0", features=["blocking"]}
-```
-
 __OR__
 For bleeding edge development use
 
