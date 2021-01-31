@@ -27,6 +27,8 @@ pub mod exchange;
 
 pub mod forex;
 
+pub mod income_statement;
+
 pub mod quote;
 
 pub mod search;

@@ -16,6 +16,7 @@ Rust Client library built for accessing [Alphavantage][alphavantage_link] API.
 - [X] Earning
 - [X] Exchange Rate
 - [X] Forex
+- [X] Income Statement
 - [X] Crypto Currency
 - [X] Crypto Health
 - [X] Technical Indicators
@@ -45,8 +46,6 @@ let exchange = api_key.exchange("USD","CNY").await.unwrap();
 let rate = exchange.rate();
 println!("{}",rate);
 ```
-
-[git_link]: https://github.com/iamsauravsharma/alpha_vantage
 
 [license_badge]: https://img.shields.io/github/license/iamsauravsharma/alpha_vantage.svg
 [license_link]: LICENSE
