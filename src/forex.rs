@@ -256,9 +256,9 @@ struct EntryHelper {
     open: f64,
     #[serde(rename = "2. high", deserialize_with = "from_str")]
     high: f64,
-    #[serde(rename = "3. low")]
+    #[serde(rename = "3. low", deserialize_with = "from_str")]
     low: f64,
-    #[serde(rename = "4. close")]
+    #[serde(rename = "4. close", deserialize_with = "from_str")]
     close: f64,
 }
 
@@ -290,70 +290,65 @@ impl ForexHelper {
         if let Some(note) = self.note {
             return Err(Error::AlphaVantageNote(note));
         }
-        if let Some(meta_data) = self.meta_data {
-            let information = &meta_data["1. Information"];
-            let from_symbol = &meta_data["2. From Symbol"];
-            let to_symbol = &meta_data["3. To Symbol"];
-            let last_refreshed = meta_data.get("4. Last Refreshed");
-            let mut last_refreshed_value = last_refreshed.cloned();
-            if last_refreshed_value.is_none() {
-                let last_refreshed = meta_data.get("5. Last Refreshed");
-                last_refreshed_value = last_refreshed.cloned();
-            }
-            let last_refreshed_value =
-                last_refreshed_value.expect("Last refreshed value contains None");
-            let time_zone = meta_data.get("5. Time Zone");
-            let mut time_zone_value = time_zone.cloned();
-            if time_zone_value.is_none() {
-                let time_zone = meta_data.get("6. Time Zone");
-                time_zone_value = time_zone.cloned();
-            }
-            if time_zone_value.is_none() {
-                let time_zone = meta_data.get("7. Time Zone");
-                time_zone_value = time_zone.cloned();
-            }
-            let time_zone_value = time_zone_value.expect("Time zone contains None value");
-            let output_size = meta_data.get("4. Output Size");
-            let mut output_size_value = output_size.cloned();
-            if output_size_value.is_none() {
-                let output_size = meta_data.get("6. Output Size");
-                output_size_value = output_size.cloned();
-            }
-            let interval = meta_data.get("5. Interval");
-            let interval_value = interval.cloned();
-            forex_struct.meta_data = MetaData {
-                information: information.to_string(),
-                from_symbol: from_symbol.to_string(),
-                to_symbol: to_symbol.to_string(),
-                last_refreshed: last_refreshed_value,
-                interval: interval_value,
-                output_size: output_size_value,
-                time_zone: time_zone_value,
-            };
+        let meta_data = self.meta_data.unwrap();
+        let information = &meta_data["1. Information"];
+        let from_symbol = &meta_data["2. From Symbol"];
+        let to_symbol = &meta_data["3. To Symbol"];
+        let last_refreshed = meta_data.get("4. Last Refreshed");
+        let mut last_refreshed_value = last_refreshed.cloned();
+        if last_refreshed_value.is_none() {
+            let last_refreshed = meta_data.get("5. Last Refreshed");
+            last_refreshed_value = last_refreshed.cloned();
         }
-        let mut value: Vec<Entry> = Vec::new();
-        if let Some(entry) = self.forex {
-            for hash in entry.values() {
-                for val in hash.keys() {
-                    let mut entry = Entry {
-                        time: val.to_string(),
-                        ..Entry::default()
-                    };
-                    let entry_helper = hash
-                        .get(val)
-                        .expect("Cannot get a val from hash map")
-                        .clone();
-                    entry.open = entry_helper.open;
-                    entry.high = entry_helper.high;
-                    entry.low = entry_helper.low;
-                    entry.close = entry_helper.close;
-                    value.push(entry);
-                }
+        let last_refreshed_value =
+            last_refreshed_value.expect("Last refreshed value contains None");
+        let time_zone = meta_data.get("5. Time Zone");
+        let mut time_zone_value = time_zone.cloned();
+        if time_zone_value.is_none() {
+            let time_zone = meta_data.get("6. Time Zone");
+            time_zone_value = time_zone.cloned();
+        }
+        if time_zone_value.is_none() {
+            let time_zone = meta_data.get("7. Time Zone");
+            time_zone_value = time_zone.cloned();
+        }
+        let time_zone_value = time_zone_value.expect("Time zone contains None value");
+        let output_size = meta_data.get("4. Output Size");
+        let mut output_size_value = output_size.cloned();
+        if output_size_value.is_none() {
+            let output_size = meta_data.get("6. Output Size");
+            output_size_value = output_size.cloned();
+        }
+        let interval = meta_data.get("5. Interval");
+        let interval_value = interval.cloned();
+        forex_struct.meta_data = MetaData {
+            information: information.to_string(),
+            from_symbol: from_symbol.to_string(),
+            to_symbol: to_symbol.to_string(),
+            last_refreshed: last_refreshed_value,
+            interval: interval_value,
+            output_size: output_size_value,
+            time_zone: time_zone_value,
+        };
+        let mut forex_entries: Vec<Entry> = Vec::new();
+        for hash in self.forex.unwrap().values() {
+            for val in hash.keys() {
+                let mut entry = Entry {
+                    time: val.to_string(),
+                    ..Entry::default()
+                };
+                let entry_helper = hash
+                    .get(val)
+                    .expect("Cannot get a val from hash map")
+                    .clone();
+                entry.open = entry_helper.open;
+                entry.high = entry_helper.high;
+                entry.low = entry_helper.low;
+                entry.close = entry_helper.close;
+                forex_entries.push(entry);
             }
         }
-        if !value.is_empty() {
-            forex_struct.forex = value;
-        }
+        forex_struct.forex = forex_entries;
         Ok(forex_struct)
     }
 }

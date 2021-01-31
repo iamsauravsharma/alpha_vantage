@@ -303,42 +303,40 @@ impl CryptoHelper {
             return Err(Error::AlphaVantageNote(note));
         }
         crypto.meta_data = self.meta_data.unwrap();
-        if self.entry.is_some() {
-            let mut vec_entry = Vec::new();
-            for value in self.entry.expect("self.entry is None").values() {
-                for key in value.keys() {
-                    let mut entry = Entry {
-                        time: key.to_string(),
-                        ..Entry::default()
-                    };
-                    let entry_helper = value
-                        .get(key)
-                        .expect("failed to get key from hashmap")
-                        .clone();
-                    entry.usd_open = entry_helper.open_usd;
-                    entry.usd_high = entry_helper.high_usd;
-                    entry.usd_low = entry_helper.low_usd;
-                    entry.usd_close = entry_helper.close_usd;
-                    entry.market_cap = entry_helper.market_cap;
-                    entry.volume = entry_helper.volume;
-                    for key in entry_helper.market_data.keys() {
-                        let value = &entry_helper.market_data[key];
-                        let f64_value = f64::from_str(value).unwrap();
-                        if key.contains("1a") {
-                            entry.market_open = f64_value;
-                        } else if key.contains("2a") {
-                            entry.market_high = f64_value;
-                        } else if key.contains("3a") {
-                            entry.market_low = f64_value;
-                        } else if key.contains("4a") {
-                            entry.market_close = f64_value;
-                        }
+        let mut vec_entry = Vec::new();
+        for value in self.entry.unwrap().values() {
+            for key in value.keys() {
+                let mut entry = Entry {
+                    time: key.to_string(),
+                    ..Entry::default()
+                };
+                let entry_helper = value
+                    .get(key)
+                    .expect("failed to get key from hashmap")
+                    .clone();
+                entry.usd_open = entry_helper.open_usd;
+                entry.usd_high = entry_helper.high_usd;
+                entry.usd_low = entry_helper.low_usd;
+                entry.usd_close = entry_helper.close_usd;
+                entry.market_cap = entry_helper.market_cap;
+                entry.volume = entry_helper.volume;
+                for key in entry_helper.market_data.keys() {
+                    let value = &entry_helper.market_data[key];
+                    let f64_value = f64::from_str(value).unwrap();
+                    if key.contains("1a") {
+                        entry.market_open = f64_value;
+                    } else if key.contains("2a") {
+                        entry.market_high = f64_value;
+                    } else if key.contains("3a") {
+                        entry.market_low = f64_value;
+                    } else if key.contains("4a") {
+                        entry.market_close = f64_value;
                     }
-                    vec_entry.push(entry);
                 }
+                vec_entry.push(entry);
             }
-            crypto.entry = vec_entry;
         }
+        crypto.entry = vec_entry;
         Ok(crypto)
     }
 }

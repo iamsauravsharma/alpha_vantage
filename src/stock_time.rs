@@ -316,41 +316,40 @@ impl TimeSeriesHelper {
         if let Some(note) = self.note {
             return Err(Error::AlphaVantageNote(note));
         }
-        if let Some(meta_data) = self.meta_data {
-            let information = &meta_data["1. Information"];
-            let symbol = &meta_data["2. Symbol"];
-            let last_refreshed = &meta_data["3. Last Refreshed"];
-            let interval = meta_data.get("4. Interval");
-            let interval = interval.cloned();
-            let output_size = meta_data.get("4. Output Size");
-            let mut output_size_value = output_size.cloned();
-            if output_size_value.is_none() {
-                let output_size = meta_data.get("5. Output Size");
-                output_size_value = output_size.cloned();
-            }
-            let time_zone = meta_data.get("4. Time Zone");
-            let mut time_zone_value = time_zone.cloned();
-            if time_zone_value.is_none() {
-                let time_zone = meta_data.get("5. Time Zone");
-                time_zone_value = time_zone.cloned()
-            }
-            if time_zone_value.is_none() {
-                let time_zone = meta_data.get("6. Time Zone");
-                time_zone_value = time_zone.cloned()
-            }
-            let time_zone_value = time_zone_value.expect("time zone value is None");
-            time_series.meta_data = MetaData {
-                information: information.to_string(),
-                symbol: symbol.to_string(),
-                last_refreshed: last_refreshed.to_string(),
-                interval,
-                output_size: output_size_value,
-                time_zone: time_zone_value,
-            };
+        let meta_data = self.meta_data.unwrap();
+        let information = &meta_data["1. Information"];
+        let symbol = &meta_data["2. Symbol"];
+        let last_refreshed = &meta_data["3. Last Refreshed"];
+        let interval = meta_data.get("4. Interval");
+        let interval = interval.cloned();
+        let output_size = meta_data.get("4. Output Size");
+        let mut output_size_value = output_size.cloned();
+        if output_size_value.is_none() {
+            let output_size = meta_data.get("5. Output Size");
+            output_size_value = output_size.cloned();
         }
-        let mut value: Vec<Entry> = Vec::new();
-        if let Some(entry) = self.time_series {
-            for hash in entry.values() {
+        let time_zone = meta_data.get("4. Time Zone");
+        let mut time_zone_value = time_zone.cloned();
+        if time_zone_value.is_none() {
+            let time_zone = meta_data.get("5. Time Zone");
+            time_zone_value = time_zone.cloned()
+        }
+        if time_zone_value.is_none() {
+            let time_zone = meta_data.get("6. Time Zone");
+            time_zone_value = time_zone.cloned()
+        }
+        let time_zone_value = time_zone_value.expect("time zone value is None");
+        time_series.meta_data = MetaData {
+            information: information.to_string(),
+            symbol: symbol.to_string(),
+            last_refreshed: last_refreshed.to_string(),
+            interval,
+            output_size: output_size_value,
+            time_zone: time_zone_value,
+        };
+        let mut entry_value: Vec<Entry> = Vec::new();
+        if let Some(time_series) = self.time_series {
+            for hash in time_series.values() {
                 for val in hash.keys() {
                     let mut entry = Entry {
                         time: val.to_string(),
@@ -365,12 +364,12 @@ impl TimeSeriesHelper {
                     entry.low = entry_helper.low;
                     entry.close = entry_helper.close;
                     entry.volume = entry_helper.volume;
-                    value.push(entry);
+                    entry_value.push(entry);
                 }
             }
         }
-        if let Some(entry) = self.adjusted_series {
-            for hash in entry.values() {
+        if let Some(adjusted_series) = self.adjusted_series {
+            for hash in adjusted_series.values() {
                 for val in hash.keys() {
                     let mut entry = Entry {
                         time: val.to_string(),
@@ -388,13 +387,11 @@ impl TimeSeriesHelper {
                     entry.adjusted_close = option_from_str(entry_helper.adjusted_close);
                     entry.split_coefficient = option_from_str(entry_helper.split_coefficient);
                     entry.dividend_amount = option_from_str(entry_helper.dividend_amount);
-                    value.push(entry);
+                    entry_value.push(entry);
                 }
             }
         }
-        if !value.is_empty() {
-            time_series.entry = value;
-        }
+        time_series.entry = entry_value;
         Ok(time_series)
     }
 }

@@ -187,51 +187,47 @@ impl SectorHelper {
             return Err(Error::AlphaVantageNote(note));
         }
         sector.meta_data = self.meta_data.unwrap();
-        if let Some(temp_data) = self.data {
-            let mut final_data = Vec::new();
-            for (key, val) in &temp_data {
-                let mut data = Data::default();
-                match key.as_str() {
-                    "Rank A: Real-Time Performance" => data.rank = "real-time".to_string(),
-                    "Rank B: 1 Day Performance" => data.rank = "1-day".to_string(),
-                    "Rank C: 5 Day Performance" => data.rank = "5-day".to_string(),
-                    "Rank D: 1 Month Performance" => data.rank = "1-month".to_string(),
-                    "Rank E: 3 Month Performance" => data.rank = "3-month".to_string(),
-                    "Rank F: Year-to-Date (YTD) Performance" => {
-                        data.rank = "year-to-date".to_string()
-                    }
-                    "Rank G: 1 Year Performance" => data.rank = "1-year".to_string(),
-                    "Rank H: 3 Year Performance" => data.rank = "3-year".to_string(),
-                    "Rank I: 5 Year Performance" => data.rank = "5-year".to_string(),
-                    "Rank J: 10 Year Performance" => data.rank = "10-year".to_string(),
-                    _ => data.rank = "".to_string(),
-                }
-                for (key, val) in val.iter() {
-                    match key.as_str() {
-                        "Utilities" => data.utilities = convert_str_percent_f64(val),
-                        "Health Care" => data.health_care = convert_str_percent_f64(val),
-                        "Information Technology" => {
-                            data.information_technology = convert_str_percent_f64(val)
-                        }
-                        "Industrials" => data.industrials = convert_str_percent_f64(val),
-                        "Real Estate" => data.real_estate = convert_str_percent_f64(val),
-                        "Consumer Staples" => data.consumer_staples = convert_str_percent_f64(val),
-                        "Consumer Discretionary" => {
-                            data.consumer_discretionary = convert_str_percent_f64(val)
-                        }
-                        "Financials" => data.financials = convert_str_percent_f64(val),
-                        "Communication Services" => {
-                            data.communication_services = convert_str_percent_f64(val)
-                        }
-                        "Materials" => data.materials = convert_str_percent_f64(val),
-                        "Energy" => data.energy = convert_str_percent_f64(val),
-                        _ => {}
-                    }
-                }
-                final_data.push(data);
+        let mut final_data = Vec::new();
+        for (key, val) in &self.data.unwrap() {
+            let mut data = Data::default();
+            match key.as_str() {
+                "Rank A: Real-Time Performance" => data.rank = "real-time".to_string(),
+                "Rank B: 1 Day Performance" => data.rank = "1-day".to_string(),
+                "Rank C: 5 Day Performance" => data.rank = "5-day".to_string(),
+                "Rank D: 1 Month Performance" => data.rank = "1-month".to_string(),
+                "Rank E: 3 Month Performance" => data.rank = "3-month".to_string(),
+                "Rank F: Year-to-Date (YTD) Performance" => data.rank = "year-to-date".to_string(),
+                "Rank G: 1 Year Performance" => data.rank = "1-year".to_string(),
+                "Rank H: 3 Year Performance" => data.rank = "3-year".to_string(),
+                "Rank I: 5 Year Performance" => data.rank = "5-year".to_string(),
+                "Rank J: 10 Year Performance" => data.rank = "10-year".to_string(),
+                _ => data.rank = "".to_string(),
             }
-            sector.data = final_data;
+            for (key, val) in val.iter() {
+                match key.as_str() {
+                    "Utilities" => data.utilities = convert_str_percent_f64(val),
+                    "Health Care" => data.health_care = convert_str_percent_f64(val),
+                    "Information Technology" => {
+                        data.information_technology = convert_str_percent_f64(val)
+                    }
+                    "Industrials" => data.industrials = convert_str_percent_f64(val),
+                    "Real Estate" => data.real_estate = convert_str_percent_f64(val),
+                    "Consumer Staples" => data.consumer_staples = convert_str_percent_f64(val),
+                    "Consumer Discretionary" => {
+                        data.consumer_discretionary = convert_str_percent_f64(val)
+                    }
+                    "Financials" => data.financials = convert_str_percent_f64(val),
+                    "Communication Services" => {
+                        data.communication_services = convert_str_percent_f64(val)
+                    }
+                    "Materials" => data.materials = convert_str_percent_f64(val),
+                    "Energy" => data.energy = convert_str_percent_f64(val),
+                    _ => {}
+                }
+            }
+            final_data.push(data);
         }
+        sector.data = final_data;
         Ok(sector)
     }
 }
