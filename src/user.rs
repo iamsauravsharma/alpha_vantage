@@ -5,6 +5,7 @@ use crate::{
     error::Result,
     exchange::{Exchange, ExchangeHelper},
     forex::{create_url as create_url_forex, Forex, ForexHelper},
+    income_statement::{IncomeStatement, IncomeStatementHelper},
     quote::{Quote, QuoteHelper},
     search::{Search, SearchHelper},
     sector::{Sector, SectorHelper},
@@ -136,6 +137,7 @@ impl APIKey {
             .expect("fail to get json");
         earning_helper.convert()
     }
+
     /// Method for exchanging currency value from one currency to another
     /// currency.
     ///
@@ -209,6 +211,33 @@ impl APIKey {
             .await
             .expect("fail to get json");
         forex_helper.convert()
+    }
+
+    /// Method for returning income statement struct
+    ///
+    /// # Example
+    /// ```
+    /// #[async_std::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo");
+    ///     let income_statement = api.income_statement("IBM").await.unwrap();
+    ///     let symbol = income_statement.symbol();
+    ///     assert_eq!(symbol, "IBM");
+    /// }
+    /// ```
+    pub async fn income_statement(&self, symbol: &str) -> Result<IncomeStatement> {
+        let path = format!(
+            "query?function=INCOME_STATEMENT&symbol={}&apikey={}",
+            symbol,
+            self.get_api()
+        );
+        let income_statement_helper: IncomeStatementHelper = self
+            .client
+            .get(path)
+            .recv_json()
+            .await
+            .expect("fail to get json");
+        income_statement_helper.convert()
     }
 
     /// Method for returning Quote Struct
