@@ -47,13 +47,13 @@ let rate = exchange.rate();
 println!("{}",rate);
 ```
 
-[license_badge]: https://img.shields.io/github/license/iamsauravsharma/alpha_vantage.svg
+[license_badge]: https://img.shields.io/github/license/iamsauravsharma/alpha_vantage.svg?style=for-the-badge
 [license_link]: LICENSE
 
 [alphavantage_link]: https://www.alphavantage.co
 
-[cratesio_badge]: https://img.shields.io/crates/v/alpha_vantage.svg
+[cratesio_badge]: https://img.shields.io/crates/v/alpha_vantage.svg?style=for-the-badge
 [cratesio_link]: https://crates.io/crates/alpha_vantage
 
-[docsrs_badge]: https://docs.rs/alpha_vantage/badge.svg
+[docsrs_badge]: https://img.shields.io/docsrs/alpha_vantage/latest?style=for-the-badge
 [docsrs_link]: https://docs.rs/alpha_vantage
