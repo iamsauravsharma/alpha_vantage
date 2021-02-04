@@ -3,11 +3,12 @@
 //! This API returns the annual and quarterly income statements for the company
 //! of interest. Data is generally refreshed on the same day a company reports
 //! its latest earnings and financials.
+use serde::Deserialize;
+
 use crate::{
     deserialize::{from_none_str, from_str},
     error::{Error, Result},
 };
-use serde::Deserialize;
 
 /// struct to store information for both annual report and quarterly report
 #[derive(Clone, Debug, Deserialize)]

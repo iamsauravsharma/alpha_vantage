@@ -1,5 +1,6 @@
-use serde::de::{Deserialize, Deserializer, Error};
 use std::str::FromStr;
+
+use serde::de::{Deserialize, Deserializer, Error};
 
 pub(crate) fn from_str<'de, T, D>(deserializer: D) -> Result<T, D::Error>
 where

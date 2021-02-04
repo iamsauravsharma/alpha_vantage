@@ -4,11 +4,12 @@
 //! interest. Quarterly data also includes analyst estimates and surprise
 //! metrics.
 
+use serde::Deserialize;
+
 use crate::{
     deserialize::{from_none_str, from_str},
     error::{Error, Result},
 };
-use serde::Deserialize;
 
 /// Struct to store information of annual earning
 #[derive(Debug, Deserialize, Clone, Default)]
@@ -56,6 +57,7 @@ impl Quarterly {
     pub fn fiscal_date_ending(&self) -> &str {
         &self.fiscal_date_ending
     }
+
     /// Return reported date for quarterly earning
     #[must_use]
     pub fn reported_date(&self) -> &str {

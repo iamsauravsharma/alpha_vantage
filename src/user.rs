@@ -1,3 +1,5 @@
+use surf::{Client, Url};
+
 use crate::{
     crypto::{create_url as create_url_crypto, Crypto, CryptoHelper},
     crypto_rating::{CryptoRating, CryptoRatingHelper},
@@ -16,7 +18,6 @@ use crate::{
         TechnicalIndicatorInterval, TimeSeriesInterval,
     },
 };
-use surf::{Client, Url};
 const BASE_URL: &str = "https://www.alphavantage.co/";
 
 /// Struct for initializing api key value as well as contain different method

@@ -8,13 +8,15 @@
 //!
 //! [forex]: https://www.alphavantage.co/documentation/#fx
 
+use std::collections::HashMap;
+
+use serde::Deserialize;
+
 use crate::{
     deserialize::from_str,
     error::{Error, Result},
     util::{ForexFunction, OutputSize, TimeSeriesInterval},
 };
-use serde::Deserialize;
-use std::collections::HashMap;
 
 /// Struct used to store metadata value
 #[derive(Debug, Clone, Default)]

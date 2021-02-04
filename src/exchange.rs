@@ -8,11 +8,12 @@
 //!
 //! [exchange]: https://www.alphavantage.co/documentation/#currency-exchnage
 
+use serde::Deserialize;
+
 use crate::{
     deserialize::from_str,
     error::{Error, Result},
 };
-use serde::Deserialize;
 
 /// Struct used for exchanging currency
 #[derive(Default)]

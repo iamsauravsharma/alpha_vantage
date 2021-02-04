@@ -9,13 +9,15 @@
 //!
 //! [technical_indicator]: https://www.alphavantage.co/documentation/#technical-indicators
 
+use std::collections::HashMap;
+
+use serde::Deserialize;
+use serde_json::value::Value;
+
 use crate::{
     error::{Error, Result},
     util::{TechnicalIndicator as UtilIndicator, TechnicalIndicatorInterval},
 };
-use serde::Deserialize;
-use serde_json::value::Value;
-use std::collections::HashMap;
 
 type DataType = HashMap<String, HashMap<String, HashMap<String, String>>>;
 

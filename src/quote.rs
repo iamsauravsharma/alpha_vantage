@@ -8,11 +8,12 @@
 //!
 //! [quote]: https://www.alphavantage.co/documentation/#latestprice
 
+use serde::Deserialize;
+
 use crate::{
     deserialize::{from_str, percent_f64},
     error::{Error, Result},
 };
-use serde::Deserialize;
 
 /// Struct storing Global Quote Value
 #[derive(Debug, Deserialize, Clone, Default)]

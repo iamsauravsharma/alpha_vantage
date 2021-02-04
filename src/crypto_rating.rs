@@ -13,11 +13,12 @@
 //!
 //! [crypto_health_rating]: https://www.alphavantage.co/documentation/#crypto-ratings
 
+use serde::Deserialize;
+
 use crate::{
     deserialize::from_str,
     error::{Error, Result},
 };
-use serde::Deserialize;
 
 /// Struct Storing Health rating score
 #[derive(Debug, Deserialize, Clone, Default)]

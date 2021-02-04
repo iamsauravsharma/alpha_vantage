@@ -8,9 +8,11 @@
 //!
 //! [sector]: https://www.alphavantage.co/documentation/#sector
 
-use crate::error::{Error, Result};
-use serde::Deserialize;
 use std::collections::HashMap;
+
+use serde::Deserialize;
+
+use crate::error::{Error, Result};
 
 /// Stores Metadata
 #[derive(Deserialize, Clone, Default)]

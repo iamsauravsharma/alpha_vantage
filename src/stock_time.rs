@@ -10,13 +10,15 @@
 //!
 //! [stock_time]: https://www.alphavantage.co/documentation/#time-series-data
 
+use std::{collections::HashMap, str::FromStr};
+
+use serde::Deserialize;
+
 use crate::{
     deserialize::from_str,
     error::{Error, Result},
     util::{OutputSize, StockFunction, TimeSeriesInterval},
 };
-use serde::Deserialize;
-use std::{collections::HashMap, str::FromStr};
 
 /// Struct for storing Meta Data value
 #[derive(Debug, Clone, Default)]

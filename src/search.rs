@@ -8,11 +8,12 @@
 //!
 //! [symbol_search]: https://www.alphavantage.co/documentation/#symbolsearch
 
+use serde::Deserialize;
+
 use crate::{
     deserialize::from_str,
     error::{Error, Result},
 };
-use serde::Deserialize;
 
 /// Struct which stores matches data for search keyword
 #[derive(Debug, Clone, Deserialize, Default)]
