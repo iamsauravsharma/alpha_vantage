@@ -340,17 +340,19 @@
 <span id="337">337</span>
 <span id="338">338</span>
 <span id="339">339</span>
+<span id="340">340</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Module for returning income statement for a company</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! This API returns the annual and quarterly income statements for the company</span>
 <span class="doccomment">//! of interest. Data is generally refreshed on the same day a company reports</span>
 <span class="doccomment">//! its latest earnings and financials.</span>
+<span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">Deserialize</span>;
+
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">deserialize</span>::{<span class="ident">from_none_str</span>, <span class="ident">from_str</span>},
     <span class="ident">error</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>},
 };
-<span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">Deserialize</span>;
 
 <span class="doccomment">/// struct to store information for both annual report and quarterly report</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Deserialize</span>)]</span>

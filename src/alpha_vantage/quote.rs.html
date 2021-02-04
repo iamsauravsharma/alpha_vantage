@@ -149,6 +149,7 @@
 <span id="146">146</span>
 <span id="147">147</span>
 <span id="148">148</span>
+<span id="149">149</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Module for returning latest price and volume information</span>
 <span class="doccomment">//!</span>
@@ -160,11 +161,12 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! [quote]: https://www.alphavantage.co/documentation/#latestprice</span>
 
+<span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">Deserialize</span>;
+
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">deserialize</span>::{<span class="ident">from_str</span>, <span class="ident">percent_f64</span>},
     <span class="ident">error</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>},
 };
-<span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">Deserialize</span>;
 
 <span class="doccomment">/// Struct storing Global Quote Value</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Deserialize</span>, <span class="ident">Clone</span>, <span class="ident">Default</span>)]</span>

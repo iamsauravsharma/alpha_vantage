@@ -217,6 +217,7 @@
 <span id="214">214</span>
 <span id="215">215</span>
 <span id="216">216</span>
+<span id="217">217</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Module for searching specific symbol or companies</span>
 <span class="doccomment">//!</span>
@@ -228,11 +229,12 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! [symbol_search]: https://www.alphavantage.co/documentation/#symbolsearch</span>
 
+<span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">Deserialize</span>;
+
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">deserialize</span>::<span class="ident">from_str</span>,
     <span class="ident">error</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>},
 };
-<span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">Deserialize</span>;
 
 <span class="doccomment">/// Struct which stores matches data for search keyword</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Deserialize</span>, <span class="ident">Default</span>)]</span>
