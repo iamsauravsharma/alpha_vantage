@@ -1,3 +1,4 @@
+use serde::de::DeserializeOwned;
 use surf::{Client, Url};
 
 use crate::{
@@ -18,6 +19,7 @@ use crate::{
         TechnicalIndicatorInterval, TimeSeriesInterval,
     },
 };
+
 const BASE_URL: &str = "https://www.alphavantage.co/";
 
 /// Struct for initializing api key value as well as contain different method
@@ -56,6 +58,18 @@ impl APIKey {
         &self.api
     }
 
+    // Get json from api endpoint and create struct
+    async fn get_json<T>(&self, path: String) -> T
+    where
+        T: DeserializeOwned,
+    {
+        self.client
+            .get(path)
+            .recv_json()
+            .await
+            .expect("fail to get json")
+    }
+
     /// Method for getting crypto health rating
     ///
     /// # Example
@@ -72,12 +86,7 @@ impl APIKey {
             symbol,
             self.get_api()
         );
-        let crypto_rating_helper: CryptoRatingHelper = self
-            .client
-            .get(path)
-            .recv_json()
-            .await
-            .expect("fail to get json");
+        let crypto_rating_helper: CryptoRatingHelper = self.get_json(path).await;
         crypto_rating_helper.convert()
     }
 
@@ -103,12 +112,7 @@ impl APIKey {
         market: &str,
     ) -> Result<Crypto> {
         let path = create_url_crypto(function, symbol, market, self.get_api());
-        let crypto_helper: CryptoHelper = self
-            .client
-            .get(path)
-            .recv_json()
-            .await
-            .expect("fail to get json");
+        let crypto_helper: CryptoHelper = self.get_json(path).await;
         crypto_helper.convert()
     }
 
@@ -130,12 +134,7 @@ impl APIKey {
             symbol,
             self.get_api()
         );
-        let earning_helper: EarningHelper = self
-            .client
-            .get(path)
-            .recv_json()
-            .await
-            .expect("fail to get json");
+        let earning_helper: EarningHelper = self.get_json(path).await;
         earning_helper.convert()
     }
 
@@ -160,12 +159,7 @@ impl APIKey {
             to_currency,
             self.get_api()
         );
-        let exchange_helper: ExchangeHelper = self
-            .client
-            .get(path)
-            .recv_json()
-            .await
-            .expect("fail to get json");
+        let exchange_helper: ExchangeHelper = self.get_json(path).await;
         exchange_helper.convert()
     }
 
@@ -205,12 +199,7 @@ impl APIKey {
             output_size,
             self.get_api(),
         );
-        let forex_helper: ForexHelper = self
-            .client
-            .get(path)
-            .recv_json()
-            .await
-            .expect("fail to get json");
+        let forex_helper: ForexHelper = self.get_json(path).await;
         forex_helper.convert()
     }
 
@@ -232,12 +221,7 @@ impl APIKey {
             symbol,
             self.get_api()
         );
-        let income_statement_helper: IncomeStatementHelper = self
-            .client
-            .get(path)
-            .recv_json()
-            .await
-            .expect("fail to get json");
+        let income_statement_helper: IncomeStatementHelper = self.get_json(path).await;
         income_statement_helper.convert()
     }
 
@@ -259,12 +243,7 @@ impl APIKey {
             symbol,
             self.get_api()
         );
-        let quote_helper: QuoteHelper = self
-            .client
-            .get(path)
-            .recv_json()
-            .await
-            .expect("fail to get json");
+        let quote_helper: QuoteHelper = self.get_json(path).await;
         quote_helper.convert()
     }
 
@@ -284,12 +263,7 @@ impl APIKey {
             keywords,
             self.get_api()
         );
-        let search_helper: SearchHelper = self
-            .client
-            .get(path)
-            .recv_json()
-            .await
-            .expect("fail to get json");
+        let search_helper: SearchHelper = self.get_json(path).await;
         search_helper.convert()
     }
 
@@ -308,12 +282,7 @@ impl APIKey {
     /// ```
     pub async fn sector(&self) -> Result<Sector> {
         let path = format!("query?function=SECTOR&apikey={}", self.get_api());
-        let sector_helper: SectorHelper = self
-            .client
-            .get(path)
-            .recv_json()
-            .await
-            .expect("fail to get json");
+        let sector_helper: SectorHelper = self.get_json(path).await;
         sector_helper.convert()
     }
 
@@ -344,12 +313,7 @@ impl APIKey {
         output_size: OutputSize,
     ) -> Result<TimeSeries> {
         let path = create_url_time_series(function, symbol, interval, output_size, self.get_api());
-        let time_series_helper: TimeSeriesHelper = self
-            .client
-            .get(path)
-            .recv_json()
-            .await
-            .expect("fail to get json");
+        let time_series_helper: TimeSeriesHelper = self.get_json(path).await;
         time_series_helper.convert()
     }
 
@@ -390,12 +354,7 @@ impl APIKey {
             temporary_value,
             self.get_api(),
         );
-        let indicator_helper: IndicatorHelper = self
-            .client
-            .get(path)
-            .recv_json()
-            .await
-            .expect("fail to get json");
+        let indicator_helper: IndicatorHelper = self.get_json(path).await;
         indicator_helper.convert()
     }
 }
