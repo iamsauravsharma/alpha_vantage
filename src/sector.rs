@@ -188,6 +188,9 @@ impl SectorHelper {
         if let Some(note) = self.note {
             return Err(Error::AlphaVantageNote(note));
         }
+        if self.meta_data.is_none() || self.data.is_none() {
+            return Err(Error::EmptyResponse);
+        }
         sector.meta_data = self.meta_data.unwrap();
         let mut final_data = Vec::new();
         for (key, val) in &self.data.unwrap() {

@@ -45,7 +45,7 @@ pub mod user;
 
 /// Utility module declaring enum for basic function and parameters for
 /// different API
-pub mod util;
+pub mod utils;
 
 use self::user::APIKey;
 

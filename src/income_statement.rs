@@ -332,6 +332,12 @@ impl IncomeStatementHelper {
         if let Some(note) = self.note {
             return Err(Error::AlphaVantageNote(note));
         }
+        if self.symbol.is_none()
+            || self.annual_reports.is_none()
+            || self.quarterly_reports.is_none()
+        {
+            return Err(Error::EmptyResponse);
+        }
         income_sheet.symbol = self.symbol.unwrap();
         income_sheet.annual_reports = self.annual_reports.unwrap();
         income_sheet.quarterly_reports = self.quarterly_reports.unwrap();

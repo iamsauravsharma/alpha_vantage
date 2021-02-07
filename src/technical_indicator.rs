@@ -16,7 +16,7 @@ use serde_json::value::Value;
 
 use crate::{
     error::{Error, Result},
-    util::{TechnicalIndicator as UtilIndicator, TechnicalIndicatorInterval},
+    utils::{TechnicalIndicator as UtilIndicator, TechnicalIndicatorInterval},
 };
 
 type DataType = HashMap<String, HashMap<String, HashMap<String, String>>>;
@@ -111,6 +111,9 @@ impl IndicatorHelper {
         }
         if let Some(note) = self.note {
             return Err(Error::AlphaVantageNote(note));
+        }
+        if self.metadata.is_none() || self.data.is_none() {
+            return Err(Error::EmptyResponse);
         }
         indicator.metadata = self.metadata.unwrap();
         indicator.data = self.data.unwrap();

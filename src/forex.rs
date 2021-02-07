@@ -15,7 +15,7 @@ use serde::Deserialize;
 use crate::{
     deserialize::from_str,
     error::{Error, Result},
-    util::{ForexFunction, OutputSize, TimeSeriesInterval},
+    utils::{ForexFunction, OutputSize, TimeSeriesInterval},
 };
 
 /// Struct used to store metadata value
@@ -83,7 +83,7 @@ impl Forex {
     /// Return information of data
     ///
     /// ```
-    /// use alpha_vantage::util::*;
+    /// use alpha_vantage::utils::*;
     /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
@@ -109,7 +109,7 @@ impl Forex {
     /// Return from symbol
     ///
     /// ```
-    /// use alpha_vantage::util::*;
+    /// use alpha_vantage::utils::*;
     /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
@@ -137,7 +137,7 @@ impl Forex {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     use alpha_vantage::util::*;
+    ///     use alpha_vantage::utils::*;
     ///     let api = alpha_vantage::set_api("demo");
     ///     let forex = api
     ///         .forex(
@@ -173,7 +173,7 @@ impl Forex {
     /// Return interval for intraday
     ///
     /// ```
-    /// use alpha_vantage::util::*;
+    /// use alpha_vantage::utils::*;
     /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
@@ -199,7 +199,7 @@ impl Forex {
     /// Return output size which can be full or compact
     ///
     /// ```
-    /// use alpha_vantage::util::*;
+    /// use alpha_vantage::utils::*;
     /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
@@ -291,6 +291,9 @@ impl ForexHelper {
         }
         if let Some(note) = self.note {
             return Err(Error::AlphaVantageNote(note));
+        }
+        if self.meta_data.is_none() || self.forex.is_none() {
+            return Err(Error::EmptyResponse);
         }
         let meta_data = self.meta_data.unwrap();
         let information = &meta_data["1. Information"];
@@ -458,7 +461,7 @@ pub(crate) fn create_url(
 // Test module
 #[cfg(test)]
 mod test {
-    use crate::util::*;
+    use crate::utils::*;
     #[test]
     // Testing forex create_url() function
     fn test_forex_create_url() {

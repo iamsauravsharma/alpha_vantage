@@ -211,6 +211,10 @@ impl SearchHelper {
         if let Some(note) = self.note {
             return Err(Error::AlphaVantageNote(note));
         }
+
+        if self.matches.is_none() {
+            return Err(Error::EmptyResponse);
+        }
         search.matches = self.matches.unwrap();
         Ok(search)
     }

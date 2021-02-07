@@ -15,7 +15,7 @@ use serde::Deserialize;
 use crate::{
     deserialize::from_str,
     error::{Error, Result},
-    util::CryptoFunction,
+    utils::CryptoFunction,
 };
 
 /// Store Meta Data Information
@@ -136,7 +136,7 @@ impl Crypto {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let crypto = api
-    ///         .crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY")
+    ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
     ///         .await
     ///         .unwrap();
     ///     let information = crypto.information();
@@ -155,7 +155,7 @@ impl Crypto {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let crypto = api
-    ///         .crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY")
+    ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
     ///         .await
     ///         .unwrap();
     ///     let digital_code = crypto.digital_code();
@@ -174,7 +174,7 @@ impl Crypto {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let crypto = api
-    ///         .crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY")
+    ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
     ///         .await
     ///         .unwrap();
     ///     let digital_name = crypto.digital_name();
@@ -193,7 +193,7 @@ impl Crypto {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let crypto = api
-    ///         .crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY")
+    ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
     ///         .await
     ///         .unwrap();
     ///     let market_code = crypto.market_code();
@@ -212,7 +212,7 @@ impl Crypto {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let crypto = api
-    ///         .crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY")
+    ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
     ///         .await
     ///         .unwrap();
     ///     let market_name = crypto.market_name();
@@ -303,6 +303,9 @@ impl CryptoHelper {
         }
         if let Some(note) = self.note {
             return Err(Error::AlphaVantageNote(note));
+        }
+        if self.meta_data.is_none() || self.entry.is_none() {
+            return Err(Error::EmptyResponse);
         }
         crypto.meta_data = self.meta_data.unwrap();
         let mut vec_entry = Vec::new();
@@ -421,7 +424,7 @@ pub(crate) fn create_url(
 
 #[cfg(test)]
 mod test {
-    use crate::util::*;
+    use crate::utils::*;
     #[test]
     fn test_crypto_create_url() {
         assert_eq!(

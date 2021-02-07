@@ -143,6 +143,9 @@ impl QuoteHelper {
         if let Some(note) = self.note {
             return Err(Error::AlphaVantageNote(note));
         }
+        if self.global_quote.is_none() {
+            return Err(Error::EmptyResponse);
+        }
         quote.global_quote = self.global_quote.unwrap();
         Ok(quote)
     }

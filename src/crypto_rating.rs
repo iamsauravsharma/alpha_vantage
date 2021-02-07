@@ -89,7 +89,7 @@ impl CryptoRating {
     }
 
     /// Return time zone of last refreshed time
-
+    ///
     /// ```
     /// #[async_std::main]
     /// async fn main() {
@@ -159,6 +159,9 @@ impl CryptoRatingHelper {
         }
         if let Some(note) = self.note {
             return Err(Error::AlphaVantageNote(note));
+        }
+        if self.rating_score.is_none() {
+            return Err(Error::EmptyResponse);
         }
         crypto_rating.rating_score = self.rating_score.unwrap();
         Ok(crypto_rating)

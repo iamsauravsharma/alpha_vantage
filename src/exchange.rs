@@ -165,6 +165,9 @@ impl ExchangeHelper {
         if let Some(note) = self.note {
             return Err(Error::AlphaVantageNote(note));
         }
+        if self.real_time.is_none() {
+            return Err(Error::EmptyResponse);
+        }
         exchange.real_time = self.real_time.unwrap();
         Ok(exchange)
     }

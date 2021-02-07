@@ -17,7 +17,7 @@ use serde::Deserialize;
 use crate::{
     deserialize::from_str,
     error::{Error, Result},
-    util::{OutputSize, StockFunction, TimeSeriesInterval},
+    utils::{OutputSize, StockFunction, TimeSeriesInterval},
 };
 
 /// Struct for storing Meta Data value
@@ -112,7 +112,7 @@ impl TimeSeries {
     /// Return information present in meta data
     ///
     /// ```
-    /// use alpha_vantage::util::*;
+    /// use alpha_vantage::utils::*;
     /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
@@ -140,7 +140,7 @@ impl TimeSeries {
     /// Return symbol for which time series function is called
     ///
     /// ```
-    /// use alpha_vantage::util::*;
+    /// use alpha_vantage::utils::*;
     /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
@@ -177,7 +177,7 @@ impl TimeSeries {
     /// Time series interval between two consecutive data
     ///
     /// ```
-    /// use alpha_vantage::util::*;
+    /// use alpha_vantage::utils::*;
     /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
@@ -202,7 +202,7 @@ impl TimeSeries {
     /// Output Size of intraday which can be either Full or compact
     ///
     /// ```
-    /// use alpha_vantage::util::*;
+    /// use alpha_vantage::utils::*;
     /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
@@ -317,6 +317,11 @@ impl TimeSeriesHelper {
         }
         if let Some(note) = self.note {
             return Err(Error::AlphaVantageNote(note));
+        }
+        if self.meta_data.is_none()
+            || (self.time_series.is_none() && self.adjusted_series.is_none())
+        {
+            return Err(Error::EmptyResponse);
         }
         let meta_data = self.meta_data.unwrap();
         let information = &meta_data["1. Information"];
@@ -507,7 +512,7 @@ pub(crate) fn create_url(
 
 #[cfg(test)]
 mod test {
-    use crate::util::*;
+    use crate::utils::*;
     #[test]
     fn test_stock_time_create_url() {
         assert_eq!(

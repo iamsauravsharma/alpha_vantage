@@ -160,6 +160,12 @@ impl EarningHelper {
         if let Some(note) = self.note {
             return Err(Error::AlphaVantageNote(note));
         }
+        if self.symbol.is_none()
+            || self.annual_earning.is_none()
+            || self.quarterly_earning.is_none()
+        {
+            return Err(Error::EmptyResponse);
+        }
         earning.symbol = self.symbol.unwrap();
         earning.annual_earning = self.annual_earning.unwrap();
         earning.quarterly_earning = self.quarterly_earning.unwrap();

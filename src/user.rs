@@ -14,7 +14,7 @@ use crate::{
     sector::{Sector, SectorHelper},
     stock_time::{create_url as create_url_time_series, TimeSeries, TimeSeriesHelper},
     technical_indicator::{create_url as create_url_technical, Indicator, IndicatorHelper},
-    util::{
+    utils::{
         CryptoFunction, ForexFunction, OutputSize, StockFunction, TechnicalIndicator,
         TechnicalIndicatorInterval, TimeSeriesInterval,
     },
@@ -77,7 +77,10 @@ impl APIKey {
     /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
-    ///     assert_eq!(api.crypto_rating("BTC").await.unwrap().name(), "Bitcoin");
+    ///     let crypto_rating = api.crypto_rating("BTC").await.unwrap();
+    ///     assert_eq!(crypto_rating.symbol(), "BTC");
+    ///     assert_eq!(crypto_rating.name(), "Bitcoin");
+    ///     assert_eq!(crypto_rating.time_zone(), "UTC");
     /// }
     /// ```
     pub async fn crypto_rating(&self, symbol: &str) -> Result<CryptoRating> {
@@ -98,11 +101,13 @@ impl APIKey {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let crypto = api
-    ///         .crypto(alpha_vantage::util::CryptoFunction::Daily, "BTC", "CNY")
+    ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
     ///         .await
     ///         .unwrap();
-    ///     let digital_name = crypto.digital_name();
-    ///     assert_eq!(digital_name, "Bitcoin");
+    ///     assert_eq!(crypto.digital_code(), "BTC");
+    ///     assert_eq!(crypto.digital_name(), "Bitcoin");
+    ///     assert_eq!(crypto.market_code(), "CNY");
+    ///     assert_eq!(crypto.market_name(), "Chinese Yuan");
     /// }
     /// ```
     pub async fn crypto(
@@ -146,10 +151,11 @@ impl APIKey {
     /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
-    ///     assert_eq!(
-    ///         api.exchange("BTC", "CNY").await.unwrap().name_from(),
-    ///         "Bitcoin"
-    ///     );
+    ///     let exchange = api.exchange("BTC", "CNY").await.unwrap();
+    ///     assert_eq!(exchange.name_from(), "Bitcoin");
+    ///     assert_eq!(exchange.code_from(), "BTC");
+    ///     assert_eq!(exchange.name_to(), "Chinese Yuan");
+    ///     assert_eq!(exchange.code_to(), "CNY");
     /// }
     /// ```
     pub async fn exchange(&self, from_currency: &str, to_currency: &str) -> Result<Exchange> {
@@ -167,7 +173,7 @@ impl APIKey {
     ///
     /// # Example
     /// ```
-    /// use alpha_vantage::util::*;
+    /// use alpha_vantage::utils::*;
     /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
@@ -179,8 +185,11 @@ impl APIKey {
     ///             TimeSeriesInterval::None,
     ///             OutputSize::None,
     ///         )
-    ///         .await;
-    ///     assert_eq!(forex.unwrap().symbol_from(), "EUR");
+    ///         .await
+    ///         .unwrap();
+    ///     assert_eq!(forex.symbol_from(), "EUR");
+    ///     assert_eq!(forex.symbol_to(), "USD");
+    ///     assert!(forex.interval().is_none());
     /// }
     /// ```
     pub async fn forex(
@@ -254,7 +263,13 @@ impl APIKey {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
     ///     let search = api.search("BA").await.unwrap();
-    ///     assert_eq!(search.result()[0].symbol(), "BA");
+    ///     let first_search_result = &search.result()[0];
+    ///     assert_eq!(first_search_result.symbol(), "BA");
+    ///     assert_eq!(first_search_result.name(), "Boeing Company");
+    ///     assert_eq!(first_search_result.stock_type(), "Equity");
+    ///     assert_eq!(first_search_result.region(), "United States");
+    ///     assert_eq!(first_search_result.currency(), "USD");
+    ///     assert_eq!(first_search_result.match_score(), 1.0);
     /// }
     /// ```
     pub async fn search(&self, keywords: &str) -> Result<Search> {
@@ -289,7 +304,7 @@ impl APIKey {
     /// Stock time method for calling stock time series API
     /// # Example
     /// ```
-    /// use alpha_vantage::util::*;
+    /// use alpha_vantage::utils::*;
     /// #[async_std::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo");
@@ -302,7 +317,8 @@ impl APIKey {
     ///         )
     ///         .await
     ///         .unwrap();
-    ///     assert_eq!(stock.symbol(), "MSFT".to_string());
+    ///     assert_eq!(stock.symbol(), "MSFT");
+    ///     assert!(stock.interval().is_none());
     /// }
     /// ```
     pub async fn stock_time(
@@ -327,13 +343,13 @@ impl APIKey {
     ///         .technical_indicator(
     ///             "SMA",
     ///             "IBM",
-    ///             alpha_vantage::util::TechnicalIndicatorInterval::Weekly,
+    ///             alpha_vantage::utils::TechnicalIndicatorInterval::Weekly,
     ///             Some(10),
     ///             Some("open"),
     ///             vec![],
     ///         )
     ///         .await;
-    ///     assert_eq!(technical.is_ok(), true);
+    ///     assert!(technical.is_ok());
     /// }
     /// ```
     pub async fn technical_indicator(
