@@ -9,7 +9,7 @@
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">main</span>() {
     <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>);
     <span class="kw">let</span> <span class="ident">crypto</span> <span class="op">=</span> <span class="ident">api</span>
-        .<span class="ident">crypto</span>(<span class="ident">alpha_vantage</span>::<span class="ident">util</span>::<span class="ident">CryptoFunction</span>::<span class="ident">Daily</span>, <span class="string">&quot;BTC&quot;</span>, <span class="string">&quot;CNY&quot;</span>)
+        .<span class="ident">crypto</span>(<span class="ident">alpha_vantage</span>::<span class="ident">utils</span>::<span class="ident">CryptoFunction</span>::<span class="ident">Daily</span>, <span class="string">&quot;BTC&quot;</span>, <span class="string">&quot;CNY&quot;</span>)
         .<span class="kw">await</span>
         .<span class="ident">unwrap</span>();
     <span class="kw">let</span> <span class="ident">information</span> <span class="op">=</span> <span class="ident">crypto</span>.<span class="ident">information</span>();
@@ -22,7 +22,7 @@
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">main</span>() {
     <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>);
     <span class="kw">let</span> <span class="ident">crypto</span> <span class="op">=</span> <span class="ident">api</span>
-        .<span class="ident">crypto</span>(<span class="ident">alpha_vantage</span>::<span class="ident">util</span>::<span class="ident">CryptoFunction</span>::<span class="ident">Daily</span>, <span class="string">&quot;BTC&quot;</span>, <span class="string">&quot;CNY&quot;</span>)
+        .<span class="ident">crypto</span>(<span class="ident">alpha_vantage</span>::<span class="ident">utils</span>::<span class="ident">CryptoFunction</span>::<span class="ident">Daily</span>, <span class="string">&quot;BTC&quot;</span>, <span class="string">&quot;CNY&quot;</span>)
         .<span class="kw">await</span>
         .<span class="ident">unwrap</span>();
     <span class="kw">let</span> <span class="ident">digital_code</span> <span class="op">=</span> <span class="ident">crypto</span>.<span class="ident">digital_code</span>();
@@ -35,7 +35,7 @@
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">main</span>() {
     <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>);
     <span class="kw">let</span> <span class="ident">crypto</span> <span class="op">=</span> <span class="ident">api</span>
-        .<span class="ident">crypto</span>(<span class="ident">alpha_vantage</span>::<span class="ident">util</span>::<span class="ident">CryptoFunction</span>::<span class="ident">Daily</span>, <span class="string">&quot;BTC&quot;</span>, <span class="string">&quot;CNY&quot;</span>)
+        .<span class="ident">crypto</span>(<span class="ident">alpha_vantage</span>::<span class="ident">utils</span>::<span class="ident">CryptoFunction</span>::<span class="ident">Daily</span>, <span class="string">&quot;BTC&quot;</span>, <span class="string">&quot;CNY&quot;</span>)
         .<span class="kw">await</span>
         .<span class="ident">unwrap</span>();
     <span class="kw">let</span> <span class="ident">digital_name</span> <span class="op">=</span> <span class="ident">crypto</span>.<span class="ident">digital_name</span>();
@@ -48,7 +48,7 @@
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">main</span>() {
     <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>);
     <span class="kw">let</span> <span class="ident">crypto</span> <span class="op">=</span> <span class="ident">api</span>
-        .<span class="ident">crypto</span>(<span class="ident">alpha_vantage</span>::<span class="ident">util</span>::<span class="ident">CryptoFunction</span>::<span class="ident">Daily</span>, <span class="string">&quot;BTC&quot;</span>, <span class="string">&quot;CNY&quot;</span>)
+        .<span class="ident">crypto</span>(<span class="ident">alpha_vantage</span>::<span class="ident">utils</span>::<span class="ident">CryptoFunction</span>::<span class="ident">Daily</span>, <span class="string">&quot;BTC&quot;</span>, <span class="string">&quot;CNY&quot;</span>)
         .<span class="kw">await</span>
         .<span class="ident">unwrap</span>();
     <span class="kw">let</span> <span class="ident">market_code</span> <span class="op">=</span> <span class="ident">crypto</span>.<span class="ident">market_code</span>();
@@ -61,7 +61,7 @@
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">main</span>() {
     <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>);
     <span class="kw">let</span> <span class="ident">crypto</span> <span class="op">=</span> <span class="ident">api</span>
-        .<span class="ident">crypto</span>(<span class="ident">alpha_vantage</span>::<span class="ident">util</span>::<span class="ident">CryptoFunction</span>::<span class="ident">Daily</span>, <span class="string">&quot;BTC&quot;</span>, <span class="string">&quot;CNY&quot;</span>)
+        .<span class="ident">crypto</span>(<span class="ident">alpha_vantage</span>::<span class="ident">utils</span>::<span class="ident">CryptoFunction</span>::<span class="ident">Daily</span>, <span class="string">&quot;BTC&quot;</span>, <span class="string">&quot;CNY&quot;</span>)
         .<span class="kw">await</span>
         .<span class="ident">unwrap</span>();
     <span class="kw">let</span> <span class="ident">market_name</span> <span class="op">=</span> <span class="ident">crypto</span>.<span class="ident">market_name</span>();

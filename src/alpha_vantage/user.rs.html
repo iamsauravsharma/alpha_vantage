@@ -374,6 +374,22 @@
 <span id="371">371</span>
 <span id="372">372</span>
 <span id="373">373</span>
+<span id="374">374</span>
+<span id="375">375</span>
+<span id="376">376</span>
+<span id="377">377</span>
+<span id="378">378</span>
+<span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
+<span id="382">382</span>
+<span id="383">383</span>
+<span id="384">384</span>
+<span id="385">385</span>
+<span id="386">386</span>
+<span id="387">387</span>
+<span id="388">388</span>
+<span id="389">389</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">de</span>::<span class="ident">DeserializeOwned</span>;
 <span class="kw">use</span> <span class="ident">surf</span>::{<span class="ident">Client</span>, <span class="ident">Url</span>};
@@ -391,7 +407,7 @@
     <span class="ident">sector</span>::{<span class="ident">Sector</span>, <span class="ident">SectorHelper</span>},
     <span class="ident">stock_time</span>::{<span class="ident">create_url</span> <span class="kw">as</span> <span class="ident">create_url_time_series</span>, <span class="ident">TimeSeries</span>, <span class="ident">TimeSeriesHelper</span>},
     <span class="ident">technical_indicator</span>::{<span class="ident">create_url</span> <span class="kw">as</span> <span class="ident">create_url_technical</span>, <span class="ident">Indicator</span>, <span class="ident">IndicatorHelper</span>},
-    <span class="ident">util</span>::{
+    <span class="ident">utils</span>::{
         <span class="ident">CryptoFunction</span>, <span class="ident">ForexFunction</span>, <span class="ident">OutputSize</span>, <span class="ident">StockFunction</span>, <span class="ident">TechnicalIndicator</span>,
         <span class="ident">TechnicalIndicatorInterval</span>, <span class="ident">TimeSeriesInterval</span>,
     },
@@ -454,7 +470,10 @@
     <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
-    <span class="doccomment">///     assert_eq!(api.crypto_rating(&quot;BTC&quot;).await.unwrap().name(), &quot;Bitcoin&quot;);</span>
+    <span class="doccomment">///     let crypto_rating = api.crypto_rating(&quot;BTC&quot;).await.unwrap();</span>
+    <span class="doccomment">///     assert_eq!(crypto_rating.symbol(), &quot;BTC&quot;);</span>
+    <span class="doccomment">///     assert_eq!(crypto_rating.name(), &quot;Bitcoin&quot;);</span>
+    <span class="doccomment">///     assert_eq!(crypto_rating.time_zone(), &quot;UTC&quot;);</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">crypto_rating</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">CryptoRating</span><span class="op">&gt;</span> {
@@ -475,11 +494,13 @@
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
     <span class="doccomment">///     let crypto = api</span>
-    <span class="doccomment">///         .crypto(alpha_vantage::util::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
+    <span class="doccomment">///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
-    <span class="doccomment">///     let digital_name = crypto.digital_name();</span>
-    <span class="doccomment">///     assert_eq!(digital_name, &quot;Bitcoin&quot;);</span>
+    <span class="doccomment">///     assert_eq!(crypto.digital_code(), &quot;BTC&quot;);</span>
+    <span class="doccomment">///     assert_eq!(crypto.digital_name(), &quot;Bitcoin&quot;);</span>
+    <span class="doccomment">///     assert_eq!(crypto.market_code(), &quot;CNY&quot;);</span>
+    <span class="doccomment">///     assert_eq!(crypto.market_name(), &quot;Chinese Yuan&quot;);</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">crypto</span>(
@@ -523,10 +544,11 @@
     <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
-    <span class="doccomment">///     assert_eq!(</span>
-    <span class="doccomment">///         api.exchange(&quot;BTC&quot;, &quot;CNY&quot;).await.unwrap().name_from(),</span>
-    <span class="doccomment">///         &quot;Bitcoin&quot;</span>
-    <span class="doccomment">///     );</span>
+    <span class="doccomment">///     let exchange = api.exchange(&quot;BTC&quot;, &quot;CNY&quot;).await.unwrap();</span>
+    <span class="doccomment">///     assert_eq!(exchange.name_from(), &quot;Bitcoin&quot;);</span>
+    <span class="doccomment">///     assert_eq!(exchange.code_from(), &quot;BTC&quot;);</span>
+    <span class="doccomment">///     assert_eq!(exchange.name_to(), &quot;Chinese Yuan&quot;);</span>
+    <span class="doccomment">///     assert_eq!(exchange.code_to(), &quot;CNY&quot;);</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">exchange</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">from_currency</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">to_currency</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Exchange</span><span class="op">&gt;</span> {
@@ -544,7 +566,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use alpha_vantage::util::*;</span>
+    <span class="doccomment">/// use alpha_vantage::utils::*;</span>
     <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
@@ -556,8 +578,11 @@
     <span class="doccomment">///             TimeSeriesInterval::None,</span>
     <span class="doccomment">///             OutputSize::None,</span>
     <span class="doccomment">///         )</span>
-    <span class="doccomment">///         .await;</span>
-    <span class="doccomment">///     assert_eq!(forex.unwrap().symbol_from(), &quot;EUR&quot;);</span>
+    <span class="doccomment">///         .await</span>
+    <span class="doccomment">///         .unwrap();</span>
+    <span class="doccomment">///     assert_eq!(forex.symbol_from(), &quot;EUR&quot;);</span>
+    <span class="doccomment">///     assert_eq!(forex.symbol_to(), &quot;USD&quot;);</span>
+    <span class="doccomment">///     assert!(forex.interval().is_none());</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">forex</span>(
@@ -631,7 +656,13 @@
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
     <span class="doccomment">///     let search = api.search(&quot;BA&quot;).await.unwrap();</span>
-    <span class="doccomment">///     assert_eq!(search.result()[0].symbol(), &quot;BA&quot;);</span>
+    <span class="doccomment">///     let first_search_result = &amp;search.result()[0];</span>
+    <span class="doccomment">///     assert_eq!(first_search_result.symbol(), &quot;BA&quot;);</span>
+    <span class="doccomment">///     assert_eq!(first_search_result.name(), &quot;Boeing Company&quot;);</span>
+    <span class="doccomment">///     assert_eq!(first_search_result.stock_type(), &quot;Equity&quot;);</span>
+    <span class="doccomment">///     assert_eq!(first_search_result.region(), &quot;United States&quot;);</span>
+    <span class="doccomment">///     assert_eq!(first_search_result.currency(), &quot;USD&quot;);</span>
+    <span class="doccomment">///     assert_eq!(first_search_result.match_score(), 1.0);</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">search</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">keywords</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Search</span><span class="op">&gt;</span> {
@@ -666,7 +697,7 @@
     <span class="doccomment">/// Stock time method for calling stock time series API</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use alpha_vantage::util::*;</span>
+    <span class="doccomment">/// use alpha_vantage::utils::*;</span>
     <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
@@ -679,7 +710,8 @@
     <span class="doccomment">///         )</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
-    <span class="doccomment">///     assert_eq!(stock.symbol(), &quot;MSFT&quot;.to_string());</span>
+    <span class="doccomment">///     assert_eq!(stock.symbol(), &quot;MSFT&quot;);</span>
+    <span class="doccomment">///     assert!(stock.interval().is_none());</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">stock_time</span>(
@@ -704,13 +736,13 @@
     <span class="doccomment">///         .technical_indicator(</span>
     <span class="doccomment">///             &quot;SMA&quot;,</span>
     <span class="doccomment">///             &quot;IBM&quot;,</span>
-    <span class="doccomment">///             alpha_vantage::util::TechnicalIndicatorInterval::Weekly,</span>
+    <span class="doccomment">///             alpha_vantage::utils::TechnicalIndicatorInterval::Weekly,</span>
     <span class="doccomment">///             Some(10),</span>
     <span class="doccomment">///             Some(&quot;open&quot;),</span>
     <span class="doccomment">///             vec![],</span>
     <span class="doccomment">///         )</span>
     <span class="doccomment">///         .await;</span>
-    <span class="doccomment">///     assert_eq!(technical.is_ok(), true);</span>
+    <span class="doccomment">///     assert!(technical.is_ok());</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">technical_indicator</span>(

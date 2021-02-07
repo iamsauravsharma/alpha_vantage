@@ -29,6 +29,11 @@
 <span id="26">26</span>
 <span id="27">27</span>
 <span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Module which contains all types of error for alpha vantage crates</span>
 <span class="kw">use</span> <span class="ident">thiserror</span>::<span class="ident">Error</span>;
@@ -57,6 +62,11 @@
     <span class="doccomment">/// Error which is raised when desired number of entry is not present</span>
     <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;desired number of latest entry not found try using less than {0} as n&quot;</span>)]</span>
     <span class="ident">DesiredNumberOfEntryNotPresent</span>(<span class="ident">usize</span>),
+
+    <span class="doccomment">/// Error which is raised if API return empty response instead of returning</span>
+    <span class="doccomment">/// data</span>
+    <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;server returned empty response&quot;</span>)]</span>
+    <span class="ident">EmptyResponse</span>,
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage"></div>

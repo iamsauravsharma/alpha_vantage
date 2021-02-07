@@ -5,7 +5,7 @@
 </div><h2 id="implementations" class="small-section-header">Implementations<a href="#implementations" class="anchor"></a></h2><h3 id="impl" class="impl"><code class="in-band">impl <a class="struct" href="../../alpha_vantage/stock_time/struct.TimeSeries.html" title="struct alpha_vantage::stock_time::TimeSeries">TimeSeries</a></code><a href="#impl" class="anchor"></a><a class="srclink" href="../../src/alpha_vantage/stock_time.rs.html#111-253" title="goto source code">[src]</a></h3><div class="impl-items"><h4 id="method.information" class="method"><code><span class="docblock attributes">#[must_use]</span>pub fn <a href="#method.information" class="fnname">information</a>(&amp;self) -&gt; &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a></code><a class="srclink" href="../../src/alpha_vantage/stock_time.rs.html#136-138" title="goto source code">[src]</a></h4><div class="docblock"><p>Return information present in meta data</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">use</span> <span class="ident">alpha_vantage</span>::<span class="ident">util</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">alpha_vantage</span>::<span class="ident">utils</span>::<span class="kw-2">*</span>;
 <span class="attribute">#[<span class="ident">async_std</span>::<span class="ident">main</span>]</span>
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">main</span>() {
     <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>);
@@ -27,7 +27,7 @@
 </div><h4 id="method.symbol" class="method"><code><span class="docblock attributes">#[must_use]</span>pub fn <a href="#method.symbol" class="fnname">symbol</a>(&amp;self) -&gt; &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a></code><a class="srclink" href="../../src/alpha_vantage/stock_time.rs.html#161-163" title="goto source code">[src]</a></h4><div class="docblock"><p>Return symbol for which time series function is called</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">use</span> <span class="ident">alpha_vantage</span>::<span class="ident">util</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">alpha_vantage</span>::<span class="ident">utils</span>::<span class="kw-2">*</span>;
 <span class="attribute">#[<span class="ident">async_std</span>::<span class="ident">main</span>]</span>
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">main</span>() {
     <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>);
@@ -48,7 +48,7 @@
 </div><h4 id="method.interval" class="method"><code><span class="docblock attributes">#[must_use]</span>pub fn <a href="#method.interval" class="fnname">interval</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;</code><a class="srclink" href="../../src/alpha_vantage/stock_time.rs.html#198-200" title="goto source code">[src]</a></h4><div class="docblock"><p>Time series interval between two consecutive data</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">use</span> <span class="ident">alpha_vantage</span>::<span class="ident">util</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">alpha_vantage</span>::<span class="ident">utils</span>::<span class="kw-2">*</span>;
 <span class="attribute">#[<span class="ident">async_std</span>::<span class="ident">main</span>]</span>
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">main</span>() {
     <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>);
@@ -67,7 +67,7 @@
 </div><h4 id="method.output_size" class="method"><code><span class="docblock attributes">#[must_use]</span>pub fn <a href="#method.output_size" class="fnname">output_size</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;</code><a class="srclink" href="../../src/alpha_vantage/stock_time.rs.html#223-225" title="goto source code">[src]</a></h4><div class="docblock"><p>Output Size of intraday which can be either Full or compact</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
-<span class="kw">use</span> <span class="ident">alpha_vantage</span>::<span class="ident">util</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">alpha_vantage</span>::<span class="ident">utils</span>::<span class="kw-2">*</span>;
 <span class="attribute">#[<span class="ident">async_std</span>::<span class="ident">main</span>]</span>
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">main</span>() {
     <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>);

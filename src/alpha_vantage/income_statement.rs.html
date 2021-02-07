@@ -341,6 +341,12 @@
 <span id="338">338</span>
 <span id="339">339</span>
 <span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Module for returning income statement for a company</span>
 <span class="doccomment">//!</span>
@@ -675,6 +681,12 @@
         }
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">note</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">note</span> {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">AlphaVantageNote</span>(<span class="ident">note</span>));
+        }
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">symbol</span>.<span class="ident">is_none</span>()
+            <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">annual_reports</span>.<span class="ident">is_none</span>()
+            <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">quarterly_reports</span>.<span class="ident">is_none</span>()
+        {
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">EmptyResponse</span>);
         }
         <span class="ident">income_sheet</span>.<span class="ident">symbol</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">symbol</span>.<span class="ident">unwrap</span>();
         <span class="ident">income_sheet</span>.<span class="ident">annual_reports</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">annual_reports</span>.<span class="ident">unwrap</span>();

@@ -447,6 +447,9 @@
 <span id="444">444</span>
 <span id="445">445</span>
 <span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Module for crypto real time data</span>
 <span class="doccomment">//!</span>
@@ -465,7 +468,7 @@
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">deserialize</span>::<span class="ident">from_str</span>,
     <span class="ident">error</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>},
-    <span class="ident">util</span>::<span class="ident">CryptoFunction</span>,
+    <span class="ident">utils</span>::<span class="ident">CryptoFunction</span>,
 };
 
 <span class="doccomment">/// Store Meta Data Information</span>
@@ -586,7 +589,7 @@
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
     <span class="doccomment">///     let crypto = api</span>
-    <span class="doccomment">///         .crypto(alpha_vantage::util::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
+    <span class="doccomment">///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
     <span class="doccomment">///     let information = crypto.information();</span>
@@ -605,7 +608,7 @@
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
     <span class="doccomment">///     let crypto = api</span>
-    <span class="doccomment">///         .crypto(alpha_vantage::util::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
+    <span class="doccomment">///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
     <span class="doccomment">///     let digital_code = crypto.digital_code();</span>
@@ -624,7 +627,7 @@
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
     <span class="doccomment">///     let crypto = api</span>
-    <span class="doccomment">///         .crypto(alpha_vantage::util::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
+    <span class="doccomment">///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
     <span class="doccomment">///     let digital_name = crypto.digital_name();</span>
@@ -643,7 +646,7 @@
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
     <span class="doccomment">///     let crypto = api</span>
-    <span class="doccomment">///         .crypto(alpha_vantage::util::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
+    <span class="doccomment">///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
     <span class="doccomment">///     let market_code = crypto.market_code();</span>
@@ -662,7 +665,7 @@
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
     <span class="doccomment">///     let crypto = api</span>
-    <span class="doccomment">///         .crypto(alpha_vantage::util::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
+    <span class="doccomment">///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
     <span class="doccomment">///     let market_name = crypto.market_name();</span>
@@ -753,6 +756,9 @@
         }
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">note</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">note</span> {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">AlphaVantageNote</span>(<span class="ident">note</span>));
+        }
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">is_none</span>() <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">entry</span>.<span class="ident">is_none</span>() {
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">EmptyResponse</span>);
         }
         <span class="ident">crypto</span>.<span class="ident">meta_data</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">vec_entry</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
@@ -871,7 +877,7 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">test</span> {
-    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">util</span>::<span class="kw-2">*</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">utils</span>::<span class="kw-2">*</span>;
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_crypto_create_url</span>() {
         <span class="macro">assert_eq</span><span class="macro">!</span>(
