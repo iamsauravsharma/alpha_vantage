@@ -5,7 +5,7 @@ use crate::{
     crypto::{create_url as create_url_crypto, Crypto, CryptoHelper},
     crypto_rating::{CryptoRating, CryptoRatingHelper},
     earning::{Earning, EarningHelper},
-    error::Result,
+    error::{Error, Result},
     exchange::{Exchange, ExchangeHelper},
     forex::{create_url as create_url_forex, Forex, ForexHelper},
     income_statement::{IncomeStatement, IncomeStatementHelper},
@@ -59,7 +59,7 @@ impl APIClient {
     }
 
     // Get json from api endpoint and create struct
-    async fn get_json<T>(&self, path: String) -> T
+    async fn get_json<T>(&self, path: String) -> Result<T>
     where
         T: DeserializeOwned,
     {
@@ -67,7 +67,7 @@ impl APIClient {
             .get(path)
             .recv_json()
             .await
-            .expect("fail to get json")
+            .map_err(|_| Error::DecodeJsonToStruct)
     }
 
     /// Method for getting crypto health rating
@@ -89,7 +89,7 @@ impl APIClient {
             symbol,
             self.get_api()
         );
-        let crypto_rating_helper: CryptoRatingHelper = self.get_json(path).await;
+        let crypto_rating_helper: CryptoRatingHelper = self.get_json(path).await?;
         crypto_rating_helper.convert()
     }
 
@@ -117,7 +117,7 @@ impl APIClient {
         market: &str,
     ) -> Result<Crypto> {
         let path = create_url_crypto(function, symbol, market, self.get_api());
-        let crypto_helper: CryptoHelper = self.get_json(path).await;
+        let crypto_helper: CryptoHelper = self.get_json(path).await?;
         crypto_helper.convert()
     }
 
@@ -139,7 +139,7 @@ impl APIClient {
             symbol,
             self.get_api()
         );
-        let earning_helper: EarningHelper = self.get_json(path).await;
+        let earning_helper: EarningHelper = self.get_json(path).await?;
         earning_helper.convert()
     }
 
@@ -165,7 +165,7 @@ impl APIClient {
             to_currency,
             self.get_api()
         );
-        let exchange_helper: ExchangeHelper = self.get_json(path).await;
+        let exchange_helper: ExchangeHelper = self.get_json(path).await?;
         exchange_helper.convert()
     }
 
@@ -208,7 +208,7 @@ impl APIClient {
             output_size,
             self.get_api(),
         );
-        let forex_helper: ForexHelper = self.get_json(path).await;
+        let forex_helper: ForexHelper = self.get_json(path).await?;
         forex_helper.convert()
     }
 
@@ -230,7 +230,7 @@ impl APIClient {
             symbol,
             self.get_api()
         );
-        let income_statement_helper: IncomeStatementHelper = self.get_json(path).await;
+        let income_statement_helper: IncomeStatementHelper = self.get_json(path).await?;
         income_statement_helper.convert()
     }
 
@@ -252,7 +252,7 @@ impl APIClient {
             symbol,
             self.get_api()
         );
-        let quote_helper: QuoteHelper = self.get_json(path).await;
+        let quote_helper: QuoteHelper = self.get_json(path).await?;
         quote_helper.convert()
     }
 
@@ -278,7 +278,7 @@ impl APIClient {
             keywords,
             self.get_api()
         );
-        let search_helper: SearchHelper = self.get_json(path).await;
+        let search_helper: SearchHelper = self.get_json(path).await?;
         search_helper.convert()
     }
 
@@ -297,7 +297,7 @@ impl APIClient {
     /// ```
     pub async fn sector(&self) -> Result<Sector> {
         let path = format!("query?function=SECTOR&apikey={}", self.get_api());
-        let sector_helper: SectorHelper = self.get_json(path).await;
+        let sector_helper: SectorHelper = self.get_json(path).await?;
         sector_helper.convert()
     }
 
@@ -329,7 +329,7 @@ impl APIClient {
         output_size: OutputSize,
     ) -> Result<TimeSeries> {
         let path = create_url_time_series(function, symbol, interval, output_size, self.get_api());
-        let time_series_helper: TimeSeriesHelper = self.get_json(path).await;
+        let time_series_helper: TimeSeriesHelper = self.get_json(path).await?;
         time_series_helper.convert()
     }
 
@@ -370,7 +370,7 @@ impl APIClient {
             temporary_value,
             self.get_api(),
         );
-        let indicator_helper: IndicatorHelper = self.get_json(path).await;
+        let indicator_helper: IndicatorHelper = self.get_json(path).await?;
         indicator_helper.convert()
     }
 }

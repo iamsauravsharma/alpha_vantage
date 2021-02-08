@@ -30,4 +30,9 @@ pub enum Error {
     /// data
     #[error("server returned empty response")]
     EmptyResponse,
+
+    /// Error which is raised if client fails to get json from server and decode
+    /// it into struct
+    #[error("Failed to get json and decode into struct")]
+    DecodeJsonToStruct,
 }
