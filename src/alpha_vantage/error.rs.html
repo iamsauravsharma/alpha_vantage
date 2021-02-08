@@ -34,6 +34,11 @@
 <span id="31">31</span>
 <span id="32">32</span>
 <span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Module which contains all types of error for alpha vantage crates</span>
 <span class="kw">use</span> <span class="ident">thiserror</span>::<span class="ident">Error</span>;
@@ -67,6 +72,11 @@
     <span class="doccomment">/// data</span>
     <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;server returned empty response&quot;</span>)]</span>
     <span class="ident">EmptyResponse</span>,
+
+    <span class="doccomment">/// Error which is raised if client fails to get json from server and decode</span>
+    <span class="doccomment">/// it into struct</span>
+    <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Failed to get json and decode into struct&quot;</span>)]</span>
+    <span class="ident">DecodeJsonToStruct</span>,
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage"></div>

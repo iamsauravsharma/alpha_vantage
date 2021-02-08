@@ -398,7 +398,7 @@
     <span class="ident">crypto</span>::{<span class="ident">create_url</span> <span class="kw">as</span> <span class="ident">create_url_crypto</span>, <span class="ident">Crypto</span>, <span class="ident">CryptoHelper</span>},
     <span class="ident">crypto_rating</span>::{<span class="ident">CryptoRating</span>, <span class="ident">CryptoRatingHelper</span>},
     <span class="ident">earning</span>::{<span class="ident">Earning</span>, <span class="ident">EarningHelper</span>},
-    <span class="ident">error</span>::<span class="prelude-ty">Result</span>,
+    <span class="ident">error</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>},
     <span class="ident">exchange</span>::{<span class="ident">Exchange</span>, <span class="ident">ExchangeHelper</span>},
     <span class="ident">forex</span>::{<span class="ident">create_url</span> <span class="kw">as</span> <span class="ident">create_url_forex</span>, <span class="ident">Forex</span>, <span class="ident">ForexHelper</span>},
     <span class="ident">income_statement</span>::{<span class="ident">IncomeStatement</span>, <span class="ident">IncomeStatementHelper</span>},
@@ -452,7 +452,7 @@
     }
 
     <span class="comment">// Get json from api endpoint and create struct</span>
-    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_json</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">path</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span>
+    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_json</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">path</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">DeserializeOwned</span>,
     {
@@ -460,7 +460,7 @@
             .<span class="ident">get</span>(<span class="ident">path</span>)
             .<span class="ident">recv_json</span>()
             .<span class="kw">await</span>
-            .<span class="ident">expect</span>(<span class="string">&quot;fail to get json&quot;</span>)
+            .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Error</span>::<span class="ident">DecodeJsonToStruct</span>)
     }
 
     <span class="doccomment">/// Method for getting crypto health rating</span>
@@ -482,7 +482,7 @@
             <span class="ident">symbol</span>,
             <span class="self">self</span>.<span class="ident">get_api</span>()
         );
-        <span class="kw">let</span> <span class="ident">crypto_rating_helper</span>: <span class="ident">CryptoRatingHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span>;
+        <span class="kw">let</span> <span class="ident">crypto_rating_helper</span>: <span class="ident">CryptoRatingHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="ident">crypto_rating_helper</span>.<span class="ident">convert</span>()
     }
 
@@ -510,7 +510,7 @@
         <span class="ident">market</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Crypto</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">create_url_crypto</span>(<span class="ident">function</span>, <span class="ident">symbol</span>, <span class="ident">market</span>, <span class="self">self</span>.<span class="ident">get_api</span>());
-        <span class="kw">let</span> <span class="ident">crypto_helper</span>: <span class="ident">CryptoHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span>;
+        <span class="kw">let</span> <span class="ident">crypto_helper</span>: <span class="ident">CryptoHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="ident">crypto_helper</span>.<span class="ident">convert</span>()
     }
 
@@ -532,7 +532,7 @@
             <span class="ident">symbol</span>,
             <span class="self">self</span>.<span class="ident">get_api</span>()
         );
-        <span class="kw">let</span> <span class="ident">earning_helper</span>: <span class="ident">EarningHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span>;
+        <span class="kw">let</span> <span class="ident">earning_helper</span>: <span class="ident">EarningHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="ident">earning_helper</span>.<span class="ident">convert</span>()
     }
 
@@ -558,7 +558,7 @@
             <span class="ident">to_currency</span>,
             <span class="self">self</span>.<span class="ident">get_api</span>()
         );
-        <span class="kw">let</span> <span class="ident">exchange_helper</span>: <span class="ident">ExchangeHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span>;
+        <span class="kw">let</span> <span class="ident">exchange_helper</span>: <span class="ident">ExchangeHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="ident">exchange_helper</span>.<span class="ident">convert</span>()
     }
 
@@ -601,7 +601,7 @@
             <span class="ident">output_size</span>,
             <span class="self">self</span>.<span class="ident">get_api</span>(),
         );
-        <span class="kw">let</span> <span class="ident">forex_helper</span>: <span class="ident">ForexHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span>;
+        <span class="kw">let</span> <span class="ident">forex_helper</span>: <span class="ident">ForexHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="ident">forex_helper</span>.<span class="ident">convert</span>()
     }
 
@@ -623,7 +623,7 @@
             <span class="ident">symbol</span>,
             <span class="self">self</span>.<span class="ident">get_api</span>()
         );
-        <span class="kw">let</span> <span class="ident">income_statement_helper</span>: <span class="ident">IncomeStatementHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span>;
+        <span class="kw">let</span> <span class="ident">income_statement_helper</span>: <span class="ident">IncomeStatementHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="ident">income_statement_helper</span>.<span class="ident">convert</span>()
     }
 
@@ -645,7 +645,7 @@
             <span class="ident">symbol</span>,
             <span class="self">self</span>.<span class="ident">get_api</span>()
         );
-        <span class="kw">let</span> <span class="ident">quote_helper</span>: <span class="ident">QuoteHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span>;
+        <span class="kw">let</span> <span class="ident">quote_helper</span>: <span class="ident">QuoteHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="ident">quote_helper</span>.<span class="ident">convert</span>()
     }
 
@@ -671,7 +671,7 @@
             <span class="ident">keywords</span>,
             <span class="self">self</span>.<span class="ident">get_api</span>()
         );
-        <span class="kw">let</span> <span class="ident">search_helper</span>: <span class="ident">SearchHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span>;
+        <span class="kw">let</span> <span class="ident">search_helper</span>: <span class="ident">SearchHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="ident">search_helper</span>.<span class="ident">convert</span>()
     }
 
@@ -690,7 +690,7 @@
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">sector</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Sector</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;query?function=SECTOR&amp;apikey={}&quot;</span>, <span class="self">self</span>.<span class="ident">get_api</span>());
-        <span class="kw">let</span> <span class="ident">sector_helper</span>: <span class="ident">SectorHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span>;
+        <span class="kw">let</span> <span class="ident">sector_helper</span>: <span class="ident">SectorHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="ident">sector_helper</span>.<span class="ident">convert</span>()
     }
 
@@ -722,7 +722,7 @@
         <span class="ident">output_size</span>: <span class="ident">OutputSize</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TimeSeries</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">create_url_time_series</span>(<span class="ident">function</span>, <span class="ident">symbol</span>, <span class="ident">interval</span>, <span class="ident">output_size</span>, <span class="self">self</span>.<span class="ident">get_api</span>());
-        <span class="kw">let</span> <span class="ident">time_series_helper</span>: <span class="ident">TimeSeriesHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span>;
+        <span class="kw">let</span> <span class="ident">time_series_helper</span>: <span class="ident">TimeSeriesHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="ident">time_series_helper</span>.<span class="ident">convert</span>()
     }
 
@@ -763,7 +763,7 @@
             <span class="ident">temporary_value</span>,
             <span class="self">self</span>.<span class="ident">get_api</span>(),
         );
-        <span class="kw">let</span> <span class="ident">indicator_helper</span>: <span class="ident">IndicatorHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span>;
+        <span class="kw">let</span> <span class="ident">indicator_helper</span>: <span class="ident">IndicatorHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="ident">indicator_helper</span>.<span class="ident">convert</span>()
     }
 }
