@@ -22,19 +22,19 @@ use crate::{
 
 const BASE_URL: &str = "https://www.alphavantage.co/";
 
-/// Struct for initializing api key value as well as contain different method
+/// Struct for initializing client as well as contain different method
 /// for API call
-pub struct APIKey {
+pub struct APIClient {
     api: String,
     client: Client,
 }
 
-impl APIKey {
-    /// Method for initializing [APIKey][APIKey] struct
+impl APIClient {
+    /// Method for initializing [APIClient][APIClient] struct
     ///
     /// ```
-    /// use alpha_vantage::user::APIKey;
-    /// let api = APIKey::set_api("some_key");
+    /// use alpha_vantage::api::APIClient;
+    /// let api = APIClient::set_api("some_key");
     /// ```
     #[must_use]
     pub fn set_api(api: &str) -> Self {
@@ -49,8 +49,8 @@ impl APIKey {
     /// Method to get api key
     ///
     /// ```
-    /// use alpha_vantage::user::APIKey;
-    /// let api = alpha_vantage::user::APIKey::set_api("some_key");
+    /// use alpha_vantage::api::APIClient;
+    /// let api = alpha_vantage::api::APIClient::set_api("some_key");
     /// assert_eq!(api.get_api(), "some_key");
     /// ```
     #[must_use]
@@ -382,7 +382,7 @@ mod test {
     // Testing get api and set api function
     fn test_get_api() {
         assert_eq!(
-            super::APIKey::set_api("secret_key").get_api(),
+            super::APIClient::set_api("secret_key").get_api(),
             "secret_key".to_string()
         );
     }

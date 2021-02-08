@@ -13,6 +13,10 @@
 //!
 //! [alpha_vantage_link]: https://alphavantage.co
 
+/// Module for basic definition of user information like setting API and
+/// requesting through that API
+pub mod api;
+
 pub mod crypto_rating;
 
 pub mod crypto;
@@ -39,15 +43,11 @@ pub mod stock_time;
 
 pub mod technical_indicator;
 
-/// Module for basic definition of user information like setting API and
-/// requesting through that API
-pub mod user;
-
 /// Utility module declaring enum for basic function and parameters for
 /// different API
 pub mod utils;
 
-use self::user::APIKey;
+use self::api::APIClient;
 
 /// Set API value which can be used for calling different module
 ///
@@ -55,6 +55,6 @@ use self::user::APIKey;
 /// let api = alpha_vantage::set_api("some_key");
 /// ```
 #[must_use]
-pub fn set_api(api: &str) -> APIKey {
-    APIKey::set_api(api)
+pub fn set_api(api: &str) -> APIClient {
+    APIClient::set_api(api)
 }
