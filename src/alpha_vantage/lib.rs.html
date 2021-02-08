@@ -77,6 +77,10 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! [alpha_vantage_link]: https://alphavantage.co</span>
 
+<span class="doccomment">/// Module for basic definition of user information like setting API and</span>
+<span class="doccomment">/// requesting through that API</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">api</span>;
+
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">crypto_rating</span>;
 
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">crypto</span>;
@@ -103,15 +107,11 @@
 
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">technical_indicator</span>;
 
-<span class="doccomment">/// Module for basic definition of user information like setting API and</span>
-<span class="doccomment">/// requesting through that API</span>
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">user</span>;
-
 <span class="doccomment">/// Utility module declaring enum for basic function and parameters for</span>
 <span class="doccomment">/// different API</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">utils</span>;
 
-<span class="kw">use</span> <span class="self">self</span>::<span class="ident">user</span>::<span class="ident">APIKey</span>;
+<span class="kw">use</span> <span class="self">self</span>::<span class="ident">api</span>::<span class="ident">APIClient</span>;
 
 <span class="doccomment">/// Set API value which can be used for calling different module</span>
 <span class="doccomment">///</span>
@@ -119,8 +119,8 @@
 <span class="doccomment">/// let api = alpha_vantage::set_api(&quot;some_key&quot;);</span>
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">must_use</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_api</span>(<span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">APIKey</span> {
-    <span class="ident">APIKey</span>::<span class="ident">set_api</span>(<span class="ident">api</span>)
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_api</span>(<span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">APIClient</span> {
+    <span class="ident">APIClient</span>::<span class="ident">set_api</span>(<span class="ident">api</span>)
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage"></div>
