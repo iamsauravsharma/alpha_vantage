@@ -1,7 +1,7 @@
 use serde::de::DeserializeOwned;
-use surf::{Client, Url};
 
 use crate::{
+    client::HttpClient,
     crypto::{create_url as create_url_crypto, Crypto, CryptoHelper},
     crypto_rating::{CryptoRating, CryptoRatingHelper},
     earning::{Earning, EarningHelper},
@@ -22,24 +22,42 @@ use crate::{
 
 const BASE_URL: &str = "https://www.alphavantage.co/";
 
-/// Struct for initializing client as well as contain different method
-/// for API call
-pub struct APIClient {
+/// Struct for initializing client which contains different method for API call
+pub struct ApiClient {
     api: String,
-    client: Client,
+    client: Box<dyn HttpClient>,
 }
 
-impl APIClient {
-    /// Method for initializing [APIClient][APIClient] struct
+impl ApiClient {
+    /// Method for initializing [ApiClient][ApiClient] struct by automatically
+    /// selecting default client
     ///
     /// ```
-    /// use alpha_vantage::api::APIClient;
-    /// let api = APIClient::set_api("some_key");
+    /// use alpha_vantage::api::ApiClient;
+    /// let api = ApiClient::set_api("some_key");
     /// ```
     #[must_use]
+    #[cfg(any(feature = "surf-client", feature = "reqwest-client"))]
     pub fn set_api(api: &str) -> Self {
-        let mut client = Client::new();
-        client.set_base_url(Url::parse(BASE_URL).unwrap());
+        let client = Box::new(crate::client::DefaultClient::new());
+        Self {
+            api: api.to_string(),
+            client,
+        }
+    }
+
+    /// Method for initializing [ApiClient][ApiClient] struct using  user
+    /// provided client
+    ///
+    /// ```
+    /// use alpha_vantage::api::ApiClient;
+    /// let api = ApiClient::set_api_with_client(
+    ///     "some_key",
+    ///     Box::new(alpha_vantage::client::DefaultClient::new()),
+    /// );
+    /// ```
+    #[must_use]
+    pub fn set_api_with_client(api: &str, client: Box<dyn HttpClient>) -> Self {
         Self {
             api: api.to_string(),
             client,
@@ -49,8 +67,8 @@ impl APIClient {
     /// Method to get api key
     ///
     /// ```
-    /// use alpha_vantage::api::APIClient;
-    /// let api = alpha_vantage::api::APIClient::set_api("some_key");
+    /// use alpha_vantage::api::ApiClient;
+    /// let api = alpha_vantage::api::ApiClient::set_api("some_key");
     /// assert_eq!(api.get_api(), "some_key");
     /// ```
     #[must_use]
@@ -63,11 +81,9 @@ impl APIClient {
     where
         T: DeserializeOwned,
     {
-        self.client
-            .get(path)
-            .recv_json()
-            .await
-            .map_err(|_| Error::DecodeJsonToStruct)
+        let full_path = format!("{}{}", BASE_URL, path);
+        let string_output = self.client.get_output(full_path).await?;
+        serde_json::from_str(&string_output).map_err(|_| Error::DecodeJsonToStruct)
     }
 
     /// Method for getting crypto health rating
@@ -121,7 +137,7 @@ impl APIClient {
         crypto_helper.convert()
     }
 
-    /// Earning method for returning company earning
+    /// Method for returning company earning
     ///
     /// # Example
     /// ```
@@ -169,7 +185,7 @@ impl APIClient {
         exchange_helper.convert()
     }
 
-    /// Forex method for calling stock time series
+    /// Method for calling stock time series forex Api
     ///
     /// # Example
     /// ```
@@ -256,7 +272,7 @@ impl APIClient {
         quote_helper.convert()
     }
 
-    /// Search method for searching keyword or company
+    /// Method for searching keyword or company
     /// # Example
     /// ```
     /// #[async_std::main]
@@ -301,7 +317,7 @@ impl APIClient {
         sector_helper.convert()
     }
 
-    /// Stock time method for calling stock time series API
+    /// Method for calling stock time series API
     /// # Example
     /// ```
     /// use alpha_vantage::utils::*;
@@ -333,7 +349,7 @@ impl APIClient {
         time_series_helper.convert()
     }
 
-    /// Technical indicator API caller method
+    /// Method for technical indicator API
     /// # Example
     /// ```
     /// #[async_std::main]
@@ -378,12 +394,13 @@ impl APIClient {
 // Mod for unit testing
 #[cfg(test)]
 mod test {
+
     #[test]
-    // Testing get api and set api function
     fn test_get_api() {
-        assert_eq!(
-            super::APIClient::set_api("secret_key").get_api(),
-            "secret_key".to_string()
+        let api = super::ApiClient::set_api_with_client(
+            "secret_key",
+            Box::new(crate::client::DefaultClient::new()),
         );
+        assert_eq!(api.get_api(), "secret_key".to_string());
     }
 }

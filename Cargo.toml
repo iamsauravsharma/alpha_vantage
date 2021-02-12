@@ -21,20 +21,21 @@ categories = [
 ]
 
 [dependencies]
+async-trait = "0.1.42"
+cfg-if = "1.0.0"
+reqwest = { version = "0.11.0", optional = true }
 serde = { version = "1.0.123", features = [ "derive" ] }
 serde_json = "1.0.62"
-surf = { version = "2.1.0", default-features = false }
+surf = { version = "2.1.0", optional = true }
 thiserror = "1.0.23"
 
 [dev-dependencies]
 async-std = { version = "1.9.0", features = [ "attributes" ] }
 
 [features]
-default = [ "curl-client" ]
-curl-client = [ "surf/curl-client" ]
-h1-client = [ "surf/h1-client" ]
-hyper-client = [ "surf/hyper-client" ]
-wasm-client = [ "surf/wasm-client" ]
+default = [ "surf-client" ]
+reqwest-client = [ "reqwest" ]
+surf-client = [ "surf" ]
 
 [package.metadata.docs.rs]
 all-features = true
