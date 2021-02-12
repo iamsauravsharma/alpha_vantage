@@ -2,11 +2,7 @@
 #![deny(unsafe_code)]
 #![deny(clippy::all)]
 #![warn(clippy::pedantic)]
-#![allow(
-    clippy::missing_errors_doc,
-    clippy::used_underscore_binding,
-    clippy::needless_doctest_main
-)]
+#![allow(clippy::missing_errors_doc, clippy::module_name_repetitions)]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 
 //! Rust Client/Wrapper built for [Alphavantage][alpha_vantage_link] API.
@@ -16,6 +12,10 @@
 /// Module for basic definition of user information like setting API and
 /// requesting through that API
 pub mod api;
+
+/// Module which provides trait to implement own client as well as default
+/// client in project
+pub mod client;
 
 pub mod crypto_rating;
 
@@ -47,14 +47,28 @@ pub mod technical_indicator;
 /// different API
 pub mod utils;
 
-use self::api::APIClient;
+use self::{api::ApiClient, client::HttpClient};
 
-/// Set API value which can be used for calling different module
+/// Set API key using user selected or created client
+///
+/// ```
+/// let api = alpha_vantage::set_api_with_client(
+///     "some_key",
+///     Box::new(alpha_vantage::client::DefaultClient::new()),
+/// );
+/// ```
+#[must_use]
+pub fn set_api_with_client(api: &str, client: Box<dyn HttpClient>) -> ApiClient {
+    ApiClient::set_api_with_client(api, client)
+}
+/// Method for initializing [ApiClient][ApiClient] struct by automatically
+/// selecting default client
 ///
 /// ```
 /// let api = alpha_vantage::set_api("some_key");
 /// ```
+#[cfg(any(feature = "surf-client", feature = "reqwest-client"))]
 #[must_use]
-pub fn set_api(api: &str) -> APIClient {
-    APIClient::set_api(api)
+pub fn set_api(api: &str) -> ApiClient {
+    ApiClient::set_api(api)
 }
