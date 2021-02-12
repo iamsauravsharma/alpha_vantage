@@ -39,6 +39,9 @@
 <span id="36">36</span>
 <span id="37">37</span>
 <span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Module which contains all types of error for alpha vantage crates</span>
 <span class="kw">use</span> <span class="ident">thiserror</span>::<span class="ident">Error</span>;
@@ -73,9 +76,12 @@
     <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;server returned empty response&quot;</span>)]</span>
     <span class="ident">EmptyResponse</span>,
 
-    <span class="doccomment">/// Error which is raised if client fails to get json from server and decode</span>
-    <span class="doccomment">/// it into struct</span>
-    <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Failed to get json and decode into struct&quot;</span>)]</span>
+    <span class="doccomment">/// Error which is raise if failed to get output from server</span>
+    <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Failed to get output from sever&quot;</span>)]</span>
+    <span class="ident">GetRequestFailed</span>,
+
+    <span class="doccomment">/// Error which is raised if client fails to decode it into struct</span>
+    <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Failed to decode string into struct&quot;</span>)]</span>
     <span class="ident">DecodeJsonToStruct</span>,
 }
 </pre></div>

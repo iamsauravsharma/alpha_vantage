@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["APIClient","Struct for initializing client as well as contain different method for API call"]]});
+initSidebarItems({"struct":[["ApiClient","Struct for initializing client which contains different method for API call"]]});
