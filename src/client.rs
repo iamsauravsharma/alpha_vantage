@@ -19,6 +19,7 @@ cfg_if::cfg_if! {
 /// surf and reqwest are two client which are supported with feature flag. If
 /// you prefer alternate http client you can add support by implementing
 /// `HttpClient` trait for client.
+/// Some example of other client which can be used are isahc client
 pub trait HttpClient {
     /// Get output from server in String. This string is automatically converted
     /// to appropriate struct by library

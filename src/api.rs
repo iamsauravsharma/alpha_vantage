@@ -2,18 +2,18 @@ use serde::de::DeserializeOwned;
 
 use crate::{
     client::HttpClient,
-    crypto::{create_url as create_url_crypto, Crypto, CryptoHelper},
+    crypto::{Crypto, CryptoHelper},
     crypto_rating::{CryptoRating, CryptoRatingHelper},
     earning::{Earning, EarningHelper},
     error::{Error, Result},
     exchange::{Exchange, ExchangeHelper},
-    forex::{create_url as create_url_forex, Forex, ForexHelper},
+    forex::{Forex, ForexHelper},
     income_statement::{IncomeStatement, IncomeStatementHelper},
     quote::{Quote, QuoteHelper},
     search::{Search, SearchHelper},
     sector::{Sector, SectorHelper},
-    stock_time::{create_url as create_url_time_series, TimeSeries, TimeSeriesHelper},
-    technical_indicator::{create_url as create_url_technical, Indicator, IndicatorHelper},
+    stock_time::{TimeSeries, TimeSeriesHelper},
+    technical_indicator::{Indicator, IndicatorHelper},
     utils::{
         CryptoFunction, ForexFunction, OutputSize, StockFunction, TechnicalIndicator,
         TechnicalIndicatorInterval, TimeSeriesInterval,
@@ -132,7 +132,7 @@ impl ApiClient {
         symbol: &str,
         market: &str,
     ) -> Result<Crypto> {
-        let path = create_url_crypto(function, symbol, market, self.get_api());
+        let path = crate::crypto::create_url(function, symbol, market, self.get_api());
         let crypto_helper: CryptoHelper = self.get_json(path).await?;
         crypto_helper.convert()
     }
@@ -216,7 +216,7 @@ impl ApiClient {
         interval: TimeSeriesInterval,
         output_size: OutputSize,
     ) -> Result<Forex> {
-        let path = create_url_forex(
+        let path = crate::forex::create_url(
             function,
             from_symbol,
             to_symbol,
@@ -344,7 +344,8 @@ impl ApiClient {
         interval: TimeSeriesInterval,
         output_size: OutputSize,
     ) -> Result<TimeSeries> {
-        let path = create_url_time_series(function, symbol, interval, output_size, self.get_api());
+        let path =
+            crate::stock_time::create_url(function, symbol, interval, output_size, self.get_api());
         let time_series_helper: TimeSeriesHelper = self.get_json(path).await?;
         time_series_helper.convert()
     }
@@ -377,7 +378,7 @@ impl ApiClient {
         series_type: Option<&str>,
         temporary_value: Vec<TechnicalIndicator>,
     ) -> Result<Indicator> {
-        let path = create_url_technical(
+        let path = crate::technical_indicator::create_url(
             function,
             symbol,
             interval,
