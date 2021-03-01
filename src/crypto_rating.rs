@@ -55,7 +55,7 @@ impl CryptoRating {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo");
+    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
     ///     let crypto_rating = api.crypto_rating("BTC").await.unwrap();
     ///     let symbol = crypto_rating.symbol();
     ///     assert_eq!(symbol, "BTC");
@@ -71,7 +71,7 @@ impl CryptoRating {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo");
+    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
     ///     let crypto_rating = api.crypto_rating("BTC").await.unwrap();
     ///     let name = crypto_rating.name();
     ///     assert_eq!(name, "Bitcoin");
@@ -93,7 +93,7 @@ impl CryptoRating {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo");
+    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
     ///     let crypto_rating = api.crypto_rating("BTC").await.unwrap();
     ///     let time_zone = crypto_rating.time_zone();
     ///     assert_eq!(time_zone, "UTC");

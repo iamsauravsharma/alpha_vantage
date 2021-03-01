@@ -50,24 +50,9 @@ use self::{api::ApiClient, client::HttpClient};
 /// Set API key using user selected or created client
 ///
 /// ```
-/// let api = alpha_vantage::set_api_with_client(
-///     "some_key",
-///     Box::new(alpha_vantage::client::DefaultClient::new()),
-/// );
+/// let api = alpha_vantage::set_api("some_key", Box::new(surf::Client::new()));
 /// ```
 #[must_use]
-pub fn set_api_with_client(api: &str, client: Box<dyn HttpClient>) -> ApiClient {
-    ApiClient::set_api_with_client(api, client)
-}
-
-/// Method for initializing [ApiClient][ApiClient] struct by automatically
-/// selecting default client
-///
-/// ```
-/// let api = alpha_vantage::set_api("some_key");
-/// ```
-#[cfg(any(feature = "surf-client", feature = "reqwest-client"))]
-#[must_use]
-pub fn set_api(api: &str) -> ApiClient {
-    ApiClient::set_api(api)
+pub fn set_api(api: &str, client: Box<dyn HttpClient>) -> ApiClient {
+    ApiClient::set_api(api, client)
 }

@@ -2,17 +2,6 @@ use async_trait::async_trait;
 
 use crate::error::{Error, Result};
 
-cfg_if::cfg_if! {
-    if #[cfg(feature="surf-client")] {
-        /// Default surf client for a server
-        pub type DefaultClient = surf::Client;
-    }
-    else if #[cfg(feature="reqwest-client")] {
-        /// Default reqwest client for a server
-        pub type DefaultClient = reqwest::Client;
-    }
-}
-
 #[async_trait]
 /// Trait which can be implemented for all common library client for getting
 /// output from server

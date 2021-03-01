@@ -86,7 +86,7 @@ impl Forex {
     /// use alpha_vantage::utils::*;
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo");
+    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
     ///     let forex = api
     ///         .forex(
     ///             ForexFunction::IntraDay,
@@ -112,7 +112,7 @@ impl Forex {
     /// use alpha_vantage::utils::*;
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo");
+    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
     ///     let forex = api
     ///         .forex(
     ///             ForexFunction::IntraDay,
@@ -138,7 +138,7 @@ impl Forex {
     /// #[async_std::main]
     /// async fn main() {
     ///     use alpha_vantage::utils::*;
-    ///     let api = alpha_vantage::set_api("demo");
+    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
     ///     let forex = api
     ///         .forex(
     ///             ForexFunction::IntraDay,
@@ -176,7 +176,7 @@ impl Forex {
     /// use alpha_vantage::utils::*;
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo");
+    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
     ///     let forex = api
     ///         .forex(
     ///             ForexFunction::IntraDay,
@@ -202,7 +202,7 @@ impl Forex {
     /// use alpha_vantage::utils::*;
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo");
+    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
     ///     let forex = api
     ///         .forex(
     ///             ForexFunction::IntraDay,

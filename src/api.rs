@@ -28,35 +28,15 @@ pub struct ApiClient {
 }
 
 impl ApiClient {
-    /// Method for initializing [ApiClient][ApiClient] struct by automatically
-    /// selecting default client
-    ///
-    /// ```
-    /// use alpha_vantage::api::ApiClient;
-    /// let api = ApiClient::set_api("some_key");
-    /// ```
-    #[must_use]
-    #[cfg(any(feature = "surf-client", feature = "reqwest-client"))]
-    pub fn set_api(api: &str) -> Self {
-        let client = Box::new(crate::client::DefaultClient::new());
-        Self {
-            api: api.to_string(),
-            client,
-        }
-    }
-
     /// Method for initializing [ApiClient][ApiClient] struct using  user
     /// provided client
     ///
     /// ```
     /// use alpha_vantage::api::ApiClient;
-    /// let api = ApiClient::set_api_with_client(
-    ///     "some_key",
-    ///     Box::new(alpha_vantage::client::DefaultClient::new()),
-    /// );
+    /// let api = ApiClient::set_api("some_key", Box::new(surf::Client::new()));
     /// ```
     #[must_use]
-    pub fn set_api_with_client(api: &str, client: Box<dyn HttpClient>) -> Self {
+    pub fn set_api(api: &str, client: Box<dyn HttpClient>) -> Self {
         Self {
             api: api.to_string(),
             client,
@@ -67,7 +47,7 @@ impl ApiClient {
     ///
     /// ```
     /// use alpha_vantage::api::ApiClient;
-    /// let api = alpha_vantage::api::ApiClient::set_api("some_key");
+    /// let api = alpha_vantage::api::ApiClient::set_api("some_key", Box::new(surf::Client::new()));
     /// assert_eq!(api.get_api(), "some_key");
     /// ```
     #[must_use]
@@ -91,7 +71,7 @@ impl ApiClient {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo");
+    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
     ///     let crypto_rating = api.crypto_rating("BTC").await.unwrap();
     ///     assert_eq!(crypto_rating.symbol(), "BTC");
     ///     assert_eq!(crypto_rating.name(), "Bitcoin");
@@ -114,7 +94,7 @@ impl ApiClient {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo");
+    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
     ///     let crypto = api
     ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
     ///         .await
@@ -142,7 +122,7 @@ impl ApiClient {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo");
+    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
     ///     let earning = api.earning("IBM").await.unwrap();
     ///     let symbol = earning.symbol();
     ///     assert_eq!(symbol, "IBM");
@@ -165,7 +145,7 @@ impl ApiClient {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo");
+    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
     ///     let exchange = api.exchange("BTC", "CNY").await.unwrap();
     ///     assert_eq!(exchange.name_from(), "Bitcoin");
     ///     assert_eq!(exchange.code_from(), "BTC");
@@ -191,7 +171,7 @@ impl ApiClient {
     /// use alpha_vantage::utils::*;
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo");
+    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
     ///     let forex = api
     ///         .forex(
     ///             ForexFunction::Weekly,
@@ -233,7 +213,7 @@ impl ApiClient {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo");
+    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
     ///     let quote = api.quote("MSFT").await.unwrap();
     ///     let symbol = quote.symbol();
     ///     assert_eq!(symbol, "MSFT");
@@ -254,7 +234,7 @@ impl ApiClient {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo");
+    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
     ///     let search = api.search("BA").await.unwrap();
     ///     let first_search_result = &search.result()[0];
     ///     assert_eq!(first_search_result.symbol(), "BA");
@@ -280,7 +260,7 @@ impl ApiClient {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo");
+    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
     ///     let sector = api.sector().await.unwrap();
     ///     assert_eq!(
     ///         sector.information(),
@@ -300,7 +280,7 @@ impl ApiClient {
     /// use alpha_vantage::utils::*;
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo");
+    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
     ///     let stock = api
     ///         .stock_time(
     ///             StockFunction::Weekly,
@@ -332,7 +312,7 @@ impl ApiClient {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo");
+    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
     ///     let technical = api
     ///         .technical_indicator(
     ///             "SMA",
@@ -375,10 +355,7 @@ mod test {
 
     #[test]
     fn test_get_api() {
-        let api = super::ApiClient::set_api_with_client(
-            "secret_key",
-            Box::new(crate::client::DefaultClient::new()),
-        );
+        let api = super::ApiClient::set_api("secret_key", Box::new(surf::Client::new()));
         assert_eq!(api.get_api(), "secret_key".to_string());
     }
 }

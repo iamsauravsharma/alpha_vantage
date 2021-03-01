@@ -44,7 +44,7 @@ impl DataValue {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo");
+    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
     ///     let search = api.search("BA").await.unwrap();
     ///     let symbol = search.result()[0].symbol();
     ///     assert_eq!(symbol, "BA");
@@ -60,7 +60,7 @@ impl DataValue {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo");
+    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
     ///     let search = api.search("BA").await.unwrap();
     ///     let name = search.result()[0].name();
     ///     assert_eq!(name, "Boeing Company");
@@ -76,7 +76,7 @@ impl DataValue {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo");
+    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
     ///     let search = api.search("BA").await.unwrap();
     ///     let stock_type = search.result()[0].stock_type();
     ///     assert_eq!(stock_type, "Equity");
@@ -91,7 +91,7 @@ impl DataValue {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo");
+    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
     ///     let search = api.search("BA").await.unwrap();
     ///     let region = search.result()[0].region();
     ///     assert_eq!(region, "United States");
@@ -106,7 +106,7 @@ impl DataValue {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo");
+    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
     ///     let search = api.search("BA").await.unwrap();
     ///     let market_open = search.result()[0].market_open();
     ///     assert_eq!(market_open, "09:30");
@@ -121,7 +121,7 @@ impl DataValue {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo");
+    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
     ///     let search = api.search("BA").await.unwrap();
     ///     let market_close = search.result()[0].market_close();
     ///     assert_eq!(market_close, "16:00");
@@ -136,7 +136,7 @@ impl DataValue {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo");
+    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
     ///     let search = api.search("BA").await.unwrap();
     ///     let time_zone = search.result()[0].time_zone();
     ///     assert_eq!(time_zone, "UTC-05");
@@ -151,7 +151,7 @@ impl DataValue {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo");
+    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
     ///     let search = api.search("BA").await.unwrap();
     ///     let currency = search.result()[0].currency();
     ///     assert_eq!(currency, "USD");
@@ -166,7 +166,7 @@ impl DataValue {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo");
+    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
     ///     let search = api.search("BA").await.unwrap();
     ///     let match_score = search.result()[0].match_score();
     ///     assert_eq!(match_score, 1.0);
