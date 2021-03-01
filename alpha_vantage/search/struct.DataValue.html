@@ -7,7 +7,7 @@
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="attribute">#[<span class="ident">async_std</span>::<span class="ident">main</span>]</span>
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">main</span>() {
-    <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>);
+    <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>, <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">surf</span>::<span class="ident">Client</span>::<span class="ident">new</span>()));
     <span class="kw">let</span> <span class="ident">search</span> <span class="op">=</span> <span class="ident">api</span>.<span class="ident">search</span>(<span class="string">&quot;BA&quot;</span>).<span class="kw">await</span>.<span class="ident">unwrap</span>();
     <span class="kw">let</span> <span class="ident">symbol</span> <span class="op">=</span> <span class="ident">search</span>.<span class="ident">result</span>()[<span class="number">0</span>].<span class="ident">symbol</span>();
     <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">symbol</span>, <span class="string">&quot;BA&quot;</span>);
@@ -17,7 +17,7 @@
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="attribute">#[<span class="ident">async_std</span>::<span class="ident">main</span>]</span>
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">main</span>() {
-    <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>);
+    <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>, <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">surf</span>::<span class="ident">Client</span>::<span class="ident">new</span>()));
     <span class="kw">let</span> <span class="ident">search</span> <span class="op">=</span> <span class="ident">api</span>.<span class="ident">search</span>(<span class="string">&quot;BA&quot;</span>).<span class="kw">await</span>.<span class="ident">unwrap</span>();
     <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">search</span>.<span class="ident">result</span>()[<span class="number">0</span>].<span class="ident">name</span>();
     <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">name</span>, <span class="string">&quot;Boeing Company&quot;</span>);
@@ -27,7 +27,7 @@
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="attribute">#[<span class="ident">async_std</span>::<span class="ident">main</span>]</span>
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">main</span>() {
-    <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>);
+    <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>, <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">surf</span>::<span class="ident">Client</span>::<span class="ident">new</span>()));
     <span class="kw">let</span> <span class="ident">search</span> <span class="op">=</span> <span class="ident">api</span>.<span class="ident">search</span>(<span class="string">&quot;BA&quot;</span>).<span class="kw">await</span>.<span class="ident">unwrap</span>();
     <span class="kw">let</span> <span class="ident">stock_type</span> <span class="op">=</span> <span class="ident">search</span>.<span class="ident">result</span>()[<span class="number">0</span>].<span class="ident">stock_type</span>();
     <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">stock_type</span>, <span class="string">&quot;Equity&quot;</span>);
@@ -37,7 +37,7 @@
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="attribute">#[<span class="ident">async_std</span>::<span class="ident">main</span>]</span>
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">main</span>() {
-    <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>);
+    <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>, <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">surf</span>::<span class="ident">Client</span>::<span class="ident">new</span>()));
     <span class="kw">let</span> <span class="ident">search</span> <span class="op">=</span> <span class="ident">api</span>.<span class="ident">search</span>(<span class="string">&quot;BA&quot;</span>).<span class="kw">await</span>.<span class="ident">unwrap</span>();
     <span class="kw">let</span> <span class="ident">region</span> <span class="op">=</span> <span class="ident">search</span>.<span class="ident">result</span>()[<span class="number">0</span>].<span class="ident">region</span>();
     <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">region</span>, <span class="string">&quot;United States&quot;</span>);
@@ -47,7 +47,7 @@
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="attribute">#[<span class="ident">async_std</span>::<span class="ident">main</span>]</span>
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">main</span>() {
-    <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>);
+    <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>, <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">surf</span>::<span class="ident">Client</span>::<span class="ident">new</span>()));
     <span class="kw">let</span> <span class="ident">search</span> <span class="op">=</span> <span class="ident">api</span>.<span class="ident">search</span>(<span class="string">&quot;BA&quot;</span>).<span class="kw">await</span>.<span class="ident">unwrap</span>();
     <span class="kw">let</span> <span class="ident">market_open</span> <span class="op">=</span> <span class="ident">search</span>.<span class="ident">result</span>()[<span class="number">0</span>].<span class="ident">market_open</span>();
     <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">market_open</span>, <span class="string">&quot;09:30&quot;</span>);
@@ -57,7 +57,7 @@
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="attribute">#[<span class="ident">async_std</span>::<span class="ident">main</span>]</span>
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">main</span>() {
-    <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>);
+    <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>, <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">surf</span>::<span class="ident">Client</span>::<span class="ident">new</span>()));
     <span class="kw">let</span> <span class="ident">search</span> <span class="op">=</span> <span class="ident">api</span>.<span class="ident">search</span>(<span class="string">&quot;BA&quot;</span>).<span class="kw">await</span>.<span class="ident">unwrap</span>();
     <span class="kw">let</span> <span class="ident">market_close</span> <span class="op">=</span> <span class="ident">search</span>.<span class="ident">result</span>()[<span class="number">0</span>].<span class="ident">market_close</span>();
     <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">market_close</span>, <span class="string">&quot;16:00&quot;</span>);
@@ -67,7 +67,7 @@
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="attribute">#[<span class="ident">async_std</span>::<span class="ident">main</span>]</span>
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">main</span>() {
-    <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>);
+    <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>, <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">surf</span>::<span class="ident">Client</span>::<span class="ident">new</span>()));
     <span class="kw">let</span> <span class="ident">search</span> <span class="op">=</span> <span class="ident">api</span>.<span class="ident">search</span>(<span class="string">&quot;BA&quot;</span>).<span class="kw">await</span>.<span class="ident">unwrap</span>();
     <span class="kw">let</span> <span class="ident">time_zone</span> <span class="op">=</span> <span class="ident">search</span>.<span class="ident">result</span>()[<span class="number">0</span>].<span class="ident">time_zone</span>();
     <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">time_zone</span>, <span class="string">&quot;UTC-05&quot;</span>);
@@ -77,7 +77,7 @@
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="attribute">#[<span class="ident">async_std</span>::<span class="ident">main</span>]</span>
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">main</span>() {
-    <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>);
+    <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>, <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">surf</span>::<span class="ident">Client</span>::<span class="ident">new</span>()));
     <span class="kw">let</span> <span class="ident">search</span> <span class="op">=</span> <span class="ident">api</span>.<span class="ident">search</span>(<span class="string">&quot;BA&quot;</span>).<span class="kw">await</span>.<span class="ident">unwrap</span>();
     <span class="kw">let</span> <span class="ident">currency</span> <span class="op">=</span> <span class="ident">search</span>.<span class="ident">result</span>()[<span class="number">0</span>].<span class="ident">currency</span>();
     <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">currency</span>, <span class="string">&quot;USD&quot;</span>);
@@ -87,7 +87,7 @@
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="attribute">#[<span class="ident">async_std</span>::<span class="ident">main</span>]</span>
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">main</span>() {
-    <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>);
+    <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>, <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">surf</span>::<span class="ident">Client</span>::<span class="ident">new</span>()));
     <span class="kw">let</span> <span class="ident">search</span> <span class="op">=</span> <span class="ident">api</span>.<span class="ident">search</span>(<span class="string">&quot;BA&quot;</span>).<span class="kw">await</span>.<span class="ident">unwrap</span>();
     <span class="kw">let</span> <span class="ident">match_score</span> <span class="op">=</span> <span class="ident">search</span>.<span class="ident">result</span>()[<span class="number">0</span>].<span class="ident">match_score</span>();
     <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">match_score</span>, <span class="number">1.0</span>);

@@ -284,7 +284,7 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, Box::new(surf::Client::new()));</span>
     <span class="doccomment">///     let earning = api.earning(&quot;IBM&quot;).await.unwrap();</span>
     <span class="doccomment">///     let symbol = earning.symbol();</span>
     <span class="doccomment">///     assert_eq!(symbol, &quot;IBM&quot;);</span>

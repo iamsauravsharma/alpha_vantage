@@ -228,7 +228,7 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, Box::new(surf::Client::new()));</span>
     <span class="doccomment">///     let crypto_rating = api.crypto_rating(&quot;BTC&quot;).await.unwrap();</span>
     <span class="doccomment">///     let symbol = crypto_rating.symbol();</span>
     <span class="doccomment">///     assert_eq!(symbol, &quot;BTC&quot;);</span>
@@ -244,7 +244,7 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, Box::new(surf::Client::new()));</span>
     <span class="doccomment">///     let crypto_rating = api.crypto_rating(&quot;BTC&quot;).await.unwrap();</span>
     <span class="doccomment">///     let name = crypto_rating.name();</span>
     <span class="doccomment">///     assert_eq!(name, &quot;Bitcoin&quot;);</span>
@@ -266,7 +266,7 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;);</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, Box::new(surf::Client::new()));</span>
     <span class="doccomment">///     let crypto_rating = api.crypto_rating(&quot;BTC&quot;).await.unwrap();</span>
     <span class="doccomment">///     let time_zone = crypto_rating.time_zone();</span>
     <span class="doccomment">///     assert_eq!(time_zone, &quot;UTC&quot;);</span>
