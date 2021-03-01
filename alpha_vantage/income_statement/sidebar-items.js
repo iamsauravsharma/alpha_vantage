@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["IncomeStatement","Struct to store income statement information"],["Report","struct to store information for both annual report and quarterly report"]],"type":[["AnnualReport","type alias for report for annual report"],["QuarterlyReport","type alias for report for quarterly report"]]});
