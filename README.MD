@@ -10,17 +10,16 @@ Rust Client library built for accessing [Alphavantage][alphavantage_link] API.
 
 ### Project Functionality
 
-- [X] StockTimeSeries
-- [X] Quote Endpoint
-- [X] Search Endpoint
+- [X] Crypto Currency
+- [X] Crypto Health
 - [X] Earning
 - [X] Exchange Rate
 - [X] Forex
-- [X] Income Statement
-- [X] Crypto Currency
-- [X] Crypto Health
-- [X] Technical Indicators
+- [X] Quote Endpoint
+- [X] Search Endpoint
 - [X] Sector Performances
+- [X] Stock Time Series
+- [X] Technical Indicators
 
 ## Add as dependencies
 Edit Cargo.toml file to add alpha_vantage as dependencies

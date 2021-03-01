@@ -31,8 +31,6 @@ pub mod exchange;
 
 pub mod forex;
 
-pub mod income_statement;
-
 pub mod quote;
 
 pub mod search;
@@ -61,6 +59,7 @@ use self::{api::ApiClient, client::HttpClient};
 pub fn set_api_with_client(api: &str, client: Box<dyn HttpClient>) -> ApiClient {
     ApiClient::set_api_with_client(api, client)
 }
+
 /// Method for initializing [ApiClient][ApiClient] struct by automatically
 /// selecting default client
 ///
