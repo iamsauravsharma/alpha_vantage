@@ -128,7 +128,7 @@ pub(crate) fn create_url(
     interval: TechnicalIndicatorInterval,
     time_period: Option<u64>,
     series_type: Option<&str>,
-    temporary_value: Vec<UtilIndicator>,
+    extras: Vec<UtilIndicator>,
     apikey: &str,
 ) -> String {
     let interval_val = match interval {
@@ -151,7 +151,7 @@ pub(crate) fn create_url(
     if let Some(series_type) = series_type {
         created_link.push_str(&format!("&series_type={}", series_type));
     }
-    for values in temporary_value {
+    for values in extras {
         match values {
             UtilIndicator::Acceleration(val) => {
                 created_link.push_str(&format!("&acceleration={}", val))

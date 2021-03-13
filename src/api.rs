@@ -333,7 +333,7 @@ impl ApiClient {
         interval: TechnicalIndicatorInterval,
         time_period: Option<u64>,
         series_type: Option<&str>,
-        temporary_value: Vec<TechnicalIndicator>,
+        extras: Vec<TechnicalIndicator>,
     ) -> Result<Indicator> {
         let path = crate::technical_indicator::create_url(
             function,
@@ -341,7 +341,7 @@ impl ApiClient {
             interval,
             time_period,
             series_type,
-            temporary_value,
+            extras,
             self.get_api(),
         );
         let indicator_helper: IndicatorHelper = self.get_json(path).await?;
