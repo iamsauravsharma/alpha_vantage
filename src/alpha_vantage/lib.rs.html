@@ -59,6 +59,9 @@
 <span id="56">56</span>
 <span id="57">57</span>
 <span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">bare_trait_objects</span>, <span class="ident">missing_docs</span>, <span class="ident">unreachable_pub</span>)]</span>
 <span class="attribute">#![<span class="ident">deny</span>(<span class="ident">unsafe_code</span>)]</span>
@@ -112,10 +115,13 @@
 <span class="doccomment">/// Set API key using user selected or created client</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
-<span class="doccomment">/// let api = alpha_vantage::set_api(&quot;some_key&quot;, Box::new(surf::Client::new()));</span>
+<span class="doccomment">/// let api = alpha_vantage::set_api(&quot;some_key&quot;, surf::Client::new());</span>
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">must_use</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_api</span>(<span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">client</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">HttpClient</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ApiClient</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_api</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">client</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ApiClient</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">HttpClient</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
+{
     <span class="ident">ApiClient</span>::<span class="ident">set_api</span>(<span class="ident">api</span>, <span class="ident">client</span>)
 }
 </pre></div>

@@ -7,7 +7,7 @@
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="attribute">#[<span class="ident">async_std</span>::<span class="ident">main</span>]</span>
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">main</span>() {
-    <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>, <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">surf</span>::<span class="ident">Client</span>::<span class="ident">new</span>()));
+    <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>, <span class="ident">surf</span>::<span class="ident">Client</span>::<span class="ident">new</span>());
     <span class="kw">let</span> <span class="ident">crypto_rating</span> <span class="op">=</span> <span class="ident">api</span>.<span class="ident">crypto_rating</span>(<span class="string">&quot;BTC&quot;</span>).<span class="kw">await</span>.<span class="ident">unwrap</span>();
     <span class="kw">let</span> <span class="ident">symbol</span> <span class="op">=</span> <span class="ident">crypto_rating</span>.<span class="ident">symbol</span>();
     <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">symbol</span>, <span class="string">&quot;BTC&quot;</span>);
@@ -17,7 +17,7 @@
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="attribute">#[<span class="ident">async_std</span>::<span class="ident">main</span>]</span>
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">main</span>() {
-    <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>, <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">surf</span>::<span class="ident">Client</span>::<span class="ident">new</span>()));
+    <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>, <span class="ident">surf</span>::<span class="ident">Client</span>::<span class="ident">new</span>());
     <span class="kw">let</span> <span class="ident">crypto_rating</span> <span class="op">=</span> <span class="ident">api</span>.<span class="ident">crypto_rating</span>(<span class="string">&quot;BTC&quot;</span>).<span class="kw">await</span>.<span class="ident">unwrap</span>();
     <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">crypto_rating</span>.<span class="ident">name</span>();
     <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">name</span>, <span class="string">&quot;Bitcoin&quot;</span>);
@@ -28,7 +28,7 @@
 <div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="attribute">#[<span class="ident">async_std</span>::<span class="ident">main</span>]</span>
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">main</span>() {
-    <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>, <span class="ident">Box</span>::<span class="ident">new</span>(<span class="ident">surf</span>::<span class="ident">Client</span>::<span class="ident">new</span>()));
+    <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">alpha_vantage</span>::<span class="ident">set_api</span>(<span class="string">&quot;demo&quot;</span>, <span class="ident">surf</span>::<span class="ident">Client</span>::<span class="ident">new</span>());
     <span class="kw">let</span> <span class="ident">crypto_rating</span> <span class="op">=</span> <span class="ident">api</span>.<span class="ident">crypto_rating</span>(<span class="string">&quot;BTC&quot;</span>).<span class="kw">await</span>.<span class="ident">unwrap</span>();
     <span class="kw">let</span> <span class="ident">time_zone</span> <span class="op">=</span> <span class="ident">crypto_rating</span>.<span class="ident">time_zone</span>();
     <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">time_zone</span>, <span class="string">&quot;UTC&quot;</span>);

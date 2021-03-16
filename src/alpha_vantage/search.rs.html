@@ -213,15 +213,6 @@
 <span id="210">210</span>
 <span id="211">211</span>
 <span id="212">212</span>
-<span id="213">213</span>
-<span id="214">214</span>
-<span id="215">215</span>
-<span id="216">216</span>
-<span id="217">217</span>
-<span id="218">218</span>
-<span id="219">219</span>
-<span id="220">220</span>
-<span id="221">221</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Module for searching specific symbol or companies</span>
 <span class="doccomment">//!</span>
@@ -269,7 +260,7 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, Box::new(surf::Client::new()));</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, surf::Client::new());</span>
     <span class="doccomment">///     let search = api.search(&quot;BA&quot;).await.unwrap();</span>
     <span class="doccomment">///     let symbol = search.result()[0].symbol();</span>
     <span class="doccomment">///     assert_eq!(symbol, &quot;BA&quot;);</span>
@@ -285,7 +276,7 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, Box::new(surf::Client::new()));</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, surf::Client::new());</span>
     <span class="doccomment">///     let search = api.search(&quot;BA&quot;).await.unwrap();</span>
     <span class="doccomment">///     let name = search.result()[0].name();</span>
     <span class="doccomment">///     assert_eq!(name, &quot;Boeing Company&quot;);</span>
@@ -301,7 +292,7 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, Box::new(surf::Client::new()));</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, surf::Client::new());</span>
     <span class="doccomment">///     let search = api.search(&quot;BA&quot;).await.unwrap();</span>
     <span class="doccomment">///     let stock_type = search.result()[0].stock_type();</span>
     <span class="doccomment">///     assert_eq!(stock_type, &quot;Equity&quot;);</span>
@@ -316,7 +307,7 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, Box::new(surf::Client::new()));</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, surf::Client::new());</span>
     <span class="doccomment">///     let search = api.search(&quot;BA&quot;).await.unwrap();</span>
     <span class="doccomment">///     let region = search.result()[0].region();</span>
     <span class="doccomment">///     assert_eq!(region, &quot;United States&quot;);</span>
@@ -331,7 +322,7 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, Box::new(surf::Client::new()));</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, surf::Client::new());</span>
     <span class="doccomment">///     let search = api.search(&quot;BA&quot;).await.unwrap();</span>
     <span class="doccomment">///     let market_open = search.result()[0].market_open();</span>
     <span class="doccomment">///     assert_eq!(market_open, &quot;09:30&quot;);</span>
@@ -346,7 +337,7 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, Box::new(surf::Client::new()));</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, surf::Client::new());</span>
     <span class="doccomment">///     let search = api.search(&quot;BA&quot;).await.unwrap();</span>
     <span class="doccomment">///     let market_close = search.result()[0].market_close();</span>
     <span class="doccomment">///     assert_eq!(market_close, &quot;16:00&quot;);</span>
@@ -357,15 +348,6 @@
     }
 
     <span class="doccomment">/// Return time zone of symbol</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// #[async_std::main]</span>
-    <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, Box::new(surf::Client::new()));</span>
-    <span class="doccomment">///     let search = api.search(&quot;BA&quot;).await.unwrap();</span>
-    <span class="doccomment">///     let time_zone = search.result()[0].time_zone();</span>
-    <span class="doccomment">///     assert_eq!(time_zone, &quot;UTC-05&quot;);</span>
-    <span class="doccomment">/// }</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">time_zone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">time_zone</span>
@@ -376,7 +358,7 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, Box::new(surf::Client::new()));</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, surf::Client::new());</span>
     <span class="doccomment">///     let search = api.search(&quot;BA&quot;).await.unwrap();</span>
     <span class="doccomment">///     let currency = search.result()[0].currency();</span>
     <span class="doccomment">///     assert_eq!(currency, &quot;USD&quot;);</span>
@@ -391,7 +373,7 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// #[async_std::main]</span>
     <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, Box::new(surf::Client::new()));</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, surf::Client::new());</span>
     <span class="doccomment">///     let search = api.search(&quot;BA&quot;).await.unwrap();</span>
     <span class="doccomment">///     let match_score = search.result()[0].match_score();</span>
     <span class="doccomment">///     assert_eq!(match_score, 1.0);</span>
