@@ -68,7 +68,7 @@ impl Exchange {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
+    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
     ///     let exchange = api.exchange("BTC", "CNY").await.unwrap();
     ///     let code_from = exchange.code_from();
     ///     assert_eq!(code_from, "BTC");
@@ -84,7 +84,7 @@ impl Exchange {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
+    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
     ///     let exchange = api.exchange("BTC", "CNY").await.unwrap();
     ///     let name_from = exchange.name_from();
     ///     assert_eq!(name_from, "Bitcoin");
@@ -100,7 +100,7 @@ impl Exchange {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
+    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
     ///     let exchange = api.exchange("BTC", "CNY").await.unwrap();
     ///     let code_to = exchange.code_to();
     ///     assert_eq!(code_to, "CNY");
@@ -116,7 +116,7 @@ impl Exchange {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
+    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
     ///     let exchange = api.exchange("BTC", "CNY").await.unwrap();
     ///     let name_to = exchange.name_to();
     ///     assert_eq!(name_to, "Chinese Yuan");

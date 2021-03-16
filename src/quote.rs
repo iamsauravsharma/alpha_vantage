@@ -106,7 +106,7 @@ impl Quote {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
+    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
     ///     let quote = api.quote("MSFT").await.unwrap();
     ///     let symbol = quote.symbol();
     ///     assert_eq!(symbol, "MSFT");

@@ -70,7 +70,7 @@ impl Indicator {
                 let hash_values = hash
                     .get(time)
                     .expect("cannot get time key value from hash map")
-                    .to_owned();
+                    .clone();
                 for (key, value) in &hash_values {
                     let value_f64 = value
                         .trim()

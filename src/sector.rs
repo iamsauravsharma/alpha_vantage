@@ -127,7 +127,7 @@ impl Sector {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
+    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
     ///     let sector = api.sector().await.unwrap();
     ///     let information = sector.information();
     ///     assert_eq!(information, "US Sector Performance (realtime & historical)");

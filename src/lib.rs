@@ -50,9 +50,12 @@ use self::{api::ApiClient, client::HttpClient};
 /// Set API key using user selected or created client
 ///
 /// ```
-/// let api = alpha_vantage::set_api("some_key", Box::new(surf::Client::new()));
+/// let api = alpha_vantage::set_api("some_key", surf::Client::new());
 /// ```
 #[must_use]
-pub fn set_api(api: &str, client: Box<dyn HttpClient>) -> ApiClient {
+pub fn set_api<T>(api: &str, client: T) -> ApiClient
+where
+    T: HttpClient + 'static,
+{
     ApiClient::set_api(api, client)
 }

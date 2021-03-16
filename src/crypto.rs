@@ -134,7 +134,7 @@ impl Crypto {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
+    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
     ///     let crypto = api
     ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
     ///         .await
@@ -153,7 +153,7 @@ impl Crypto {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
+    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
     ///     let crypto = api
     ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
     ///         .await
@@ -172,7 +172,7 @@ impl Crypto {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
+    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
     ///     let crypto = api
     ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
     ///         .await
@@ -191,7 +191,7 @@ impl Crypto {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
+    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
     ///     let crypto = api
     ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
     ///         .await
@@ -210,7 +210,7 @@ impl Crypto {
     /// ```
     /// #[async_std::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", Box::new(surf::Client::new()));
+    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
     ///     let crypto = api
     ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
     ///         .await
