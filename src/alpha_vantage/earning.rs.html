@@ -168,13 +168,6 @@
 <span id="165">165</span>
 <span id="166">166</span>
 <span id="167">167</span>
-<span id="168">168</span>
-<span id="169">169</span>
-<span id="170">170</span>
-<span id="171">171</span>
-<span id="172">172</span>
-<span id="173">173</span>
-<span id="174">174</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Module for return earning per share for a company</span>
 <span class="doccomment">//!</span>
@@ -187,6 +180,7 @@
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">deserialize</span>::{<span class="ident">from_none_str</span>, <span class="ident">from_str</span>},
     <span class="ident">error</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>},
+    <span class="ident">utils</span>::<span class="ident">detect_common_helper_error</span>,
 };
 
 <span class="doccomment">/// Struct to store information of annual earning</span>
@@ -329,15 +323,7 @@
     <span class="doccomment">/// [Earning][Earning]</span>
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">convert</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Earning</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">earning</span> <span class="op">=</span> <span class="ident">Earning</span>::<span class="ident">default</span>();
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">information</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">information</span> {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">AlphaVantageInformation</span>(<span class="ident">information</span>));
-        }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">error_message</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">error_message</span> {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">AlphaVantageErrorMessage</span>(<span class="ident">error_message</span>));
-        }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">note</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">note</span> {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">AlphaVantageNote</span>(<span class="ident">note</span>));
-        }
+        <span class="ident">detect_common_helper_error</span>(<span class="self">self</span>.<span class="ident">information</span>, <span class="self">self</span>.<span class="ident">error_message</span>, <span class="self">self</span>.<span class="ident">note</span>)<span class="question-mark">?</span>;
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">symbol</span>.<span class="ident">is_none</span>()
             <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">annual_earning</span>.<span class="ident">is_none</span>()
             <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">quarterly_earning</span>.<span class="ident">is_none</span>()
