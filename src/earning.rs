@@ -9,6 +9,7 @@ use serde::Deserialize;
 use crate::{
     deserialize::{from_none_str, from_str},
     error::{Error, Result},
+    utils::detect_common_helper_error,
 };
 
 /// Struct to store information of annual earning
@@ -151,15 +152,7 @@ impl EarningHelper {
     /// [Earning][Earning]
     pub(crate) fn convert(self) -> Result<Earning> {
         let mut earning = Earning::default();
-        if let Some(information) = self.information {
-            return Err(Error::AlphaVantageInformation(information));
-        }
-        if let Some(error_message) = self.error_message {
-            return Err(Error::AlphaVantageErrorMessage(error_message));
-        }
-        if let Some(note) = self.note {
-            return Err(Error::AlphaVantageNote(note));
-        }
+        detect_common_helper_error(self.information, self.error_message, self.note)?;
         if self.symbol.is_none()
             || self.annual_earning.is_none()
             || self.quarterly_earning.is_none()

@@ -12,7 +12,10 @@ use std::collections::HashMap;
 
 use serde::Deserialize;
 
-use crate::error::{Error, Result};
+use crate::{
+    error::{Error, Result},
+    utils::detect_common_helper_error,
+};
 
 /// Stores Metadata
 #[derive(Deserialize, Clone, Default)]
@@ -179,15 +182,7 @@ impl SectorHelper {
     /// Convert [SectorHelper][SectorHelper] to [Sector][Sector]
     pub(crate) fn convert(self) -> Result<Sector> {
         let mut sector = Sector::default();
-        if let Some(information) = self.information {
-            return Err(Error::AlphaVantageInformation(information));
-        }
-        if let Some(error_message) = self.error_message {
-            return Err(Error::AlphaVantageErrorMessage(error_message));
-        }
-        if let Some(note) = self.note {
-            return Err(Error::AlphaVantageNote(note));
-        }
+        detect_common_helper_error(self.information, self.error_message, self.note)?;
         if self.meta_data.is_none() || self.data.is_none() {
             return Err(Error::EmptyResponse);
         }

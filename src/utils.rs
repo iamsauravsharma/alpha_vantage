@@ -1,3 +1,4 @@
+use crate::error::{Error, Result};
 /// Enum for declaring function for crypto series by defining which type of
 /// crypto series to be returned
 #[derive(Copy, Clone)]
@@ -226,4 +227,21 @@ pub enum TimeSeriesInterval {
     SixtyMin,
     /// no interval which applies for all time series expect intraday
     None,
+}
+
+pub(crate) fn detect_common_helper_error(
+    information: Option<String>,
+    error_message: Option<String>,
+    note: Option<String>,
+) -> Result<()> {
+    if let Some(information) = information {
+        return Err(Error::AlphaVantageInformation(information));
+    }
+    if let Some(error_message) = error_message {
+        return Err(Error::AlphaVantageErrorMessage(error_message));
+    }
+    if let Some(note) = note {
+        return Err(Error::AlphaVantageNote(note));
+    }
+    Ok(())
 }

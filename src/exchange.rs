@@ -13,6 +13,7 @@ use serde::Deserialize;
 use crate::{
     deserialize::from_str,
     error::{Error, Result},
+    utils::detect_common_helper_error,
 };
 
 /// Struct used for exchanging currency
@@ -156,15 +157,7 @@ pub(crate) struct ExchangeHelper {
 impl ExchangeHelper {
     pub(crate) fn convert(self) -> Result<Exchange> {
         let mut exchange = Exchange::default();
-        if let Some(information) = self.information {
-            return Err(Error::AlphaVantageInformation(information));
-        }
-        if let Some(error_message) = self.error_message {
-            return Err(Error::AlphaVantageErrorMessage(error_message));
-        }
-        if let Some(note) = self.note {
-            return Err(Error::AlphaVantageNote(note));
-        }
+        detect_common_helper_error(self.information, self.error_message, self.note)?;
         if self.real_time.is_none() {
             return Err(Error::EmptyResponse);
         }

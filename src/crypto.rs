@@ -15,7 +15,7 @@ use serde::Deserialize;
 use crate::{
     deserialize::from_str,
     error::{Error, Result},
-    utils::CryptoFunction,
+    utils::{detect_common_helper_error, CryptoFunction},
 };
 
 /// Store Meta Data Information
@@ -295,15 +295,7 @@ impl CryptoHelper {
     /// Function which convert [CryptoHelper][CryptoHelper] to [Crypto][Crypto]
     pub(crate) fn convert(self) -> Result<Crypto> {
         let mut crypto = Crypto::default();
-        if let Some(information) = self.information {
-            return Err(Error::AlphaVantageInformation(information));
-        }
-        if let Some(error_message) = self.error_message {
-            return Err(Error::AlphaVantageErrorMessage(error_message));
-        }
-        if let Some(note) = self.note {
-            return Err(Error::AlphaVantageNote(note));
-        }
+        detect_common_helper_error(self.information, self.error_message, self.note)?;
         if self.meta_data.is_none() || self.entry.is_none() {
             return Err(Error::EmptyResponse);
         }

@@ -15,7 +15,7 @@ use serde::Deserialize;
 use crate::{
     deserialize::from_str,
     error::{Error, Result},
-    utils::{ForexFunction, OutputSize, TimeSeriesInterval},
+    utils::{detect_common_helper_error, ForexFunction, OutputSize, TimeSeriesInterval},
 };
 
 /// Struct used to store metadata value
@@ -283,15 +283,7 @@ impl ForexHelper {
     /// convert [ForexHelper][ForexHelper] to [Forex][Forex]
     pub(crate) fn convert(self) -> Result<Forex> {
         let mut forex_struct = Forex::default();
-        if let Some(information) = self.information {
-            return Err(Error::AlphaVantageInformation(information));
-        }
-        if let Some(error_message) = self.error_message {
-            return Err(Error::AlphaVantageErrorMessage(error_message));
-        }
-        if let Some(note) = self.note {
-            return Err(Error::AlphaVantageNote(note));
-        }
+        detect_common_helper_error(self.information, self.error_message, self.note)?;
         if self.meta_data.is_none() || self.forex.is_none() {
             return Err(Error::EmptyResponse);
         }

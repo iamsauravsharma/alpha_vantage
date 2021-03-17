@@ -18,6 +18,7 @@ use serde::Deserialize;
 use crate::{
     deserialize::from_str,
     error::{Error, Result},
+    utils::detect_common_helper_error,
 };
 
 /// Struct Storing Health rating score
@@ -151,15 +152,7 @@ pub(crate) struct CryptoRatingHelper {
 impl CryptoRatingHelper {
     pub(crate) fn convert(self) -> Result<CryptoRating> {
         let mut crypto_rating = CryptoRating::default();
-        if let Some(information) = self.information {
-            return Err(Error::AlphaVantageInformation(information));
-        }
-        if let Some(error_message) = self.error_message {
-            return Err(Error::AlphaVantageErrorMessage(error_message));
-        }
-        if let Some(note) = self.note {
-            return Err(Error::AlphaVantageNote(note));
-        }
+        detect_common_helper_error(self.information, self.error_message, self.note)?;
         if self.rating_score.is_none() {
             return Err(Error::EmptyResponse);
         }

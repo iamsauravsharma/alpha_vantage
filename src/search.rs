@@ -13,6 +13,7 @@ use serde::Deserialize;
 use crate::{
     deserialize::from_str,
     error::{Error, Result},
+    utils::detect_common_helper_error,
 };
 
 /// Struct which stores matches data for search keyword
@@ -196,13 +197,7 @@ pub(crate) struct SearchHelper {
 impl SearchHelper {
     pub(crate) fn convert(self) -> Result<Search> {
         let mut search = Search::default();
-        if let Some(information) = self.information {
-            return Err(Error::AlphaVantageInformation(information));
-        }
-        if let Some(note) = self.note {
-            return Err(Error::AlphaVantageNote(note));
-        }
-
+        detect_common_helper_error(self.information, None, self.note)?;
         if self.matches.is_none() {
             return Err(Error::EmptyResponse);
         }
