@@ -21,6 +21,9 @@ pub mod crypto_rating;
 
 pub mod crypto;
 
+/// Module for custom url call
+pub(crate) mod custom;
+
 mod deserialize;
 
 pub mod earning;

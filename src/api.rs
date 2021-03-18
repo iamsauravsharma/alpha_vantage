@@ -4,6 +4,7 @@ use crate::{
     client::HttpClient,
     crypto::{Crypto, CryptoHelper},
     crypto_rating::{CryptoRating, CryptoRatingHelper},
+    custom::CustomHelper,
     earning::{Earning, EarningHelper},
     error::{Error, Result},
     exchange::{Exchange, ExchangeHelper},
@@ -117,6 +118,20 @@ impl ApiClient {
         let path = crate::crypto::create_url(function, symbol, market, self.get_api());
         let crypto_helper: CryptoHelper = self.get_json(path).await?;
         crypto_helper.convert()
+    }
+
+    /// Method for calling custom function not implemented currently in library
+    pub async fn custom<T>(&self, function: &str, extras: Vec<(&str, &str)>) -> Result<T>
+    where
+        T: DeserializeOwned,
+    {
+        let mut path = format!("query?function={}", function);
+        for (key, value) in extras {
+            path.push_str(format!("&{}={}", key, value).as_str());
+        }
+        path.push_str(format!("&apikey={}", self.get_api()).as_str());
+        let custom_helper: CustomHelper = self.get_json(path).await?;
+        custom_helper.convert()
     }
 
     /// Method for returning company earning
