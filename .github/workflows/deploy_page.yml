@@ -25,7 +25,7 @@ jobs:
         uses: davidB/rust-cargo-make@v1
       - name: Generate documentation
         run: |
-          cargo make rustdoc --env FEATURES_FLAG=$(echo $FEATURES_FLAG) VERBOSE_FLAG=$(echo $VERBOSE_FLAG) TARGET_TRIPLE_FLAG=$(echo $TARGET_TRIPLE_FLAG)
+          cargo make rustdoc --env FEATURES_FLAG=$FEATURES_FLAG VERBOSE_FLAG=$VERBOSE_FLAG TARGET_TRIPLE_FLAG=$TARGET_TRIPLE_FLAG
       - name: Generate index page
         run: |
           echo "<meta http-equiv=refresh content=0;url=alpha_vantage/index.html>" > target/doc/index.html          
