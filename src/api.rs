@@ -23,12 +23,12 @@ use crate::{
 const BASE_URL: &str = "https://www.alphavantage.co/";
 
 /// Struct for initializing client which contains different method for API call
-pub struct ApiClient {
-    api: String,
+pub struct ApiClient<'a> {
+    api: &'a str,
     client: Box<dyn HttpClient>,
 }
 
-impl ApiClient {
+impl<'a> ApiClient<'a> {
     /// Method for initializing [ApiClient][ApiClient] struct using  user
     /// provided client
     ///
@@ -37,12 +37,12 @@ impl ApiClient {
     /// let api = ApiClient::set_api("some_key", surf::Client::new());
     /// ```
     #[must_use]
-    pub fn set_api<T>(api: &str, client: T) -> Self
+    pub fn set_api<T>(api: &'a str, client: T) -> Self
     where
         T: HttpClient + 'static,
     {
         Self {
-            api: api.to_string(),
+            api,
             client: Box::new(client),
         }
     }
@@ -56,7 +56,7 @@ impl ApiClient {
     /// ```
     #[must_use]
     pub fn get_api(&self) -> &str {
-        &self.api
+        self.api
     }
 
     // Get json from api endpoint and create struct
