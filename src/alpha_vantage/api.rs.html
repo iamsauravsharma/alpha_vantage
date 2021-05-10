@@ -406,12 +406,12 @@
 <span class="kw">const</span> <span class="ident">BASE_URL</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;https://www.alphavantage.co/&quot;</span>;
 
 <span class="doccomment">/// Struct for initializing client which contains different method for API call</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ApiClient</span> {
-    <span class="ident">api</span>: <span class="ident">String</span>,
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ApiClient</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
     <span class="ident">client</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">HttpClient</span><span class="op">&gt;</span>,
 }
 
-<span class="kw">impl</span> <span class="ident">ApiClient</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">ApiClient</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Method for initializing [ApiClient][ApiClient] struct using  user</span>
     <span class="doccomment">/// provided client</span>
     <span class="doccomment">///</span>
@@ -420,12 +420,12 @@
     <span class="doccomment">/// let api = ApiClient::set_api(&quot;some_key&quot;, surf::Client::new());</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_api</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">client</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_api</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>, <span class="ident">client</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">HttpClient</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
     {
         <span class="self">Self</span> {
-            <span class="ident">api</span>: <span class="ident">api</span>.<span class="ident">to_string</span>(),
+            <span class="ident">api</span>,
             <span class="ident">client</span>: <span class="ident">Box::new</span>(<span class="ident">client</span>),
         }
     }
@@ -439,7 +439,7 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_api</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">api</span>
+        <span class="self">self</span>.<span class="ident">api</span>
     }
 
     <span class="comment">// Get json from api endpoint and create struct</span>
