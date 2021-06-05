@@ -208,17 +208,17 @@ impl SectorHelper {
                     "Utilities" => data.utilities = convert_str_percent_f64(val),
                     "Health Care" => data.health_care = convert_str_percent_f64(val),
                     "Information Technology" => {
-                        data.information_technology = convert_str_percent_f64(val)
+                        data.information_technology = convert_str_percent_f64(val);
                     }
                     "Industrials" => data.industrials = convert_str_percent_f64(val),
                     "Real Estate" => data.real_estate = convert_str_percent_f64(val),
                     "Consumer Staples" => data.consumer_staples = convert_str_percent_f64(val),
                     "Consumer Discretionary" => {
-                        data.consumer_discretionary = convert_str_percent_f64(val)
+                        data.consumer_discretionary = convert_str_percent_f64(val);
                     }
                     "Financials" => data.financials = convert_str_percent_f64(val),
                     "Communication Services" => {
-                        data.communication_services = convert_str_percent_f64(val)
+                        data.communication_services = convert_str_percent_f64(val);
                     }
                     "Materials" => data.materials = convert_str_percent_f64(val),
                     "Energy" => data.energy = convert_str_percent_f64(val),

@@ -331,11 +331,11 @@ impl TimeSeriesHelper {
         let mut time_zone_value = time_zone.cloned();
         if time_zone_value.is_none() {
             let time_zone = meta_data.get("5. Time Zone");
-            time_zone_value = time_zone.cloned()
+            time_zone_value = time_zone.cloned();
         }
         if time_zone_value.is_none() {
             let time_zone = meta_data.get("6. Time Zone");
-            time_zone_value = time_zone.cloned()
+            time_zone_value = time_zone.cloned();
         }
         let time_zone_value = time_zone_value.expect("time zone value is None");
         time_series.meta_data = MetaData {
