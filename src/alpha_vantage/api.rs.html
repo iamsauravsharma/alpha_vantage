@@ -1,7 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/api.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>api.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
-<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../alpha_vantage/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button">?</button>
-                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src&#x2F;api.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>api.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../alpha_vantage/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input"name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -356,37 +353,12 @@
 <span id="353">353</span>
 <span id="354">354</span>
 <span id="355">355</span>
-<span id="356">356</span>
-<span id="357">357</span>
-<span id="358">358</span>
-<span id="359">359</span>
-<span id="360">360</span>
-<span id="361">361</span>
-<span id="362">362</span>
-<span id="363">363</span>
-<span id="364">364</span>
-<span id="365">365</span>
-<span id="366">366</span>
-<span id="367">367</span>
-<span id="368">368</span>
-<span id="369">369</span>
-<span id="370">370</span>
-<span id="371">371</span>
-<span id="372">372</span>
-<span id="373">373</span>
-<span id="374">374</span>
-<span id="375">375</span>
-<span id="376">376</span>
-<span id="377">377</span>
-<span id="378">378</span>
-<span id="379">379</span>
 </pre><pre class="rust">
 <span class="kw">use</span> <span class="ident">serde::de::DeserializeOwned</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">client::HttpClient</span>,
     <span class="ident">crypto</span>::{<span class="ident">Crypto</span>, <span class="ident">CryptoHelper</span>},
-    <span class="ident">crypto_rating</span>::{<span class="ident">CryptoRating</span>, <span class="ident">CryptoRatingHelper</span>},
     <span class="ident">custom::CustomHelper</span>,
     <span class="ident">earning</span>::{<span class="ident">Earning</span>, <span class="ident">EarningHelper</span>},
     <span class="ident">error</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>},
@@ -417,7 +389,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use alpha_vantage::api::ApiClient;</span>
-    <span class="doccomment">/// let api = ApiClient::set_api(&quot;some_key&quot;, surf::Client::new());</span>
+    <span class="doccomment">/// let api = ApiClient::set_api(&quot;some_key&quot;, reqwest::Client::new());</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_api</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>, <span class="ident">client</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
@@ -434,7 +406,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use alpha_vantage::api::ApiClient;</span>
-    <span class="doccomment">/// let api = alpha_vantage::api::ApiClient::set_api(&quot;some_key&quot;, surf::Client::new());</span>
+    <span class="doccomment">/// let api = alpha_vantage::api::ApiClient::set_api(&quot;some_key&quot;, reqwest::Client::new());</span>
     <span class="doccomment">/// assert_eq!(api.get_api(), &quot;some_key&quot;);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
@@ -452,36 +424,13 @@
         <span class="ident">serde_json::from_str</span>(<span class="kw-2">&amp;</span><span class="ident">string_output</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Error::DecodeJsonToStruct</span>)
     }
 
-    <span class="doccomment">/// Method for getting crypto health rating</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Example</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// #[async_std::main]</span>
-    <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, surf::Client::new());</span>
-    <span class="doccomment">///     let crypto_rating = api.crypto_rating(&quot;BTC&quot;).await.unwrap();</span>
-    <span class="doccomment">///     assert_eq!(crypto_rating.symbol(), &quot;BTC&quot;);</span>
-    <span class="doccomment">///     assert_eq!(crypto_rating.name(), &quot;Bitcoin&quot;);</span>
-    <span class="doccomment">///     assert_eq!(crypto_rating.time_zone(), &quot;UTC&quot;);</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">crypto_rating</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">CryptoRating</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="macro">format!</span>(
-            <span class="string">&quot;query?function=CRYPTO_RATING&amp;symbol={}&amp;apikey={}&quot;</span>,
-            <span class="ident">symbol</span>,
-            <span class="self">self</span>.<span class="ident">get_api</span>()
-        );
-        <span class="kw">let</span> <span class="ident">crypto_rating_helper</span>: <span class="ident">CryptoRatingHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="ident">crypto_rating_helper</span>.<span class="ident">convert</span>()
-    }
-
     <span class="doccomment">/// Crypto method for calling cryptography function</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// #[async_std::main]</span>
+    <span class="doccomment">/// #[tokio::main]</span>
     <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, surf::Client::new());</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let crypto = api</span>
     <span class="doccomment">///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
     <span class="doccomment">///         .await</span>
@@ -521,9 +470,9 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// #[async_std::main]</span>
+    <span class="doccomment">/// #[tokio::main]</span>
     <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, surf::Client::new());</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let earning = api.earning(&quot;IBM&quot;).await.unwrap();</span>
     <span class="doccomment">///     let symbol = earning.symbol();</span>
     <span class="doccomment">///     assert_eq!(symbol, &quot;IBM&quot;);</span>
@@ -544,9 +493,9 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// #[async_std::main]</span>
+    <span class="doccomment">/// #[tokio::main]</span>
     <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, surf::Client::new());</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let exchange = api.exchange(&quot;BTC&quot;, &quot;CNY&quot;).await.unwrap();</span>
     <span class="doccomment">///     assert_eq!(exchange.name_from(), &quot;Bitcoin&quot;);</span>
     <span class="doccomment">///     assert_eq!(exchange.code_from(), &quot;BTC&quot;);</span>
@@ -570,9 +519,9 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use alpha_vantage::utils::*;</span>
-    <span class="doccomment">/// #[async_std::main]</span>
+    <span class="doccomment">/// #[tokio::main]</span>
     <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, surf::Client::new());</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let forex = api</span>
     <span class="doccomment">///         .forex(</span>
     <span class="doccomment">///             ForexFunction::Weekly,</span>
@@ -612,9 +561,9 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// #[async_std::main]</span>
+    <span class="doccomment">/// #[tokio::main]</span>
     <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, surf::Client::new());</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let quote = api.quote(&quot;MSFT&quot;).await.unwrap();</span>
     <span class="doccomment">///     let symbol = quote.symbol();</span>
     <span class="doccomment">///     assert_eq!(symbol, &quot;MSFT&quot;);</span>
@@ -633,9 +582,9 @@
     <span class="doccomment">/// Method for searching keyword or company</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// #[async_std::main]</span>
+    <span class="doccomment">/// #[tokio::main]</span>
     <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, surf::Client::new());</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let search = api.search(&quot;BA&quot;).await.unwrap();</span>
     <span class="doccomment">///     let first_search_result = &amp;search.result()[0];</span>
     <span class="doccomment">///     assert_eq!(first_search_result.symbol(), &quot;BA&quot;);</span>
@@ -659,9 +608,9 @@
     <span class="doccomment">/// Method for returning a sector data as struct</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// #[async_std::main]</span>
+    <span class="doccomment">/// #[tokio::main]</span>
     <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, surf::Client::new());</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let sector = api.sector().await.unwrap();</span>
     <span class="doccomment">///     assert_eq!(</span>
     <span class="doccomment">///         sector.information(),</span>
@@ -679,9 +628,9 @@
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use alpha_vantage::utils::*;</span>
-    <span class="doccomment">/// #[async_std::main]</span>
+    <span class="doccomment">/// #[tokio::main]</span>
     <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, surf::Client::new());</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let stock = api</span>
     <span class="doccomment">///         .stock_time(</span>
     <span class="doccomment">///             StockFunction::Weekly,</span>
@@ -711,9 +660,9 @@
     <span class="doccomment">/// Method for technical indicator API</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// #[async_std::main]</span>
+    <span class="doccomment">/// #[tokio::main]</span>
     <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, surf::Client::new());</span>
+    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let technical = api</span>
     <span class="doccomment">///         .technical_indicator(</span>
     <span class="doccomment">///             &quot;SMA&quot;,</span>
@@ -756,9 +705,11 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_get_api</span>() {
-        <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="kw">super</span><span class="ident">::ApiClient::set_api</span>(<span class="string">&quot;secret_key&quot;</span>, <span class="ident">surf::Client::new</span>());
+        <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="kw">super</span><span class="ident">::ApiClient::set_api</span>(<span class="string">&quot;secret_key&quot;</span>, <span class="ident">reqwest::Client::new</span>());
         <span class="macro">assert_eq!</span>(<span class="ident">api</span>.<span class="ident">get_api</span>(), <span class="string">&quot;secret_key&quot;</span>.<span class="ident">to_string</span>());
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
+    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script>
+</body></html>
