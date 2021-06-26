@@ -113,9 +113,9 @@ impl TimeSeries {
     ///
     /// ```
     /// use alpha_vantage::utils::*;
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let stock_time = api
     ///         .stock_time(
     ///             StockFunction::IntraDay,
@@ -141,9 +141,9 @@ impl TimeSeries {
     ///
     /// ```
     /// use alpha_vantage::utils::*;
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let stock_time = api
     ///         .stock_time(
     ///             StockFunction::IntraDay,
@@ -178,9 +178,9 @@ impl TimeSeries {
     ///
     /// ```
     /// use alpha_vantage::utils::*;
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let stock_time = api
     ///         .stock_time(
     ///             StockFunction::IntraDay,
@@ -203,9 +203,9 @@ impl TimeSeries {
     ///
     /// ```
     /// use alpha_vantage::utils::*;
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let stock_time = api
     ///         .stock_time(
     ///             StockFunction::IntraDay,

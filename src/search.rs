@@ -43,9 +43,9 @@ impl DataValue {
     /// Return symbol
     ///
     /// ```
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let search = api.search("BA").await.unwrap();
     ///     let symbol = search.result()[0].symbol();
     ///     assert_eq!(symbol, "BA");
@@ -59,9 +59,9 @@ impl DataValue {
     /// Return name for symbol
     ///
     /// ```
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let search = api.search("BA").await.unwrap();
     ///     let name = search.result()[0].name();
     ///     assert_eq!(name, "Boeing Company");
@@ -75,9 +75,9 @@ impl DataValue {
     /// Return stock type
     ///
     /// ```
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let search = api.search("BA").await.unwrap();
     ///     let stock_type = search.result()[0].stock_type();
     ///     assert_eq!(stock_type, "Equity");
@@ -90,9 +90,9 @@ impl DataValue {
     /// Return region of search entry
     ///
     /// ```
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let search = api.search("BA").await.unwrap();
     ///     let region = search.result()[0].region();
     ///     assert_eq!(region, "United States");
@@ -105,9 +105,9 @@ impl DataValue {
     /// Return market open time
     ///
     /// ```
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let search = api.search("BA").await.unwrap();
     ///     let market_open = search.result()[0].market_open();
     ///     assert_eq!(market_open, "09:30");
@@ -120,9 +120,9 @@ impl DataValue {
     /// Return market close time
     ///
     /// ```
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let search = api.search("BA").await.unwrap();
     ///     let market_close = search.result()[0].market_close();
     ///     assert_eq!(market_close, "16:00");
@@ -141,9 +141,9 @@ impl DataValue {
     /// Return currency
     ///
     /// ```
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let search = api.search("BA").await.unwrap();
     ///     let currency = search.result()[0].currency();
     ///     assert_eq!(currency, "USD");
@@ -156,9 +156,9 @@ impl DataValue {
     /// Return match score
     ///
     /// ```
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let search = api.search("BA").await.unwrap();
     ///     let match_score = search.result()[0].match_score();
     ///     assert_eq!(match_score, 1.0);

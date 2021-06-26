@@ -105,9 +105,9 @@ impl Earning {
     ///
     /// # Example
     /// ```
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let earning = api.earning("IBM").await.unwrap();
     ///     let symbol = earning.symbol();
     ///     assert_eq!(symbol, "IBM");

@@ -3,7 +3,6 @@ use serde::de::DeserializeOwned;
 use crate::{
     client::HttpClient,
     crypto::{Crypto, CryptoHelper},
-    crypto_rating::{CryptoRating, CryptoRatingHelper},
     custom::CustomHelper,
     earning::{Earning, EarningHelper},
     error::{Error, Result},
@@ -34,7 +33,7 @@ impl<'a> ApiClient<'a> {
     ///
     /// ```
     /// use alpha_vantage::api::ApiClient;
-    /// let api = ApiClient::set_api("some_key", surf::Client::new());
+    /// let api = ApiClient::set_api("some_key", reqwest::Client::new());
     /// ```
     #[must_use]
     pub fn set_api<T>(api: &'a str, client: T) -> Self
@@ -51,7 +50,7 @@ impl<'a> ApiClient<'a> {
     ///
     /// ```
     /// use alpha_vantage::api::ApiClient;
-    /// let api = alpha_vantage::api::ApiClient::set_api("some_key", surf::Client::new());
+    /// let api = alpha_vantage::api::ApiClient::set_api("some_key", reqwest::Client::new());
     /// assert_eq!(api.get_api(), "some_key");
     /// ```
     #[must_use]
@@ -69,36 +68,13 @@ impl<'a> ApiClient<'a> {
         serde_json::from_str(&string_output).map_err(|_| Error::DecodeJsonToStruct)
     }
 
-    /// Method for getting crypto health rating
-    ///
-    /// # Example
-    /// ```
-    /// #[async_std::main]
-    /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
-    ///     let crypto_rating = api.crypto_rating("BTC").await.unwrap();
-    ///     assert_eq!(crypto_rating.symbol(), "BTC");
-    ///     assert_eq!(crypto_rating.name(), "Bitcoin");
-    ///     assert_eq!(crypto_rating.time_zone(), "UTC");
-    /// }
-    /// ```
-    pub async fn crypto_rating(&self, symbol: &str) -> Result<CryptoRating> {
-        let path = format!(
-            "query?function=CRYPTO_RATING&symbol={}&apikey={}",
-            symbol,
-            self.get_api()
-        );
-        let crypto_rating_helper: CryptoRatingHelper = self.get_json(path).await?;
-        crypto_rating_helper.convert()
-    }
-
     /// Crypto method for calling cryptography function
     ///
     /// # Example
     /// ```
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let crypto = api
     ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
     ///         .await
@@ -138,9 +114,9 @@ impl<'a> ApiClient<'a> {
     ///
     /// # Example
     /// ```
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let earning = api.earning("IBM").await.unwrap();
     ///     let symbol = earning.symbol();
     ///     assert_eq!(symbol, "IBM");
@@ -161,9 +137,9 @@ impl<'a> ApiClient<'a> {
     ///
     /// # Example
     /// ```
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let exchange = api.exchange("BTC", "CNY").await.unwrap();
     ///     assert_eq!(exchange.name_from(), "Bitcoin");
     ///     assert_eq!(exchange.code_from(), "BTC");
@@ -187,9 +163,9 @@ impl<'a> ApiClient<'a> {
     /// # Example
     /// ```
     /// use alpha_vantage::utils::*;
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let forex = api
     ///         .forex(
     ///             ForexFunction::Weekly,
@@ -229,9 +205,9 @@ impl<'a> ApiClient<'a> {
     ///
     /// # Example
     /// ```
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let quote = api.quote("MSFT").await.unwrap();
     ///     let symbol = quote.symbol();
     ///     assert_eq!(symbol, "MSFT");
@@ -250,9 +226,9 @@ impl<'a> ApiClient<'a> {
     /// Method for searching keyword or company
     /// # Example
     /// ```
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let search = api.search("BA").await.unwrap();
     ///     let first_search_result = &search.result()[0];
     ///     assert_eq!(first_search_result.symbol(), "BA");
@@ -276,9 +252,9 @@ impl<'a> ApiClient<'a> {
     /// Method for returning a sector data as struct
     /// # Example
     /// ```
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let sector = api.sector().await.unwrap();
     ///     assert_eq!(
     ///         sector.information(),
@@ -296,9 +272,9 @@ impl<'a> ApiClient<'a> {
     /// # Example
     /// ```
     /// use alpha_vantage::utils::*;
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let stock = api
     ///         .stock_time(
     ///             StockFunction::Weekly,
@@ -328,9 +304,9 @@ impl<'a> ApiClient<'a> {
     /// Method for technical indicator API
     /// # Example
     /// ```
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let technical = api
     ///         .technical_indicator(
     ///             "SMA",
@@ -373,7 +349,7 @@ mod test {
 
     #[test]
     fn test_get_api() {
-        let api = super::ApiClient::set_api("secret_key", surf::Client::new());
+        let api = super::ApiClient::set_api("secret_key", reqwest::Client::new());
         assert_eq!(api.get_api(), "secret_key".to_string());
     }
 }

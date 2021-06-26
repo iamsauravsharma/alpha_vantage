@@ -132,9 +132,9 @@ impl Crypto {
     /// Return meta data information
     ///
     /// ```
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let crypto = api
     ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
     ///         .await
@@ -151,9 +151,9 @@ impl Crypto {
     /// Return digital currency code
     ///
     /// ```
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let crypto = api
     ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
     ///         .await
@@ -170,9 +170,9 @@ impl Crypto {
     /// Return digital currency name
     ///
     /// ```
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let crypto = api
     ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
     ///         .await
@@ -189,9 +189,9 @@ impl Crypto {
     /// Return market code
     ///
     /// ```
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let crypto = api
     ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
     ///         .await
@@ -208,9 +208,9 @@ impl Crypto {
     /// Return market name
     ///
     /// ```
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let crypto = api
     ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
     ///         .await

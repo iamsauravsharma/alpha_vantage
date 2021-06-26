@@ -67,9 +67,9 @@ impl Exchange {
     /// get from code from which exchange is performed
     ///
     /// ```
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let exchange = api.exchange("BTC", "CNY").await.unwrap();
     ///     let code_from = exchange.code_from();
     ///     assert_eq!(code_from, "BTC");
@@ -83,9 +83,9 @@ impl Exchange {
     /// get from name from which exchange is performed
     ///
     /// ```
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let exchange = api.exchange("BTC", "CNY").await.unwrap();
     ///     let name_from = exchange.name_from();
     ///     assert_eq!(name_from, "Bitcoin");
@@ -99,9 +99,9 @@ impl Exchange {
     /// get to code from exchange
     ///
     /// ```
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let exchange = api.exchange("BTC", "CNY").await.unwrap();
     ///     let code_to = exchange.code_to();
     ///     assert_eq!(code_to, "CNY");
@@ -115,9 +115,9 @@ impl Exchange {
     /// get to name from exchange
     ///
     /// ```
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let exchange = api.exchange("BTC", "CNY").await.unwrap();
     ///     let name_to = exchange.name_to();
     ///     assert_eq!(name_to, "Chinese Yuan");

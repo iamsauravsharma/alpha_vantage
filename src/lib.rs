@@ -17,8 +17,6 @@ pub mod api;
 /// client in project
 pub mod client;
 
-pub mod crypto_rating;
-
 pub mod crypto;
 
 /// Module for custom url call
@@ -53,7 +51,7 @@ use self::{api::ApiClient, client::HttpClient};
 /// Set API key using user selected or created client
 ///
 /// ```
-/// let api = alpha_vantage::set_api("some_key", surf::Client::new());
+/// let api = alpha_vantage::set_api("some_key", reqwest::Client::new());
 /// ```
 #[must_use]
 pub fn set_api<T>(api: &str, client: T) -> ApiClient

@@ -15,17 +15,6 @@ pub trait HttpClient {
     async fn get_output(&self, path: String) -> Result<String>;
 }
 
-#[cfg(feature = "surf-client")]
-#[async_trait]
-impl HttpClient for surf::Client {
-    async fn get_output(&self, path: String) -> Result<String> {
-        self.get(path)
-            .recv_string()
-            .await
-            .map_err(|_| Error::GetRequestFailed)
-    }
-}
-
 #[cfg(feature = "reqwest-client")]
 #[async_trait]
 impl HttpClient for reqwest::Client {
@@ -35,6 +24,17 @@ impl HttpClient for reqwest::Client {
             .await
             .map_err(|_| Error::GetRequestFailed)?
             .text()
+            .await
+            .map_err(|_| Error::GetRequestFailed)
+    }
+}
+
+#[cfg(feature = "surf-client")]
+#[async_trait]
+impl HttpClient for surf::Client {
+    async fn get_output(&self, path: String) -> Result<String> {
+        self.get(path)
+            .recv_string()
             .await
             .map_err(|_| Error::GetRequestFailed)
     }

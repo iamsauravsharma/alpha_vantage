@@ -11,7 +11,6 @@ Rust Client library built for accessing [Alphavantage][alphavantage_link] API.
 ### Project Functionality
 
 - [X] Crypto Currency
-- [X] Crypto Health
 - [X] Custom function
 - [X] Earning
 - [X] Exchange Rate
@@ -41,7 +40,7 @@ alpha_vantage = {git = "https://github.com/iamsauravsharma/alpha_vantage"}
 Sample code to find exchange rate between two currency(both physical & digital supported)
 
 ```rust
-let api_key = alpha_vantage::set_api("YOUR-API-HERE", surf::Client::new());
+let api_key = alpha_vantage::set_api("YOUR-API-HERE", reqwest::Client::new());
 let exchange = api_key.exchange("USD","CNY").await.unwrap();
 let rate = exchange.rate();
 println!("{}",rate);

@@ -84,9 +84,9 @@ impl Forex {
     ///
     /// ```
     /// use alpha_vantage::utils::*;
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let forex = api
     ///         .forex(
     ///             ForexFunction::IntraDay,
@@ -110,9 +110,9 @@ impl Forex {
     ///
     /// ```
     /// use alpha_vantage::utils::*;
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let forex = api
     ///         .forex(
     ///             ForexFunction::IntraDay,
@@ -135,10 +135,10 @@ impl Forex {
     /// Return to symbol
     ///
     /// ```
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
     ///     use alpha_vantage::utils::*;
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let forex = api
     ///         .forex(
     ///             ForexFunction::IntraDay,
@@ -174,9 +174,9 @@ impl Forex {
     ///
     /// ```
     /// use alpha_vantage::utils::*;
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let forex = api
     ///         .forex(
     ///             ForexFunction::IntraDay,
@@ -200,9 +200,9 @@ impl Forex {
     ///
     /// ```
     /// use alpha_vantage::utils::*;
-    /// #[async_std::main]
+    /// #[tokio::main]
     /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", surf::Client::new());
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let forex = api
     ///         .forex(
     ///             ForexFunction::IntraDay,
