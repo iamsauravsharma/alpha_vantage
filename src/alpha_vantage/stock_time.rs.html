@@ -552,6 +552,8 @@
 <span id="552">552</span>
 <span id="553">553</span>
 <span id="554">554</span>
+<span id="555">555</span>
+<span id="556">556</span>
 </pre><pre class="rust">
 <span class="doccomment">//! Module for stock time series</span>
 <span class="doccomment">//!</span>
@@ -956,7 +958,9 @@
     <span class="kw">fn</span> <span class="ident">find</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">time</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&gt;</span>;
     <span class="doccomment">/// Return a entry which is of latest time period</span>
     <span class="kw">fn</span> <span class="ident">latest</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Entry</span>;
-    <span class="doccomment">/// Return a top n latest Entry if n Entry is present else return Error</span>
+    <span class="doccomment">/// Return a top n latest Entry</span>
+    <span class="doccomment">/// # Errors</span>
+    <span class="doccomment">/// If n is greater than no of entry</span>
     <span class="kw">fn</span> <span class="ident">latestn</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">n</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 }
 
