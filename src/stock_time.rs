@@ -401,7 +401,9 @@ pub trait VecEntry {
     fn find(&self, time: &str) -> Option<Entry>;
     /// Return a entry which is of latest time period
     fn latest(&self) -> Entry;
-    /// Return a top n latest Entry if n Entry is present else return Error
+    /// Return a top n latest Entry
+    /// # Errors
+    /// If n is greater than no of entry
     fn latestn(&self, n: usize) -> Result<Vec<Entry>>;
 }
 

@@ -70,6 +70,11 @@ impl<'a> ApiClient<'a> {
 
     /// Crypto method for calling cryptography function
     ///
+    /// # Errors
+    /// If either of information, note or error message is returned instead of
+    /// json data from server. If empty json is returned or returned json cannot
+    /// be converted to struct than it will also raise error
+    ///
     /// # Example
     /// ```
     /// #[tokio::main]
@@ -97,6 +102,11 @@ impl<'a> ApiClient<'a> {
     }
 
     /// Method for calling custom function not implemented currently in library
+    ///
+    /// # Errors
+    /// If either of information, note or error message is returned instead of
+    /// json data from server. If empty json is returned or returned json cannot
+    /// be converted to struct than it will also raise error
     pub async fn custom<T>(&self, function: &str, extras: Vec<(&str, &str)>) -> Result<T>
     where
         T: DeserializeOwned,
@@ -111,6 +121,11 @@ impl<'a> ApiClient<'a> {
     }
 
     /// Method for returning company earning
+    ///
+    /// # Errors
+    /// If either of information, note or error message is returned instead of
+    /// json data from server. If empty json is returned or returned json cannot
+    /// be converted to struct than it will also raise error
     ///
     /// # Example
     /// ```
@@ -135,6 +150,11 @@ impl<'a> ApiClient<'a> {
     /// Method for exchanging currency value from one currency to another
     /// currency.
     ///
+    /// # Errors
+    /// If either of information, note or error message is returned instead of
+    /// json data from server. If empty json is returned or returned json cannot
+    /// be converted to struct than it will also raise error
+    ///
     /// # Example
     /// ```
     /// #[tokio::main]
@@ -158,7 +178,12 @@ impl<'a> ApiClient<'a> {
         exchange_helper.convert()
     }
 
-    /// Method for calling stock time series forex Api
+    /// Method for calling stock time series forex API
+    ///
+    /// # Errors
+    /// If either of information, note or error message is returned instead of
+    /// json data from server. If empty json is returned or returned json cannot
+    /// be converted to struct than it will also raise error
     ///
     /// # Example
     /// ```
@@ -203,6 +228,11 @@ impl<'a> ApiClient<'a> {
 
     /// Method for returning Quote Struct
     ///
+    /// # Errors
+    /// If either of information, note or error message is returned instead of
+    /// json data from server. If empty json is returned or returned json cannot
+    /// be converted to struct than it will also raise error
+    ///
     /// # Example
     /// ```
     /// #[tokio::main]
@@ -224,6 +254,12 @@ impl<'a> ApiClient<'a> {
     }
 
     /// Method for searching keyword or company
+    ///
+    /// # Errors
+    /// If either of information, note or error message is returned instead of
+    /// json data from server. If empty json is returned or returned json cannot
+    /// be converted to struct than it will also raise error
+    ///
     /// # Example
     /// ```
     /// #[tokio::main]
@@ -250,6 +286,12 @@ impl<'a> ApiClient<'a> {
     }
 
     /// Method for returning a sector data as struct
+    ///
+    /// # Errors
+    /// If either of information, note or error message is returned instead of
+    /// json data from server. If empty json is returned or returned json cannot
+    /// be converted to struct than it will also raise error
+    ///
     /// # Example
     /// ```
     /// #[tokio::main]
@@ -269,6 +311,12 @@ impl<'a> ApiClient<'a> {
     }
 
     /// Method for calling stock time series API
+    ///
+    /// # Errors
+    /// If either of information, note or error message is returned instead of
+    /// json data from server. If empty json is returned or returned json cannot
+    /// be converted to struct than it will also raise error
+    ///
     /// # Example
     /// ```
     /// use alpha_vantage::utils::*;
@@ -302,6 +350,12 @@ impl<'a> ApiClient<'a> {
     }
 
     /// Method for technical indicator API
+    ///
+    /// # Errors
+    /// If either of information, note or error message is returned instead of
+    /// json data from server. If empty json is returned or returned json cannot
+    /// be converted to struct than it will also raise error
+    ///
     /// # Example
     /// ```
     /// #[tokio::main]
