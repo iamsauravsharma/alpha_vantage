@@ -13,6 +13,7 @@ use std::collections::HashMap;
 use serde::Deserialize;
 
 use crate::{
+    api::ApiClient,
     error::{Error, Result},
     utils::detect_common_helper_error,
 };
@@ -131,7 +132,7 @@ impl Sector {
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
-    ///     let sector = api.sector().await.unwrap();
+    ///     let sector = api.sector().json().await.unwrap();
     ///     let information = sector.information();
     ///     assert_eq!(information, "US Sector Performance (realtime & historical)");
     /// }
@@ -237,4 +238,35 @@ fn convert_str_percent_f64(val: &str) -> f64 {
     let mut s = val.to_owned();
     s.pop();
     s.trim().parse::<f64>().unwrap()
+}
+
+/// Builder to create new Sector
+pub struct SectorBuilder<'a> {
+    api_client: &'a ApiClient<'a>,
+}
+
+impl<'a> SectorBuilder<'a> {
+    /// Create new sector builder from `APIClient`
+    #[must_use]
+    pub fn new(api_client: &'a ApiClient) -> Self {
+        Self { api_client }
+    }
+
+    fn create_url(&self) -> String {
+        format!(
+            "query?function=SECTOR&apikey={}",
+            self.api_client.get_api_key()
+        )
+    }
+
+    /// Returns JSON data struct
+    ///
+    /// # Errors
+    /// Raise error if data obtained cannot be properly converted to struct or
+    /// API returns any 4 possible known errors
+    pub async fn json(&self) -> Result<Sector> {
+        let url = self.create_url();
+        let sector_helper: SectorHelper = self.api_client.get_json(url).await?;
+        sector_helper.convert()
+    }
 }

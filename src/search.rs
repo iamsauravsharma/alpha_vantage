@@ -11,6 +11,7 @@
 use serde::Deserialize;
 
 use crate::{
+    api::ApiClient,
     deserialize::from_str,
     error::{Error, Result},
     utils::detect_common_helper_error,
@@ -46,7 +47,7 @@ impl DataValue {
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
-    ///     let search = api.search("BA").await.unwrap();
+    ///     let search = api.search("BA").json().await.unwrap();
     ///     let symbol = search.result()[0].symbol();
     ///     assert_eq!(symbol, "BA");
     /// }
@@ -62,7 +63,7 @@ impl DataValue {
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
-    ///     let search = api.search("BA").await.unwrap();
+    ///     let search = api.search("BA").json().await.unwrap();
     ///     let name = search.result()[0].name();
     ///     assert_eq!(name, "Boeing Company");
     /// }
@@ -78,7 +79,7 @@ impl DataValue {
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
-    ///     let search = api.search("BA").await.unwrap();
+    ///     let search = api.search("BA").json().await.unwrap();
     ///     let stock_type = search.result()[0].stock_type();
     ///     assert_eq!(stock_type, "Equity");
     /// }
@@ -93,7 +94,7 @@ impl DataValue {
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
-    ///     let search = api.search("BA").await.unwrap();
+    ///     let search = api.search("BA").json().await.unwrap();
     ///     let region = search.result()[0].region();
     ///     assert_eq!(region, "United States");
     /// }
@@ -108,7 +109,7 @@ impl DataValue {
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
-    ///     let search = api.search("BA").await.unwrap();
+    ///     let search = api.search("BA").json().await.unwrap();
     ///     let market_open = search.result()[0].market_open();
     ///     assert_eq!(market_open, "09:30");
     /// }
@@ -123,7 +124,7 @@ impl DataValue {
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
-    ///     let search = api.search("BA").await.unwrap();
+    ///     let search = api.search("BA").json().await.unwrap();
     ///     let market_close = search.result()[0].market_close();
     ///     assert_eq!(market_close, "16:00");
     /// }
@@ -144,7 +145,7 @@ impl DataValue {
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
-    ///     let search = api.search("BA").await.unwrap();
+    ///     let search = api.search("BA").json().await.unwrap();
     ///     let currency = search.result()[0].currency();
     ///     assert_eq!(currency, "USD");
     /// }
@@ -159,7 +160,7 @@ impl DataValue {
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
-    ///     let search = api.search("BA").await.unwrap();
+    ///     let search = api.search("BA").json().await.unwrap();
     ///     let match_score = search.result()[0].match_score();
     ///     assert_eq!(match_score, 1.0);
     /// }
@@ -203,5 +204,41 @@ impl SearchHelper {
         }
         search.matches = self.matches.unwrap();
         Ok(search)
+    }
+}
+
+/// Builder to create new `Search`
+pub struct SearchBuilder<'a> {
+    api_client: &'a ApiClient<'a>,
+    keywords: &'a str,
+}
+
+impl<'a> SearchBuilder<'a> {
+    /// Create new `SearchBuilder` from `APIClient`
+    #[must_use]
+    pub fn new(api_client: &'a ApiClient, keywords: &'a str) -> Self {
+        Self {
+            api_client,
+            keywords,
+        }
+    }
+
+    fn create_url(&self) -> String {
+        format!(
+            "query?function=SYMBOL_SEARCH&keywords={}&apikey={}",
+            self.keywords,
+            self.api_client.get_api_key()
+        )
+    }
+
+    /// Returns JSON data struct
+    ///
+    /// # Errors
+    /// Raise error if data obtained cannot be properly converted to struct or
+    /// API returns any 4 possible known errors
+    pub async fn json(&self) -> Result<Search> {
+        let url = self.create_url();
+        let search_helper: SearchHelper = self.api_client.get_json(url).await?;
+        search_helper.convert()
     }
 }

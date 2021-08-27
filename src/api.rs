@@ -2,20 +2,20 @@ use serde::de::DeserializeOwned;
 
 use crate::{
     client::HttpClient,
-    crypto::{Crypto, CryptoHelper},
-    custom::CustomHelper,
-    earning::{Earning, EarningHelper},
+    crypto::CryptoBuilder,
+    custom::CustomBuilder,
+    earning::EarningBuilder,
     error::{Error, Result},
-    exchange::{Exchange, ExchangeHelper},
-    forex::{Forex, ForexHelper},
-    quote::{Quote, QuoteHelper},
-    search::{Search, SearchHelper},
-    sector::{Sector, SectorHelper},
-    stock_time::{TimeSeries, TimeSeriesHelper},
-    technical_indicator::{Indicator, IndicatorHelper},
+    exchange::ExchangeBuilder,
+    forex::ForexBuilder,
+    quote::QuoteBuilder,
+    search::SearchBuilder,
+    sector::SectorBuilder,
+    stock_time::TimeSeriesBuilder,
+    technical_indicator::IndicatorBuilder,
     utils::{
-        CryptoFunction, ForexFunction, OutputSize, StockFunction, TechnicalIndicator,
-        TechnicalIndicatorInterval, TimeSeriesInterval,
+        CryptoFunction, ForexFunction, OutputSize, StockFunction, TechnicalIndicatorInterval,
+        TimeSeriesInterval,
     },
 };
 
@@ -51,15 +51,15 @@ impl<'a> ApiClient<'a> {
     /// ```
     /// use alpha_vantage::api::ApiClient;
     /// let api = alpha_vantage::api::ApiClient::set_api("some_key", reqwest::Client::new());
-    /// assert_eq!(api.get_api(), "some_key");
+    /// assert_eq!(api.get_api_key(), "some_key");
     /// ```
     #[must_use]
-    pub fn get_api(&self) -> &str {
+    pub fn get_api_key(&self) -> &str {
         self.api
     }
 
     // Get json from api endpoint and create struct
-    async fn get_json<T>(&self, path: String) -> Result<T>
+    pub(crate) async fn get_json<T>(&self, path: String) -> Result<T>
     where
         T: DeserializeOwned,
     {
@@ -68,12 +68,8 @@ impl<'a> ApiClient<'a> {
         serde_json::from_str(&string_output).map_err(|_| Error::DecodeJsonToStruct)
     }
 
-    /// Crypto method for calling cryptography function
-    ///
-    /// # Errors
-    /// If either of information, note or error message is returned instead of
-    /// json data from server. If empty json is returned or returned json cannot
-    /// be converted to struct than it will also raise error
+    /// Crypto method for calling cryptography function with help of
+    /// `CryptoBuilder`
     ///
     /// # Example
     /// ```
@@ -82,6 +78,7 @@ impl<'a> ApiClient<'a> {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let crypto = api
     ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
+    ///         .json()
     ///         .await
     ///         .unwrap();
     ///     assert_eq!(crypto.digital_code(), "BTC");
@@ -90,100 +87,60 @@ impl<'a> ApiClient<'a> {
     ///     assert_eq!(crypto.market_name(), "Chinese Yuan");
     /// }
     /// ```
-    pub async fn crypto(
-        &self,
+    #[must_use]
+    pub fn crypto(
+        &'a self,
         function: CryptoFunction,
-        symbol: &str,
-        market: &str,
-    ) -> Result<Crypto> {
-        let path = crate::crypto::create_url(function, symbol, market, self.get_api());
-        let crypto_helper: CryptoHelper = self.get_json(path).await?;
-        crypto_helper.convert()
+        symbol: &'a str,
+        market: &'a str,
+    ) -> CryptoBuilder<'a> {
+        CryptoBuilder::new(self, function, symbol, market)
     }
 
     /// Method for calling custom function not implemented currently in library
-    ///
-    /// # Errors
-    /// If either of information, note or error message is returned instead of
-    /// json data from server. If empty json is returned or returned json cannot
-    /// be converted to struct than it will also raise error
-    pub async fn custom<T>(&self, function: &str, extras: Vec<(&str, &str)>) -> Result<T>
-    where
-        T: DeserializeOwned,
-    {
-        let mut path = format!("query?function={}", function);
-        for (key, value) in extras {
-            path.push_str(format!("&{}={}", key, value).as_str());
-        }
-        path.push_str(format!("&apikey={}", self.get_api()).as_str());
-        let custom_helper: CustomHelper = self.get_json(path).await?;
-        custom_helper.convert()
+    /// using `CustomBuilder`
+    #[must_use]
+    pub fn custom(&'a self, function: &'a str) -> CustomBuilder<'a> {
+        CustomBuilder::new(self, function)
     }
 
-    /// Method for returning company earning
-    ///
-    /// # Errors
-    /// If either of information, note or error message is returned instead of
-    /// json data from server. If empty json is returned or returned json cannot
-    /// be converted to struct than it will also raise error
-    ///
+    /// Method for returning `EarningBuilder` for earning API
     /// # Example
     /// ```
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
-    ///     let earning = api.earning("IBM").await.unwrap();
+    ///     let earning = api.earning("IBM").json().await.unwrap();
     ///     let symbol = earning.symbol();
     ///     assert_eq!(symbol, "IBM");
     /// }
     /// ```
-    pub async fn earning(&self, symbol: &str) -> Result<Earning> {
-        let path = format!(
-            "query?function=EARNINGS&symbol={}&apikey={}",
-            symbol,
-            self.get_api()
-        );
-        let earning_helper: EarningHelper = self.get_json(path).await?;
-        earning_helper.convert()
+    #[must_use]
+    pub fn earning(&'a self, symbol: &'a str) -> EarningBuilder<'a> {
+        EarningBuilder::new(self, symbol)
     }
 
-    /// Method for exchanging currency value from one currency to another
-    /// currency.
-    ///
-    /// # Errors
-    /// If either of information, note or error message is returned instead of
-    /// json data from server. If empty json is returned or returned json cannot
-    /// be converted to struct than it will also raise error
+    /// Method for creating `ExchangeBuilder` for exchanging currency value from
+    /// one currency to another currency.
     ///
     /// # Example
     /// ```
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
-    ///     let exchange = api.exchange("BTC", "CNY").await.unwrap();
+    ///     let exchange = api.exchange("BTC", "CNY").json().await.unwrap();
     ///     assert_eq!(exchange.name_from(), "Bitcoin");
     ///     assert_eq!(exchange.code_from(), "BTC");
     ///     assert_eq!(exchange.name_to(), "Chinese Yuan");
     ///     assert_eq!(exchange.code_to(), "CNY");
     /// }
     /// ```
-    pub async fn exchange(&self, from_currency: &str, to_currency: &str) -> Result<Exchange> {
-        let path = format!(
-            "query?function=CURRENCY_EXCHANGE_RATE&from_currency={}&to_currency={}&apikey={}",
-            from_currency,
-            to_currency,
-            self.get_api()
-        );
-        let exchange_helper: ExchangeHelper = self.get_json(path).await?;
-        exchange_helper.convert()
+    #[must_use]
+    pub fn exchange(&'a self, from_currency: &'a str, to_currency: &'a str) -> ExchangeBuilder<'a> {
+        ExchangeBuilder::new(self, from_currency, to_currency)
     }
 
-    /// Method for calling stock time series forex API
-    ///
-    /// # Errors
-    /// If either of information, note or error message is returned instead of
-    /// json data from server. If empty json is returned or returned json cannot
-    /// be converted to struct than it will also raise error
+    /// Method for creating `ForexBuilder` for `Forex` API
     ///
     /// # Example
     /// ```
@@ -199,6 +156,7 @@ impl<'a> ApiClient<'a> {
     ///             TimeSeriesInterval::None,
     ///             OutputSize::None,
     ///         )
+    ///         .json()
     ///         .await
     ///         .unwrap();
     ///     assert_eq!(forex.symbol_from(), "EUR");
@@ -206,66 +164,49 @@ impl<'a> ApiClient<'a> {
     ///     assert!(forex.interval().is_none());
     /// }
     /// ```
-    pub async fn forex(
-        &self,
+    #[must_use]
+    pub fn forex(
+        &'a self,
         function: ForexFunction,
-        from_symbol: &str,
-        to_symbol: &str,
+        from_symbol: &'a str,
+        to_symbol: &'a str,
         interval: TimeSeriesInterval,
         output_size: OutputSize,
-    ) -> Result<Forex> {
-        let path = crate::forex::create_url(
+    ) -> ForexBuilder<'a> {
+        ForexBuilder::new(
+            self,
             function,
             from_symbol,
             to_symbol,
             interval,
             output_size,
-            self.get_api(),
-        );
-        let forex_helper: ForexHelper = self.get_json(path).await?;
-        forex_helper.convert()
+        )
     }
 
-    /// Method for returning Quote Struct
-    ///
-    /// # Errors
-    /// If either of information, note or error message is returned instead of
-    /// json data from server. If empty json is returned or returned json cannot
-    /// be converted to struct than it will also raise error
-    ///
+    /// Method for creating `QuoteBuilder` from `APIClient`
     /// # Example
     /// ```
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
-    ///     let quote = api.quote("MSFT").await.unwrap();
+    ///     let quote = api.quote("MSFT").json().await.unwrap();
     ///     let symbol = quote.symbol();
     ///     assert_eq!(symbol, "MSFT");
     /// }
     /// ```
-    pub async fn quote(&self, symbol: &str) -> Result<Quote> {
-        let path = format!(
-            "query?function=GLOBAL_QUOTE&symbol={}&apikey={}",
-            symbol,
-            self.get_api()
-        );
-        let quote_helper: QuoteHelper = self.get_json(path).await?;
-        quote_helper.convert()
+    #[must_use]
+    pub fn quote(&'a self, symbol: &'a str) -> QuoteBuilder<'a> {
+        QuoteBuilder::new(self, symbol)
     }
 
-    /// Method for searching keyword or company
-    ///
-    /// # Errors
-    /// If either of information, note or error message is returned instead of
-    /// json data from server. If empty json is returned or returned json cannot
-    /// be converted to struct than it will also raise error
+    /// Method for creating search builder
     ///
     /// # Example
     /// ```
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
-    ///     let search = api.search("BA").await.unwrap();
+    ///     let search = api.search("BA").json().await.unwrap();
     ///     let first_search_result = &search.result()[0];
     ///     assert_eq!(first_search_result.symbol(), "BA");
     ///     assert_eq!(first_search_result.name(), "Boeing Company");
@@ -275,47 +216,30 @@ impl<'a> ApiClient<'a> {
     ///     assert_eq!(first_search_result.match_score(), 1.0);
     /// }
     /// ```
-    pub async fn search(&self, keywords: &str) -> Result<Search> {
-        let path = format!(
-            "query?function=SYMBOL_SEARCH&keywords={}&apikey={}",
-            keywords,
-            self.get_api()
-        );
-        let search_helper: SearchHelper = self.get_json(path).await?;
-        search_helper.convert()
+    #[must_use]
+    pub fn search(&'a self, keywords: &'a str) -> SearchBuilder<'a> {
+        SearchBuilder::new(self, keywords)
     }
 
-    /// Method for returning a sector data as struct
-    ///
-    /// # Errors
-    /// If either of information, note or error message is returned instead of
-    /// json data from server. If empty json is returned or returned json cannot
-    /// be converted to struct than it will also raise error
-    ///
+    /// Method for creating `SectorBuilder`
     /// # Example
     /// ```
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
-    ///     let sector = api.sector().await.unwrap();
+    ///     let sector = api.sector().json().await.unwrap();
     ///     assert_eq!(
     ///         sector.information(),
     ///         "US Sector Performance (realtime & historical)"
     ///     );
     /// }
     /// ```
-    pub async fn sector(&self) -> Result<Sector> {
-        let path = format!("query?function=SECTOR&apikey={}", self.get_api());
-        let sector_helper: SectorHelper = self.get_json(path).await?;
-        sector_helper.convert()
+    #[must_use]
+    pub fn sector(&'a self) -> SectorBuilder<'a> {
+        SectorBuilder::new(self)
     }
 
-    /// Method for calling stock time series API
-    ///
-    /// # Errors
-    /// If either of information, note or error message is returned instead of
-    /// json data from server. If empty json is returned or returned json cannot
-    /// be converted to struct than it will also raise error
+    /// Method for creating Stock time Builder from `APIClient`
     ///
     /// # Example
     /// ```
@@ -330,31 +254,25 @@ impl<'a> ApiClient<'a> {
     ///             TimeSeriesInterval::None,
     ///             OutputSize::None,
     ///         )
+    ///         .json()
     ///         .await
     ///         .unwrap();
     ///     assert_eq!(stock.symbol(), "MSFT");
     ///     assert!(stock.interval().is_none());
     /// }
     /// ```
-    pub async fn stock_time(
-        &self,
+    #[must_use]
+    pub fn stock_time(
+        &'a self,
         function: StockFunction,
-        symbol: &str,
+        symbol: &'a str,
         interval: TimeSeriesInterval,
         output_size: OutputSize,
-    ) -> Result<TimeSeries> {
-        let path =
-            crate::stock_time::create_url(function, symbol, interval, output_size, self.get_api());
-        let time_series_helper: TimeSeriesHelper = self.get_json(path).await?;
-        time_series_helper.convert()
+    ) -> TimeSeriesBuilder<'a> {
+        TimeSeriesBuilder::new(self, function, symbol, interval, output_size)
     }
 
-    /// Method for technical indicator API
-    ///
-    /// # Errors
-    /// If either of information, note or error message is returned instead of
-    /// json data from server. If empty json is returned or returned json cannot
-    /// be converted to struct than it will also raise error
+    /// Method for technical indicator builder
     ///
     /// # Example
     /// ```
@@ -366,44 +284,21 @@ impl<'a> ApiClient<'a> {
     ///             "SMA",
     ///             "IBM",
     ///             alpha_vantage::utils::TechnicalIndicatorInterval::Weekly,
-    ///             Some(10),
-    ///             Some("open"),
-    ///             vec![],
     ///         )
+    ///         .time_period(10)
+    ///         .series_type("open")
+    ///         .json()
     ///         .await;
     ///     assert!(technical.is_ok());
     /// }
     /// ```
-    pub async fn technical_indicator(
-        &self,
-        function: &str,
-        symbol: &str,
+    #[must_use]
+    pub fn technical_indicator(
+        &'a self,
+        function: &'a str,
+        symbol: &'a str,
         interval: TechnicalIndicatorInterval,
-        time_period: Option<u64>,
-        series_type: Option<&str>,
-        extras: Vec<TechnicalIndicator>,
-    ) -> Result<Indicator> {
-        let path = crate::technical_indicator::create_url(
-            function,
-            symbol,
-            interval,
-            time_period,
-            series_type,
-            extras,
-            self.get_api(),
-        );
-        let indicator_helper: IndicatorHelper = self.get_json(path).await?;
-        indicator_helper.convert()
-    }
-}
-
-// Mod for unit testing
-#[cfg(test)]
-mod test {
-
-    #[test]
-    fn test_get_api() {
-        let api = super::ApiClient::set_api("secret_key", reqwest::Client::new());
-        assert_eq!(api.get_api(), "secret_key".to_string());
+    ) -> IndicatorBuilder<'a> {
+        IndicatorBuilder::new(self, function, symbol, interval)
     }
 }

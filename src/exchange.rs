@@ -11,6 +11,7 @@
 use serde::Deserialize;
 
 use crate::{
+    api::ApiClient,
     deserialize::from_str,
     error::{Error, Result},
     utils::detect_common_helper_error,
@@ -70,7 +71,7 @@ impl Exchange {
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
-    ///     let exchange = api.exchange("BTC", "CNY").await.unwrap();
+    ///     let exchange = api.exchange("BTC", "CNY").json().await.unwrap();
     ///     let code_from = exchange.code_from();
     ///     assert_eq!(code_from, "BTC");
     /// }
@@ -86,7 +87,7 @@ impl Exchange {
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
-    ///     let exchange = api.exchange("BTC", "CNY").await.unwrap();
+    ///     let exchange = api.exchange("BTC", "CNY").json().await.unwrap();
     ///     let name_from = exchange.name_from();
     ///     assert_eq!(name_from, "Bitcoin");
     /// }
@@ -102,7 +103,7 @@ impl Exchange {
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
-    ///     let exchange = api.exchange("BTC", "CNY").await.unwrap();
+    ///     let exchange = api.exchange("BTC", "CNY").json().await.unwrap();
     ///     let code_to = exchange.code_to();
     ///     assert_eq!(code_to, "CNY");
     /// }
@@ -118,7 +119,7 @@ impl Exchange {
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
-    ///     let exchange = api.exchange("BTC", "CNY").await.unwrap();
+    ///     let exchange = api.exchange("BTC", "CNY").json().await.unwrap();
     ///     let name_to = exchange.name_to();
     ///     assert_eq!(name_to, "Chinese Yuan");
     /// }
@@ -163,5 +164,44 @@ impl ExchangeHelper {
         }
         exchange.real_time = self.real_time.unwrap();
         Ok(exchange)
+    }
+}
+
+/// Builder to create `Exchange`
+pub struct ExchangeBuilder<'a> {
+    api_client: &'a ApiClient<'a>,
+    from_currency: &'a str,
+    to_currency: &'a str,
+}
+
+impl<'a> ExchangeBuilder<'a> {
+    /// Create new `ExchangeBuilder` from `APIClient`
+    #[must_use]
+    pub fn new(api_client: &'a ApiClient, from_currency: &'a str, to_currency: &'a str) -> Self {
+        Self {
+            api_client,
+            from_currency,
+            to_currency,
+        }
+    }
+
+    fn create_url(&self) -> String {
+        format!(
+            "query?function=CURRENCY_EXCHANGE_RATE&from_currency={}&to_currency={}&apikey={}",
+            self.from_currency,
+            self.to_currency,
+            self.api_client.get_api_key()
+        )
+    }
+
+    /// Returns JSON data struct
+    ///
+    /// # Errors
+    /// Raise error if data obtained cannot be properly converted to struct or
+    /// API returns any 4 possible known errors
+    pub async fn json(&self) -> Result<Exchange> {
+        let url = self.create_url();
+        let exchange_helper: ExchangeHelper = self.api_client.get_json(url).await?;
+        exchange_helper.convert()
     }
 }
