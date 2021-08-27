@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["DataCollector","Struct for storing a data values"],["Indicator","Struct for indicator"]]});
+initSidebarItems({"struct":[["DataCollector","Struct for storing a data values"],["Indicator","Struct for indicator"],["IndicatorBuilder","Builder to help create `Indicator`"]]});

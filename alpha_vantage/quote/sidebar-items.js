@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Quote","Struct for storing Quote related information"]]});
+initSidebarItems({"struct":[["Quote","Struct for storing Quote related information"],["QuoteBuilder","Builder to create `Quote`"]]});

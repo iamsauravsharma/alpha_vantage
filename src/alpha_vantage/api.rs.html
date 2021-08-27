@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src&#x2F;api.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>api.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../alpha_vantage/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input"name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src&#x2F;api.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>api.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../alpha_vantage/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -302,130 +302,24 @@
 <span id="302">302</span>
 <span id="303">303</span>
 <span id="304">304</span>
-<span id="305">305</span>
-<span id="306">306</span>
-<span id="307">307</span>
-<span id="308">308</span>
-<span id="309">309</span>
-<span id="310">310</span>
-<span id="311">311</span>
-<span id="312">312</span>
-<span id="313">313</span>
-<span id="314">314</span>
-<span id="315">315</span>
-<span id="316">316</span>
-<span id="317">317</span>
-<span id="318">318</span>
-<span id="319">319</span>
-<span id="320">320</span>
-<span id="321">321</span>
-<span id="322">322</span>
-<span id="323">323</span>
-<span id="324">324</span>
-<span id="325">325</span>
-<span id="326">326</span>
-<span id="327">327</span>
-<span id="328">328</span>
-<span id="329">329</span>
-<span id="330">330</span>
-<span id="331">331</span>
-<span id="332">332</span>
-<span id="333">333</span>
-<span id="334">334</span>
-<span id="335">335</span>
-<span id="336">336</span>
-<span id="337">337</span>
-<span id="338">338</span>
-<span id="339">339</span>
-<span id="340">340</span>
-<span id="341">341</span>
-<span id="342">342</span>
-<span id="343">343</span>
-<span id="344">344</span>
-<span id="345">345</span>
-<span id="346">346</span>
-<span id="347">347</span>
-<span id="348">348</span>
-<span id="349">349</span>
-<span id="350">350</span>
-<span id="351">351</span>
-<span id="352">352</span>
-<span id="353">353</span>
-<span id="354">354</span>
-<span id="355">355</span>
-<span id="356">356</span>
-<span id="357">357</span>
-<span id="358">358</span>
-<span id="359">359</span>
-<span id="360">360</span>
-<span id="361">361</span>
-<span id="362">362</span>
-<span id="363">363</span>
-<span id="364">364</span>
-<span id="365">365</span>
-<span id="366">366</span>
-<span id="367">367</span>
-<span id="368">368</span>
-<span id="369">369</span>
-<span id="370">370</span>
-<span id="371">371</span>
-<span id="372">372</span>
-<span id="373">373</span>
-<span id="374">374</span>
-<span id="375">375</span>
-<span id="376">376</span>
-<span id="377">377</span>
-<span id="378">378</span>
-<span id="379">379</span>
-<span id="380">380</span>
-<span id="381">381</span>
-<span id="382">382</span>
-<span id="383">383</span>
-<span id="384">384</span>
-<span id="385">385</span>
-<span id="386">386</span>
-<span id="387">387</span>
-<span id="388">388</span>
-<span id="389">389</span>
-<span id="390">390</span>
-<span id="391">391</span>
-<span id="392">392</span>
-<span id="393">393</span>
-<span id="394">394</span>
-<span id="395">395</span>
-<span id="396">396</span>
-<span id="397">397</span>
-<span id="398">398</span>
-<span id="399">399</span>
-<span id="400">400</span>
-<span id="401">401</span>
-<span id="402">402</span>
-<span id="403">403</span>
-<span id="404">404</span>
-<span id="405">405</span>
-<span id="406">406</span>
-<span id="407">407</span>
-<span id="408">408</span>
-<span id="409">409</span>
-</pre><pre class="rust">
-<span class="kw">use</span> <span class="ident">serde::de::DeserializeOwned</span>;
+</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">serde::de::DeserializeOwned</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">client::HttpClient</span>,
-    <span class="ident">crypto</span>::{<span class="ident">Crypto</span>, <span class="ident">CryptoHelper</span>},
-    <span class="ident">custom::CustomHelper</span>,
-    <span class="ident">earning</span>::{<span class="ident">Earning</span>, <span class="ident">EarningHelper</span>},
+    <span class="ident">crypto::CryptoBuilder</span>,
+    <span class="ident">custom::CustomBuilder</span>,
+    <span class="ident">earning::EarningBuilder</span>,
     <span class="ident">error</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>},
-    <span class="ident">exchange</span>::{<span class="ident">Exchange</span>, <span class="ident">ExchangeHelper</span>},
-    <span class="ident">forex</span>::{<span class="ident">Forex</span>, <span class="ident">ForexHelper</span>},
-    <span class="ident">quote</span>::{<span class="ident">Quote</span>, <span class="ident">QuoteHelper</span>},
-    <span class="ident">search</span>::{<span class="ident">Search</span>, <span class="ident">SearchHelper</span>},
-    <span class="ident">sector</span>::{<span class="ident">Sector</span>, <span class="ident">SectorHelper</span>},
-    <span class="ident">stock_time</span>::{<span class="ident">TimeSeries</span>, <span class="ident">TimeSeriesHelper</span>},
-    <span class="ident">technical_indicator</span>::{<span class="ident">Indicator</span>, <span class="ident">IndicatorHelper</span>},
+    <span class="ident">exchange::ExchangeBuilder</span>,
+    <span class="ident">forex::ForexBuilder</span>,
+    <span class="ident">quote::QuoteBuilder</span>,
+    <span class="ident">search::SearchBuilder</span>,
+    <span class="ident">sector::SectorBuilder</span>,
+    <span class="ident">stock_time::TimeSeriesBuilder</span>,
+    <span class="ident">technical_indicator::IndicatorBuilder</span>,
     <span class="ident">utils</span>::{
-        <span class="ident">CryptoFunction</span>, <span class="ident">ForexFunction</span>, <span class="ident">OutputSize</span>, <span class="ident">StockFunction</span>, <span class="ident">TechnicalIndicator</span>,
-        <span class="ident">TechnicalIndicatorInterval</span>, <span class="ident">TimeSeriesInterval</span>,
+        <span class="ident">CryptoFunction</span>, <span class="ident">ForexFunction</span>, <span class="ident">OutputSize</span>, <span class="ident">StockFunction</span>, <span class="ident">TechnicalIndicatorInterval</span>,
+        <span class="ident">TimeSeriesInterval</span>,
     },
 };
 
@@ -461,15 +355,15 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use alpha_vantage::api::ApiClient;</span>
     <span class="doccomment">/// let api = alpha_vantage::api::ApiClient::set_api(&quot;some_key&quot;, reqwest::Client::new());</span>
-    <span class="doccomment">/// assert_eq!(api.get_api(), &quot;some_key&quot;);</span>
+    <span class="doccomment">/// assert_eq!(api.get_api_key(), &quot;some_key&quot;);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_api</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_api_key</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="self">self</span>.<span class="ident">api</span>
     }
 
     <span class="comment">// Get json from api endpoint and create struct</span>
-    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_json</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">path</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_json</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">path</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">DeserializeOwned</span>,
     {
@@ -478,12 +372,8 @@
         <span class="ident">serde_json::from_str</span>(<span class="kw-2">&amp;</span><span class="ident">string_output</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Error::DecodeJsonToStruct</span>)
     }
 
-    <span class="doccomment">/// Crypto method for calling cryptography function</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Errors</span>
-    <span class="doccomment">/// If either of information, note or error message is returned instead of</span>
-    <span class="doccomment">/// json data from server. If empty json is returned or returned json cannot</span>
-    <span class="doccomment">/// be converted to struct than it will also raise error</span>
+    <span class="doccomment">/// Crypto method for calling cryptography function with help of</span>
+    <span class="doccomment">/// `CryptoBuilder`</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
@@ -492,6 +382,7 @@
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let crypto = api</span>
     <span class="doccomment">///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
+    <span class="doccomment">///         .json()</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
     <span class="doccomment">///     assert_eq!(crypto.digital_code(), &quot;BTC&quot;);</span>
@@ -500,100 +391,60 @@
     <span class="doccomment">///     assert_eq!(crypto.market_name(), &quot;Chinese Yuan&quot;);</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">crypto</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">crypto</span>(
+        <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>,
         <span class="ident">function</span>: <span class="ident">CryptoFunction</span>,
-        <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">market</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Crypto</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="kw">crate</span><span class="ident">::crypto::create_url</span>(<span class="ident">function</span>, <span class="ident">symbol</span>, <span class="ident">market</span>, <span class="self">self</span>.<span class="ident">get_api</span>());
-        <span class="kw">let</span> <span class="ident">crypto_helper</span>: <span class="ident">CryptoHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="ident">crypto_helper</span>.<span class="ident">convert</span>()
+        <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
+        <span class="ident">market</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CryptoBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+        <span class="ident">CryptoBuilder::new</span>(<span class="self">self</span>, <span class="ident">function</span>, <span class="ident">symbol</span>, <span class="ident">market</span>)
     }
 
     <span class="doccomment">/// Method for calling custom function not implemented currently in library</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Errors</span>
-    <span class="doccomment">/// If either of information, note or error message is returned instead of</span>
-    <span class="doccomment">/// json data from server. If empty json is returned or returned json cannot</span>
-    <span class="doccomment">/// be converted to struct than it will also raise error</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">custom</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">function</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">extras</span>: <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span>)<span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span>
-        <span class="ident">T</span>: <span class="ident">DeserializeOwned</span>,
-    {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">path</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">&quot;query?function={}&quot;</span>, <span class="ident">function</span>);
-        <span class="kw">for</span> (<span class="ident">key</span>, <span class="ident">value</span>) <span class="kw">in</span> <span class="ident">extras</span> {
-            <span class="ident">path</span>.<span class="ident">push_str</span>(<span class="macro">format!</span>(<span class="string">&quot;&amp;{}={}&quot;</span>, <span class="ident">key</span>, <span class="ident">value</span>).<span class="ident">as_str</span>());
-        }
-        <span class="ident">path</span>.<span class="ident">push_str</span>(<span class="macro">format!</span>(<span class="string">&quot;&amp;apikey={}&quot;</span>, <span class="self">self</span>.<span class="ident">get_api</span>()).<span class="ident">as_str</span>());
-        <span class="kw">let</span> <span class="ident">custom_helper</span>: <span class="ident">CustomHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="ident">custom_helper</span>.<span class="ident">convert</span>()
+    <span class="doccomment">/// using `CustomBuilder`</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">custom</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>, <span class="ident">function</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CustomBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+        <span class="ident">CustomBuilder::new</span>(<span class="self">self</span>, <span class="ident">function</span>)
     }
 
-    <span class="doccomment">/// Method for returning company earning</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Errors</span>
-    <span class="doccomment">/// If either of information, note or error message is returned instead of</span>
-    <span class="doccomment">/// json data from server. If empty json is returned or returned json cannot</span>
-    <span class="doccomment">/// be converted to struct than it will also raise error</span>
-    <span class="doccomment">///</span>
+    <span class="doccomment">/// Method for returning `EarningBuilder` for earning API</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// #[tokio::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
-    <span class="doccomment">///     let earning = api.earning(&quot;IBM&quot;).await.unwrap();</span>
+    <span class="doccomment">///     let earning = api.earning(&quot;IBM&quot;).json().await.unwrap();</span>
     <span class="doccomment">///     let symbol = earning.symbol();</span>
     <span class="doccomment">///     assert_eq!(symbol, &quot;IBM&quot;);</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">earning</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Earning</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="macro">format!</span>(
-            <span class="string">&quot;query?function=EARNINGS&amp;symbol={}&amp;apikey={}&quot;</span>,
-            <span class="ident">symbol</span>,
-            <span class="self">self</span>.<span class="ident">get_api</span>()
-        );
-        <span class="kw">let</span> <span class="ident">earning_helper</span>: <span class="ident">EarningHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="ident">earning_helper</span>.<span class="ident">convert</span>()
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">earning</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>, <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">EarningBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+        <span class="ident">EarningBuilder::new</span>(<span class="self">self</span>, <span class="ident">symbol</span>)
     }
 
-    <span class="doccomment">/// Method for exchanging currency value from one currency to another</span>
-    <span class="doccomment">/// currency.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Errors</span>
-    <span class="doccomment">/// If either of information, note or error message is returned instead of</span>
-    <span class="doccomment">/// json data from server. If empty json is returned or returned json cannot</span>
-    <span class="doccomment">/// be converted to struct than it will also raise error</span>
+    <span class="doccomment">/// Method for creating `ExchangeBuilder` for exchanging currency value from</span>
+    <span class="doccomment">/// one currency to another currency.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// #[tokio::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
-    <span class="doccomment">///     let exchange = api.exchange(&quot;BTC&quot;, &quot;CNY&quot;).await.unwrap();</span>
+    <span class="doccomment">///     let exchange = api.exchange(&quot;BTC&quot;, &quot;CNY&quot;).json().await.unwrap();</span>
     <span class="doccomment">///     assert_eq!(exchange.name_from(), &quot;Bitcoin&quot;);</span>
     <span class="doccomment">///     assert_eq!(exchange.code_from(), &quot;BTC&quot;);</span>
     <span class="doccomment">///     assert_eq!(exchange.name_to(), &quot;Chinese Yuan&quot;);</span>
     <span class="doccomment">///     assert_eq!(exchange.code_to(), &quot;CNY&quot;);</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">exchange</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">from_currency</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">to_currency</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Exchange</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="macro">format!</span>(
-            <span class="string">&quot;query?function=CURRENCY_EXCHANGE_RATE&amp;from_currency={}&amp;to_currency={}&amp;apikey={}&quot;</span>,
-            <span class="ident">from_currency</span>,
-            <span class="ident">to_currency</span>,
-            <span class="self">self</span>.<span class="ident">get_api</span>()
-        );
-        <span class="kw">let</span> <span class="ident">exchange_helper</span>: <span class="ident">ExchangeHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="ident">exchange_helper</span>.<span class="ident">convert</span>()
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">exchange</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>, <span class="ident">from_currency</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>, <span class="ident">to_currency</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ExchangeBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+        <span class="ident">ExchangeBuilder::new</span>(<span class="self">self</span>, <span class="ident">from_currency</span>, <span class="ident">to_currency</span>)
     }
 
-    <span class="doccomment">/// Method for calling stock time series forex API</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Errors</span>
-    <span class="doccomment">/// If either of information, note or error message is returned instead of</span>
-    <span class="doccomment">/// json data from server. If empty json is returned or returned json cannot</span>
-    <span class="doccomment">/// be converted to struct than it will also raise error</span>
+    <span class="doccomment">/// Method for creating `ForexBuilder` for `Forex` API</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
@@ -609,6 +460,7 @@
     <span class="doccomment">///             TimeSeriesInterval::None,</span>
     <span class="doccomment">///             OutputSize::None,</span>
     <span class="doccomment">///         )</span>
+    <span class="doccomment">///         .json()</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
     <span class="doccomment">///     assert_eq!(forex.symbol_from(), &quot;EUR&quot;);</span>
@@ -616,66 +468,49 @@
     <span class="doccomment">///     assert!(forex.interval().is_none());</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">forex</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">forex</span>(
+        <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>,
         <span class="ident">function</span>: <span class="ident">ForexFunction</span>,
-        <span class="ident">from_symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">to_symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">from_symbol</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
+        <span class="ident">to_symbol</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
         <span class="ident">interval</span>: <span class="ident">TimeSeriesInterval</span>,
         <span class="ident">output_size</span>: <span class="ident">OutputSize</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Forex</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="kw">crate</span><span class="ident">::forex::create_url</span>(
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ForexBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+        <span class="ident">ForexBuilder::new</span>(
+            <span class="self">self</span>,
             <span class="ident">function</span>,
             <span class="ident">from_symbol</span>,
             <span class="ident">to_symbol</span>,
             <span class="ident">interval</span>,
             <span class="ident">output_size</span>,
-            <span class="self">self</span>.<span class="ident">get_api</span>(),
-        );
-        <span class="kw">let</span> <span class="ident">forex_helper</span>: <span class="ident">ForexHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="ident">forex_helper</span>.<span class="ident">convert</span>()
+        )
     }
 
-    <span class="doccomment">/// Method for returning Quote Struct</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Errors</span>
-    <span class="doccomment">/// If either of information, note or error message is returned instead of</span>
-    <span class="doccomment">/// json data from server. If empty json is returned or returned json cannot</span>
-    <span class="doccomment">/// be converted to struct than it will also raise error</span>
-    <span class="doccomment">///</span>
+    <span class="doccomment">/// Method for creating `QuoteBuilder` from `APIClient`</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// #[tokio::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
-    <span class="doccomment">///     let quote = api.quote(&quot;MSFT&quot;).await.unwrap();</span>
+    <span class="doccomment">///     let quote = api.quote(&quot;MSFT&quot;).json().await.unwrap();</span>
     <span class="doccomment">///     let symbol = quote.symbol();</span>
     <span class="doccomment">///     assert_eq!(symbol, &quot;MSFT&quot;);</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">quote</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Quote</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="macro">format!</span>(
-            <span class="string">&quot;query?function=GLOBAL_QUOTE&amp;symbol={}&amp;apikey={}&quot;</span>,
-            <span class="ident">symbol</span>,
-            <span class="self">self</span>.<span class="ident">get_api</span>()
-        );
-        <span class="kw">let</span> <span class="ident">quote_helper</span>: <span class="ident">QuoteHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="ident">quote_helper</span>.<span class="ident">convert</span>()
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">quote</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>, <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QuoteBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+        <span class="ident">QuoteBuilder::new</span>(<span class="self">self</span>, <span class="ident">symbol</span>)
     }
 
-    <span class="doccomment">/// Method for searching keyword or company</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Errors</span>
-    <span class="doccomment">/// If either of information, note or error message is returned instead of</span>
-    <span class="doccomment">/// json data from server. If empty json is returned or returned json cannot</span>
-    <span class="doccomment">/// be converted to struct than it will also raise error</span>
+    <span class="doccomment">/// Method for creating search builder</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// #[tokio::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
-    <span class="doccomment">///     let search = api.search(&quot;BA&quot;).await.unwrap();</span>
+    <span class="doccomment">///     let search = api.search(&quot;BA&quot;).json().await.unwrap();</span>
     <span class="doccomment">///     let first_search_result = &amp;search.result()[0];</span>
     <span class="doccomment">///     assert_eq!(first_search_result.symbol(), &quot;BA&quot;);</span>
     <span class="doccomment">///     assert_eq!(first_search_result.name(), &quot;Boeing Company&quot;);</span>
@@ -685,47 +520,30 @@
     <span class="doccomment">///     assert_eq!(first_search_result.match_score(), 1.0);</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">search</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">keywords</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Search</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="macro">format!</span>(
-            <span class="string">&quot;query?function=SYMBOL_SEARCH&amp;keywords={}&amp;apikey={}&quot;</span>,
-            <span class="ident">keywords</span>,
-            <span class="self">self</span>.<span class="ident">get_api</span>()
-        );
-        <span class="kw">let</span> <span class="ident">search_helper</span>: <span class="ident">SearchHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="ident">search_helper</span>.<span class="ident">convert</span>()
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">search</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>, <span class="ident">keywords</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SearchBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+        <span class="ident">SearchBuilder::new</span>(<span class="self">self</span>, <span class="ident">keywords</span>)
     }
 
-    <span class="doccomment">/// Method for returning a sector data as struct</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Errors</span>
-    <span class="doccomment">/// If either of information, note or error message is returned instead of</span>
-    <span class="doccomment">/// json data from server. If empty json is returned or returned json cannot</span>
-    <span class="doccomment">/// be converted to struct than it will also raise error</span>
-    <span class="doccomment">///</span>
+    <span class="doccomment">/// Method for creating `SectorBuilder`</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// #[tokio::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
-    <span class="doccomment">///     let sector = api.sector().await.unwrap();</span>
+    <span class="doccomment">///     let sector = api.sector().json().await.unwrap();</span>
     <span class="doccomment">///     assert_eq!(</span>
     <span class="doccomment">///         sector.information(),</span>
     <span class="doccomment">///         &quot;US Sector Performance (realtime &amp; historical)&quot;</span>
     <span class="doccomment">///     );</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">sector</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Sector</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">&quot;query?function=SECTOR&amp;apikey={}&quot;</span>, <span class="self">self</span>.<span class="ident">get_api</span>());
-        <span class="kw">let</span> <span class="ident">sector_helper</span>: <span class="ident">SectorHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="ident">sector_helper</span>.<span class="ident">convert</span>()
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sector</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SectorBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+        <span class="ident">SectorBuilder::new</span>(<span class="self">self</span>)
     }
 
-    <span class="doccomment">/// Method for calling stock time series API</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Errors</span>
-    <span class="doccomment">/// If either of information, note or error message is returned instead of</span>
-    <span class="doccomment">/// json data from server. If empty json is returned or returned json cannot</span>
-    <span class="doccomment">/// be converted to struct than it will also raise error</span>
+    <span class="doccomment">/// Method for creating Stock time Builder from `APIClient`</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
@@ -740,31 +558,25 @@
     <span class="doccomment">///             TimeSeriesInterval::None,</span>
     <span class="doccomment">///             OutputSize::None,</span>
     <span class="doccomment">///         )</span>
+    <span class="doccomment">///         .json()</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
     <span class="doccomment">///     assert_eq!(stock.symbol(), &quot;MSFT&quot;);</span>
     <span class="doccomment">///     assert!(stock.interval().is_none());</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">stock_time</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">stock_time</span>(
+        <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>,
         <span class="ident">function</span>: <span class="ident">StockFunction</span>,
-        <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
         <span class="ident">interval</span>: <span class="ident">TimeSeriesInterval</span>,
         <span class="ident">output_size</span>: <span class="ident">OutputSize</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TimeSeries</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span>
-            <span class="kw">crate</span><span class="ident">::stock_time::create_url</span>(<span class="ident">function</span>, <span class="ident">symbol</span>, <span class="ident">interval</span>, <span class="ident">output_size</span>, <span class="self">self</span>.<span class="ident">get_api</span>());
-        <span class="kw">let</span> <span class="ident">time_series_helper</span>: <span class="ident">TimeSeriesHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="ident">time_series_helper</span>.<span class="ident">convert</span>()
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TimeSeriesBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+        <span class="ident">TimeSeriesBuilder::new</span>(<span class="self">self</span>, <span class="ident">function</span>, <span class="ident">symbol</span>, <span class="ident">interval</span>, <span class="ident">output_size</span>)
     }
 
-    <span class="doccomment">/// Method for technical indicator API</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Errors</span>
-    <span class="doccomment">/// If either of information, note or error message is returned instead of</span>
-    <span class="doccomment">/// json data from server. If empty json is returned or returned json cannot</span>
-    <span class="doccomment">/// be converted to struct than it will also raise error</span>
+    <span class="doccomment">/// Method for technical indicator builder</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Example</span>
     <span class="doccomment">/// ```</span>
@@ -776,48 +588,25 @@
     <span class="doccomment">///             &quot;SMA&quot;,</span>
     <span class="doccomment">///             &quot;IBM&quot;,</span>
     <span class="doccomment">///             alpha_vantage::utils::TechnicalIndicatorInterval::Weekly,</span>
-    <span class="doccomment">///             Some(10),</span>
-    <span class="doccomment">///             Some(&quot;open&quot;),</span>
-    <span class="doccomment">///             vec![],</span>
     <span class="doccomment">///         )</span>
+    <span class="doccomment">///         .time_period(10)</span>
+    <span class="doccomment">///         .series_type(&quot;open&quot;)</span>
+    <span class="doccomment">///         .json()</span>
     <span class="doccomment">///         .await;</span>
     <span class="doccomment">///     assert!(technical.is_ok());</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">technical_indicator</span>(
-        <span class="kw-2">&amp;</span><span class="self">self</span>,
-        <span class="ident">function</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-        <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">technical_indicator</span>(
+        <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>,
+        <span class="ident">function</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
+        <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
         <span class="ident">interval</span>: <span class="ident">TechnicalIndicatorInterval</span>,
-        <span class="ident">time_period</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span>,
-        <span class="ident">series_type</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>,
-        <span class="ident">extras</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">TechnicalIndicator</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Indicator</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="kw">crate</span><span class="ident">::technical_indicator::create_url</span>(
-            <span class="ident">function</span>,
-            <span class="ident">symbol</span>,
-            <span class="ident">interval</span>,
-            <span class="ident">time_period</span>,
-            <span class="ident">series_type</span>,
-            <span class="ident">extras</span>,
-            <span class="self">self</span>.<span class="ident">get_api</span>(),
-        );
-        <span class="kw">let</span> <span class="ident">indicator_helper</span>: <span class="ident">IndicatorHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_json</span>(<span class="ident">path</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="ident">indicator_helper</span>.<span class="ident">convert</span>()
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">IndicatorBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+        <span class="ident">IndicatorBuilder::new</span>(<span class="self">self</span>, <span class="ident">function</span>, <span class="ident">symbol</span>, <span class="ident">interval</span>)
     }
 }
-
-<span class="comment">// Mod for unit testing</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">mod</span> <span class="ident">test</span> {
-
-    <span class="attribute">#[<span class="ident">test</span>]</span>
-    <span class="kw">fn</span> <span class="ident">test_get_api</span>() {
-        <span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="kw">super</span><span class="ident">::ApiClient::set_api</span>(<span class="string">&quot;secret_key&quot;</span>, <span class="ident">reqwest::Client::new</span>());
-        <span class="macro">assert_eq!</span>(<span class="ident">api</span>.<span class="ident">get_api</span>(), <span class="string">&quot;secret_key&quot;</span>.<span class="ident">to_string</span>());
-    }
-}
-</pre></div>
+</code></pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
     <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script>
 </body></html>
