@@ -11,6 +11,7 @@
 use serde::Deserialize;
 
 use crate::{
+    api::ApiClient,
     deserialize::{from_str, percent_f64},
     error::{Error, Result},
     utils::detect_common_helper_error,
@@ -108,7 +109,7 @@ impl Quote {
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
-    ///     let quote = api.quote("MSFT").await.unwrap();
+    ///     let quote = api.quote("MSFT").json().await.unwrap();
     ///     let symbol = quote.symbol();
     ///     assert_eq!(symbol, "MSFT");
     /// }
@@ -141,5 +142,38 @@ impl QuoteHelper {
         }
         quote.global_quote = self.global_quote.unwrap();
         Ok(quote)
+    }
+}
+
+/// Builder to create `Quote`
+pub struct QuoteBuilder<'a> {
+    api_client: &'a ApiClient<'a>,
+    symbol: &'a str,
+}
+
+impl<'a> QuoteBuilder<'a> {
+    /// Create new `QuoteBuilder` from `APIClient`
+    #[must_use]
+    pub fn new(api_client: &'a ApiClient, symbol: &'a str) -> Self {
+        Self { api_client, symbol }
+    }
+
+    fn create_url(&self) -> String {
+        format!(
+            "query?function=GLOBAL_QUOTE&symbol={}&apikey={}",
+            self.symbol,
+            self.api_client.get_api_key()
+        )
+    }
+
+    /// Returns JSON data struct
+    ///
+    /// # Errors
+    /// Raise error if data obtained cannot be properly converted to struct or
+    /// API returns any 4 possible known errors
+    pub async fn json(&self) -> Result<Quote> {
+        let url = self.create_url();
+        let quote_helper: QuoteHelper = self.api_client.get_json(url).await?;
+        quote_helper.convert()
     }
 }

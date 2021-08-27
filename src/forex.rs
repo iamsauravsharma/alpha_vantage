@@ -13,6 +13,7 @@ use std::collections::HashMap;
 use serde::Deserialize;
 
 use crate::{
+    api::ApiClient,
     deserialize::from_str,
     error::{Error, Result},
     utils::{detect_common_helper_error, ForexFunction, OutputSize, TimeSeriesInterval},
@@ -95,6 +96,7 @@ impl Forex {
     ///             TimeSeriesInterval::FiveMin,
     ///             OutputSize::Full,
     ///         )
+    ///         .json()
     ///         .await
     ///         .unwrap();
     ///     let information = forex.information();
@@ -121,6 +123,7 @@ impl Forex {
     ///             TimeSeriesInterval::FiveMin,
     ///             OutputSize::Full,
     ///         )
+    ///         .json()
     ///         .await
     ///         .unwrap();
     ///     let symbol_from = forex.symbol_from();
@@ -147,6 +150,7 @@ impl Forex {
     ///             TimeSeriesInterval::FiveMin,
     ///             OutputSize::Full,
     ///         )
+    ///         .json()
     ///         .await
     ///         .unwrap();
     ///     let symbol_to = forex.symbol_to();
@@ -185,6 +189,7 @@ impl Forex {
     ///             TimeSeriesInterval::FiveMin,
     ///             OutputSize::Full,
     ///         )
+    ///         .json()
     ///         .await
     ///         .unwrap();
     ///     let interval = forex.interval();
@@ -211,6 +216,7 @@ impl Forex {
     ///             TimeSeriesInterval::FiveMin,
     ///             OutputSize::Full,
     ///         )
+    ///         .json()
     ///         .await
     ///         .unwrap();
     ///     let output_size = forex.output_size();
@@ -410,101 +416,79 @@ impl VecEntry for Vec<Entry> {
     }
 }
 
-/// Create Url from given user parameter for reqwest crate
-pub(crate) fn create_url(
+/// Builder to create `Forex`
+pub struct ForexBuilder<'a> {
+    api_client: &'a ApiClient<'a>,
     function: ForexFunction,
-    from_symbol: &str,
-    to_symbol: &str,
+    from_symbol: &'a str,
+    to_symbol: &'a str,
     interval: TimeSeriesInterval,
     output_size: OutputSize,
-    api: &str,
-) -> String {
-    let function = match function {
-        ForexFunction::IntraDay => "FX_INTRADAY",
-        ForexFunction::Daily => "FX_DAILY",
-        ForexFunction::Weekly => "FX_WEEKLY",
-        ForexFunction::Monthly => "FX_MONTHLY",
-    };
-
-    let mut url = format!(
-        "query?function={}&from_symbol={}&to_symbol={}",
-        function, from_symbol, to_symbol
-    );
-    let interval = match interval {
-        TimeSeriesInterval::OneMin => "1min",
-        TimeSeriesInterval::FiveMin => "5min",
-        TimeSeriesInterval::FifteenMin => "15min",
-        TimeSeriesInterval::ThirtyMin => "30min",
-        TimeSeriesInterval::SixtyMin => "60min",
-        TimeSeriesInterval::None => "",
-    };
-
-    if !interval.is_empty() {
-        url.push_str(&format!("&interval={}", interval));
-    }
-
-    url.push_str(match output_size {
-        OutputSize::Full => "&outputsize=full",
-        _ => "",
-    });
-
-    url.push_str(&format!("&apikey={}", api));
-    url
 }
 
-// Test module
-#[cfg(test)]
-mod test {
-    use crate::utils::*;
-    #[test]
-    // Testing forex create_url() function
-    fn test_forex_create_url() {
-        assert_eq!(
-            super::create_url(
-                ForexFunction::Daily,
-                "USD",
-                "NPR",
-                TimeSeriesInterval::None,
-                OutputSize::None,
-                "random"
-            ),
-            String::from("query?function=FX_DAILY&from_symbol=USD&to_symbol=NPR&apikey=random")
+impl<'a> ForexBuilder<'a> {
+    /// Create new `ForexBuilder` from `APIClient`
+    #[must_use]
+    pub fn new(
+        api_client: &'a ApiClient,
+        function: ForexFunction,
+        from_symbol: &'a str,
+        to_symbol: &'a str,
+        interval: TimeSeriesInterval,
+        output_size: OutputSize,
+    ) -> Self {
+        Self {
+            api_client,
+            function,
+            from_symbol,
+            to_symbol,
+            interval,
+            output_size,
+        }
+    }
+
+    fn create_url(&self) -> String {
+        let function = match self.function {
+            ForexFunction::IntraDay => "FX_INTRADAY",
+            ForexFunction::Daily => "FX_DAILY",
+            ForexFunction::Weekly => "FX_WEEKLY",
+            ForexFunction::Monthly => "FX_MONTHLY",
+        };
+
+        let mut url = format!(
+            "query?function={}&from_symbol={}&to_symbol={}",
+            function, self.from_symbol, self.to_symbol
         );
-        assert_eq!(
-            super::create_url(
-                ForexFunction::Weekly,
-                "USD",
-                "NPR",
-                TimeSeriesInterval::None,
-                OutputSize::None,
-                "random"
-            ),
-            String::from("query?function=FX_WEEKLY&from_symbol=USD&to_symbol=NPR&apikey=random")
-        );
-        assert_eq!(
-            super::create_url(
-                ForexFunction::Monthly,
-                "USD",
-                "NPR",
-                TimeSeriesInterval::None,
-                OutputSize::None,
-                "random"
-            ),
-            String::from("query?function=FX_MONTHLY&from_symbol=USD&to_symbol=NPR&apikey=random")
-        );
-        assert_eq!(
-            super::create_url(
-                ForexFunction::IntraDay,
-                "USD",
-                "NPR",
-                TimeSeriesInterval::FifteenMin,
-                OutputSize::Full,
-                "random"
-            ),
-            String::from(
-                "query?function=FX_INTRADAY&from_symbol=USD&to_symbol=NPR&interval=15min&\
-                 outputsize=full&apikey=random"
-            )
-        );
+        let interval = match self.interval {
+            TimeSeriesInterval::OneMin => "1min",
+            TimeSeriesInterval::FiveMin => "5min",
+            TimeSeriesInterval::FifteenMin => "15min",
+            TimeSeriesInterval::ThirtyMin => "30min",
+            TimeSeriesInterval::SixtyMin => "60min",
+            TimeSeriesInterval::None => "",
+        };
+
+        if !interval.is_empty() {
+            url.push_str(&format!("&interval={}", interval));
+        }
+
+        url.push_str(match self.output_size {
+            OutputSize::Full => "&outputsize=full",
+            _ => "",
+        });
+
+        url.push_str(&format!("&apikey={}", self.api_client.get_api_key()));
+        url
+    }
+
+    /// Returns JSON data struct
+    ///
+    /// # Errors
+    /// Raise error if data obtained cannot be properly converted to struct or
+    /// API returns any 4 possible known errors
+    pub async fn json(&self) -> Result<Forex> {
+        let url = self.create_url();
+        let forex_helper: ForexHelper = self.api_client.get_json(url).await?;
+        forex_helper.convert()
     }
 }

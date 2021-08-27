@@ -13,6 +13,7 @@ use std::{collections::HashMap, str::FromStr};
 use serde::Deserialize;
 
 use crate::{
+    api::ApiClient,
     deserialize::from_str,
     error::{Error, Result},
     utils::{detect_common_helper_error, CryptoFunction},
@@ -137,6 +138,7 @@ impl Crypto {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let crypto = api
     ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
+    ///         .json()
     ///         .await
     ///         .unwrap();
     ///     let information = crypto.information();
@@ -156,6 +158,7 @@ impl Crypto {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let crypto = api
     ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
+    ///         .json()
     ///         .await
     ///         .unwrap();
     ///     let digital_code = crypto.digital_code();
@@ -175,6 +178,7 @@ impl Crypto {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let crypto = api
     ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
+    ///         .json()
     ///         .await
     ///         .unwrap();
     ///     let digital_name = crypto.digital_name();
@@ -194,6 +198,7 @@ impl Crypto {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let crypto = api
     ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
+    ///         .json()
     ///         .await
     ///         .unwrap();
     ///     let market_code = crypto.market_code();
@@ -213,6 +218,7 @@ impl Crypto {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let crypto = api
     ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
+    ///         .json()
     ///         .await
     ///         .unwrap();
     ///     let market_name = crypto.market_name();
@@ -398,46 +404,54 @@ impl VecEntry for Vec<Entry> {
     }
 }
 
-/// Create url from which JSON data is collected for Crypto
-pub(crate) fn create_url(
+/// Builder to help create `Crypto`
+pub struct CryptoBuilder<'a> {
+    api_client: &'a ApiClient<'a>,
     function: CryptoFunction,
-    symbol: &str,
-    market: &str,
-    api: &str,
-) -> String {
-    let function_name = match function {
-        CryptoFunction::Daily => "DIGITAL_CURRENCY_DAILY",
-        CryptoFunction::Weekly => "DIGITAL_CURRENCY_WEEKLY",
-        CryptoFunction::Monthly => "DIGITAL_CURRENCY_MONTHLY",
-    };
-    format!(
-        "query?function={}&symbol={}&market={}&apikey={}",
-        function_name, symbol, market, api
-    )
+    symbol: &'a str,
+    market: &'a str,
 }
 
-#[cfg(test)]
-mod test {
-    use crate::utils::*;
-    #[test]
-    fn test_crypto_create_url() {
-        assert_eq!(
-            super::create_url(CryptoFunction::Daily, "BTC", "USD", "random"),
-            String::from(
-                "query?function=DIGITAL_CURRENCY_DAILY&symbol=BTC&market=USD&apikey=random"
-            )
-        );
-        assert_eq!(
-            super::create_url(CryptoFunction::Weekly, "ETH", "EUR", "randomkey"),
-            String::from(
-                "query?function=DIGITAL_CURRENCY_WEEKLY&symbol=ETH&market=EUR&apikey=randomkey"
-            )
-        );
-        assert_eq!(
-            super::create_url(CryptoFunction::Monthly, "BTC", "CNY", "secret_key"),
-            String::from(
-                "query?function=DIGITAL_CURRENCY_MONTHLY&symbol=BTC&market=CNY&apikey=secret_key"
-            )
-        );
+impl<'a> CryptoBuilder<'a> {
+    /// Create new `CryptoBuilder` with help of `APIClient`
+    #[must_use]
+    pub fn new(
+        api_client: &'a ApiClient,
+        function: CryptoFunction,
+        symbol: &'a str,
+        market: &'a str,
+    ) -> Self {
+        Self {
+            api_client,
+            function,
+            symbol,
+            market,
+        }
+    }
+
+    fn create_url(&self) -> String {
+        let function_name = match self.function {
+            CryptoFunction::Daily => "DIGITAL_CURRENCY_DAILY",
+            CryptoFunction::Weekly => "DIGITAL_CURRENCY_WEEKLY",
+            CryptoFunction::Monthly => "DIGITAL_CURRENCY_MONTHLY",
+        };
+        format!(
+            "query?function={}&symbol={}&market={}&apikey={}",
+            function_name,
+            self.symbol,
+            self.market,
+            self.api_client.get_api_key()
+        )
+    }
+
+    /// Returns JSON data struct
+    ///
+    /// # Errors
+    /// Raise error if data obtained cannot be properly converted to struct or
+    /// API returns any 4 possible known errors
+    pub async fn json(&self) -> Result<Crypto> {
+        let url = self.create_url();
+        let crypto_helper: CryptoHelper = self.api_client.get_json(url).await?;
+        crypto_helper.convert()
     }
 }

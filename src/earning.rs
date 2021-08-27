@@ -7,6 +7,7 @@
 use serde::Deserialize;
 
 use crate::{
+    api::ApiClient,
     deserialize::{from_none_str, from_str},
     error::{Error, Result},
     utils::detect_common_helper_error,
@@ -108,7 +109,7 @@ impl Earning {
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
-    ///     let earning = api.earning("IBM").await.unwrap();
+    ///     let earning = api.earning("IBM").json().await.unwrap();
     ///     let symbol = earning.symbol();
     ///     assert_eq!(symbol, "IBM");
     /// }
@@ -163,5 +164,38 @@ impl EarningHelper {
         earning.annual_earning = self.annual_earning.unwrap();
         earning.quarterly_earning = self.quarterly_earning.unwrap();
         Ok(earning)
+    }
+}
+
+/// Builder to help create Earning
+pub struct EarningBuilder<'a> {
+    api_client: &'a ApiClient<'a>,
+    symbol: &'a str,
+}
+
+impl<'a> EarningBuilder<'a> {
+    /// Create new Earning Builder with help of `APIClient`
+    #[must_use]
+    pub fn new(api_client: &'a ApiClient, symbol: &'a str) -> Self {
+        Self { api_client, symbol }
+    }
+
+    fn create_url(&self) -> String {
+        format!(
+            "query?function=EARNINGS&symbol={}&apikey={}",
+            self.symbol,
+            self.api_client.get_api_key()
+        )
+    }
+
+    /// Returns JSON data struct
+    ///
+    /// # Errors
+    /// Raise error if data obtained cannot be properly converted to struct or
+    /// API returns any 4 possible known errors
+    pub async fn json(&self) -> Result<Earning> {
+        let url = self.create_url();
+        let earning_helper: EarningHelper = self.api_client.get_json(url).await?;
+        earning_helper.convert()
     }
 }

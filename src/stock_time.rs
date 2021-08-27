@@ -15,6 +15,7 @@ use std::{collections::HashMap, str::FromStr};
 use serde::Deserialize;
 
 use crate::{
+    api::ApiClient,
     deserialize::from_str,
     error::{Error, Result},
     utils::{detect_common_helper_error, OutputSize, StockFunction, TimeSeriesInterval},
@@ -123,6 +124,7 @@ impl TimeSeries {
     ///             TimeSeriesInterval::FiveMin,
     ///             OutputSize::Full,
     ///         )
+    ///         .json()
     ///         .await
     ///         .unwrap();
     ///     let information = stock_time.information();
@@ -151,6 +153,7 @@ impl TimeSeries {
     ///             TimeSeriesInterval::FiveMin,
     ///             OutputSize::Full,
     ///         )
+    ///         .json()
     ///         .await
     ///         .unwrap();
     ///     let symbol = stock_time.symbol();
@@ -188,6 +191,7 @@ impl TimeSeries {
     ///             TimeSeriesInterval::FiveMin,
     ///             OutputSize::Full,
     ///         )
+    ///         .json()
     ///         .await
     ///         .unwrap();
     ///     let interval = stock_time.interval();
@@ -213,6 +217,7 @@ impl TimeSeries {
     ///             TimeSeriesInterval::FiveMin,
     ///             OutputSize::Full,
     ///         )
+    ///         .json()
     ///         .await
     ///         .unwrap();
     ///     let output_size = stock_time.output_size();
@@ -464,93 +469,75 @@ where
     val.map(|s| T::from_str(&s).unwrap())
 }
 
-/// create url from user provided data
-pub(crate) fn create_url(
+/// Builder to create new `TimeSeries`
+pub struct TimeSeriesBuilder<'a> {
+    api_client: &'a ApiClient<'a>,
     function: StockFunction,
-    symbol: &str,
+    symbol: &'a str,
     interval: TimeSeriesInterval,
     output_size: OutputSize,
-    api: &str,
-) -> String {
-    let function = match function {
-        StockFunction::IntraDay => "TIME_SERIES_INTRADAY",
-        StockFunction::Daily => "TIME_SERIES_DAILY",
-        StockFunction::DailyAdjusted => "TIME_SERIES_DAILY_ADJUSTED",
-        StockFunction::Weekly => "TIME_SERIES_WEEKLY",
-        StockFunction::WeeklyAdjusted => "TIME_SERIES_WEEKLY_ADJUSTED",
-        StockFunction::Monthly => "TIME_SERIES_MONTHLY",
-        StockFunction::MonthlyAdjusted => "TIME_SERIES_MONTHLY_ADJUSTED",
-    };
-
-    let mut url = format!("query?function={}&symbol={}", function, symbol);
-    let interval = match interval {
-        TimeSeriesInterval::OneMin => "1min",
-        TimeSeriesInterval::FiveMin => "5min",
-        TimeSeriesInterval::FifteenMin => "15min",
-        TimeSeriesInterval::ThirtyMin => "30min",
-        TimeSeriesInterval::SixtyMin => "60min",
-        TimeSeriesInterval::None => "",
-    };
-
-    if !interval.is_empty() {
-        url.push_str(&format!("&interval={}", interval));
-    }
-
-    url.push_str(match output_size {
-        OutputSize::Full => "&outputsize=full",
-        _ => "",
-    });
-    url.push_str(&format!("&apikey={}", api));
-    url
 }
 
-#[cfg(test)]
-mod test {
-    use crate::utils::*;
-    #[test]
-    fn test_stock_time_create_url() {
-        assert_eq!(
-            super::create_url(
-                StockFunction::Daily,
-                "USD",
-                TimeSeriesInterval::None,
-                OutputSize::None,
-                "random"
-            ),
-            String::from("query?function=TIME_SERIES_DAILY&symbol=USD&apikey=random")
-        );
-        assert_eq!(
-            super::create_url(
-                StockFunction::Weekly,
-                "NPR",
-                TimeSeriesInterval::None,
-                OutputSize::None,
-                "random"
-            ),
-            String::from("query?function=TIME_SERIES_WEEKLY&symbol=NPR&apikey=random")
-        );
-        assert_eq!(
-            super::create_url(
-                StockFunction::Monthly,
-                "NPR",
-                TimeSeriesInterval::None,
-                OutputSize::None,
-                "random"
-            ),
-            String::from("query?function=TIME_SERIES_MONTHLY&symbol=NPR&apikey=random")
-        );
-        assert_eq!(
-            super::create_url(
-                StockFunction::IntraDay,
-                "MSFT",
-                TimeSeriesInterval::SixtyMin,
-                OutputSize::Full,
-                "random"
-            ),
-            String::from(
-                "query?function=TIME_SERIES_INTRADAY&symbol=MSFT&interval=60min&outputsize=full&\
-                 apikey=random"
-            )
-        );
+impl<'a> TimeSeriesBuilder<'a> {
+    /// Create new `TimeSeriesBuilder` form `APIClient`
+    #[must_use]
+    pub fn new(
+        api_client: &'a ApiClient,
+        function: StockFunction,
+        symbol: &'a str,
+        interval: TimeSeriesInterval,
+        output_size: OutputSize,
+    ) -> Self {
+        Self {
+            api_client,
+            function,
+            symbol,
+            interval,
+            output_size,
+        }
+    }
+
+    fn create_url(&self) -> String {
+        let function = match self.function {
+            StockFunction::IntraDay => "TIME_SERIES_INTRADAY",
+            StockFunction::Daily => "TIME_SERIES_DAILY",
+            StockFunction::DailyAdjusted => "TIME_SERIES_DAILY_ADJUSTED",
+            StockFunction::Weekly => "TIME_SERIES_WEEKLY",
+            StockFunction::WeeklyAdjusted => "TIME_SERIES_WEEKLY_ADJUSTED",
+            StockFunction::Monthly => "TIME_SERIES_MONTHLY",
+            StockFunction::MonthlyAdjusted => "TIME_SERIES_MONTHLY_ADJUSTED",
+        };
+
+        let mut url = format!("query?function={}&symbol={}", function, self.symbol);
+        let interval = match self.interval {
+            TimeSeriesInterval::OneMin => "1min",
+            TimeSeriesInterval::FiveMin => "5min",
+            TimeSeriesInterval::FifteenMin => "15min",
+            TimeSeriesInterval::ThirtyMin => "30min",
+            TimeSeriesInterval::SixtyMin => "60min",
+            TimeSeriesInterval::None => "",
+        };
+
+        if !interval.is_empty() {
+            url.push_str(&format!("&interval={}", interval));
+        }
+
+        url.push_str(match self.output_size {
+            OutputSize::Full => "&outputsize=full",
+            _ => "",
+        });
+        url.push_str(&format!("&apikey={}", self.api_client.get_api_key()));
+        url
+    }
+
+    /// Returns JSON data struct
+    ///
+    /// # Errors
+    /// Raise error if data obtained cannot be properly converted to struct or
+    /// API returns any 4 possible known errors
+    pub async fn json(&self) -> Result<TimeSeries> {
+        let url = self.create_url();
+        let stock_time_helper: TimeSeriesHelper = self.api_client.get_json(url).await?;
+        stock_time_helper.convert()
     }
 }
