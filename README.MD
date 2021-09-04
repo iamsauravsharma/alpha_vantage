@@ -41,7 +41,7 @@ Sample code to find exchange rate between two currency(both physical & digital s
 
 ```rust
 let api_key = alpha_vantage::set_api("YOUR-API-HERE", reqwest::Client::new());
-let exchange = api_key.exchange("USD","CNY").await.unwrap();
+let exchange = api_key.exchange("USD","CNY").json().await.unwrap();
 let rate = exchange.rate();
 println!("{}",rate);
 ```
