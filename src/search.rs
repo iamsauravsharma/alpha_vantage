@@ -224,11 +224,7 @@ impl<'a> SearchBuilder<'a> {
     }
 
     fn create_url(&self) -> String {
-        format!(
-            "query?function=SYMBOL_SEARCH&keywords={}&apikey={}",
-            self.keywords,
-            self.api_client.get_api_key()
-        )
+        format!("query?function=SYMBOL_SEARCH&keywords={}", self.keywords)
     }
 
     /// Returns JSON data struct

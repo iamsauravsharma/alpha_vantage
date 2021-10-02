@@ -252,11 +252,8 @@ impl<'a> SectorBuilder<'a> {
         Self { api_client }
     }
 
-    fn create_url(&self) -> String {
-        format!(
-            "query?function=SECTOR&apikey={}",
-            self.api_client.get_api_key()
-        )
+    fn create_url() -> String {
+        String::from("query?function=SECTOR")
     }
 
     /// Returns JSON data struct
@@ -265,7 +262,7 @@ impl<'a> SectorBuilder<'a> {
     /// Raise error if data obtained cannot be properly converted to struct or
     /// API returns any 4 possible known errors
     pub async fn json(&self) -> Result<Sector> {
-        let url = self.create_url();
+        let url = Self::create_url();
         let sector_helper: SectorHelper = self.api_client.get_json(url).await?;
         sector_helper.convert()
     }

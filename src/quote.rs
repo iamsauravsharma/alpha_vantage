@@ -159,11 +159,7 @@ impl<'a> QuoteBuilder<'a> {
     }
 
     fn create_url(&self) -> String {
-        format!(
-            "query?function=GLOBAL_QUOTE&symbol={}&apikey={}",
-            self.symbol,
-            self.api_client.get_api_key()
-        )
+        format!("query?function=GLOBAL_QUOTE&symbol={}", self.symbol)
     }
 
     /// Returns JSON data struct
