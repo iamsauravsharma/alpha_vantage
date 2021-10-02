@@ -187,10 +187,8 @@ impl<'a> ExchangeBuilder<'a> {
 
     fn create_url(&self) -> String {
         format!(
-            "query?function=CURRENCY_EXCHANGE_RATE&from_currency={}&to_currency={}&apikey={}",
-            self.from_currency,
-            self.to_currency,
-            self.api_client.get_api_key()
+            "query?function=CURRENCY_EXCHANGE_RATE&from_currency={}&to_currency={}",
+            self.from_currency, self.to_currency
         )
     }
 

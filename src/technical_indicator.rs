@@ -251,7 +251,6 @@ impl<'a> IndicatorBuilder<'a> {
                 }
             }
         }
-        created_link.push_str(&format!("&apikey={}", self.api_client.get_api_key()));
         created_link
     }
 

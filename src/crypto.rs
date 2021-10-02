@@ -436,11 +436,8 @@ impl<'a> CryptoBuilder<'a> {
             CryptoFunction::Monthly => "DIGITAL_CURRENCY_MONTHLY",
         };
         format!(
-            "query?function={}&symbol={}&market={}&apikey={}",
-            function_name,
-            self.symbol,
-            self.market,
-            self.api_client.get_api_key()
+            "query?function={}&symbol={}&market={}",
+            function_name, self.symbol, self.market
         )
     }
 

@@ -476,8 +476,6 @@ impl<'a> ForexBuilder<'a> {
             OutputSize::Full => "&outputsize=full",
             _ => "",
         });
-
-        url.push_str(&format!("&apikey={}", self.api_client.get_api_key()));
         url
     }
 

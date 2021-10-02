@@ -181,11 +181,7 @@ impl<'a> EarningBuilder<'a> {
     }
 
     fn create_url(&self) -> String {
-        format!(
-            "query?function=EARNINGS&symbol={}&apikey={}",
-            self.symbol,
-            self.api_client.get_api_key()
-        )
+        format!("query?function=EARNINGS&symbol={}", self.symbol)
     }
 
     /// Returns JSON data struct

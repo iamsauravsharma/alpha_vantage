@@ -20,11 +20,21 @@ use crate::{
 };
 
 const BASE_URL: &str = "https://www.alphavantage.co/";
+const RAPID_API_BASE_URL: &str = "https://alpha-vantage.p.rapidapi.com/query";
+
+/// Provider for alpha vantage API
+pub enum Provider {
+    /// Use alphavantage API provider
+    AlphaVantage,
+    /// User RapidAPI as provider
+    RapidAPI,
+}
 
 /// Struct for initializing client which contains different method for API call
 pub struct ApiClient<'a> {
     api: &'a str,
     client: Box<dyn HttpClient>,
+    provider: Provider,
 }
 
 impl<'a> ApiClient<'a> {
@@ -43,6 +53,26 @@ impl<'a> ApiClient<'a> {
         Self {
             api,
             client: Box::new(client),
+            provider: Provider::AlphaVantage,
+        }
+    }
+
+    /// Method for initializing [ApiClient][ApiClient] struct using user
+    /// provided client and `RapidAPI`
+    ///
+    /// ```
+    /// use alpha_vantage::api::ApiClient;
+    /// let api = ApiClient::set_api("some_key", reqwest::Client::new());
+    /// ```
+    #[must_use]
+    pub fn set_rapid_api<T>(api: &'a str, client: T) -> Self
+    where
+        T: HttpClient + 'static,
+    {
+        Self {
+            api,
+            client: Box::new(client),
+            provider: Provider::RapidAPI,
         }
     }
 
@@ -63,8 +93,24 @@ impl<'a> ApiClient<'a> {
     where
         T: DeserializeOwned,
     {
-        let full_path = format!("{}{}", BASE_URL, path);
-        let string_output = self.client.get_output(full_path).await?;
+        let string_output = match &self.provider {
+            Provider::AlphaVantage => {
+                self.client
+                    .get_alpha_vantage_provider_output(format!(
+                        "{}{}&apikey={}",
+                        BASE_URL, path, self.api
+                    ))
+                    .await
+            }
+            Provider::RapidAPI => {
+                self.client
+                    .get_rapid_api_provider_output(
+                        format!("{}{}", RAPID_API_BASE_URL, path),
+                        String::from(self.api),
+                    )
+                    .await
+            }
+        }?;
         serde_json::from_str(&string_output).map_err(|_| Error::DecodeJsonToStruct)
     }
 

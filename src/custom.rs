@@ -63,7 +63,6 @@ impl<'a> CustomBuilder<'a> {
         for (key, value) in &self.extras {
             path.push_str(format!("&{}={}", key, value).as_str());
         }
-        path.push_str(format!("&apikey={}", self.api_client.get_api_key()).as_str());
         path
     }
 
