@@ -267,9 +267,6 @@
 <span id="267">267</span>
 <span id="268">268</span>
 <span id="269">269</span>
-<span id="270">270</span>
-<span id="271">271</span>
-<span id="272">272</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Module for sector</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! This API returns the realtime and historical sector performances calculated</span>
@@ -524,11 +521,8 @@
         <span class="self">Self</span> { <span class="ident">api_client</span> }
     }
 
-    <span class="kw">fn</span> <span class="ident">create_url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
-        <span class="macro">format!</span>(
-            <span class="string">&quot;query?function=SECTOR&amp;apikey={}&quot;</span>,
-            <span class="self">self</span>.<span class="ident">api_client</span>.<span class="ident">get_api_key</span>()
-        )
+    <span class="kw">fn</span> <span class="ident">create_url</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+        <span class="ident">String::from</span>(<span class="string">&quot;query?function=SECTOR&quot;</span>)
     }
 
     <span class="doccomment">/// Returns JSON data struct</span>
@@ -537,7 +531,7 @@
     <span class="doccomment">/// Raise error if data obtained cannot be properly converted to struct or</span>
     <span class="doccomment">/// API returns any 4 possible known errors</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">json</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Sector</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">url</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">create_url</span>();
+        <span class="kw">let</span> <span class="ident">url</span> <span class="op">=</span> <span class="ident"><span class="self">Self</span>::create_url</span>();
         <span class="kw">let</span> <span class="ident">sector_helper</span>: <span class="ident">SectorHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">api_client</span>.<span class="ident">get_json</span>(<span class="ident">url</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="ident">sector_helper</span>.<span class="ident">convert</span>()
     }

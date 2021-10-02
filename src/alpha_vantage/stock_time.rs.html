@@ -540,7 +540,6 @@
 <span id="540">540</span>
 <span id="541">541</span>
 <span id="542">542</span>
-<span id="543">543</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Module for stock time series</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! This suite of APIs provide realtime and historical global equity data in 4</span>
@@ -1069,7 +1068,6 @@
             <span class="ident">OutputSize::Full</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;&amp;outputsize=full&quot;</span>,
             <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;&quot;</span>,
         });
-        <span class="ident">url</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;&amp;apikey={}&quot;</span>, <span class="self">self</span>.<span class="ident">api_client</span>.<span class="ident">get_api_key</span>()));
         <span class="ident">url</span>
     }
 

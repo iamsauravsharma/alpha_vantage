@@ -173,10 +173,6 @@
 <span id="173">173</span>
 <span id="174">174</span>
 <span id="175">175</span>
-<span id="176">176</span>
-<span id="177">177</span>
-<span id="178">178</span>
-<span id="179">179</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Module for returning latest price and volume information</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! A lightweight alternative to the time series APIs, this service returns the</span>
@@ -338,11 +334,7 @@
     }
 
     <span class="kw">fn</span> <span class="ident">create_url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
-        <span class="macro">format!</span>(
-            <span class="string">&quot;query?function=GLOBAL_QUOTE&amp;symbol={}&amp;apikey={}&quot;</span>,
-            <span class="self">self</span>.<span class="ident">symbol</span>,
-            <span class="self">self</span>.<span class="ident">api_client</span>.<span class="ident">get_api_key</span>()
-        )
+        <span class="macro">format!</span>(<span class="string">&quot;query?function=GLOBAL_QUOTE&amp;symbol={}&quot;</span>, <span class="self">self</span>.<span class="ident">symbol</span>)
     }
 
     <span class="doccomment">/// Returns JSON data struct</span>

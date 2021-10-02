@@ -452,9 +452,6 @@
 <span id="452">452</span>
 <span id="453">453</span>
 <span id="454">454</span>
-<span id="455">455</span>
-<span id="456">456</span>
-<span id="457">457</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Module for crypto real time data</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! APIs under this section provide a wide range of data feed for digital and</span>
@@ -893,11 +890,8 @@
             <span class="ident">CryptoFunction::Monthly</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;DIGITAL_CURRENCY_MONTHLY&quot;</span>,
         };
         <span class="macro">format!</span>(
-            <span class="string">&quot;query?function={}&amp;symbol={}&amp;market={}&amp;apikey={}&quot;</span>,
-            <span class="ident">function_name</span>,
-            <span class="self">self</span>.<span class="ident">symbol</span>,
-            <span class="self">self</span>.<span class="ident">market</span>,
-            <span class="self">self</span>.<span class="ident">api_client</span>.<span class="ident">get_api_key</span>()
+            <span class="string">&quot;query?function={}&amp;symbol={}&amp;market={}&quot;</span>,
+            <span class="ident">function_name</span>, <span class="self">self</span>.<span class="ident">symbol</span>, <span class="self">self</span>.<span class="ident">market</span>
         )
     }
 

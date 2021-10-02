@@ -490,8 +490,6 @@
 <span id="490">490</span>
 <span id="491">491</span>
 <span id="492">492</span>
-<span id="493">493</span>
-<span id="494">494</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Module for Forex realtime and historical data</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! APIs under this section provide a wide range of data feed for realtime and</span>
@@ -970,8 +968,6 @@
             <span class="ident">OutputSize::Full</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;&amp;outputsize=full&quot;</span>,
             <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;&quot;</span>,
         });
-
-        <span class="ident">url</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;&amp;apikey={}&quot;</span>, <span class="self">self</span>.<span class="ident">api_client</span>.<span class="ident">get_api_key</span>()));
         <span class="ident">url</span>
     }
 

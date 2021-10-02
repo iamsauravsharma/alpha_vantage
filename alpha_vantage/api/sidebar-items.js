@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["ApiClient","Struct for initializing client which contains different method for API call"]]});
+initSidebarItems({"enum":[["Provider","Provider for alpha vantage API"]],"struct":[["ApiClient","Struct for initializing client which contains different method for API call"]]});

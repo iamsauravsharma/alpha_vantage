@@ -238,10 +238,6 @@
 <span id="238">238</span>
 <span id="239">239</span>
 <span id="240">240</span>
-<span id="241">241</span>
-<span id="242">242</span>
-<span id="243">243</span>
-<span id="244">244</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Module for searching specific symbol or companies</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Looking for some specific symbols or companies? Trying to build a search box</span>
@@ -468,11 +464,7 @@
     }
 
     <span class="kw">fn</span> <span class="ident">create_url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
-        <span class="macro">format!</span>(
-            <span class="string">&quot;query?function=SYMBOL_SEARCH&amp;keywords={}&amp;apikey={}&quot;</span>,
-            <span class="self">self</span>.<span class="ident">keywords</span>,
-            <span class="self">self</span>.<span class="ident">api_client</span>.<span class="ident">get_api_key</span>()
-        )
+        <span class="macro">format!</span>(<span class="string">&quot;query?function=SYMBOL_SEARCH&amp;keywords={}&quot;</span>, <span class="self">self</span>.<span class="ident">keywords</span>)
     }
 
     <span class="doccomment">/// Returns JSON data struct</span>

@@ -203,8 +203,6 @@
 <span id="203">203</span>
 <span id="204">204</span>
 <span id="205">205</span>
-<span id="206">206</span>
-<span id="207">207</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Module for exchange currency (both digital &amp; physical currency exchange)</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!  This API returns the realtime exchange rate for any pair of digital</span>
@@ -394,10 +392,8 @@
 
     <span class="kw">fn</span> <span class="ident">create_url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
         <span class="macro">format!</span>(
-            <span class="string">&quot;query?function=CURRENCY_EXCHANGE_RATE&amp;from_currency={}&amp;to_currency={}&amp;apikey={}&quot;</span>,
-            <span class="self">self</span>.<span class="ident">from_currency</span>,
-            <span class="self">self</span>.<span class="ident">to_currency</span>,
-            <span class="self">self</span>.<span class="ident">api_client</span>.<span class="ident">get_api_key</span>()
+            <span class="string">&quot;query?function=CURRENCY_EXCHANGE_RATE&amp;from_currency={}&amp;to_currency={}&quot;</span>,
+            <span class="self">self</span>.<span class="ident">from_currency</span>, <span class="self">self</span>.<span class="ident">to_currency</span>
         )
     }
 
