@@ -118,12 +118,9 @@ impl TimeSeries {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let stock_time = api
-    ///         .stock_time(
-    ///             StockFunction::IntraDay,
-    ///             "MSFT",
-    ///             TimeSeriesInterval::FiveMin,
-    ///             OutputSize::Full,
-    ///         )
+    ///         .stock_time(StockFunction::IntraDay, "MSFT")
+    ///         .interval(TimeSeriesInterval::FiveMin)
+    ///         .output_size(OutputSize::Full)
     ///         .json()
     ///         .await
     ///         .unwrap();
@@ -147,12 +144,9 @@ impl TimeSeries {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let stock_time = api
-    ///         .stock_time(
-    ///             StockFunction::IntraDay,
-    ///             "MSFT",
-    ///             TimeSeriesInterval::FiveMin,
-    ///             OutputSize::Full,
-    ///         )
+    ///         .stock_time(StockFunction::IntraDay, "MSFT")
+    ///         .interval(TimeSeriesInterval::FiveMin)
+    ///         .output_size(OutputSize::Full)
     ///         .json()
     ///         .await
     ///         .unwrap();
@@ -185,12 +179,9 @@ impl TimeSeries {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let stock_time = api
-    ///         .stock_time(
-    ///             StockFunction::IntraDay,
-    ///             "MSFT",
-    ///             TimeSeriesInterval::FiveMin,
-    ///             OutputSize::Full,
-    ///         )
+    ///         .stock_time(StockFunction::IntraDay, "MSFT")
+    ///         .interval(TimeSeriesInterval::FiveMin)
+    ///         .output_size(OutputSize::Full)
     ///         .json()
     ///         .await
     ///         .unwrap();
@@ -211,12 +202,9 @@ impl TimeSeries {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let stock_time = api
-    ///         .stock_time(
-    ///             StockFunction::IntraDay,
-    ///             "MSFT",
-    ///             TimeSeriesInterval::FiveMin,
-    ///             OutputSize::Full,
-    ///         )
+    ///         .stock_time(StockFunction::IntraDay, "MSFT")
+    ///         .interval(TimeSeriesInterval::FiveMin)
+    ///         .output_size(OutputSize::Full)
     ///         .json()
     ///         .await
     ///         .unwrap();
@@ -474,27 +462,45 @@ pub struct TimeSeriesBuilder<'a> {
     api_client: &'a ApiClient<'a>,
     function: StockFunction,
     symbol: &'a str,
-    interval: TimeSeriesInterval,
-    output_size: OutputSize,
+    interval: Option<TimeSeriesInterval>,
+    output_size: Option<OutputSize>,
+    adjusted: Option<bool>,
 }
 
 impl<'a> TimeSeriesBuilder<'a> {
     /// Create new `TimeSeriesBuilder` form `APIClient`
     #[must_use]
-    pub fn new(
-        api_client: &'a ApiClient,
-        function: StockFunction,
-        symbol: &'a str,
-        interval: TimeSeriesInterval,
-        output_size: OutputSize,
-    ) -> Self {
+    pub fn new(api_client: &'a ApiClient, function: StockFunction, symbol: &'a str) -> Self {
         Self {
             api_client,
             function,
             symbol,
-            interval,
-            output_size,
+            interval: None,
+            output_size: None,
+            adjusted: None,
         }
+    }
+
+    /// Define time series interval for intraday stock time series
+    #[must_use]
+    pub fn interval(mut self, interval: TimeSeriesInterval) -> Self {
+        self.interval = Some(interval);
+        self
+    }
+
+    /// Define output size for intraday or daily stock time series
+    #[must_use]
+    pub fn output_size(mut self, output_size: OutputSize) -> Self {
+        self.output_size = Some(output_size);
+        self
+    }
+
+    /// Define if output time series is adjusted by historical split and
+    /// dividend events
+    #[must_use]
+    pub fn adjusted(mut self, adjusted: bool) -> Self {
+        self.adjusted = Some(adjusted);
+        self
     }
 
     fn create_url(&self) -> String {
@@ -509,23 +515,34 @@ impl<'a> TimeSeriesBuilder<'a> {
         };
 
         let mut url = format!("query?function={}&symbol={}", function, self.symbol);
-        let interval = match self.interval {
-            TimeSeriesInterval::OneMin => "1min",
-            TimeSeriesInterval::FiveMin => "5min",
-            TimeSeriesInterval::FifteenMin => "15min",
-            TimeSeriesInterval::ThirtyMin => "30min",
-            TimeSeriesInterval::SixtyMin => "60min",
-            TimeSeriesInterval::None => "",
+
+        if let Some(stock_time_interval) = self.interval {
+            let interval = match stock_time_interval {
+                TimeSeriesInterval::OneMin => "1min",
+                TimeSeriesInterval::FiveMin => "5min",
+                TimeSeriesInterval::FifteenMin => "15min",
+                TimeSeriesInterval::ThirtyMin => "30min",
+                TimeSeriesInterval::SixtyMin => "60min",
+            };
+            url.push_str(&format!("&interval={}", interval));
         };
 
-        if !interval.is_empty() {
-            url.push_str(&format!("&interval={}", interval));
+        if let Some(stock_time_output_size) = self.output_size {
+            let size = match stock_time_output_size {
+                OutputSize::Full => "full",
+                OutputSize::Compact => "compact",
+            };
+            url.push_str(&format!("&outputsize={}", size));
         }
 
-        url.push_str(match self.output_size {
-            OutputSize::Full => "&outputsize=full",
-            _ => "",
-        });
+        if let Some(adjusted) = self.adjusted {
+            if adjusted {
+                url.push_str("&adjusted=true");
+            } else {
+                url.push_str("&adjusted=false");
+            }
+        };
+
         url
     }
 

@@ -47,8 +47,6 @@ pub enum OutputSize {
     /// Returns full api data points recommended if a full historical data is
     /// required
     Full,
-    /// uses default which is Compact
-    None,
 }
 
 /// Enum for declaring function for stock time series by defining which type of
@@ -225,8 +223,6 @@ pub enum TimeSeriesInterval {
     ThirtyMin,
     /// 60 min interval
     SixtyMin,
-    /// no interval which applies for all time series expect intraday
-    None,
 }
 
 pub(crate) fn detect_common_helper_error(

@@ -89,13 +89,9 @@ impl Forex {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let forex = api
-    ///         .forex(
-    ///             ForexFunction::IntraDay,
-    ///             "EUR",
-    ///             "USD",
-    ///             TimeSeriesInterval::FiveMin,
-    ///             OutputSize::Full,
-    ///         )
+    ///         .forex(ForexFunction::IntraDay, "EUR", "USD")
+    ///         .interval(TimeSeriesInterval::FiveMin)
+    ///         .output_size(OutputSize::Full)
     ///         .json()
     ///         .await
     ///         .unwrap();
@@ -116,13 +112,9 @@ impl Forex {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let forex = api
-    ///         .forex(
-    ///             ForexFunction::IntraDay,
-    ///             "EUR",
-    ///             "USD",
-    ///             TimeSeriesInterval::FiveMin,
-    ///             OutputSize::Full,
-    ///         )
+    ///         .forex(ForexFunction::IntraDay, "EUR", "USD")
+    ///         .interval(TimeSeriesInterval::FiveMin)
+    ///         .output_size(OutputSize::Full)
     ///         .json()
     ///         .await
     ///         .unwrap();
@@ -143,13 +135,9 @@ impl Forex {
     ///     use alpha_vantage::utils::*;
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let forex = api
-    ///         .forex(
-    ///             ForexFunction::IntraDay,
-    ///             "EUR",
-    ///             "USD",
-    ///             TimeSeriesInterval::FiveMin,
-    ///             OutputSize::Full,
-    ///         )
+    ///         .forex(ForexFunction::IntraDay, "EUR", "USD")
+    ///         .interval(TimeSeriesInterval::FiveMin)
+    ///         .output_size(OutputSize::Full)
     ///         .json()
     ///         .await
     ///         .unwrap();
@@ -182,13 +170,9 @@ impl Forex {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let forex = api
-    ///         .forex(
-    ///             ForexFunction::IntraDay,
-    ///             "EUR",
-    ///             "USD",
-    ///             TimeSeriesInterval::FiveMin,
-    ///             OutputSize::Full,
-    ///         )
+    ///         .forex(ForexFunction::IntraDay, "EUR", "USD")
+    ///         .interval(TimeSeriesInterval::FiveMin)
+    ///         .output_size(OutputSize::Full)
     ///         .json()
     ///         .await
     ///         .unwrap();
@@ -209,13 +193,9 @@ impl Forex {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let forex = api
-    ///         .forex(
-    ///             ForexFunction::IntraDay,
-    ///             "EUR",
-    ///             "USD",
-    ///             TimeSeriesInterval::FiveMin,
-    ///             OutputSize::Full,
-    ///         )
+    ///         .forex(ForexFunction::IntraDay, "EUR", "USD")
+    ///         .interval(TimeSeriesInterval::FiveMin)
+    ///         .output_size(OutputSize::Full)
     ///         .json()
     ///         .await
     ///         .unwrap();
@@ -422,8 +402,8 @@ pub struct ForexBuilder<'a> {
     function: ForexFunction,
     from_symbol: &'a str,
     to_symbol: &'a str,
-    interval: TimeSeriesInterval,
-    output_size: OutputSize,
+    interval: Option<TimeSeriesInterval>,
+    output_size: Option<OutputSize>,
 }
 
 impl<'a> ForexBuilder<'a> {
@@ -434,17 +414,29 @@ impl<'a> ForexBuilder<'a> {
         function: ForexFunction,
         from_symbol: &'a str,
         to_symbol: &'a str,
-        interval: TimeSeriesInterval,
-        output_size: OutputSize,
     ) -> Self {
         Self {
             api_client,
             function,
             from_symbol,
             to_symbol,
-            interval,
-            output_size,
+            interval: None,
+            output_size: None,
         }
+    }
+
+    /// Define time series interval for forex
+    #[must_use]
+    pub fn interval(mut self, interval: TimeSeriesInterval) -> Self {
+        self.interval = Some(interval);
+        self
+    }
+
+    /// Define output size for intraday or daily forex
+    #[must_use]
+    pub fn output_size(mut self, output_size: OutputSize) -> Self {
+        self.output_size = Some(output_size);
+        self
     }
 
     fn create_url(&self) -> String {
@@ -459,23 +451,25 @@ impl<'a> ForexBuilder<'a> {
             "query?function={}&from_symbol={}&to_symbol={}",
             function, self.from_symbol, self.to_symbol
         );
-        let interval = match self.interval {
-            TimeSeriesInterval::OneMin => "1min",
-            TimeSeriesInterval::FiveMin => "5min",
-            TimeSeriesInterval::FifteenMin => "15min",
-            TimeSeriesInterval::ThirtyMin => "30min",
-            TimeSeriesInterval::SixtyMin => "60min",
-            TimeSeriesInterval::None => "",
+
+        if let Some(forex_interval) = self.interval {
+            let interval = match forex_interval {
+                TimeSeriesInterval::OneMin => "1min",
+                TimeSeriesInterval::FiveMin => "5min",
+                TimeSeriesInterval::FifteenMin => "15min",
+                TimeSeriesInterval::ThirtyMin => "30min",
+                TimeSeriesInterval::SixtyMin => "60min",
+            };
+            url.push_str(&format!("&interval={}", interval));
         };
 
-        if !interval.is_empty() {
-            url.push_str(&format!("&interval={}", interval));
+        if let Some(forex_output_size) = self.output_size {
+            let size = match forex_output_size {
+                OutputSize::Full => "full",
+                OutputSize::Compact => "compact",
+            };
+            url.push_str(&format!("&outputsize={}", size));
         }
-
-        url.push_str(match self.output_size {
-            OutputSize::Full => "&outputsize=full",
-            _ => "",
-        });
         url
     }
 
