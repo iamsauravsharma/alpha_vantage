@@ -540,6 +540,23 @@
 <span id="540">540</span>
 <span id="541">541</span>
 <span id="542">542</span>
+<span id="543">543</span>
+<span id="544">544</span>
+<span id="545">545</span>
+<span id="546">546</span>
+<span id="547">547</span>
+<span id="548">548</span>
+<span id="549">549</span>
+<span id="550">550</span>
+<span id="551">551</span>
+<span id="552">552</span>
+<span id="553">553</span>
+<span id="554">554</span>
+<span id="555">555</span>
+<span id="556">556</span>
+<span id="557">557</span>
+<span id="558">558</span>
+<span id="559">559</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Module for stock time series</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! This suite of APIs provide realtime and historical global equity data in 4</span>
@@ -660,12 +677,9 @@
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let stock_time = api</span>
-    <span class="doccomment">///         .stock_time(</span>
-    <span class="doccomment">///             StockFunction::IntraDay,</span>
-    <span class="doccomment">///             &quot;MSFT&quot;,</span>
-    <span class="doccomment">///             TimeSeriesInterval::FiveMin,</span>
-    <span class="doccomment">///             OutputSize::Full,</span>
-    <span class="doccomment">///         )</span>
+    <span class="doccomment">///         .stock_time(StockFunction::IntraDay, &quot;MSFT&quot;)</span>
+    <span class="doccomment">///         .interval(TimeSeriesInterval::FiveMin)</span>
+    <span class="doccomment">///         .output_size(OutputSize::Full)</span>
     <span class="doccomment">///         .json()</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
@@ -689,12 +703,9 @@
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let stock_time = api</span>
-    <span class="doccomment">///         .stock_time(</span>
-    <span class="doccomment">///             StockFunction::IntraDay,</span>
-    <span class="doccomment">///             &quot;MSFT&quot;,</span>
-    <span class="doccomment">///             TimeSeriesInterval::FiveMin,</span>
-    <span class="doccomment">///             OutputSize::Full,</span>
-    <span class="doccomment">///         )</span>
+    <span class="doccomment">///         .stock_time(StockFunction::IntraDay, &quot;MSFT&quot;)</span>
+    <span class="doccomment">///         .interval(TimeSeriesInterval::FiveMin)</span>
+    <span class="doccomment">///         .output_size(OutputSize::Full)</span>
     <span class="doccomment">///         .json()</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
@@ -727,12 +738,9 @@
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let stock_time = api</span>
-    <span class="doccomment">///         .stock_time(</span>
-    <span class="doccomment">///             StockFunction::IntraDay,</span>
-    <span class="doccomment">///             &quot;MSFT&quot;,</span>
-    <span class="doccomment">///             TimeSeriesInterval::FiveMin,</span>
-    <span class="doccomment">///             OutputSize::Full,</span>
-    <span class="doccomment">///         )</span>
+    <span class="doccomment">///         .stock_time(StockFunction::IntraDay, &quot;MSFT&quot;)</span>
+    <span class="doccomment">///         .interval(TimeSeriesInterval::FiveMin)</span>
+    <span class="doccomment">///         .output_size(OutputSize::Full)</span>
     <span class="doccomment">///         .json()</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
@@ -753,12 +761,9 @@
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let stock_time = api</span>
-    <span class="doccomment">///         .stock_time(</span>
-    <span class="doccomment">///             StockFunction::IntraDay,</span>
-    <span class="doccomment">///             &quot;MSFT&quot;,</span>
-    <span class="doccomment">///             TimeSeriesInterval::FiveMin,</span>
-    <span class="doccomment">///             OutputSize::Full,</span>
-    <span class="doccomment">///         )</span>
+    <span class="doccomment">///         .stock_time(StockFunction::IntraDay, &quot;MSFT&quot;)</span>
+    <span class="doccomment">///         .interval(TimeSeriesInterval::FiveMin)</span>
+    <span class="doccomment">///         .output_size(OutputSize::Full)</span>
     <span class="doccomment">///         .json()</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
@@ -1016,27 +1021,45 @@
     <span class="ident">api_client</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ApiClient</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
     <span class="ident">function</span>: <span class="ident">StockFunction</span>,
     <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
-    <span class="ident">interval</span>: <span class="ident">TimeSeriesInterval</span>,
-    <span class="ident">output_size</span>: <span class="ident">OutputSize</span>,
+    <span class="ident">interval</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TimeSeriesInterval</span><span class="op">&gt;</span>,
+    <span class="ident">output_size</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">OutputSize</span><span class="op">&gt;</span>,
+    <span class="ident">adjusted</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TimeSeriesBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Create new `TimeSeriesBuilder` form `APIClient`</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(
-        <span class="ident">api_client</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ApiClient</span>,
-        <span class="ident">function</span>: <span class="ident">StockFunction</span>,
-        <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
-        <span class="ident">interval</span>: <span class="ident">TimeSeriesInterval</span>,
-        <span class="ident">output_size</span>: <span class="ident">OutputSize</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">api_client</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ApiClient</span>, <span class="ident">function</span>: <span class="ident">StockFunction</span>, <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">api_client</span>,
             <span class="ident">function</span>,
             <span class="ident">symbol</span>,
-            <span class="ident">interval</span>,
-            <span class="ident">output_size</span>,
+            <span class="ident">interval</span>: <span class="prelude-val">None</span>,
+            <span class="ident">output_size</span>: <span class="prelude-val">None</span>,
+            <span class="ident">adjusted</span>: <span class="prelude-val">None</span>,
         }
+    }
+
+    <span class="doccomment">/// Define time series interval for intraday stock time series</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interval</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">interval</span>: <span class="ident">TimeSeriesInterval</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">interval</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">interval</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="doccomment">/// Define output size for intraday or daily stock time series</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">output_size</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">output_size</span>: <span class="ident">OutputSize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">output_size</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">output_size</span>);
+        <span class="self">self</span>
+    }
+
+    <span class="doccomment">/// Define if output time series is adjusted by historical split and</span>
+    <span class="doccomment">/// dividend events</span>
+    <span class="attribute">#[<span class="ident">must_use</span>]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">adjusted</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">adjusted</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="self">self</span>.<span class="ident">adjusted</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">adjusted</span>);
+        <span class="self">self</span>
     }
 
     <span class="kw">fn</span> <span class="ident">create_url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
@@ -1051,23 +1074,34 @@
         };
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">url</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">&quot;query?function={}&amp;symbol={}&quot;</span>, <span class="ident">function</span>, <span class="self">self</span>.<span class="ident">symbol</span>);
-        <span class="kw">let</span> <span class="ident">interval</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">interval</span> {
-            <span class="ident">TimeSeriesInterval::OneMin</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;1min&quot;</span>,
-            <span class="ident">TimeSeriesInterval::FiveMin</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;5min&quot;</span>,
-            <span class="ident">TimeSeriesInterval::FifteenMin</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;15min&quot;</span>,
-            <span class="ident">TimeSeriesInterval::ThirtyMin</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;30min&quot;</span>,
-            <span class="ident">TimeSeriesInterval::SixtyMin</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;60min&quot;</span>,
-            <span class="ident">TimeSeriesInterval::None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;&quot;</span>,
+
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">stock_time_interval</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">interval</span> {
+            <span class="kw">let</span> <span class="ident">interval</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">stock_time_interval</span> {
+                <span class="ident">TimeSeriesInterval::OneMin</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;1min&quot;</span>,
+                <span class="ident">TimeSeriesInterval::FiveMin</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;5min&quot;</span>,
+                <span class="ident">TimeSeriesInterval::FifteenMin</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;15min&quot;</span>,
+                <span class="ident">TimeSeriesInterval::ThirtyMin</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;30min&quot;</span>,
+                <span class="ident">TimeSeriesInterval::SixtyMin</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;60min&quot;</span>,
+            };
+            <span class="ident">url</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;&amp;interval={}&quot;</span>, <span class="ident">interval</span>));
         };
 
-        <span class="kw">if</span> <span class="op">!</span><span class="ident">interval</span>.<span class="ident">is_empty</span>() {
-            <span class="ident">url</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;&amp;interval={}&quot;</span>, <span class="ident">interval</span>));
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">stock_time_output_size</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">output_size</span> {
+            <span class="kw">let</span> <span class="ident">size</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">stock_time_output_size</span> {
+                <span class="ident">OutputSize::Full</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;full&quot;</span>,
+                <span class="ident">OutputSize::Compact</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;compact&quot;</span>,
+            };
+            <span class="ident">url</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;&amp;outputsize={}&quot;</span>, <span class="ident">size</span>));
         }
 
-        <span class="ident">url</span>.<span class="ident">push_str</span>(<span class="kw">match</span> <span class="self">self</span>.<span class="ident">output_size</span> {
-            <span class="ident">OutputSize::Full</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;&amp;outputsize=full&quot;</span>,
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;&quot;</span>,
-        });
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">adjusted</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">adjusted</span> {
+            <span class="kw">if</span> <span class="ident">adjusted</span> {
+                <span class="ident">url</span>.<span class="ident">push_str</span>(<span class="string">&quot;&amp;adjusted=true&quot;</span>);
+            } <span class="kw">else</span> {
+                <span class="ident">url</span>.<span class="ident">push_str</span>(<span class="string">&quot;&amp;adjusted=false&quot;</span>);
+            }
+        };
+
         <span class="ident">url</span>
     }
 

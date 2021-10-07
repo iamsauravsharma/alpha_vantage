@@ -319,35 +319,6 @@
 <span id="319">319</span>
 <span id="320">320</span>
 <span id="321">321</span>
-<span id="322">322</span>
-<span id="323">323</span>
-<span id="324">324</span>
-<span id="325">325</span>
-<span id="326">326</span>
-<span id="327">327</span>
-<span id="328">328</span>
-<span id="329">329</span>
-<span id="330">330</span>
-<span id="331">331</span>
-<span id="332">332</span>
-<span id="333">333</span>
-<span id="334">334</span>
-<span id="335">335</span>
-<span id="336">336</span>
-<span id="337">337</span>
-<span id="338">338</span>
-<span id="339">339</span>
-<span id="340">340</span>
-<span id="341">341</span>
-<span id="342">342</span>
-<span id="343">343</span>
-<span id="344">344</span>
-<span id="345">345</span>
-<span id="346">346</span>
-<span id="347">347</span>
-<span id="348">348</span>
-<span id="349">349</span>
-<span id="350">350</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">serde::de::DeserializeOwned</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::{
@@ -363,10 +334,7 @@
     <span class="ident">sector::SectorBuilder</span>,
     <span class="ident">stock_time::TimeSeriesBuilder</span>,
     <span class="ident">technical_indicator::IndicatorBuilder</span>,
-    <span class="ident">utils</span>::{
-        <span class="ident">CryptoFunction</span>, <span class="ident">ForexFunction</span>, <span class="ident">OutputSize</span>, <span class="ident">StockFunction</span>, <span class="ident">TechnicalIndicatorInterval</span>,
-        <span class="ident">TimeSeriesInterval</span>,
-    },
+    <span class="ident">utils</span>::{<span class="ident">CryptoFunction</span>, <span class="ident">ForexFunction</span>, <span class="ident">StockFunction</span>, <span class="ident">TechnicalIndicatorInterval</span>},
 };
 
 <span class="kw">const</span> <span class="ident">BASE_URL</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;https://www.alphavantage.co/&quot;</span>;
@@ -545,13 +513,7 @@
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let forex = api</span>
-    <span class="doccomment">///         .forex(</span>
-    <span class="doccomment">///             ForexFunction::Weekly,</span>
-    <span class="doccomment">///             &quot;EUR&quot;,</span>
-    <span class="doccomment">///             &quot;USD&quot;,</span>
-    <span class="doccomment">///             TimeSeriesInterval::None,</span>
-    <span class="doccomment">///             OutputSize::None,</span>
-    <span class="doccomment">///         )</span>
+    <span class="doccomment">///         .forex(ForexFunction::Weekly, &quot;EUR&quot;, &quot;USD&quot;)</span>
     <span class="doccomment">///         .json()</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
@@ -566,17 +528,8 @@
         <span class="ident">function</span>: <span class="ident">ForexFunction</span>,
         <span class="ident">from_symbol</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
         <span class="ident">to_symbol</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
-        <span class="ident">interval</span>: <span class="ident">TimeSeriesInterval</span>,
-        <span class="ident">output_size</span>: <span class="ident">OutputSize</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ForexBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="ident">ForexBuilder::new</span>(
-            <span class="self">self</span>,
-            <span class="ident">function</span>,
-            <span class="ident">from_symbol</span>,
-            <span class="ident">to_symbol</span>,
-            <span class="ident">interval</span>,
-            <span class="ident">output_size</span>,
-        )
+        <span class="ident">ForexBuilder::new</span>(<span class="self">self</span>, <span class="ident">function</span>, <span class="ident">from_symbol</span>, <span class="ident">to_symbol</span>)
     }
 
     <span class="doccomment">/// Method for creating `QuoteBuilder` from `APIClient`</span>
@@ -644,12 +597,7 @@
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let stock = api</span>
-    <span class="doccomment">///         .stock_time(</span>
-    <span class="doccomment">///             StockFunction::Weekly,</span>
-    <span class="doccomment">///             &quot;MSFT&quot;,</span>
-    <span class="doccomment">///             TimeSeriesInterval::None,</span>
-    <span class="doccomment">///             OutputSize::None,</span>
-    <span class="doccomment">///         )</span>
+    <span class="doccomment">///         .stock_time(StockFunction::Weekly, &quot;MSFT&quot;)</span>
     <span class="doccomment">///         .json()</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
@@ -658,14 +606,8 @@
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">stock_time</span>(
-        <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>,
-        <span class="ident">function</span>: <span class="ident">StockFunction</span>,
-        <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
-        <span class="ident">interval</span>: <span class="ident">TimeSeriesInterval</span>,
-        <span class="ident">output_size</span>: <span class="ident">OutputSize</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TimeSeriesBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="ident">TimeSeriesBuilder::new</span>(<span class="self">self</span>, <span class="ident">function</span>, <span class="ident">symbol</span>, <span class="ident">interval</span>, <span class="ident">output_size</span>)
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">stock_time</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>, <span class="ident">function</span>: <span class="ident">StockFunction</span>, <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TimeSeriesBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+        <span class="ident">TimeSeriesBuilder::new</span>(<span class="self">self</span>, <span class="ident">function</span>, <span class="ident">symbol</span>)
     }
 
     <span class="doccomment">/// Method for technical indicator builder</span>
