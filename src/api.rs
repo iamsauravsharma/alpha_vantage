@@ -13,10 +13,7 @@ use crate::{
     sector::SectorBuilder,
     stock_time::TimeSeriesBuilder,
     technical_indicator::IndicatorBuilder,
-    utils::{
-        CryptoFunction, ForexFunction, OutputSize, StockFunction, TechnicalIndicatorInterval,
-        TimeSeriesInterval,
-    },
+    utils::{CryptoFunction, ForexFunction, StockFunction, TechnicalIndicatorInterval},
 };
 
 const BASE_URL: &str = "https://www.alphavantage.co/";
@@ -195,13 +192,7 @@ impl<'a> ApiClient<'a> {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let forex = api
-    ///         .forex(
-    ///             ForexFunction::Weekly,
-    ///             "EUR",
-    ///             "USD",
-    ///             TimeSeriesInterval::None,
-    ///             OutputSize::None,
-    ///         )
+    ///         .forex(ForexFunction::Weekly, "EUR", "USD")
     ///         .json()
     ///         .await
     ///         .unwrap();
@@ -216,17 +207,8 @@ impl<'a> ApiClient<'a> {
         function: ForexFunction,
         from_symbol: &'a str,
         to_symbol: &'a str,
-        interval: TimeSeriesInterval,
-        output_size: OutputSize,
     ) -> ForexBuilder<'a> {
-        ForexBuilder::new(
-            self,
-            function,
-            from_symbol,
-            to_symbol,
-            interval,
-            output_size,
-        )
+        ForexBuilder::new(self, function, from_symbol, to_symbol)
     }
 
     /// Method for creating `QuoteBuilder` from `APIClient`
@@ -294,12 +276,7 @@ impl<'a> ApiClient<'a> {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let stock = api
-    ///         .stock_time(
-    ///             StockFunction::Weekly,
-    ///             "MSFT",
-    ///             TimeSeriesInterval::None,
-    ///             OutputSize::None,
-    ///         )
+    ///         .stock_time(StockFunction::Weekly, "MSFT")
     ///         .json()
     ///         .await
     ///         .unwrap();
@@ -308,14 +285,8 @@ impl<'a> ApiClient<'a> {
     /// }
     /// ```
     #[must_use]
-    pub fn stock_time(
-        &'a self,
-        function: StockFunction,
-        symbol: &'a str,
-        interval: TimeSeriesInterval,
-        output_size: OutputSize,
-    ) -> TimeSeriesBuilder<'a> {
-        TimeSeriesBuilder::new(self, function, symbol, interval, output_size)
+    pub fn stock_time(&'a self, function: StockFunction, symbol: &'a str) -> TimeSeriesBuilder<'a> {
+        TimeSeriesBuilder::new(self, function, symbol)
     }
 
     /// Method for technical indicator builder
