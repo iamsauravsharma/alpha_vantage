@@ -83,19 +83,19 @@
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">HttpClient</span> {
     <span class="doccomment">/// AlphaVantage provider output function which provides one field path</span>
     <span class="doccomment">/// where get GET request needs to be performed</span>
-    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_alpha_vantage_provider_output</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">path</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
+    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_alpha_vantage_provider_output</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">path</span>: <span class="ident">String</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// RapidAPI provider function which provides two field path and api_key.</span>
     <span class="doccomment">/// Path needs to be set along with header x-rapidapi-host as</span>
     <span class="doccomment">/// alpha-vantage.p.rapidapi.com and header x-rapidapi-key same as</span>
     <span class="doccomment">/// api_key field</span>
-    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_rapid_api_provider_output</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">path</span>: <span class="ident">String</span>, <span class="ident">api_key</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
+    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_rapid_api_provider_output</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">path</span>: <span class="ident">String</span>, <span class="ident">api_key</span>: <span class="ident">String</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;reqwest-client&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">async_trait</span>]</span>
 <span class="kw">impl</span> <span class="ident">HttpClient</span> <span class="kw">for</span> <span class="ident">reqwest::Client</span> {
-    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_alpha_vantage_provider_output</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">path</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_alpha_vantage_provider_output</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">path</span>: <span class="ident">String</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>)
             .<span class="ident">send</span>()
             .<span class="kw">await</span>
@@ -105,7 +105,7 @@
             .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Error::GetRequestFailed</span>)
     }
 
-    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_rapid_api_provider_output</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">path</span>: <span class="ident">String</span>, <span class="ident">api_key</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_rapid_api_provider_output</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">path</span>: <span class="ident">String</span>, <span class="ident">api_key</span>: <span class="ident">String</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>)
             .<span class="ident">header</span>(
                 <span class="ident">String::from</span>(<span class="string">&quot;x-rapidapi-host&quot;</span>),
@@ -124,14 +124,14 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;surf-client&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">async_trait</span>]</span>
 <span class="kw">impl</span> <span class="ident">HttpClient</span> <span class="kw">for</span> <span class="ident">surf::Client</span> {
-    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_alpha_vantage_provider_output</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">path</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_alpha_vantage_provider_output</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">path</span>: <span class="ident">String</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">get</span>(<span class="ident">path</span>)
             .<span class="ident">recv_string</span>()
             .<span class="kw">await</span>
             .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Error::GetRequestFailed</span>)
     }
 
-    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_rapid_api_provider_output</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">path</span>: <span class="ident">String</span>, <span class="ident">api_key</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_rapid_api_provider_output</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">path</span>: <span class="ident">String</span>, <span class="ident">api_key</span>: <span class="ident">String</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>)
             .<span class="ident">header</span>(<span class="string">&quot;x-rapidapi-host&quot;</span>, <span class="string">&quot;alpha-vantage.p.rapidapi.com&quot;</span>)
             .<span class="ident">header</span>(<span class="string">&quot;x-rapidapi-key&quot;</span>, <span class="ident">api_key</span>)

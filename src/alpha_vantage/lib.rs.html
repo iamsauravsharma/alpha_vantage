@@ -116,7 +116,7 @@
 <span class="doccomment">/// let api = alpha_vantage::set_api(&quot;some_key&quot;, reqwest::Client::new());</span>
 <span class="doccomment">/// ```</span>
 <span class="attribute">#[<span class="ident">must_use</span>]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_api</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">client</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ApiClient</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_api</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">api</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">client</span>: <span class="ident">T</span>) -&gt; <span class="ident">ApiClient</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">HttpClient</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
 {
