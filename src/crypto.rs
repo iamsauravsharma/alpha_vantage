@@ -298,7 +298,7 @@ pub(crate) struct CryptoHelper {
 }
 
 impl CryptoHelper {
-    /// Function which convert [CryptoHelper][CryptoHelper] to [Crypto][Crypto]
+    /// Function which convert `CryptoHelper` to `Crypto`
     pub(crate) fn convert(self) -> Result<Crypto> {
         let mut crypto = Crypto::default();
         detect_common_helper_error(self.information, self.error_message, self.note)?;

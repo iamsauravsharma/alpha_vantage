@@ -266,7 +266,7 @@ pub(crate) struct ForexHelper {
 }
 
 impl ForexHelper {
-    /// convert [ForexHelper][ForexHelper] to [Forex][Forex]
+    /// convert `ForexHelper` to `Forex`
     pub(crate) fn convert(self) -> Result<Forex> {
         let mut forex_struct = Forex::default();
         detect_common_helper_error(self.information, self.error_message, self.note)?;

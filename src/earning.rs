@@ -149,8 +149,8 @@ pub(crate) struct EarningHelper {
     quarterly_earning: Option<Vec<Quarterly>>,
 }
 impl EarningHelper {
-    /// Function which convert [EarningHelper][EarningHelper] to
-    /// [Earning][Earning]
+    /// Function which convert `EarningHelper` to
+    /// `Earning`
     pub(crate) fn convert(self) -> Result<Earning> {
         let mut earning = Earning::default();
         detect_common_helper_error(self.information, self.error_message, self.note)?;

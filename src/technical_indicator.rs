@@ -17,9 +17,7 @@ use serde_json::value::Value;
 use crate::{
     api::ApiClient,
     error::{Error, Result},
-    utils::{
-        detect_common_helper_error, TechnicalIndicator as UtilIndicator, TechnicalIndicatorInterval,
-    },
+    utils::{detect_common_helper_error, TechnicalIndicatorInterval},
 };
 
 type DataType = HashMap<String, HashMap<String, HashMap<String, String>>>;
@@ -124,7 +122,7 @@ pub struct IndicatorBuilder<'a> {
     interval: TechnicalIndicatorInterval,
     time_period: Option<u64>,
     series_type: Option<&'a str>,
-    extras: Vec<UtilIndicator>,
+    extra_params: HashMap<String, String>,
 }
 
 impl<'a> IndicatorBuilder<'a> {
@@ -143,7 +141,7 @@ impl<'a> IndicatorBuilder<'a> {
             interval,
             time_period: None,
             series_type: None,
-            extras: vec![],
+            extra_params: HashMap::new(),
         }
     }
 
@@ -160,8 +158,8 @@ impl<'a> IndicatorBuilder<'a> {
     }
 
     /// Add extra params to builder
-    pub fn extras_param(&mut self, extra: UtilIndicator) -> &mut Self {
-        self.extras.push(extra);
+    pub fn extra_params(&mut self, param: String, value: String) -> &mut Self {
+        self.extra_params.insert(param, value);
         self
     }
 
@@ -186,70 +184,8 @@ impl<'a> IndicatorBuilder<'a> {
         if let Some(series_type) = self.series_type {
             created_link.push_str(&format!("&series_type={}", series_type));
         }
-        for values in &self.extras {
-            match values {
-                UtilIndicator::Acceleration(val) => {
-                    created_link.push_str(&format!("&acceleration={}", val));
-                }
-                UtilIndicator::Fastdmatype(val) => {
-                    created_link.push_str(&format!("&fastdmatype={}", val));
-                }
-                UtilIndicator::Fastdperiod(val) => {
-                    created_link.push_str(&format!("&fastdperiod={}", val));
-                }
-                UtilIndicator::Fastkperiod(val) => {
-                    created_link.push_str(&format!("&fastkperiod={}", val));
-                }
-                UtilIndicator::Fastlimit(val) => {
-                    created_link.push_str(&format!("&fastlimit={}", val));
-                }
-                UtilIndicator::Fastmatype(val) => {
-                    created_link.push_str(&format!("&fastmatype={}", val));
-                }
-                UtilIndicator::Fastperiod(val) => {
-                    created_link.push_str(&format!("&fastperiod={}", val));
-                }
-                UtilIndicator::Matype(val) => created_link.push_str(&format!("&matype={}", val)),
-                UtilIndicator::Maximum(val) => created_link.push_str(&format!("&maximum={}", val)),
-                UtilIndicator::Nbdevdn(val) => created_link.push_str(&format!("&nbdevdn={}", val)),
-                UtilIndicator::Nbdevup(val) => created_link.push_str(&format!("&nbdevup={}", val)),
-                UtilIndicator::Signalmatype(val) => {
-                    created_link.push_str(&format!("&signalmatype={}", val));
-                }
-                UtilIndicator::Signalperiod(val) => {
-                    created_link.push_str(&format!("&signalperiod={}", val));
-                }
-                UtilIndicator::Slowdmatype(val) => {
-                    created_link.push_str(&format!("&slowdmatype={}", val));
-                }
-                UtilIndicator::Slowdperiod(val) => {
-                    created_link.push_str(&format!("&slowdperiod={}", val));
-                }
-                UtilIndicator::Slowkmatype(val) => {
-                    created_link.push_str(&format!("&slowkmatype={}", val));
-                }
-                UtilIndicator::Slowkperiod(val) => {
-                    created_link.push_str(&format!("&slowkperiod={}", val));
-                }
-                UtilIndicator::Slowlimit(val) => {
-                    created_link.push_str(&format!("&slowlimit={}", val));
-                }
-                UtilIndicator::Slowmatype(val) => {
-                    created_link.push_str(&format!("&slowmatype={}", val));
-                }
-                UtilIndicator::Slowperiod(val) => {
-                    created_link.push_str(&format!("&slowperiod={}", val));
-                }
-                UtilIndicator::Timeperiod1(val) => {
-                    created_link.push_str(&format!("&timeperiod1={}", val));
-                }
-                UtilIndicator::Timeperiod2(val) => {
-                    created_link.push_str(&format!("&timeperiod2={}", val));
-                }
-                UtilIndicator::Timeperiod3(val) => {
-                    created_link.push_str(&format!("&timeperiod3={}", val));
-                }
-            }
+        for (param, value) in &self.extra_params {
+            created_link.push_str(&format!("&{}={}", param, value));
         }
         created_link
     }

@@ -35,8 +35,8 @@ pub struct ApiClient<'a> {
 }
 
 impl<'a> ApiClient<'a> {
-    /// Method for initializing [ApiClient][ApiClient] struct using  user
-    /// provided client
+    /// Method for initializing `ApiClient` struct using  user
+    /// provided client and alphavantage.co provider
     ///
     /// ```
     /// use alpha_vantage::api::ApiClient;
@@ -54,8 +54,8 @@ impl<'a> ApiClient<'a> {
         }
     }
 
-    /// Method for initializing [ApiClient][ApiClient] struct using user
-    /// provided client and `RapidAPI`
+    /// Method for initializing `ApiClient` struct using user
+    /// provided client and `RapidAPI` API provider
     ///
     /// ```
     /// use alpha_vantage::api::ApiClient;

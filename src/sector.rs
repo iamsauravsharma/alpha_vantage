@@ -180,7 +180,7 @@ pub(crate) struct SectorHelper {
 }
 
 impl SectorHelper {
-    /// Convert [SectorHelper][SectorHelper] to [Sector][Sector]
+    /// Convert `SectorHelper` to `Sector`
     pub(crate) fn convert(self) -> Result<Sector> {
         let mut sector = Sector::default();
         detect_common_helper_error(self.information, self.error_message, self.note)?;
