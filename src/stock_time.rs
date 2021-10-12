@@ -299,7 +299,7 @@ pub(crate) struct TimeSeriesHelper {
 }
 
 impl TimeSeriesHelper {
-    /// Convert [TimeSeriesHelper][TimeSeriesHelper] to [TimeSeries][TimeSeries]
+    /// Convert `TimeSeriesHelper` to `TimeSeries`
     pub(crate) fn convert(self) -> Result<TimeSeries> {
         let mut time_series = TimeSeries::default();
         detect_common_helper_error(self.information, self.error_message, self.note)?;
