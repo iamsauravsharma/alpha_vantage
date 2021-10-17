@@ -619,12 +619,12 @@
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let technical = api</span>
     <span class="doccomment">///         .technical_indicator(</span>
-    <span class="doccomment">///             &quot;SMA&quot;,</span>
+    <span class="doccomment">///             &quot;MAMA&quot;,</span>
     <span class="doccomment">///             &quot;IBM&quot;,</span>
-    <span class="doccomment">///             alpha_vantage::utils::TechnicalIndicatorInterval::Weekly,</span>
+    <span class="doccomment">///             alpha_vantage::utils::TechnicalIndicatorInterval::Daily,</span>
     <span class="doccomment">///         )</span>
-    <span class="doccomment">///         .time_period(10)</span>
-    <span class="doccomment">///         .series_type(&quot;open&quot;)</span>
+    <span class="doccomment">///         .series_type(&quot;close&quot;)</span>
+    <span class="doccomment">///         .extra_param(&quot;fastlimit&quot;, 0.02)</span>
     <span class="doccomment">///         .json()</span>
     <span class="doccomment">///         .await;</span>
     <span class="doccomment">///     assert!(technical.is_ok());</span>
