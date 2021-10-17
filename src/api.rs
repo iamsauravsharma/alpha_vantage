@@ -298,12 +298,12 @@ impl<'a> ApiClient<'a> {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let technical = api
     ///         .technical_indicator(
-    ///             "SMA",
+    ///             "MAMA",
     ///             "IBM",
-    ///             alpha_vantage::utils::TechnicalIndicatorInterval::Weekly,
+    ///             alpha_vantage::utils::TechnicalIndicatorInterval::Daily,
     ///         )
-    ///         .time_period(10)
-    ///         .series_type("open")
+    ///         .series_type("close")
+    ///         .extra_param("fastlimit", 0.02)
     ///         .json()
     ///         .await;
     ///     assert!(technical.is_ok());

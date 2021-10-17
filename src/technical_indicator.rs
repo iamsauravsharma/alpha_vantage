@@ -157,9 +157,14 @@ impl<'a> IndicatorBuilder<'a> {
         self
     }
 
-    /// Add extra params to builder
-    pub fn extra_params(&mut self, param: String, value: String) -> &mut Self {
-        self.extra_params.insert(param, value);
+    /// Add extra param to builder
+    pub fn extra_param<T, U>(&mut self, param: T, value: U) -> &mut Self
+    where
+        T: std::fmt::Display,
+        U: std::fmt::Display,
+    {
+        self.extra_params
+            .insert(param.to_string(), value.to_string());
         self
     }
 
