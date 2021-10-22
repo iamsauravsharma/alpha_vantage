@@ -14,8 +14,7 @@ use serde::Deserialize;
 
 use crate::{
     api::ApiClient,
-    error::{Error, Result},
-    utils::detect_common_helper_error,
+    error::{detect_common_helper_error, Error, Result},
 };
 
 /// Stores Metadata

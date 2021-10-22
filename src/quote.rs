@@ -13,8 +13,7 @@ use serde::Deserialize;
 use crate::{
     api::ApiClient,
     deserialize::{from_str, percent_f64},
-    error::{Error, Result},
-    utils::detect_common_helper_error,
+    error::{detect_common_helper_error, Error, Result},
 };
 
 /// Struct storing Global Quote Value

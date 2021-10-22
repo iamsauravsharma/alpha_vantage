@@ -15,10 +15,9 @@ use std::{collections::HashMap, str::FromStr};
 use serde::Deserialize;
 
 use crate::{
-    api::ApiClient,
+    api::{ApiClient, OutputSize, TimeSeriesInterval},
     deserialize::from_str,
-    error::{Error, Result},
-    utils::{detect_common_helper_error, OutputSize, StockFunction, TimeSeriesInterval},
+    error::{detect_common_helper_error, Error, Result},
 };
 
 /// Struct for storing Meta Data value
@@ -113,14 +112,13 @@ impl TimeSeries {
     /// Return information present in meta data
     ///
     /// ```
-    /// use alpha_vantage::utils::*;
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let stock_time = api
-    ///         .stock_time(StockFunction::IntraDay, "MSFT")
-    ///         .interval(TimeSeriesInterval::FiveMin)
-    ///         .output_size(OutputSize::Full)
+    ///         .stock_time(alpha_vantage::stock_time::StockFunction::IntraDay, "MSFT")
+    ///         .interval(alpha_vantage::api::TimeSeriesInterval::FiveMin)
+    ///         .output_size(alpha_vantage::api::OutputSize::Full)
     ///         .json()
     ///         .await
     ///         .unwrap();
@@ -139,14 +137,13 @@ impl TimeSeries {
     /// Return symbol for which time series function is called
     ///
     /// ```
-    /// use alpha_vantage::utils::*;
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let stock_time = api
-    ///         .stock_time(StockFunction::IntraDay, "MSFT")
-    ///         .interval(TimeSeriesInterval::FiveMin)
-    ///         .output_size(OutputSize::Full)
+    ///         .stock_time(alpha_vantage::stock_time::StockFunction::IntraDay, "MSFT")
+    ///         .interval(alpha_vantage::api::TimeSeriesInterval::FiveMin)
+    ///         .output_size(alpha_vantage::api::OutputSize::Full)
     ///         .json()
     ///         .await
     ///         .unwrap();
@@ -174,14 +171,13 @@ impl TimeSeries {
     /// Time series interval between two consecutive data
     ///
     /// ```
-    /// use alpha_vantage::utils::*;
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let stock_time = api
-    ///         .stock_time(StockFunction::IntraDay, "MSFT")
-    ///         .interval(TimeSeriesInterval::FiveMin)
-    ///         .output_size(OutputSize::Full)
+    ///         .stock_time(alpha_vantage::stock_time::StockFunction::IntraDay, "MSFT")
+    ///         .interval(alpha_vantage::api::TimeSeriesInterval::FiveMin)
+    ///         .output_size(alpha_vantage::api::OutputSize::Full)
     ///         .json()
     ///         .await
     ///         .unwrap();
@@ -197,14 +193,13 @@ impl TimeSeries {
     /// Output Size of intraday which can be either Full or compact
     ///
     /// ```
-    /// use alpha_vantage::utils::*;
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let stock_time = api
-    ///         .stock_time(StockFunction::IntraDay, "MSFT")
-    ///         .interval(TimeSeriesInterval::FiveMin)
-    ///         .output_size(OutputSize::Full)
+    ///         .stock_time(alpha_vantage::stock_time::StockFunction::IntraDay, "MSFT")
+    ///         .interval(alpha_vantage::api::TimeSeriesInterval::FiveMin)
+    ///         .output_size(alpha_vantage::api::OutputSize::Full)
     ///         .json()
     ///         .await
     ///         .unwrap();
@@ -556,4 +551,40 @@ impl<'a> TimeSeriesBuilder<'a> {
         let stock_time_helper: TimeSeriesHelper = self.api_client.get_json(url).await?;
         stock_time_helper.convert()
     }
+}
+
+/// Enum for declaring function for stock time series by defining which type of
+/// series of stock to be returned
+#[derive(Copy, Clone)]
+pub enum StockFunction {
+    /// returns intraday time series (timestamp, open, high, low, close, volume)
+    /// of the equity specified
+    IntraDay,
+    /// returns daily time series (date, daily open, daily high, daily low,
+    /// daily close, daily volume) of the global equity specified, covering 20+
+    /// years of historical data
+    Daily,
+    /// returns daily time series (date, daily open, daily high, daily low,
+    /// daily close, daily volume, daily adjusted close, and split/dividend
+    /// events) of the global equity specified, covering 20+ years of historical
+    /// data.
+    DailyAdjusted,
+    /// returns weekly time series (last trading day of each week, weekly open,
+    /// weekly high, weekly low, weekly close, weekly volume) of the global
+    /// equity specified, covering 20+ years of historical data.
+    Weekly,
+    /// returns weekly adjusted time series (last trading day of each week,
+    /// weekly open, weekly high, weekly low, weekly close, weekly adjusted
+    /// close, weekly volume, weekly dividend) of the global equity specified,
+    /// covering 20+ years of historical data.
+    WeeklyAdjusted,
+    /// returns monthly time series (last trading day of each month, monthly
+    /// open, monthly high, monthly low, monthly close, monthly volume) of
+    /// the global equity specified, covering 20+ years of historical data.
+    Monthly,
+    /// returns monthly adjusted time series (last trading day of each month,
+    /// monthly open, monthly high, monthly low, monthly close, monthly adjusted
+    /// close, monthly volume, monthly dividend) of the equity specified,
+    /// covering 20+ years of historical data.
+    MonthlyAdjusted,
 }

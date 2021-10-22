@@ -8,8 +8,7 @@ use serde_json::Value;
 
 use crate::{
     api::ApiClient,
-    error::{Error, Result},
-    utils::detect_common_helper_error,
+    error::{detect_common_helper_error, Error, Result},
 };
 /// struct used for helping creation of custom url
 #[derive(Debug, Deserialize)]
