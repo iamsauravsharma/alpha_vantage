@@ -7,13 +7,13 @@ repository = "https://github.com/iamsauravsharma/alpha_vantage"
 description = "Rust Wrapper/Crate built for AlphaVantage API"
 license = "MIT"
 readme = "README.MD"
-edition = "2018"
+edition = "2021"
 keywords = ["alphavantage", "currency", "finance", "stock", "exchange"]
 categories = ["api-bindings", "web-programming::http-client"]
 
 [dependencies]
 async-trait = "0.1.51"
-reqwest = { version = "0.11.4", optional = true }
+reqwest = { version = "0.11.6", optional = true }
 serde = { version = "1.0.130", features = ["derive"] }
 serde_json = "1.0.68"
 surf = { version = "2.3.1", optional = true }

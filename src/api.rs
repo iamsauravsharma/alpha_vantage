@@ -2,18 +2,17 @@ use serde::de::DeserializeOwned;
 
 use crate::{
     client::HttpClient,
-    crypto::CryptoBuilder,
+    crypto::{CryptoBuilder, CryptoFunction},
     custom::CustomBuilder,
     earning::EarningBuilder,
     error::{Error, Result},
     exchange::ExchangeBuilder,
-    forex::ForexBuilder,
+    forex::{ForexBuilder, ForexFunction},
     quote::QuoteBuilder,
     search::SearchBuilder,
     sector::SectorBuilder,
-    stock_time::TimeSeriesBuilder,
-    technical_indicator::IndicatorBuilder,
-    utils::{CryptoFunction, ForexFunction, StockFunction, TechnicalIndicatorInterval},
+    stock_time::{StockFunction, TimeSeriesBuilder},
+    technical_indicator::{IndicatorBuilder, TechnicalIndicatorInterval},
 };
 
 const BASE_URL: &str = "https://www.alphavantage.co/";
@@ -120,7 +119,7 @@ impl<'a> ApiClient<'a> {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let crypto = api
-    ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
+    ///         .crypto(alpha_vantage::crypto::CryptoFunction::Daily, "BTC", "CNY")
     ///         .json()
     ///         .await
     ///         .unwrap();
@@ -187,12 +186,11 @@ impl<'a> ApiClient<'a> {
     ///
     /// # Example
     /// ```
-    /// use alpha_vantage::utils::*;
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let forex = api
-    ///         .forex(ForexFunction::Weekly, "EUR", "USD")
+    ///         .forex(alpha_vantage::forex::ForexFunction::Weekly, "EUR", "USD")
     ///         .json()
     ///         .await
     ///         .unwrap();
@@ -271,12 +269,11 @@ impl<'a> ApiClient<'a> {
     ///
     /// # Example
     /// ```
-    /// use alpha_vantage::utils::*;
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let stock = api
-    ///         .stock_time(StockFunction::Weekly, "MSFT")
+    ///         .stock_time(alpha_vantage::stock_time::StockFunction::Weekly, "MSFT")
     ///         .json()
     ///         .await
     ///         .unwrap();
@@ -300,7 +297,7 @@ impl<'a> ApiClient<'a> {
     ///         .technical_indicator(
     ///             "MAMA",
     ///             "IBM",
-    ///             alpha_vantage::utils::TechnicalIndicatorInterval::Daily,
+    ///             alpha_vantage::technical_indicator::TechnicalIndicatorInterval::Daily,
     ///         )
     ///         .series_type("close")
     ///         .extra_param("fastlimit", 0.02)
@@ -318,4 +315,30 @@ impl<'a> ApiClient<'a> {
     ) -> IndicatorBuilder<'a> {
         IndicatorBuilder::new(self, function, symbol, interval)
     }
+}
+
+/// Enum for declaring output size of API call
+#[derive(Copy, Clone)]
+pub enum OutputSize {
+    /// Return latest top 100 points recommended if no historical data is
+    /// required and decreases api json sizes
+    Compact,
+    /// Returns full api data points recommended if a full historical data is
+    /// required
+    Full,
+}
+
+/// Enum for declaring interval for intraday time series
+#[derive(Copy, Clone)]
+pub enum TimeSeriesInterval {
+    /// 1 min interval
+    OneMin,
+    /// 5 min interval
+    FiveMin,
+    /// 15 min interval
+    FifteenMin,
+    /// 30 min interval
+    ThirtyMin,
+    /// 60 min interval
+    SixtyMin,
 }

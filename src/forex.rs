@@ -13,10 +13,9 @@ use std::collections::HashMap;
 use serde::Deserialize;
 
 use crate::{
-    api::ApiClient,
+    api::{ApiClient, OutputSize, TimeSeriesInterval},
     deserialize::from_str,
-    error::{Error, Result},
-    utils::{detect_common_helper_error, ForexFunction, OutputSize, TimeSeriesInterval},
+    error::{detect_common_helper_error, Error, Result},
 };
 
 /// Struct used to store metadata value
@@ -84,14 +83,13 @@ impl Forex {
     /// Return information of data
     ///
     /// ```
-    /// use alpha_vantage::utils::*;
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let forex = api
-    ///         .forex(ForexFunction::IntraDay, "EUR", "USD")
-    ///         .interval(TimeSeriesInterval::FiveMin)
-    ///         .output_size(OutputSize::Full)
+    ///         .forex(alpha_vantage::forex::ForexFunction::IntraDay, "EUR", "USD")
+    ///         .interval(alpha_vantage::api::TimeSeriesInterval::FiveMin)
+    ///         .output_size(alpha_vantage::api::OutputSize::Full)
     ///         .json()
     ///         .await
     ///         .unwrap();
@@ -107,14 +105,13 @@ impl Forex {
     /// Return from symbol
     ///
     /// ```
-    /// use alpha_vantage::utils::*;
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let forex = api
-    ///         .forex(ForexFunction::IntraDay, "EUR", "USD")
-    ///         .interval(TimeSeriesInterval::FiveMin)
-    ///         .output_size(OutputSize::Full)
+    ///         .forex(alpha_vantage::forex::ForexFunction::IntraDay, "EUR", "USD")
+    ///         .interval(alpha_vantage::api::TimeSeriesInterval::FiveMin)
+    ///         .output_size(alpha_vantage::api::OutputSize::Full)
     ///         .json()
     ///         .await
     ///         .unwrap();
@@ -132,12 +129,11 @@ impl Forex {
     /// ```
     /// #[tokio::main]
     /// async fn main() {
-    ///     use alpha_vantage::utils::*;
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let forex = api
-    ///         .forex(ForexFunction::IntraDay, "EUR", "USD")
-    ///         .interval(TimeSeriesInterval::FiveMin)
-    ///         .output_size(OutputSize::Full)
+    ///         .forex(alpha_vantage::forex::ForexFunction::IntraDay, "EUR", "USD")
+    ///         .interval(alpha_vantage::api::TimeSeriesInterval::FiveMin)
+    ///         .output_size(alpha_vantage::api::OutputSize::Full)
     ///         .json()
     ///         .await
     ///         .unwrap();
@@ -165,14 +161,13 @@ impl Forex {
     /// Return interval for intraday
     ///
     /// ```
-    /// use alpha_vantage::utils::*;
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let forex = api
-    ///         .forex(ForexFunction::IntraDay, "EUR", "USD")
-    ///         .interval(TimeSeriesInterval::FiveMin)
-    ///         .output_size(OutputSize::Full)
+    ///         .forex(alpha_vantage::forex::ForexFunction::IntraDay, "EUR", "USD")
+    ///         .interval(alpha_vantage::api::TimeSeriesInterval::FiveMin)
+    ///         .output_size(alpha_vantage::api::OutputSize::Full)
     ///         .json()
     ///         .await
     ///         .unwrap();
@@ -188,14 +183,13 @@ impl Forex {
     /// Return output size which can be full or compact
     ///
     /// ```
-    /// use alpha_vantage::utils::*;
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let forex = api
-    ///         .forex(ForexFunction::IntraDay, "EUR", "USD")
-    ///         .interval(TimeSeriesInterval::FiveMin)
-    ///         .output_size(OutputSize::Full)
+    ///         .forex(alpha_vantage::forex::ForexFunction::IntraDay, "EUR", "USD")
+    ///         .interval(alpha_vantage::api::TimeSeriesInterval::FiveMin)
+    ///         .output_size(alpha_vantage::api::OutputSize::Full)
     ///         .json()
     ///         .await
     ///         .unwrap();
@@ -483,4 +477,22 @@ impl<'a> ForexBuilder<'a> {
         let forex_helper: ForexHelper = self.api_client.get_json(url).await?;
         forex_helper.convert()
     }
+}
+
+/// Enum for declaring function for forex function by defining which type of
+/// forex series to be returned
+#[derive(Copy, Clone)]
+pub enum ForexFunction {
+    /// returns intraday time series (timestamp, open, high, low, close) of the
+    /// FX currency pair specified, updated realtime
+    IntraDay,
+    /// returns the daily time series (timestamp, open, high, low, close) of the
+    /// FX currency pair specified, updated realtime
+    Daily,
+    /// returns the weekly time series (timestamp, open, high, low, close) of
+    /// the FX currency pair specified, updated realtime.
+    Weekly,
+    /// returns the monthly time series (timestamp, open, high, low, close) of
+    /// the FX currency pair specified, updated realtime
+    Monthly,
 }

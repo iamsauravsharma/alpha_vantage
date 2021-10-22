@@ -13,8 +13,7 @@ use serde::Deserialize;
 use crate::{
     api::ApiClient,
     deserialize::from_str,
-    error::{Error, Result},
-    utils::detect_common_helper_error,
+    error::{detect_common_helper_error, Error, Result},
 };
 
 /// Struct which stores matches data for search keyword

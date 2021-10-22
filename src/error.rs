@@ -39,3 +39,20 @@ pub enum Error {
     #[error("Failed to decode string into struct")]
     DecodeJsonToStruct,
 }
+
+pub(crate) fn detect_common_helper_error(
+    information: Option<String>,
+    error_message: Option<String>,
+    note: Option<String>,
+) -> Result<()> {
+    if let Some(information) = information {
+        return Err(Error::AlphaVantageInformation(information));
+    }
+    if let Some(error_message) = error_message {
+        return Err(Error::AlphaVantageErrorMessage(error_message));
+    }
+    if let Some(note) = note {
+        return Err(Error::AlphaVantageNote(note));
+    }
+    Ok(())
+}

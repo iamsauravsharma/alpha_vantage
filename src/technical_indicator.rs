@@ -16,8 +16,7 @@ use serde_json::value::Value;
 
 use crate::{
     api::ApiClient,
-    error::{Error, Result},
-    utils::{detect_common_helper_error, TechnicalIndicatorInterval},
+    error::{detect_common_helper_error, Error, Result},
 };
 
 type DataType = HashMap<String, HashMap<String, HashMap<String, String>>>;
@@ -205,4 +204,25 @@ impl<'a> IndicatorBuilder<'a> {
         let indicator_helper: IndicatorHelper = self.api_client.get_json(url).await?;
         indicator_helper.convert()
     }
+}
+
+/// Enum for declaring interval for technical indicator
+#[derive(Copy, Clone)]
+pub enum TechnicalIndicatorInterval {
+    /// 1 min interval
+    OneMin,
+    /// 5 min interval
+    FiveMin,
+    /// 15 min interval
+    FifteenMin,
+    /// 30 min interval
+    ThirtyMin,
+    /// 60 min interval
+    SixtyMin,
+    /// daily interval
+    Daily,
+    /// weekly interval
+    Weekly,
+    /// monthly interval
+    Monthly,
 }

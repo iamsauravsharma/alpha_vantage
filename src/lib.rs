@@ -42,10 +42,6 @@ pub mod stock_time;
 
 pub mod technical_indicator;
 
-/// Utility module declaring enum for basic function and parameters for
-/// different API
-pub mod utils;
-
 use self::{api::ApiClient, client::HttpClient};
 
 /// Set API key using user selected or created client

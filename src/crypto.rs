@@ -15,8 +15,7 @@ use serde::Deserialize;
 use crate::{
     api::ApiClient,
     deserialize::from_str,
-    error::{Error, Result},
-    utils::{detect_common_helper_error, CryptoFunction},
+    error::{detect_common_helper_error, Error, Result},
 };
 
 /// Store Meta Data Information
@@ -137,7 +136,7 @@ impl Crypto {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let crypto = api
-    ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
+    ///         .crypto(alpha_vantage::crypto::CryptoFunction::Daily, "BTC", "CNY")
     ///         .json()
     ///         .await
     ///         .unwrap();
@@ -157,7 +156,7 @@ impl Crypto {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let crypto = api
-    ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
+    ///         .crypto(alpha_vantage::crypto::CryptoFunction::Daily, "BTC", "CNY")
     ///         .json()
     ///         .await
     ///         .unwrap();
@@ -177,7 +176,7 @@ impl Crypto {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let crypto = api
-    ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
+    ///         .crypto(alpha_vantage::crypto::CryptoFunction::Daily, "BTC", "CNY")
     ///         .json()
     ///         .await
     ///         .unwrap();
@@ -197,7 +196,7 @@ impl Crypto {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let crypto = api
-    ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
+    ///         .crypto(alpha_vantage::crypto::CryptoFunction::Daily, "BTC", "CNY")
     ///         .json()
     ///         .await
     ///         .unwrap();
@@ -217,7 +216,7 @@ impl Crypto {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let crypto = api
-    ///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, "BTC", "CNY")
+    ///         .crypto(alpha_vantage::crypto::CryptoFunction::Daily, "BTC", "CNY")
     ///         .json()
     ///         .await
     ///         .unwrap();
@@ -451,4 +450,25 @@ impl<'a> CryptoBuilder<'a> {
         let crypto_helper: CryptoHelper = self.api_client.get_json(url).await?;
         crypto_helper.convert()
     }
+}
+
+/// Enum for declaring function for crypto series by defining which type of
+/// crypto series to be returned
+#[derive(Copy, Clone)]
+pub enum CryptoFunction {
+    /// returns the daily historical time series for a digital currency (e.g.,
+    /// BTC) traded on a specific market (e.g., CNY/Chinese Yuan), refreshed
+    /// daily at midnight (UTC). Prices and volumes are quoted in both the
+    /// market-specific currency and USD.
+    Daily,
+    /// returns the weekly historical time series for a digital currency (e.g.,
+    /// BTC) traded on a specific market (e.g., CNY/Chinese Yuan), refreshed
+    /// daily at midnight (UTC). Prices and volumes are quoted in both the
+    /// market-specific currency and USD.
+    Weekly,
+    /// returns the monthly historical time series for a digital currency (e.g.,
+    /// BTC) traded on a specific market (e.g., CNY/Chinese Yuan), refreshed
+    /// daily at midnight (UTC). Prices and volumes are quoted in both the
+    /// market-specific currency and USD.
+    Monthly,
 }
