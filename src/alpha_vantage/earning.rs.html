@@ -194,7 +194,6 @@
 <span id="194">194</span>
 <span id="195">195</span>
 <span id="196">196</span>
-<span id="197">197</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Module for return earning per share for a company</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! This API returns the annual and quarterly earnings (EPS) for the company of</span>
@@ -206,8 +205,7 @@
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">api::ApiClient</span>,
     <span class="ident">deserialize</span>::{<span class="ident">from_none_str</span>, <span class="ident">from_str</span>},
-    <span class="ident">error</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>},
-    <span class="ident">utils::detect_common_helper_error</span>,
+    <span class="ident">error</span>::{<span class="ident">detect_common_helper_error</span>, <span class="ident">Error</span>, <span class="prelude-ty">Result</span>},
 };
 
 <span class="doccomment">/// Struct to store information of annual earning</span>

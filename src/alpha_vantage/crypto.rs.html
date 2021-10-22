@@ -452,6 +452,26 @@
 <span id="452">452</span>
 <span id="453">453</span>
 <span id="454">454</span>
+<span id="455">455</span>
+<span id="456">456</span>
+<span id="457">457</span>
+<span id="458">458</span>
+<span id="459">459</span>
+<span id="460">460</span>
+<span id="461">461</span>
+<span id="462">462</span>
+<span id="463">463</span>
+<span id="464">464</span>
+<span id="465">465</span>
+<span id="466">466</span>
+<span id="467">467</span>
+<span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Module for crypto real time data</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! APIs under this section provide a wide range of data feed for digital and</span>
@@ -469,8 +489,7 @@
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">api::ApiClient</span>,
     <span class="ident">deserialize::from_str</span>,
-    <span class="ident">error</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>},
-    <span class="ident">utils</span>::{<span class="ident">detect_common_helper_error</span>, <span class="ident">CryptoFunction</span>},
+    <span class="ident">error</span>::{<span class="ident">detect_common_helper_error</span>, <span class="ident">Error</span>, <span class="prelude-ty">Result</span>},
 };
 
 <span class="doccomment">/// Store Meta Data Information</span>
@@ -591,7 +610,7 @@
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let crypto = api</span>
-    <span class="doccomment">///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
+    <span class="doccomment">///         .crypto(alpha_vantage::crypto::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
     <span class="doccomment">///         .json()</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
@@ -611,7 +630,7 @@
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let crypto = api</span>
-    <span class="doccomment">///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
+    <span class="doccomment">///         .crypto(alpha_vantage::crypto::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
     <span class="doccomment">///         .json()</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
@@ -631,7 +650,7 @@
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let crypto = api</span>
-    <span class="doccomment">///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
+    <span class="doccomment">///         .crypto(alpha_vantage::crypto::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
     <span class="doccomment">///         .json()</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
@@ -651,7 +670,7 @@
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let crypto = api</span>
-    <span class="doccomment">///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
+    <span class="doccomment">///         .crypto(alpha_vantage::crypto::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
     <span class="doccomment">///         .json()</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
@@ -671,7 +690,7 @@
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let crypto = api</span>
-    <span class="doccomment">///         .crypto(alpha_vantage::utils::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
+    <span class="doccomment">///         .crypto(alpha_vantage::crypto::CryptoFunction::Daily, &quot;BTC&quot;, &quot;CNY&quot;)</span>
     <span class="doccomment">///         .json()</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
@@ -905,6 +924,27 @@
         <span class="kw">let</span> <span class="ident">crypto_helper</span>: <span class="ident">CryptoHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">api_client</span>.<span class="ident">get_json</span>(<span class="ident">url</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="ident">crypto_helper</span>.<span class="ident">convert</span>()
     }
+}
+
+<span class="doccomment">/// Enum for declaring function for crypto series by defining which type of</span>
+<span class="doccomment">/// crypto series to be returned</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">CryptoFunction</span> {
+    <span class="doccomment">/// returns the daily historical time series for a digital currency (e.g.,</span>
+    <span class="doccomment">/// BTC) traded on a specific market (e.g., CNY/Chinese Yuan), refreshed</span>
+    <span class="doccomment">/// daily at midnight (UTC). Prices and volumes are quoted in both the</span>
+    <span class="doccomment">/// market-specific currency and USD.</span>
+    <span class="ident">Daily</span>,
+    <span class="doccomment">/// returns the weekly historical time series for a digital currency (e.g.,</span>
+    <span class="doccomment">/// BTC) traded on a specific market (e.g., CNY/Chinese Yuan), refreshed</span>
+    <span class="doccomment">/// daily at midnight (UTC). Prices and volumes are quoted in both the</span>
+    <span class="doccomment">/// market-specific currency and USD.</span>
+    <span class="ident">Weekly</span>,
+    <span class="doccomment">/// returns the monthly historical time series for a digital currency (e.g.,</span>
+    <span class="doccomment">/// BTC) traded on a specific market (e.g., CNY/Chinese Yuan), refreshed</span>
+    <span class="doccomment">/// daily at midnight (UTC). Prices and volumes are quoted in both the</span>
+    <span class="doccomment">/// market-specific currency and USD.</span>
+    <span class="ident">Monthly</span>,
 }
 </code></pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>

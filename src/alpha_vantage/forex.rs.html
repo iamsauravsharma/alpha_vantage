@@ -484,6 +484,18 @@
 <span id="484">484</span>
 <span id="485">485</span>
 <span id="486">486</span>
+<span id="487">487</span>
+<span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Module for Forex realtime and historical data</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! APIs under this section provide a wide range of data feed for realtime and</span>
@@ -499,10 +511,9 @@
 <span class="kw">use</span> <span class="ident">serde::Deserialize</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">api::ApiClient</span>,
+    <span class="ident">api</span>::{<span class="ident">ApiClient</span>, <span class="ident">OutputSize</span>, <span class="ident">TimeSeriesInterval</span>},
     <span class="ident">deserialize::from_str</span>,
-    <span class="ident">error</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>},
-    <span class="ident">utils</span>::{<span class="ident">detect_common_helper_error</span>, <span class="ident">ForexFunction</span>, <span class="ident">OutputSize</span>, <span class="ident">TimeSeriesInterval</span>},
+    <span class="ident">error</span>::{<span class="ident">detect_common_helper_error</span>, <span class="ident">Error</span>, <span class="prelude-ty">Result</span>},
 };
 
 <span class="doccomment">/// Struct used to store metadata value</span>
@@ -570,14 +581,13 @@
     <span class="doccomment">/// Return information of data</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use alpha_vantage::utils::*;</span>
     <span class="doccomment">/// #[tokio::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let forex = api</span>
-    <span class="doccomment">///         .forex(ForexFunction::IntraDay, &quot;EUR&quot;, &quot;USD&quot;)</span>
-    <span class="doccomment">///         .interval(TimeSeriesInterval::FiveMin)</span>
-    <span class="doccomment">///         .output_size(OutputSize::Full)</span>
+    <span class="doccomment">///         .forex(alpha_vantage::forex::ForexFunction::IntraDay, &quot;EUR&quot;, &quot;USD&quot;)</span>
+    <span class="doccomment">///         .interval(alpha_vantage::api::TimeSeriesInterval::FiveMin)</span>
+    <span class="doccomment">///         .output_size(alpha_vantage::api::OutputSize::Full)</span>
     <span class="doccomment">///         .json()</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
@@ -593,14 +603,13 @@
     <span class="doccomment">/// Return from symbol</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use alpha_vantage::utils::*;</span>
     <span class="doccomment">/// #[tokio::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let forex = api</span>
-    <span class="doccomment">///         .forex(ForexFunction::IntraDay, &quot;EUR&quot;, &quot;USD&quot;)</span>
-    <span class="doccomment">///         .interval(TimeSeriesInterval::FiveMin)</span>
-    <span class="doccomment">///         .output_size(OutputSize::Full)</span>
+    <span class="doccomment">///         .forex(alpha_vantage::forex::ForexFunction::IntraDay, &quot;EUR&quot;, &quot;USD&quot;)</span>
+    <span class="doccomment">///         .interval(alpha_vantage::api::TimeSeriesInterval::FiveMin)</span>
+    <span class="doccomment">///         .output_size(alpha_vantage::api::OutputSize::Full)</span>
     <span class="doccomment">///         .json()</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
@@ -618,12 +627,11 @@
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// #[tokio::main]</span>
     <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     use alpha_vantage::utils::*;</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let forex = api</span>
-    <span class="doccomment">///         .forex(ForexFunction::IntraDay, &quot;EUR&quot;, &quot;USD&quot;)</span>
-    <span class="doccomment">///         .interval(TimeSeriesInterval::FiveMin)</span>
-    <span class="doccomment">///         .output_size(OutputSize::Full)</span>
+    <span class="doccomment">///         .forex(alpha_vantage::forex::ForexFunction::IntraDay, &quot;EUR&quot;, &quot;USD&quot;)</span>
+    <span class="doccomment">///         .interval(alpha_vantage::api::TimeSeriesInterval::FiveMin)</span>
+    <span class="doccomment">///         .output_size(alpha_vantage::api::OutputSize::Full)</span>
     <span class="doccomment">///         .json()</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
@@ -651,14 +659,13 @@
     <span class="doccomment">/// Return interval for intraday</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use alpha_vantage::utils::*;</span>
     <span class="doccomment">/// #[tokio::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let forex = api</span>
-    <span class="doccomment">///         .forex(ForexFunction::IntraDay, &quot;EUR&quot;, &quot;USD&quot;)</span>
-    <span class="doccomment">///         .interval(TimeSeriesInterval::FiveMin)</span>
-    <span class="doccomment">///         .output_size(OutputSize::Full)</span>
+    <span class="doccomment">///         .forex(alpha_vantage::forex::ForexFunction::IntraDay, &quot;EUR&quot;, &quot;USD&quot;)</span>
+    <span class="doccomment">///         .interval(alpha_vantage::api::TimeSeriesInterval::FiveMin)</span>
+    <span class="doccomment">///         .output_size(alpha_vantage::api::OutputSize::Full)</span>
     <span class="doccomment">///         .json()</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
@@ -674,14 +681,13 @@
     <span class="doccomment">/// Return output size which can be full or compact</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use alpha_vantage::utils::*;</span>
     <span class="doccomment">/// #[tokio::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let forex = api</span>
-    <span class="doccomment">///         .forex(ForexFunction::IntraDay, &quot;EUR&quot;, &quot;USD&quot;)</span>
-    <span class="doccomment">///         .interval(TimeSeriesInterval::FiveMin)</span>
-    <span class="doccomment">///         .output_size(OutputSize::Full)</span>
+    <span class="doccomment">///         .forex(alpha_vantage::forex::ForexFunction::IntraDay, &quot;EUR&quot;, &quot;USD&quot;)</span>
+    <span class="doccomment">///         .interval(alpha_vantage::api::TimeSeriesInterval::FiveMin)</span>
+    <span class="doccomment">///         .output_size(alpha_vantage::api::OutputSize::Full)</span>
     <span class="doccomment">///         .json()</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
@@ -969,6 +975,24 @@
         <span class="kw">let</span> <span class="ident">forex_helper</span>: <span class="ident">ForexHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">api_client</span>.<span class="ident">get_json</span>(<span class="ident">url</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="ident">forex_helper</span>.<span class="ident">convert</span>()
     }
+}
+
+<span class="doccomment">/// Enum for declaring function for forex function by defining which type of</span>
+<span class="doccomment">/// forex series to be returned</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ForexFunction</span> {
+    <span class="doccomment">/// returns intraday time series (timestamp, open, high, low, close) of the</span>
+    <span class="doccomment">/// FX currency pair specified, updated realtime</span>
+    <span class="ident">IntraDay</span>,
+    <span class="doccomment">/// returns the daily time series (timestamp, open, high, low, close) of the</span>
+    <span class="doccomment">/// FX currency pair specified, updated realtime</span>
+    <span class="ident">Daily</span>,
+    <span class="doccomment">/// returns the weekly time series (timestamp, open, high, low, close) of</span>
+    <span class="doccomment">/// the FX currency pair specified, updated realtime.</span>
+    <span class="ident">Weekly</span>,
+    <span class="doccomment">/// returns the monthly time series (timestamp, open, high, low, close) of</span>
+    <span class="doccomment">/// the FX currency pair specified, updated realtime</span>
+    <span class="ident">Monthly</span>,
 }
 </code></pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>

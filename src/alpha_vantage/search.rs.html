@@ -237,7 +237,6 @@
 <span id="237">237</span>
 <span id="238">238</span>
 <span id="239">239</span>
-<span id="240">240</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Module for searching specific symbol or companies</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Looking for some specific symbols or companies? Trying to build a search box</span>
@@ -253,8 +252,7 @@
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">api::ApiClient</span>,
     <span class="ident">deserialize::from_str</span>,
-    <span class="ident">error</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>},
-    <span class="ident">utils::detect_common_helper_error</span>,
+    <span class="ident">error</span>::{<span class="ident">detect_common_helper_error</span>, <span class="ident">Error</span>, <span class="prelude-ty">Result</span>},
 };
 
 <span class="doccomment">/// Struct which stores matches data for search keyword</span>

@@ -557,6 +557,37 @@
 <span id="557">557</span>
 <span id="558">558</span>
 <span id="559">559</span>
+<span id="560">560</span>
+<span id="561">561</span>
+<span id="562">562</span>
+<span id="563">563</span>
+<span id="564">564</span>
+<span id="565">565</span>
+<span id="566">566</span>
+<span id="567">567</span>
+<span id="568">568</span>
+<span id="569">569</span>
+<span id="570">570</span>
+<span id="571">571</span>
+<span id="572">572</span>
+<span id="573">573</span>
+<span id="574">574</span>
+<span id="575">575</span>
+<span id="576">576</span>
+<span id="577">577</span>
+<span id="578">578</span>
+<span id="579">579</span>
+<span id="580">580</span>
+<span id="581">581</span>
+<span id="582">582</span>
+<span id="583">583</span>
+<span id="584">584</span>
+<span id="585">585</span>
+<span id="586">586</span>
+<span id="587">587</span>
+<span id="588">588</span>
+<span id="589">589</span>
+<span id="590">590</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Module for stock time series</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! This suite of APIs provide realtime and historical global equity data in 4</span>
@@ -574,10 +605,9 @@
 <span class="kw">use</span> <span class="ident">serde::Deserialize</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">api::ApiClient</span>,
+    <span class="ident">api</span>::{<span class="ident">ApiClient</span>, <span class="ident">OutputSize</span>, <span class="ident">TimeSeriesInterval</span>},
     <span class="ident">deserialize::from_str</span>,
-    <span class="ident">error</span>::{<span class="ident">Error</span>, <span class="prelude-ty">Result</span>},
-    <span class="ident">utils</span>::{<span class="ident">detect_common_helper_error</span>, <span class="ident">OutputSize</span>, <span class="ident">StockFunction</span>, <span class="ident">TimeSeriesInterval</span>},
+    <span class="ident">error</span>::{<span class="ident">detect_common_helper_error</span>, <span class="ident">Error</span>, <span class="prelude-ty">Result</span>},
 };
 
 <span class="doccomment">/// Struct for storing Meta Data value</span>
@@ -672,14 +702,13 @@
     <span class="doccomment">/// Return information present in meta data</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use alpha_vantage::utils::*;</span>
     <span class="doccomment">/// #[tokio::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let stock_time = api</span>
-    <span class="doccomment">///         .stock_time(StockFunction::IntraDay, &quot;MSFT&quot;)</span>
-    <span class="doccomment">///         .interval(TimeSeriesInterval::FiveMin)</span>
-    <span class="doccomment">///         .output_size(OutputSize::Full)</span>
+    <span class="doccomment">///         .stock_time(alpha_vantage::stock_time::StockFunction::IntraDay, &quot;MSFT&quot;)</span>
+    <span class="doccomment">///         .interval(alpha_vantage::api::TimeSeriesInterval::FiveMin)</span>
+    <span class="doccomment">///         .output_size(alpha_vantage::api::OutputSize::Full)</span>
     <span class="doccomment">///         .json()</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
@@ -698,14 +727,13 @@
     <span class="doccomment">/// Return symbol for which time series function is called</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use alpha_vantage::utils::*;</span>
     <span class="doccomment">/// #[tokio::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let stock_time = api</span>
-    <span class="doccomment">///         .stock_time(StockFunction::IntraDay, &quot;MSFT&quot;)</span>
-    <span class="doccomment">///         .interval(TimeSeriesInterval::FiveMin)</span>
-    <span class="doccomment">///         .output_size(OutputSize::Full)</span>
+    <span class="doccomment">///         .stock_time(alpha_vantage::stock_time::StockFunction::IntraDay, &quot;MSFT&quot;)</span>
+    <span class="doccomment">///         .interval(alpha_vantage::api::TimeSeriesInterval::FiveMin)</span>
+    <span class="doccomment">///         .output_size(alpha_vantage::api::OutputSize::Full)</span>
     <span class="doccomment">///         .json()</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
@@ -733,14 +761,13 @@
     <span class="doccomment">/// Time series interval between two consecutive data</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use alpha_vantage::utils::*;</span>
     <span class="doccomment">/// #[tokio::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let stock_time = api</span>
-    <span class="doccomment">///         .stock_time(StockFunction::IntraDay, &quot;MSFT&quot;)</span>
-    <span class="doccomment">///         .interval(TimeSeriesInterval::FiveMin)</span>
-    <span class="doccomment">///         .output_size(OutputSize::Full)</span>
+    <span class="doccomment">///         .stock_time(alpha_vantage::stock_time::StockFunction::IntraDay, &quot;MSFT&quot;)</span>
+    <span class="doccomment">///         .interval(alpha_vantage::api::TimeSeriesInterval::FiveMin)</span>
+    <span class="doccomment">///         .output_size(alpha_vantage::api::OutputSize::Full)</span>
     <span class="doccomment">///         .json()</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
@@ -756,14 +783,13 @@
     <span class="doccomment">/// Output Size of intraday which can be either Full or compact</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use alpha_vantage::utils::*;</span>
     <span class="doccomment">/// #[tokio::main]</span>
     <span class="doccomment">/// async fn main() {</span>
     <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
     <span class="doccomment">///     let stock_time = api</span>
-    <span class="doccomment">///         .stock_time(StockFunction::IntraDay, &quot;MSFT&quot;)</span>
-    <span class="doccomment">///         .interval(TimeSeriesInterval::FiveMin)</span>
-    <span class="doccomment">///         .output_size(OutputSize::Full)</span>
+    <span class="doccomment">///         .stock_time(alpha_vantage::stock_time::StockFunction::IntraDay, &quot;MSFT&quot;)</span>
+    <span class="doccomment">///         .interval(alpha_vantage::api::TimeSeriesInterval::FiveMin)</span>
+    <span class="doccomment">///         .output_size(alpha_vantage::api::OutputSize::Full)</span>
     <span class="doccomment">///         .json()</span>
     <span class="doccomment">///         .await</span>
     <span class="doccomment">///         .unwrap();</span>
@@ -1115,6 +1141,42 @@
         <span class="kw">let</span> <span class="ident">stock_time_helper</span>: <span class="ident">TimeSeriesHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">api_client</span>.<span class="ident">get_json</span>(<span class="ident">url</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="ident">stock_time_helper</span>.<span class="ident">convert</span>()
     }
+}
+
+<span class="doccomment">/// Enum for declaring function for stock time series by defining which type of</span>
+<span class="doccomment">/// series of stock to be returned</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">StockFunction</span> {
+    <span class="doccomment">/// returns intraday time series (timestamp, open, high, low, close, volume)</span>
+    <span class="doccomment">/// of the equity specified</span>
+    <span class="ident">IntraDay</span>,
+    <span class="doccomment">/// returns daily time series (date, daily open, daily high, daily low,</span>
+    <span class="doccomment">/// daily close, daily volume) of the global equity specified, covering 20+</span>
+    <span class="doccomment">/// years of historical data</span>
+    <span class="ident">Daily</span>,
+    <span class="doccomment">/// returns daily time series (date, daily open, daily high, daily low,</span>
+    <span class="doccomment">/// daily close, daily volume, daily adjusted close, and split/dividend</span>
+    <span class="doccomment">/// events) of the global equity specified, covering 20+ years of historical</span>
+    <span class="doccomment">/// data.</span>
+    <span class="ident">DailyAdjusted</span>,
+    <span class="doccomment">/// returns weekly time series (last trading day of each week, weekly open,</span>
+    <span class="doccomment">/// weekly high, weekly low, weekly close, weekly volume) of the global</span>
+    <span class="doccomment">/// equity specified, covering 20+ years of historical data.</span>
+    <span class="ident">Weekly</span>,
+    <span class="doccomment">/// returns weekly adjusted time series (last trading day of each week,</span>
+    <span class="doccomment">/// weekly open, weekly high, weekly low, weekly close, weekly adjusted</span>
+    <span class="doccomment">/// close, weekly volume, weekly dividend) of the global equity specified,</span>
+    <span class="doccomment">/// covering 20+ years of historical data.</span>
+    <span class="ident">WeeklyAdjusted</span>,
+    <span class="doccomment">/// returns monthly time series (last trading day of each month, monthly</span>
+    <span class="doccomment">/// open, monthly high, monthly low, monthly close, monthly volume) of</span>
+    <span class="doccomment">/// the global equity specified, covering 20+ years of historical data.</span>
+    <span class="ident">Monthly</span>,
+    <span class="doccomment">/// returns monthly adjusted time series (last trading day of each month,</span>
+    <span class="doccomment">/// monthly open, monthly high, monthly low, monthly close, monthly adjusted</span>
+    <span class="doccomment">/// close, monthly volume, monthly dividend) of the equity specified,</span>
+    <span class="doccomment">/// covering 20+ years of historical data.</span>
+    <span class="ident">MonthlyAdjusted</span>,
 }
 </code></pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
