@@ -37,7 +37,7 @@ impl CustomHelper {
 
 /// Builder to create new Custom Struct
 pub struct CustomBuilder<'a> {
-    api_client: &'a ApiClient<'a>,
+    api_client: &'a ApiClient,
     function: &'a str,
     extras: Vec<(&'a str, &'a str)>,
 }

@@ -241,7 +241,7 @@ fn convert_str_percent_f64(val: &str) -> f64 {
 
 /// Builder to create new Sector
 pub struct SectorBuilder<'a> {
-    api_client: &'a ApiClient<'a>,
+    api_client: &'a ApiClient,
 }
 
 impl<'a> SectorBuilder<'a> {

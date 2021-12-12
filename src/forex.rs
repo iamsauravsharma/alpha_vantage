@@ -392,7 +392,7 @@ impl VecEntry for Vec<Entry> {
 
 /// Builder to create `Forex`
 pub struct ForexBuilder<'a> {
-    api_client: &'a ApiClient<'a>,
+    api_client: &'a ApiClient,
     function: ForexFunction,
     from_symbol: &'a str,
     to_symbol: &'a str,

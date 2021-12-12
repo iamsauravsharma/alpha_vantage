@@ -52,7 +52,7 @@ use self::{api::ApiClient, client::HttpClient};
 #[must_use]
 pub fn set_api<T>(api: &str, client: T) -> ApiClient
 where
-    T: HttpClient + 'static,
+    T: HttpClient + 'static + Send + Sync,
 {
     ApiClient::set_api(api, client)
 }
