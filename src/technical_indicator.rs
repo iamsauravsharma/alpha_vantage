@@ -115,7 +115,7 @@ impl IndicatorHelper {
 
 /// Builder to help create `Indicator`
 pub struct IndicatorBuilder<'a> {
-    api_client: &'a ApiClient<'a>,
+    api_client: &'a ApiClient,
     function: &'a str,
     symbol: &'a str,
     interval: TechnicalIndicatorInterval,

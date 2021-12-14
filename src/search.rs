@@ -208,7 +208,7 @@ impl SearchHelper {
 
 /// Builder to create new `Search`
 pub struct SearchBuilder<'a> {
-    api_client: &'a ApiClient<'a>,
+    api_client: &'a ApiClient,
     keywords: &'a str,
 }
 

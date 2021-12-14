@@ -146,7 +146,7 @@ impl QuoteHelper {
 
 /// Builder to create `Quote`
 pub struct QuoteBuilder<'a> {
-    api_client: &'a ApiClient<'a>,
+    api_client: &'a ApiClient,
     symbol: &'a str,
 }
 

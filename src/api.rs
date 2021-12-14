@@ -27,13 +27,13 @@ pub enum Provider {
 }
 
 /// Struct for initializing client which contains different method for API call
-pub struct ApiClient<'a> {
-    api: &'a str,
-    client: Box<dyn HttpClient>,
+pub struct ApiClient {
+    api: String,
+    client: Box<dyn HttpClient + Send + Sync>,
     provider: Provider,
 }
 
-impl<'a> ApiClient<'a> {
+impl<'a> ApiClient {
     /// Method for initializing `ApiClient` struct using  user
     /// provided client and alphavantage.co provider
     ///
@@ -44,10 +44,10 @@ impl<'a> ApiClient<'a> {
     #[must_use]
     pub fn set_api<T>(api: &'a str, client: T) -> Self
     where
-        T: HttpClient + 'static,
+        T: HttpClient + 'static + Send + Sync,
     {
         Self {
-            api,
+            api: api.to_owned(),
             client: Box::new(client),
             provider: Provider::AlphaVantage,
         }
@@ -63,10 +63,10 @@ impl<'a> ApiClient<'a> {
     #[must_use]
     pub fn set_rapid_api<T>(api: &'a str, client: T) -> Self
     where
-        T: HttpClient + 'static,
+        T: HttpClient + 'static + Send + Sync,
     {
         Self {
-            api,
+            api: api.to_owned(),
             client: Box::new(client),
             provider: Provider::RapidAPI,
         }
@@ -81,7 +81,7 @@ impl<'a> ApiClient<'a> {
     /// ```
     #[must_use]
     pub fn get_api_key(&self) -> &str {
-        self.api
+        &self.api
     }
 
     // Get json from api endpoint and create struct
@@ -102,7 +102,7 @@ impl<'a> ApiClient<'a> {
                 self.client
                     .get_rapid_api_provider_output(
                         format!("{}{}", RAPID_API_BASE_URL, path),
-                        String::from(self.api),
+                        self.api.clone(),
                     )
                     .await
             }
