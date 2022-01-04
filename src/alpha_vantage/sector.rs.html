@@ -266,8 +266,6 @@
 <span id="264">264</span>
 <span id="265">265</span>
 <span id="266">266</span>
-<span id="267">267</span>
-<span id="268">268</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Module for sector</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! This API returns the realtime and historical sector performances calculated</span>
@@ -477,20 +475,20 @@
                     <span class="string">&quot;Health Care&quot;</span> =&gt; <span class="ident">data</span>.<span class="ident">health_care</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
                     <span class="string">&quot;Information Technology&quot;</span> =&gt; {
                         <span class="ident">data</span>.<span class="ident">information_technology</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>);
-                    },
+                    }
                     <span class="string">&quot;Industrials&quot;</span> =&gt; <span class="ident">data</span>.<span class="ident">industrials</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
                     <span class="string">&quot;Real Estate&quot;</span> =&gt; <span class="ident">data</span>.<span class="ident">real_estate</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
                     <span class="string">&quot;Consumer Staples&quot;</span> =&gt; <span class="ident">data</span>.<span class="ident">consumer_staples</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
                     <span class="string">&quot;Consumer Discretionary&quot;</span> =&gt; {
                         <span class="ident">data</span>.<span class="ident">consumer_discretionary</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>);
-                    },
+                    }
                     <span class="string">&quot;Financials&quot;</span> =&gt; <span class="ident">data</span>.<span class="ident">financials</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
                     <span class="string">&quot;Communication Services&quot;</span> =&gt; {
                         <span class="ident">data</span>.<span class="ident">communication_services</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>);
-                    },
+                    }
                     <span class="string">&quot;Materials&quot;</span> =&gt; <span class="ident">data</span>.<span class="ident">materials</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
                     <span class="string">&quot;Energy&quot;</span> =&gt; <span class="ident">data</span>.<span class="ident">energy</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
-                    <span class="kw">_</span> =&gt; {},
+                    <span class="kw">_</span> =&gt; {}
                 }
             }
             <span class="ident">final_data</span>.<span class="ident">push</span>(<span class="ident">data</span>);
@@ -516,9 +514,7 @@
     <span class="doccomment">/// Create new sector builder from `APIClient`</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">api_client</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ApiClient</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">Self</span> {
-            <span class="ident">api_client</span>,
-        }
+        <span class="self">Self</span> { <span class="ident">api_client</span> }
     }
 
     <span class="kw">fn</span> <span class="ident">create_url</span>() -&gt; <span class="ident">String</span> {

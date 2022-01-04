@@ -194,9 +194,6 @@
 <span id="192">192</span>
 <span id="193">193</span>
 <span id="194">194</span>
-<span id="195">195</span>
-<span id="196">196</span>
-<span id="197">197</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Module for return earning per share for a company</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! This API returns the annual and quarterly earnings (EPS) for the company of</span>
@@ -373,10 +370,7 @@
     <span class="doccomment">/// Create new Earning Builder with help of `APIClient`</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">api_client</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ApiClient</span>, <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">Self</span> {
-            <span class="ident">api_client</span>,
-            <span class="ident">symbol</span>,
-        }
+        <span class="self">Self</span> { <span class="ident">api_client</span>, <span class="ident">symbol</span> }
     }
 
     <span class="kw">fn</span> <span class="ident">create_url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">String</span> {
