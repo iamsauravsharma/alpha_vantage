@@ -10,11 +10,9 @@
 
 use serde::Deserialize;
 
-use crate::{
-    api::ApiClient,
-    deserialize::from_str,
-    error::{detect_common_helper_error, Error, Result},
-};
+use crate::api::ApiClient;
+use crate::deserialize::from_str;
+use crate::error::{detect_common_helper_error, Error, Result};
 
 /// Struct which stores matches data for search keyword
 #[derive(Debug, Clone, Deserialize, Default)]

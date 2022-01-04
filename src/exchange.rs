@@ -10,11 +10,9 @@
 
 use serde::Deserialize;
 
-use crate::{
-    api::ApiClient,
-    deserialize::from_str,
-    error::{detect_common_helper_error, Error, Result},
-};
+use crate::api::ApiClient;
+use crate::deserialize::from_str;
+use crate::error::{detect_common_helper_error, Error, Result};
 
 /// Struct used for exchanging currency
 #[derive(Default)]

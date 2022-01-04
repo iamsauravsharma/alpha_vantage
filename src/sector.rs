@@ -12,10 +12,8 @@ use std::collections::HashMap;
 
 use serde::Deserialize;
 
-use crate::{
-    api::ApiClient,
-    error::{detect_common_helper_error, Error, Result},
-};
+use crate::api::ApiClient;
+use crate::error::{detect_common_helper_error, Error, Result};
 
 /// Stores Metadata
 #[derive(Deserialize, Clone, Default)]
@@ -209,20 +207,20 @@ impl SectorHelper {
                     "Health Care" => data.health_care = convert_str_percent_f64(val),
                     "Information Technology" => {
                         data.information_technology = convert_str_percent_f64(val);
-                    }
+                    },
                     "Industrials" => data.industrials = convert_str_percent_f64(val),
                     "Real Estate" => data.real_estate = convert_str_percent_f64(val),
                     "Consumer Staples" => data.consumer_staples = convert_str_percent_f64(val),
                     "Consumer Discretionary" => {
                         data.consumer_discretionary = convert_str_percent_f64(val);
-                    }
+                    },
                     "Financials" => data.financials = convert_str_percent_f64(val),
                     "Communication Services" => {
                         data.communication_services = convert_str_percent_f64(val);
-                    }
+                    },
                     "Materials" => data.materials = convert_str_percent_f64(val),
                     "Energy" => data.energy = convert_str_percent_f64(val),
-                    _ => {}
+                    _ => {},
                 }
             }
             final_data.push(data);
@@ -248,7 +246,9 @@ impl<'a> SectorBuilder<'a> {
     /// Create new sector builder from `APIClient`
     #[must_use]
     pub fn new(api_client: &'a ApiClient) -> Self {
-        Self { api_client }
+        Self {
+            api_client,
+        }
     }
 
     fn create_url() -> String {

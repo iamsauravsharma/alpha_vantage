@@ -1,19 +1,17 @@
 use serde::de::DeserializeOwned;
 
-use crate::{
-    client::HttpClient,
-    crypto::{CryptoBuilder, CryptoFunction},
-    custom::CustomBuilder,
-    earning::EarningBuilder,
-    error::{Error, Result},
-    exchange::ExchangeBuilder,
-    forex::{ForexBuilder, ForexFunction},
-    quote::QuoteBuilder,
-    search::SearchBuilder,
-    sector::SectorBuilder,
-    stock_time::{StockFunction, TimeSeriesBuilder},
-    technical_indicator::{IndicatorBuilder, TechnicalIndicatorInterval},
-};
+use crate::client::HttpClient;
+use crate::crypto::{CryptoBuilder, CryptoFunction};
+use crate::custom::CustomBuilder;
+use crate::earning::EarningBuilder;
+use crate::error::{Error, Result};
+use crate::exchange::ExchangeBuilder;
+use crate::forex::{ForexBuilder, ForexFunction};
+use crate::quote::QuoteBuilder;
+use crate::search::SearchBuilder;
+use crate::sector::SectorBuilder;
+use crate::stock_time::{StockFunction, TimeSeriesBuilder};
+use crate::technical_indicator::{IndicatorBuilder, TechnicalIndicatorInterval};
 
 const BASE_URL: &str = "https://www.alphavantage.co/";
 const RAPID_API_BASE_URL: &str = "https://alpha-vantage.p.rapidapi.com/query";
@@ -97,7 +95,7 @@ impl<'a> ApiClient {
                         BASE_URL, path, self.api
                     ))
                     .await
-            }
+            },
             Provider::RapidAPI => {
                 self.client
                     .get_rapid_api_provider_output(
@@ -105,7 +103,7 @@ impl<'a> ApiClient {
                         self.api.clone(),
                     )
                     .await
-            }
+            },
         }?;
         serde_json::from_str(&string_output).map_err(|_| Error::DecodeJsonToStruct)
     }

@@ -10,11 +10,9 @@
 
 use serde::Deserialize;
 
-use crate::{
-    api::ApiClient,
-    deserialize::{from_str, percent_f64},
-    error::{detect_common_helper_error, Error, Result},
-};
+use crate::api::ApiClient;
+use crate::deserialize::{from_str, percent_f64};
+use crate::error::{detect_common_helper_error, Error, Result};
 
 /// Struct storing Global Quote Value
 #[derive(Debug, Deserialize, Clone, Default)]
@@ -154,7 +152,10 @@ impl<'a> QuoteBuilder<'a> {
     /// Create new `QuoteBuilder` from `APIClient`
     #[must_use]
     pub fn new(api_client: &'a ApiClient, symbol: &'a str) -> Self {
-        Self { api_client, symbol }
+        Self {
+            api_client,
+            symbol,
+        }
     }
 
     fn create_url(&self) -> String {

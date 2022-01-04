@@ -6,11 +6,9 @@
 
 use serde::Deserialize;
 
-use crate::{
-    api::ApiClient,
-    deserialize::{from_none_str, from_str},
-    error::{detect_common_helper_error, Error, Result},
-};
+use crate::api::ApiClient;
+use crate::deserialize::{from_none_str, from_str};
+use crate::error::{detect_common_helper_error, Error, Result};
 
 /// Struct to store information of annual earning
 #[derive(Debug, Deserialize, Clone, Default)]
@@ -176,7 +174,10 @@ impl<'a> EarningBuilder<'a> {
     /// Create new Earning Builder with help of `APIClient`
     #[must_use]
     pub fn new(api_client: &'a ApiClient, symbol: &'a str) -> Self {
-        Self { api_client, symbol }
+        Self {
+            api_client,
+            symbol,
+        }
     }
 
     fn create_url(&self) -> String {

@@ -1,15 +1,12 @@
 use std::collections::HashMap;
 
-use serde::{
-    de::{value::MapDeserializer, DeserializeOwned},
-    Deserialize,
-};
+use serde::de::value::MapDeserializer;
+use serde::de::DeserializeOwned;
+use serde::Deserialize;
 use serde_json::Value;
 
-use crate::{
-    api::ApiClient,
-    error::{detect_common_helper_error, Error, Result},
-};
+use crate::api::ApiClient;
+use crate::error::{detect_common_helper_error, Error, Result};
 /// struct used for helping creation of custom url
 #[derive(Debug, Deserialize)]
 pub(crate) struct CustomHelper {

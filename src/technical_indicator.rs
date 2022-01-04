@@ -14,10 +14,8 @@ use std::collections::HashMap;
 use serde::Deserialize;
 use serde_json::value::Value;
 
-use crate::{
-    api::ApiClient,
-    error::{detect_common_helper_error, Error, Result},
-};
+use crate::api::ApiClient;
+use crate::error::{detect_common_helper_error, Error, Result};
 
 type DataType = HashMap<String, HashMap<String, HashMap<String, String>>>;
 

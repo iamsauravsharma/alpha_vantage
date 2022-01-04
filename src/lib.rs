@@ -42,7 +42,8 @@ pub mod stock_time;
 
 pub mod technical_indicator;
 
-use self::{api::ApiClient, client::HttpClient};
+pub use self::api::ApiClient;
+use self::client::HttpClient;
 
 /// Set API key using user selected or created client
 ///
@@ -55,4 +56,17 @@ where
     T: HttpClient + 'static + Send + Sync,
 {
     ApiClient::set_api(api, client)
+}
+
+/// Set Rapid API key using user selected or created client
+///
+/// ```
+/// let api = alpha_vantage::set_rapid_api("some_key", reqwest::Client::new());
+/// ```
+#[must_use]
+pub fn set_rapid_api<T>(api: &str, client: T) -> ApiClient
+where
+    T: HttpClient + 'static + Send + Sync,
+{
+    ApiClient::set_rapid_api(api, client)
 }

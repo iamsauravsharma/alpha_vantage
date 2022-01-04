@@ -12,11 +12,9 @@ use std::collections::HashMap;
 
 use serde::Deserialize;
 
-use crate::{
-    api::{ApiClient, OutputSize, TimeSeriesInterval},
-    deserialize::from_str,
-    error::{detect_common_helper_error, Error, Result},
-};
+use crate::api::{ApiClient, OutputSize, TimeSeriesInterval};
+use crate::deserialize::from_str;
+use crate::error::{detect_common_helper_error, Error, Result};
 
 /// Struct used to store metadata value
 #[derive(Debug, Clone, Default)]
