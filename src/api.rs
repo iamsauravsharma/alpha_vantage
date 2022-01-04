@@ -95,7 +95,7 @@ impl<'a> ApiClient {
                         BASE_URL, path, self.api
                     ))
                     .await
-            },
+            }
             Provider::RapidAPI => {
                 self.client
                     .get_rapid_api_provider_output(
@@ -103,7 +103,7 @@ impl<'a> ApiClient {
                         self.api.clone(),
                     )
                     .await
-            },
+            }
         }?;
         serde_json::from_str(&string_output).map_err(|_| Error::DecodeJsonToStruct)
     }

@@ -152,10 +152,7 @@ impl<'a> QuoteBuilder<'a> {
     /// Create new `QuoteBuilder` from `APIClient`
     #[must_use]
     pub fn new(api_client: &'a ApiClient, symbol: &'a str) -> Self {
-        Self {
-            api_client,
-            symbol,
-        }
+        Self { api_client, symbol }
     }
 
     fn create_url(&self) -> String {
