@@ -206,7 +206,7 @@ impl SearchHelper {
 
 /// Builder to create new `Search`
 pub struct SearchBuilder<'a> {
-    api_client: &'a ApiClient,
+    api_client: &'a ApiClient<'a>,
     keywords: &'a str,
 }
 
@@ -231,7 +231,7 @@ impl<'a> SearchBuilder<'a> {
     /// API returns any 4 possible known errors
     pub async fn json(&self) -> Result<Search> {
         let url = self.create_url();
-        let search_helper: SearchHelper = self.api_client.get_json(url).await?;
+        let search_helper: SearchHelper = self.api_client.get_json(&url).await?;
         search_helper.convert()
     }
 }

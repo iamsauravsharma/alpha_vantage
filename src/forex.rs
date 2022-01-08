@@ -8,6 +8,7 @@
 //!
 //! [forex]: https://www.alphavantage.co/documentation/#fx
 
+use std::cmp;
 use std::collections::HashMap;
 
 use serde::Deserialize;
@@ -260,92 +261,93 @@ pub(crate) struct ForexHelper {
 impl ForexHelper {
     /// convert `ForexHelper` to `Forex`
     pub(crate) fn convert(self) -> Result<Forex> {
-        let mut forex_struct = Forex::default();
         detect_common_helper_error(self.information, self.error_message, self.note)?;
+
         if self.meta_data.is_none() || self.forex.is_none() {
             return Err(Error::EmptyResponse);
         }
+
         let meta_data = self.meta_data.unwrap();
+
         let information = &meta_data["1. Information"];
         let from_symbol = &meta_data["2. From Symbol"];
         let to_symbol = &meta_data["3. To Symbol"];
-        let last_refreshed = meta_data.get("4. Last Refreshed");
-        let mut last_refreshed_value = last_refreshed.cloned();
-        if last_refreshed_value.is_none() {
-            let last_refreshed = meta_data.get("5. Last Refreshed");
-            last_refreshed_value = last_refreshed.cloned();
-        }
-        let last_refreshed_value =
-            last_refreshed_value.expect("Last refreshed value contains None");
-        let time_zone = meta_data.get("5. Time Zone");
-        let mut time_zone_value = time_zone.cloned();
-        if time_zone_value.is_none() {
-            let time_zone = meta_data.get("6. Time Zone");
-            time_zone_value = time_zone.cloned();
-        }
-        if time_zone_value.is_none() {
-            let time_zone = meta_data.get("7. Time Zone");
-            time_zone_value = time_zone.cloned();
-        }
-        let time_zone_value = time_zone_value.expect("Time zone contains None value");
-        let output_size = meta_data.get("4. Output Size");
-        let mut output_size_value = output_size.cloned();
-        if output_size_value.is_none() {
-            let output_size = meta_data.get("6. Output Size");
-            output_size_value = output_size.cloned();
-        }
+
+        let last_refreshed = if let Some(value) = meta_data.get("4. Last Refreshed") {
+            Some(value)
+        } else {
+            meta_data.get("5. Last Refreshed")
+        };
+
+        let time_zone_value = if let Some(value) = meta_data.get("5. Time Zone") {
+            Some(value)
+        } else if let Some(value) = meta_data.get("6. Time Zone") {
+            Some(value)
+        } else {
+            meta_data.get("7. Time Zone")
+        };
+
+        let output_size_value = if let Some(value) = meta_data.get("4. Output Size") {
+            Some(value)
+        } else {
+            meta_data.get("6. Output Size")
+        };
+
         let interval = meta_data.get("5. Interval");
-        let interval_value = interval.cloned();
-        forex_struct.meta_data = MetaData {
+
+        let meta_data = MetaData {
             information: information.to_string(),
             from_symbol: from_symbol.to_string(),
             to_symbol: to_symbol.to_string(),
-            last_refreshed: last_refreshed_value,
-            interval: interval_value,
-            output_size: output_size_value,
-            time_zone: time_zone_value,
+            last_refreshed: last_refreshed
+                .expect("Last refreshed value contains None")
+                .to_string(),
+            interval: interval.map(ToString::to_string),
+            output_size: output_size_value.map(ToString::to_string),
+            time_zone: time_zone_value
+                .expect("Time zone contains None value")
+                .to_string(),
         };
         let mut forex_entries: Vec<Entry> = Vec::new();
         for hash in self.forex.unwrap().values() {
             for val in hash.keys() {
-                let mut entry = Entry {
+                let entry_helper = hash.get(val).expect("Cannot get a val from hash map");
+
+                forex_entries.push(Entry {
                     time: val.to_string(),
-                    ..Entry::default()
-                };
-                let entry_helper = hash
-                    .get(val)
-                    .expect("Cannot get a val from hash map")
-                    .clone();
-                entry.open = entry_helper.open;
-                entry.high = entry_helper.high;
-                entry.low = entry_helper.low;
-                entry.close = entry_helper.close;
-                forex_entries.push(entry);
+                    open: entry_helper.open,
+                    high: entry_helper.high,
+                    low: entry_helper.low,
+                    close: entry_helper.close,
+                });
             }
         }
-        forex_struct.forex = forex_entries;
-        Ok(forex_struct)
+
+        Ok(Forex {
+            forex: forex_entries,
+            meta_data,
+        })
     }
 }
 
 /// trait which helps for performing some common operation on Vec<Entry>
 pub trait VecEntry {
     /// Find a entry with a given time as a input return none if no entry found
-    fn find(&self, time: &str) -> Option<Entry>;
+    fn find(&self, time: &str) -> Option<&Entry>;
     /// Return a entry which is of latest time period
     fn latest(&self) -> Entry;
     /// Return a top n latest Entry
     /// # Errors
     /// If n is greater than no of entry
-    fn latestn(&self, n: usize) -> Result<Vec<Entry>>;
+    fn latestn(&self, n: usize) -> Result<Vec<&Entry>>;
 }
 
 impl VecEntry for Vec<Entry> {
     #[must_use]
-    fn find(&self, time: &str) -> Option<Entry> {
+    fn find(&self, time: &str) -> Option<&Entry> {
         for entry in self {
             if entry.time == time {
-                return Some(entry.clone());
+                return Some(entry);
             }
         }
         None
@@ -353,44 +355,36 @@ impl VecEntry for Vec<Entry> {
 
     #[must_use]
     fn latest(&self) -> Entry {
-        let mut latest = Entry::default();
-        let mut new_time = String::new();
+        let mut latest = &Entry::default();
         for entry in self {
-            if new_time < entry.time {
-                latest = entry.clone();
-                new_time = entry.time.clone();
+            if latest.time < entry.time {
+                latest = entry;
             }
         }
-        latest
+        latest.clone()
     }
 
-    fn latestn(&self, n: usize) -> Result<Vec<Entry>> {
-        let mut time_list = Vec::new();
-        for entry in self {
-            time_list.push(entry.time.clone());
+    fn latestn(&self, n: usize) -> Result<Vec<&Entry>> {
+        let mut time_list = self.iter().map(|entry| &entry.time).collect::<Vec<_>>();
+        time_list.sort_by_key(|w| cmp::Reverse(*w));
+
+        if n > time_list.len() {
+            return Err(Error::DesiredNumberOfEntryNotPresent(time_list.len()));
         }
-        time_list.sort();
-        time_list.reverse();
-        let time_list_count: usize = time_list.len();
-        let mut full_list = Self::new();
-        for i in 0..n {
-            let time = time_list.get(i);
-            if let Some(time) = time {
-                let entry = self
-                    .find(time)
-                    .unwrap_or_else(|| panic!("Failed to find time value for index {}", i));
-                full_list.push(entry);
-            } else {
-                return Err(Error::DesiredNumberOfEntryNotPresent(time_list_count));
-            }
+
+        let mut full_list = Vec::<&Entry>::new();
+
+        for time in &time_list[0..n] {
+            full_list.push(self.find(time).unwrap());
         }
+
         Ok(full_list)
     }
 }
 
 /// Builder to create `Forex`
 pub struct ForexBuilder<'a> {
-    api_client: &'a ApiClient,
+    api_client: &'a ApiClient<'a>,
     function: ForexFunction,
     from_symbol: &'a str,
     to_symbol: &'a str,
@@ -444,7 +438,7 @@ impl<'a> ForexBuilder<'a> {
             function, self.from_symbol, self.to_symbol
         );
 
-        if let Some(forex_interval) = self.interval {
+        if let Some(forex_interval) = &self.interval {
             let interval = match forex_interval {
                 TimeSeriesInterval::OneMin => "1min",
                 TimeSeriesInterval::FiveMin => "5min",
@@ -455,13 +449,14 @@ impl<'a> ForexBuilder<'a> {
             url.push_str(&format!("&interval={}", interval));
         };
 
-        if let Some(forex_output_size) = self.output_size {
+        if let Some(forex_output_size) = &self.output_size {
             let size = match forex_output_size {
                 OutputSize::Full => "full",
                 OutputSize::Compact => "compact",
             };
             url.push_str(&format!("&outputsize={}", size));
         }
+
         url
     }
 
@@ -472,14 +467,14 @@ impl<'a> ForexBuilder<'a> {
     /// API returns any 4 possible known errors
     pub async fn json(&self) -> Result<Forex> {
         let url = self.create_url();
-        let forex_helper: ForexHelper = self.api_client.get_json(url).await?;
+        let forex_helper: ForexHelper = self.api_client.get_json(&url).await?;
         forex_helper.convert()
     }
 }
 
 /// Enum for declaring function for forex function by defining which type of
 /// forex series to be returned
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub enum ForexFunction {
     /// returns intraday time series (timestamp, open, high, low, close) of the
     /// FX currency pair specified, updated realtime

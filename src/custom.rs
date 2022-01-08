@@ -34,7 +34,7 @@ impl CustomHelper {
 
 /// Builder to create new Custom Struct
 pub struct CustomBuilder<'a> {
-    api_client: &'a ApiClient,
+    api_client: &'a ApiClient<'a>,
     function: &'a str,
     extras: Vec<(&'a str, &'a str)>,
 }
@@ -59,6 +59,7 @@ impl<'a> CustomBuilder<'a> {
         for (key, value) in &self.extras {
             path.push_str(format!("&{}={}", key, value).as_str());
         }
+
         path
     }
 
@@ -72,7 +73,7 @@ impl<'a> CustomBuilder<'a> {
         T: DeserializeOwned,
     {
         let url = self.create_url();
-        let custom_helper: CustomHelper = self.api_client.get_json(url).await?;
+        let custom_helper: CustomHelper = self.api_client.get_json(&url).await?;
         custom_helper.convert()
     }
 }

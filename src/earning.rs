@@ -166,7 +166,7 @@ impl EarningHelper {
 
 /// Builder to help create Earning
 pub struct EarningBuilder<'a> {
-    api_client: &'a ApiClient,
+    api_client: &'a ApiClient<'a>,
     symbol: &'a str,
 }
 
@@ -188,7 +188,7 @@ impl<'a> EarningBuilder<'a> {
     /// API returns any 4 possible known errors
     pub async fn json(&self) -> Result<Earning> {
         let url = self.create_url();
-        let earning_helper: EarningHelper = self.api_client.get_json(url).await?;
+        let earning_helper: EarningHelper = self.api_client.get_json(&url).await?;
         earning_helper.convert()
     }
 }

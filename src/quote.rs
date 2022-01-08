@@ -144,7 +144,7 @@ impl QuoteHelper {
 
 /// Builder to create `Quote`
 pub struct QuoteBuilder<'a> {
-    api_client: &'a ApiClient,
+    api_client: &'a ApiClient<'a>,
     symbol: &'a str,
 }
 
@@ -166,7 +166,7 @@ impl<'a> QuoteBuilder<'a> {
     /// API returns any 4 possible known errors
     pub async fn json(&self) -> Result<Quote> {
         let url = self.create_url();
-        let quote_helper: QuoteHelper = self.api_client.get_json(url).await?;
+        let quote_helper: QuoteHelper = self.api_client.get_json(&url).await?;
         quote_helper.convert()
     }
 }
