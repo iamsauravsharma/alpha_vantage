@@ -387,21 +387,21 @@ impl TimeSeriesHelper {
 /// trait which helps for performing some common operation on Vec<Entry>
 pub trait VecEntry {
     /// Find a entry with a given time as a input return none if no entry found
-    fn find(&self, time: &str) -> Option<Entry>;
+    fn find(&self, time: &str) -> Option<&Entry>;
     /// Return a entry which is of latest time period
     fn latest(&self) -> Entry;
     /// Return a top n latest Entry
     /// # Errors
     /// If n is greater than no of entry
-    fn latestn(&self, n: usize) -> Result<Vec<Entry>>;
+    fn latestn(&self, n: usize) -> Result<Vec<&Entry>>;
 }
 
 impl VecEntry for Vec<Entry> {
     #[must_use]
-    fn find(&self, time: &str) -> Option<Entry> {
+    fn find(&self, time: &str) -> Option<&Entry> {
         for entry in self {
             if entry.time == time {
-                return Some(entry.clone());
+                return Some(entry);
             }
         }
         None
@@ -418,7 +418,7 @@ impl VecEntry for Vec<Entry> {
         latest.clone()
     }
 
-    fn latestn(&self, n: usize) -> Result<Vec<Entry>> {
+    fn latestn(&self, n: usize) -> Result<Vec<&Entry>> {
         let mut time_list = self.iter().map(|entry| &entry.time).collect::<Vec<_>>();
         time_list.sort_by_key(|w| cmp::Reverse(*w));
 
@@ -426,7 +426,7 @@ impl VecEntry for Vec<Entry> {
             return Err(Error::DesiredNumberOfEntryNotPresent(time_list.len()));
         }
 
-        let mut full_list = Self::new();
+        let mut full_list = Vec::<&Entry>::new();
 
         for time in &time_list[0..n] {
             full_list.push(self.find(time).unwrap());
