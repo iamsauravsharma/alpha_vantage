@@ -226,6 +226,11 @@
 <span id="224">224</span>
 <span id="225">225</span>
 <span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Module for Technical Indicator</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! Technical indicator values are updated realtime: the latest data point is</span>
@@ -295,9 +300,9 @@
                 };
                 <span class="kw">let</span> <span class="ident">hash_values</span> <span class="op">=</span> <span class="ident">hash</span>
                     .<span class="ident">get</span>(<span class="ident">time</span>)
-                    .<span class="ident">expect</span>(<span class="string">&quot;cannot get time key value from hash map&quot;</span>)
-                    .<span class="ident">clone</span>();
-                <span class="kw">for</span> (<span class="ident">key</span>, <span class="ident">value</span>) <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">hash_values</span> {
+                    .<span class="ident">expect</span>(<span class="string">&quot;cannot get time key value from hash map&quot;</span>);
+
+                <span class="kw">for</span> (<span class="ident">key</span>, <span class="ident">value</span>) <span class="kw">in</span> <span class="ident">hash_values</span> {
                     <span class="kw">let</span> <span class="ident">value_f64</span> <span class="op">=</span> <span class="ident">value</span>
                         .<span class="ident">trim</span>()
                         .<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>()
@@ -341,7 +346,7 @@
 
 <span class="doccomment">/// Builder to help create `Indicator`</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">IndicatorBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="ident">api_client</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ApiClient</span>,
+    <span class="ident">api_client</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ApiClient</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
     <span class="ident">function</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
     <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
     <span class="ident">interval</span>: <span class="ident">TechnicalIndicatorInterval</span>,
@@ -404,19 +409,24 @@
             <span class="ident">TechnicalIndicatorInterval::Weekly</span> =&gt; <span class="string">&quot;weekly&quot;</span>,
             <span class="ident">TechnicalIndicatorInterval::Monthly</span> =&gt; <span class="string">&quot;monthly&quot;</span>,
         };
+
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">created_link</span> <span class="op">=</span> <span class="macro">format!</span>(
             <span class="string">&quot;query?function={}&amp;symbol={}&amp;interval={}&quot;</span>,
-            <span class="self">self</span>.<span class="ident">function</span>, <span class="self">self</span>.<span class="ident">symbol</span>, <span class="ident">interval_val</span>
+            <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">function</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">symbol</span>, <span class="kw-2">&amp;</span><span class="ident">interval_val</span>
         );
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">time_period</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">time_period</span> {
-            <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;&amp;time_period={}&quot;</span>, <span class="ident">time_period</span>));
+
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">time_period</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">time_period</span> {
+            <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;&amp;time_period={}&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">time_period</span>));
         }
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">series_type</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">series_type</span> {
-            <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;&amp;series_type={}&quot;</span>, <span class="ident">series_type</span>));
+
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">series_type</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">series_type</span> {
+            <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;&amp;series_type={}&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">series_type</span>));
         }
+
         <span class="kw">for</span> (<span class="ident">param</span>, <span class="ident">value</span>) <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">extra_params</span> {
-            <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;&amp;{}={}&quot;</span>, <span class="ident">param</span>, <span class="ident">value</span>));
+            <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;&amp;{}={}&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">param</span>, <span class="kw-2">&amp;</span><span class="ident">value</span>));
         }
+
         <span class="ident">created_link</span>
     }
 
@@ -427,13 +437,13 @@
     <span class="doccomment">/// API returns any 4 possible known errors</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">json</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Indicator</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">url</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">create_url</span>();
-        <span class="kw">let</span> <span class="ident">indicator_helper</span>: <span class="ident">IndicatorHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">api_client</span>.<span class="ident">get_json</span>(<span class="ident">url</span>).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">indicator_helper</span>: <span class="ident">IndicatorHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">api_client</span>.<span class="ident">get_json</span>(<span class="kw-2">&amp;</span><span class="ident">url</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="ident">indicator_helper</span>.<span class="ident">convert</span>()
     }
 }
 
 <span class="doccomment">/// Enum for declaring interval for technical indicator</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">TechnicalIndicatorInterval</span> {
     <span class="doccomment">/// 1 min interval</span>
     <span class="ident">OneMin</span>,
@@ -453,5 +463,5 @@
     <span class="ident">Monthly</span>,
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.59.0-nightly (399ba6bb3 2022-01-03)" ></div>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.59.0-nightly (e012a191d 2022-01-06)" ></div>
 </body></html>
