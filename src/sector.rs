@@ -239,7 +239,7 @@ fn convert_str_percent_f64(val: &str) -> f64 {
 
 /// Builder to create new Sector
 pub struct SectorBuilder<'a> {
-    api_client: &'a ApiClient,
+    api_client: &'a ApiClient<'a>,
 }
 
 impl<'a> SectorBuilder<'a> {
@@ -249,8 +249,8 @@ impl<'a> SectorBuilder<'a> {
         Self { api_client }
     }
 
-    fn create_url() -> String {
-        String::from("query?function=SECTOR")
+    fn create_url() -> &'a str {
+        "query?function=SECTOR"
     }
 
     /// Returns JSON data struct

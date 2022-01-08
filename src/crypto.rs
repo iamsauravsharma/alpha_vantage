@@ -8,6 +8,7 @@
 //!
 //! [crypto_currency]: https://www.alphavantage.co/documentation/#digital-currency
 
+use std::cmp;
 use std::collections::HashMap;
 use std::str::FromStr;
 
@@ -298,29 +299,28 @@ pub(crate) struct CryptoHelper {
 impl CryptoHelper {
     /// Function which convert `CryptoHelper` to `Crypto`
     pub(crate) fn convert(self) -> Result<Crypto> {
-        let mut crypto = Crypto::default();
         detect_common_helper_error(self.information, self.error_message, self.note)?;
+
         if self.meta_data.is_none() || self.entry.is_none() {
             return Err(Error::EmptyResponse);
         }
-        crypto.meta_data = self.meta_data.unwrap();
+
         let mut vec_entry = Vec::new();
         for value in self.entry.unwrap().values() {
             for key in value.keys() {
+                let entry_helper = value.get(key).expect("failed to get key from hashmap");
+
                 let mut entry = Entry {
                     time: key.to_string(),
+                    usd_open: entry_helper.open_usd,
+                    usd_high: entry_helper.high_usd,
+                    usd_low: entry_helper.low_usd,
+                    usd_close: entry_helper.close_usd,
+                    market_cap: entry_helper.market_cap,
+                    volume: entry_helper.volume,
                     ..Entry::default()
                 };
-                let entry_helper = value
-                    .get(key)
-                    .expect("failed to get key from hashmap")
-                    .clone();
-                entry.usd_open = entry_helper.open_usd;
-                entry.usd_high = entry_helper.high_usd;
-                entry.usd_low = entry_helper.low_usd;
-                entry.usd_close = entry_helper.close_usd;
-                entry.market_cap = entry_helper.market_cap;
-                entry.volume = entry_helper.volume;
+
                 for key in entry_helper.market_data.keys() {
                     let value = &entry_helper.market_data[key];
                     let f64_value = f64::from_str(value).unwrap();
@@ -337,8 +337,11 @@ impl CryptoHelper {
                 vec_entry.push(entry);
             }
         }
-        crypto.entry = vec_entry;
-        Ok(crypto)
+
+        Ok(Crypto {
+            entry: vec_entry,
+            meta_data: self.meta_data.unwrap(),
+        })
     }
 }
 
@@ -367,44 +370,36 @@ impl VecEntry for Vec<Entry> {
 
     #[must_use]
     fn latest(&self) -> Entry {
-        let mut latest = Entry::default();
-        let mut new_time = String::new();
+        let mut latest = &Entry::default();
         for entry in self {
-            if new_time < entry.time {
-                latest = entry.clone();
-                new_time = entry.time.clone();
+            if latest.time < entry.time {
+                latest = entry;
             }
         }
-        latest
+        latest.clone()
     }
 
     fn latestn(&self, n: usize) -> Result<Vec<Entry>> {
-        let mut time_list = Vec::new();
-        for entry in self {
-            time_list.push(entry.time.clone());
+        let mut time_list = self.iter().map(|entry| &entry.time).collect::<Vec<_>>();
+        time_list.sort_by_key(|w| cmp::Reverse(*w));
+
+        if n > time_list.len() {
+            return Err(Error::DesiredNumberOfEntryNotPresent(time_list.len()));
         }
-        time_list.sort();
-        time_list.reverse();
-        let time_list_count: usize = time_list.len();
+
         let mut full_list = Self::new();
-        for i in 0..n {
-            let time = time_list.get(i);
-            if let Some(time) = time {
-                let entry = self
-                    .find(time)
-                    .unwrap_or_else(|| panic!("Failed to find time value for index {}", i));
-                full_list.push(entry);
-            } else {
-                return Err(Error::DesiredNumberOfEntryNotPresent(time_list_count));
-            }
+
+        for time in &time_list[0..n] {
+            full_list.push(self.find(time).unwrap());
         }
+
         Ok(full_list)
     }
 }
 
 /// Builder to help create `Crypto`
 pub struct CryptoBuilder<'a> {
-    api_client: &'a ApiClient,
+    api_client: &'a ApiClient<'a>,
     function: CryptoFunction,
     symbol: &'a str,
     market: &'a str,
@@ -433,9 +428,10 @@ impl<'a> CryptoBuilder<'a> {
             CryptoFunction::Weekly => "DIGITAL_CURRENCY_WEEKLY",
             CryptoFunction::Monthly => "DIGITAL_CURRENCY_MONTHLY",
         };
+
         format!(
             "query?function={}&symbol={}&market={}",
-            function_name, self.symbol, self.market
+            &function_name, &self.symbol, &self.market
         )
     }
 
@@ -446,14 +442,14 @@ impl<'a> CryptoBuilder<'a> {
     /// API returns any 4 possible known errors
     pub async fn json(&self) -> Result<Crypto> {
         let url = self.create_url();
-        let crypto_helper: CryptoHelper = self.api_client.get_json(url).await?;
+        let crypto_helper: CryptoHelper = self.api_client.get_json(&url).await?;
         crypto_helper.convert()
     }
 }
 
 /// Enum for declaring function for crypto series by defining which type of
 /// crypto series to be returned
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub enum CryptoFunction {
     /// returns the daily historical time series for a digital currency (e.g.,
     /// BTC) traded on a specific market (e.g., CNY/Chinese Yuan), refreshed

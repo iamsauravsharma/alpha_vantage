@@ -25,13 +25,13 @@ pub enum Provider {
 }
 
 /// Struct for initializing client which contains different method for API call
-pub struct ApiClient {
-    api: String,
+pub struct ApiClient<'a> {
+    api: &'a str,
     client: Box<dyn HttpClient + Send + Sync>,
     provider: Provider,
 }
 
-impl<'a> ApiClient {
+impl<'a> ApiClient<'a> {
     /// Method for initializing `ApiClient` struct using  user
     /// provided client and alphavantage.co provider
     ///
@@ -45,7 +45,7 @@ impl<'a> ApiClient {
         T: HttpClient + 'static + Send + Sync,
     {
         Self {
-            api: api.to_owned(),
+            api,
             client: Box::new(client),
             provider: Provider::AlphaVantage,
         }
@@ -64,7 +64,7 @@ impl<'a> ApiClient {
         T: HttpClient + 'static + Send + Sync,
     {
         Self {
-            api: api.to_owned(),
+            api,
             client: Box::new(client),
             provider: Provider::RapidAPI,
         }
@@ -79,18 +79,18 @@ impl<'a> ApiClient {
     /// ```
     #[must_use]
     pub fn get_api_key(&self) -> &str {
-        &self.api
+        self.api
     }
 
     // Get json from api endpoint and create struct
-    pub(crate) async fn get_json<T>(&self, path: String) -> Result<T>
+    pub(crate) async fn get_json<T>(&self, path: &str) -> Result<T>
     where
         T: DeserializeOwned,
     {
         let string_output = match &self.provider {
             Provider::AlphaVantage => {
                 self.client
-                    .get_alpha_vantage_provider_output(format!(
+                    .get_alpha_vantage_provider_output(&format!(
                         "{}{}&apikey={}",
                         BASE_URL, path, self.api
                     ))
@@ -99,8 +99,8 @@ impl<'a> ApiClient {
             Provider::RapidAPI => {
                 self.client
                     .get_rapid_api_provider_output(
-                        format!("{}{}", RAPID_API_BASE_URL, path),
-                        self.api.clone(),
+                        &format!("{}{}", RAPID_API_BASE_URL, path),
+                        self.api,
                     )
                     .await
             }
@@ -316,7 +316,7 @@ impl<'a> ApiClient {
 }
 
 /// Enum for declaring output size of API call
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub enum OutputSize {
     /// Return latest top 100 points recommended if no historical data is
     /// required and decreases api json sizes
@@ -327,7 +327,7 @@ pub enum OutputSize {
 }
 
 /// Enum for declaring interval for intraday time series
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub enum TimeSeriesInterval {
     /// 1 min interval
     OneMin,

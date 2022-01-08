@@ -10,6 +10,7 @@
 //!
 //! [stock_time]: https://www.alphavantage.co/documentation/#time-series-data
 
+use std::cmp;
 use std::collections::HashMap;
 use std::str::FromStr;
 
@@ -295,90 +296,91 @@ pub(crate) struct TimeSeriesHelper {
 impl TimeSeriesHelper {
     /// Convert `TimeSeriesHelper` to `TimeSeries`
     pub(crate) fn convert(self) -> Result<TimeSeries> {
-        let mut time_series = TimeSeries::default();
         detect_common_helper_error(self.information, self.error_message, self.note)?;
+
         if self.meta_data.is_none()
             || (self.time_series.is_none() && self.adjusted_series.is_none())
         {
             return Err(Error::EmptyResponse);
         }
+
         let meta_data = self.meta_data.unwrap();
         let information = &meta_data["1. Information"];
         let symbol = &meta_data["2. Symbol"];
         let last_refreshed = &meta_data["3. Last Refreshed"];
         let interval = meta_data.get("4. Interval");
-        let interval = interval.cloned();
-        let output_size = meta_data.get("4. Output Size");
-        let mut output_size_value = output_size.cloned();
-        if output_size_value.is_none() {
-            let output_size = meta_data.get("5. Output Size");
-            output_size_value = output_size.cloned();
-        }
-        let time_zone = meta_data.get("4. Time Zone");
-        let mut time_zone_value = time_zone.cloned();
-        if time_zone_value.is_none() {
-            let time_zone = meta_data.get("5. Time Zone");
-            time_zone_value = time_zone.cloned();
-        }
-        if time_zone_value.is_none() {
-            let time_zone = meta_data.get("6. Time Zone");
-            time_zone_value = time_zone.cloned();
-        }
-        let time_zone_value = time_zone_value.expect("time zone value is None");
-        time_series.meta_data = MetaData {
+
+        let output_size = if let Some(value) = meta_data.get("4. Output Size") {
+            Some(value)
+        } else {
+            meta_data.get("5. Output Size")
+        };
+
+        let time_zone = if let Some(value) = meta_data.get("4. Time Zone") {
+            Some(value)
+        } else if let Some(value) = meta_data.get("5. Time Zone") {
+            Some(value)
+        } else {
+            meta_data.get("6. Time Zone")
+        };
+
+        let meta_data = MetaData {
             information: information.to_string(),
             symbol: symbol.to_string(),
             last_refreshed: last_refreshed.to_string(),
-            interval,
-            output_size: output_size_value,
-            time_zone: time_zone_value,
+            interval: interval.map(ToString::to_string),
+            output_size: output_size.map(ToString::to_string),
+            time_zone: time_zone.expect("time zone value is None").to_string(),
         };
+
         let mut entry_value: Vec<Entry> = Vec::new();
+
         if let Some(time_series) = self.time_series {
             for hash in time_series.values() {
                 for val in hash.keys() {
-                    let mut entry = Entry {
-                        time: val.to_string(),
-                        ..Entry::default()
-                    };
                     let entry_helper = hash
                         .get(val)
-                        .expect("failed to get val from hash for time series")
-                        .clone();
-                    entry.open = entry_helper.open;
-                    entry.high = entry_helper.high;
-                    entry.low = entry_helper.low;
-                    entry.close = entry_helper.close;
-                    entry.volume = entry_helper.volume;
-                    entry_value.push(entry);
+                        .expect("failed to get val from hash for time series");
+
+                    entry_value.push(Entry {
+                        time: val.to_string(),
+                        open: entry_helper.open,
+                        high: entry_helper.high,
+                        low: entry_helper.low,
+                        close: entry_helper.close,
+                        volume: entry_helper.volume,
+                        ..Entry::default()
+                    });
                 }
             }
         }
+
         if let Some(adjusted_series) = self.adjusted_series {
             for hash in adjusted_series.values() {
                 for val in hash.keys() {
-                    let mut entry = Entry {
-                        time: val.to_string(),
-                        ..Entry::default()
-                    };
                     let entry_helper = hash
                         .get(val)
-                        .expect("failed to get val from hash for adjusted series")
-                        .clone();
-                    entry.open = entry_helper.open;
-                    entry.high = entry_helper.high;
-                    entry.low = entry_helper.low;
-                    entry.close = entry_helper.close;
-                    entry.volume = entry_helper.volume;
-                    entry.adjusted_close = option_from_str(entry_helper.adjusted_close);
-                    entry.split_coefficient = option_from_str(entry_helper.split_coefficient);
-                    entry.dividend_amount = option_from_str(entry_helper.dividend_amount);
-                    entry_value.push(entry);
+                        .expect("failed to get val from hash for adjusted series");
+
+                    entry_value.push(Entry {
+                        time: val.to_string(),
+                        open: entry_helper.open,
+                        high: entry_helper.high,
+                        low: entry_helper.low,
+                        close: entry_helper.close,
+                        volume: entry_helper.volume,
+                        adjusted_close: option_from_str(&entry_helper.adjusted_close),
+                        split_coefficient: option_from_str(&entry_helper.split_coefficient),
+                        dividend_amount: option_from_str(&entry_helper.dividend_amount),
+                    });
                 }
             }
         }
-        time_series.entry = entry_value;
-        Ok(time_series)
+
+        Ok(TimeSeries {
+            entry: entry_value,
+            meta_data,
+        })
     }
 }
 
@@ -407,53 +409,45 @@ impl VecEntry for Vec<Entry> {
 
     #[must_use]
     fn latest(&self) -> Entry {
-        let mut latest = Entry::default();
-        let mut new_time = String::new();
+        let mut latest = &Entry::default();
         for entry in self {
-            if new_time < entry.time {
-                latest = entry.clone();
-                new_time = entry.time.clone();
+            if latest.time < entry.time {
+                latest = entry;
             }
         }
-        latest
+        latest.clone()
     }
 
     fn latestn(&self, n: usize) -> Result<Vec<Entry>> {
-        let mut time_list = Vec::new();
-        for entry in self {
-            time_list.push(entry.time.clone());
+        let mut time_list = self.iter().map(|entry| &entry.time).collect::<Vec<_>>();
+        time_list.sort_by_key(|w| cmp::Reverse(*w));
+
+        if n > time_list.len() {
+            return Err(Error::DesiredNumberOfEntryNotPresent(time_list.len()));
         }
-        time_list.sort();
-        time_list.reverse();
-        let time_list_count: usize = time_list.len();
+
         let mut full_list = Self::new();
-        for i in 0..n {
-            let time = time_list.get(i);
-            if let Some(time) = time {
-                let entry = self
-                    .find(time)
-                    .unwrap_or_else(|| panic!("Failed to find time value for index {}", i));
-                full_list.push(entry);
-            } else {
-                return Err(Error::DesiredNumberOfEntryNotPresent(time_list_count));
-            }
+
+        for time in &time_list[0..n] {
+            full_list.push(self.find(time).unwrap());
         }
+
         Ok(full_list)
     }
 }
 
 // convert string to optional T
-fn option_from_str<T>(val: Option<String>) -> Option<T>
+fn option_from_str<T>(val: &Option<String>) -> Option<T>
 where
     T: FromStr,
     T::Err: std::error::Error,
 {
-    val.map(|s| T::from_str(&s).unwrap())
+    val.as_ref().map(|s| T::from_str(s).unwrap())
 }
 
 /// Builder to create new `TimeSeries`
 pub struct TimeSeriesBuilder<'a> {
-    api_client: &'a ApiClient,
+    api_client: &'a ApiClient<'a>,
     function: StockFunction,
     symbol: &'a str,
     interval: Option<TimeSeriesInterval>,
@@ -510,7 +504,7 @@ impl<'a> TimeSeriesBuilder<'a> {
 
         let mut url = format!("query?function={}&symbol={}", function, self.symbol);
 
-        if let Some(stock_time_interval) = self.interval {
+        if let Some(stock_time_interval) = &self.interval {
             let interval = match stock_time_interval {
                 TimeSeriesInterval::OneMin => "1min",
                 TimeSeriesInterval::FiveMin => "5min",
@@ -521,7 +515,7 @@ impl<'a> TimeSeriesBuilder<'a> {
             url.push_str(&format!("&interval={}", interval));
         };
 
-        if let Some(stock_time_output_size) = self.output_size {
+        if let Some(stock_time_output_size) = &self.output_size {
             let size = match stock_time_output_size {
                 OutputSize::Full => "full",
                 OutputSize::Compact => "compact",
@@ -547,14 +541,14 @@ impl<'a> TimeSeriesBuilder<'a> {
     /// API returns any 4 possible known errors
     pub async fn json(&self) -> Result<TimeSeries> {
         let url = self.create_url();
-        let stock_time_helper: TimeSeriesHelper = self.api_client.get_json(url).await?;
+        let stock_time_helper: TimeSeriesHelper = self.api_client.get_json(&url).await?;
         stock_time_helper.convert()
     }
 }
 
 /// Enum for declaring function for stock time series by defining which type of
 /// series of stock to be returned
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub enum StockFunction {
     /// returns intraday time series (timestamp, open, high, low, close, volume)
     /// of the equity specified

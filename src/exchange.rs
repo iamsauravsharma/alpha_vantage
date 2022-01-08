@@ -166,7 +166,7 @@ impl ExchangeHelper {
 
 /// Builder to create `Exchange`
 pub struct ExchangeBuilder<'a> {
-    api_client: &'a ApiClient,
+    api_client: &'a ApiClient<'a>,
     from_currency: &'a str,
     to_currency: &'a str,
 }
@@ -196,7 +196,7 @@ impl<'a> ExchangeBuilder<'a> {
     /// API returns any 4 possible known errors
     pub async fn json(&self) -> Result<Exchange> {
         let url = self.create_url();
-        let exchange_helper: ExchangeHelper = self.api_client.get_json(url).await?;
+        let exchange_helper: ExchangeHelper = self.api_client.get_json(&url).await?;
         exchange_helper.convert()
     }
 }

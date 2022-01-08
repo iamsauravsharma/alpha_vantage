@@ -67,9 +67,9 @@ impl Indicator {
                 };
                 let hash_values = hash
                     .get(time)
-                    .expect("cannot get time key value from hash map")
-                    .clone();
-                for (key, value) in &hash_values {
+                    .expect("cannot get time key value from hash map");
+
+                for (key, value) in hash_values {
                     let value_f64 = value
                         .trim()
                         .parse::<f64>()
@@ -113,7 +113,7 @@ impl IndicatorHelper {
 
 /// Builder to help create `Indicator`
 pub struct IndicatorBuilder<'a> {
-    api_client: &'a ApiClient,
+    api_client: &'a ApiClient<'a>,
     function: &'a str,
     symbol: &'a str,
     interval: TechnicalIndicatorInterval,
@@ -176,19 +176,24 @@ impl<'a> IndicatorBuilder<'a> {
             TechnicalIndicatorInterval::Weekly => "weekly",
             TechnicalIndicatorInterval::Monthly => "monthly",
         };
+
         let mut created_link = format!(
             "query?function={}&symbol={}&interval={}",
-            self.function, self.symbol, interval_val
+            &self.function, &self.symbol, &interval_val
         );
-        if let Some(time_period) = self.time_period {
-            created_link.push_str(&format!("&time_period={}", time_period));
+
+        if let Some(time_period) = &self.time_period {
+            created_link.push_str(&format!("&time_period={}", &time_period));
         }
-        if let Some(series_type) = self.series_type {
-            created_link.push_str(&format!("&series_type={}", series_type));
+
+        if let Some(series_type) = &self.series_type {
+            created_link.push_str(&format!("&series_type={}", &series_type));
         }
+
         for (param, value) in &self.extra_params {
-            created_link.push_str(&format!("&{}={}", param, value));
+            created_link.push_str(&format!("&{}={}", &param, &value));
         }
+
         created_link
     }
 
@@ -199,13 +204,13 @@ impl<'a> IndicatorBuilder<'a> {
     /// API returns any 4 possible known errors
     pub async fn json(&self) -> Result<Indicator> {
         let url = self.create_url();
-        let indicator_helper: IndicatorHelper = self.api_client.get_json(url).await?;
+        let indicator_helper: IndicatorHelper = self.api_client.get_json(&url).await?;
         indicator_helper.convert()
     }
 }
 
 /// Enum for declaring interval for technical indicator
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub enum TechnicalIndicatorInterval {
     /// 1 min interval
     OneMin,
