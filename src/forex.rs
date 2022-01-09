@@ -311,7 +311,9 @@ impl ForexHelper {
         let mut forex_entries: Vec<Entry> = Vec::new();
         for hash in self.forex.unwrap().values() {
             for val in hash.keys() {
-                let entry_helper = hash.get(val).expect("Cannot get a val from hash map");
+                let entry_helper = hash
+                    .get(val)
+                    .context(&format!("failed to get {} from Forex hashmap", val))?;
 
                 forex_entries.push(Entry {
                     time: val.to_string(),

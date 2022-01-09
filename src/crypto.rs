@@ -308,7 +308,9 @@ impl CryptoHelper {
         let mut vec_entry = Vec::new();
         for value in self.entry.unwrap().values() {
             for key in value.keys() {
-                let entry_helper = value.get(key).expect("failed to get key from hashmap");
+                let entry_helper = value
+                    .get(key)
+                    .context(&format!("failed to get {} from Crypto hashmap", key))?;
 
                 let mut entry = Entry {
                     time: key.to_string(),
