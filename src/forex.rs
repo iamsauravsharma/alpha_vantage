@@ -313,7 +313,7 @@ impl ForexHelper {
             for val in hash.keys() {
                 let entry_helper = hash
                     .get(val)
-                    .context(&format!("failed to get {} from Forex hashmap", val))?;
+                    .expect("failed to get value from Forex hashmap");
 
                 forex_entries.push(Entry {
                     time: val.to_string(),

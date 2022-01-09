@@ -340,7 +340,7 @@ impl TimeSeriesHelper {
                 for val in hash.keys() {
                     let entry_helper = hash
                         .get(val)
-                        .context(&format!("failed to get {} from Stock time hashmap", val))?;
+                        .expect("failed to get value from Stock time hashmap");
 
                     entry_value.push(Entry {
                         time: val.to_string(),
@@ -360,7 +360,7 @@ impl TimeSeriesHelper {
                 for val in hash.keys() {
                     let entry_helper = hash
                         .get(val)
-                        .context(&format!("failed to get {} from adjusted series", val))?;
+                        .expect("failed to get value from adjusted series");
 
                     entry_value.push(Entry {
                         time: val.to_string(),
