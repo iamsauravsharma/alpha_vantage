@@ -491,6 +491,8 @@
 <span id="489">489</span>
 <span id="490">490</span>
 <span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Module for Forex realtime and historical data</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! APIs under this section provide a wide range of data feed for realtime and</span>
@@ -804,7 +806,9 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">forex_entries</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
         <span class="kw">for</span> <span class="ident">hash</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">forex</span>.<span class="ident">unwrap</span>().<span class="ident">values</span>() {
             <span class="kw">for</span> <span class="ident">val</span> <span class="kw">in</span> <span class="ident">hash</span>.<span class="ident">keys</span>() {
-                <span class="kw">let</span> <span class="ident">entry_helper</span> <span class="op">=</span> <span class="ident">hash</span>.<span class="ident">get</span>(<span class="ident">val</span>).<span class="ident">expect</span>(<span class="string">&quot;Cannot get a val from hash map&quot;</span>);
+                <span class="kw">let</span> <span class="ident">entry_helper</span> <span class="op">=</span> <span class="ident">hash</span>
+                    .<span class="ident">get</span>(<span class="ident">val</span>)
+                    .<span class="ident">context</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;failed to get {} from Forex hashmap&quot;</span>, <span class="ident">val</span>))<span class="question-mark">?</span>;
 
                 <span class="ident">forex_entries</span>.<span class="ident">push</span>(<span class="ident">Entry</span> {
                     <span class="ident">time</span>: <span class="ident">val</span>.<span class="ident">to_string</span>(),
@@ -983,5 +987,5 @@
     <span class="ident">Monthly</span>,
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.59.0-nightly (e012a191d 2022-01-06)" ></div>
+</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.60.0-nightly (a7e2e3396 2022-01-08)" ></div>
 </body></html>
