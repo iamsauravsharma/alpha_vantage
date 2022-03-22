@@ -61,6 +61,10 @@
 <span id="56">56</span>
 <span id="57">57</span>
 <span id="58">58</span>
+<span id="59">59</span>
+<span id="60">60</span>
+<span id="61">61</span>
+<span id="62">62</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Module which contains all types of error for alpha vantage crates</span>
 <span class="kw">use</span> <span class="ident">thiserror::Error</span>;
 
@@ -88,6 +92,10 @@
     <span class="doccomment">/// Error which is raised when desired number of entry is not present</span>
     <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;desired number of latest entry not found try using less than {0} as n&quot;</span>)]</span>
     <span class="ident">DesiredNumberOfEntryNotPresent</span>(<span class="ident">usize</span>),
+
+    <span class="doccomment">/// Error which is raised when desired number of entry is not present</span>
+    <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;desired number of latest data not found try using less than {0} as n&quot;</span>)]</span>
+    <span class="ident">DesiredNumberOfDataNotPresent</span>(<span class="ident">usize</span>),
 
     <span class="doccomment">/// Error which is raised if API return empty response instead of returning</span>
     <span class="doccomment">/// data</span>
