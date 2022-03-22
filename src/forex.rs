@@ -337,7 +337,7 @@ pub trait VecEntry {
     /// Return a top n latest Entry
     /// # Errors
     /// If n is greater than no of entry
-    fn latestn(&self, n: usize) -> Result<Vec<&Entry>>;
+    fn latest_n(&self, n: usize) -> Result<Vec<&Entry>>;
 }
 
 impl VecEntry for Vec<Entry> {
@@ -362,7 +362,7 @@ impl VecEntry for Vec<Entry> {
         latest.clone()
     }
 
-    fn latestn(&self, n: usize) -> Result<Vec<&Entry>> {
+    fn latest_n(&self, n: usize) -> Result<Vec<&Entry>> {
         let mut time_list = self.iter().map(|entry| &entry.time).collect::<Vec<_>>();
         time_list.sort_by_key(|w| cmp::Reverse(*w));
 

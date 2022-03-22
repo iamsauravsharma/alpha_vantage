@@ -26,6 +26,10 @@ pub enum Error {
     #[error("desired number of latest entry not found try using less than {0} as n")]
     DesiredNumberOfEntryNotPresent(usize),
 
+    /// Error which is raised when desired number of entry is not present
+    #[error("desired number of latest data not found try using less than {0} as n")]
+    DesiredNumberOfDataNotPresent(usize),
+
     /// Error which is raised if API return empty response instead of returning
     /// data
     #[error("server returned empty response")]

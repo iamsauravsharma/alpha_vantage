@@ -26,6 +26,8 @@ mod deserialize;
 
 pub mod earning;
 
+pub mod economic_indicator;
+
 pub mod error;
 
 pub mod exchange;
