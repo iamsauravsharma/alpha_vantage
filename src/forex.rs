@@ -273,25 +273,23 @@ impl ForexHelper {
         let from_symbol = &meta_data["2. From Symbol"];
         let to_symbol = &meta_data["3. To Symbol"];
 
-        let last_refreshed = if let Some(value) = meta_data.get("4. Last Refreshed") {
-            Some(value)
-        } else {
-            meta_data.get("5. Last Refreshed")
+        let mut last_refreshed = meta_data.get("4. Last Refreshed");
+        if last_refreshed.is_none() {
+            last_refreshed = meta_data.get("5. Last Refreshed");
         };
 
-        let time_zone_value = if let Some(value) = meta_data.get("5. Time Zone") {
-            Some(value)
-        } else if let Some(value) = meta_data.get("6. Time Zone") {
-            Some(value)
-        } else {
-            meta_data.get("7. Time Zone")
-        };
+        let time_zone_value = meta_data.get("5. Time Zone").unwrap_or_else(|| {
+            meta_data.get("6. Time Zone").unwrap_or_else(|| {
+                meta_data
+                    .get("7. Time Zone")
+                    .expect("Time zone contains None value")
+            })
+        });
 
-        let output_size_value = if let Some(value) = meta_data.get("4. Output Size") {
-            Some(value)
-        } else {
-            meta_data.get("6. Output Size")
-        };
+        let mut output_size_value = meta_data.get("4. Output Size");
+        if output_size_value.is_none() {
+            output_size_value = meta_data.get("6. Output Size");
+        }
 
         let interval = meta_data.get("5. Interval");
 
@@ -304,9 +302,7 @@ impl ForexHelper {
                 .to_string(),
             interval: interval.map(ToString::to_string),
             output_size: output_size_value.map(ToString::to_string),
-            time_zone: time_zone_value
-                .expect("Time zone contains None value")
-                .to_string(),
+            time_zone: time_zone_value.to_string(),
         };
         let mut forex_entries: Vec<Entry> = Vec::new();
         for hash in self.forex.unwrap().values() {

@@ -310,19 +310,18 @@ impl TimeSeriesHelper {
         let last_refreshed = &meta_data["3. Last Refreshed"];
         let interval = meta_data.get("4. Interval");
 
-        let output_size = if let Some(value) = meta_data.get("4. Output Size") {
-            Some(value)
-        } else {
-            meta_data.get("5. Output Size")
-        };
+        let mut output_size = meta_data.get("4. Output Size");
+        if output_size.is_none() {
+            output_size = meta_data.get("5. Output Size");
+        }
 
-        let time_zone = if let Some(value) = meta_data.get("4. Time Zone") {
-            Some(value)
-        } else if let Some(value) = meta_data.get("5. Time Zone") {
-            Some(value)
-        } else {
-            meta_data.get("6. Time Zone")
-        };
+        let time_zone = meta_data.get("4. Time Zone").unwrap_or_else(|| {
+            meta_data.get("5. Time Zone").unwrap_or_else(|| {
+                meta_data
+                    .get("6. Time Zone")
+                    .expect("time zone value is None")
+            })
+        });
 
         let meta_data = MetaData {
             information: information.to_string(),
@@ -330,7 +329,7 @@ impl TimeSeriesHelper {
             last_refreshed: last_refreshed.to_string(),
             interval: interval.map(ToString::to_string),
             output_size: output_size.map(ToString::to_string),
-            time_zone: time_zone.expect("time zone value is None").to_string(),
+            time_zone: time_zone.to_string(),
         };
 
         let mut entry_value: Vec<Entry> = Vec::new();

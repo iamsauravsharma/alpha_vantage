@@ -13,14 +13,14 @@ categories = ["api-bindings", "web-programming::http-client"]
 
 [dependencies]
 async-trait = "0.1.52"
-reqwest = { version = "0.11.8", optional = true }
-serde = { version = "1.0.133", features = ["derive"] }
-serde_json = "1.0.74"
+reqwest = { version = "0.11.10", optional = true }
+serde = { version = "1.0.136", features = ["derive"] }
+serde_json = "1.0.79"
 surf = { version = "2.3.2", optional = true }
 thiserror = "1.0.30"
 
 [dev-dependencies]
-tokio = { version = "1.15.0", features = ["macros", "rt-multi-thread"] }
+tokio = { version = "1.17.0", features = ["macros", "rt-multi-thread"] }
 
 [features]
 default = ["reqwest-client"]
