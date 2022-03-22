@@ -42,12 +42,12 @@ impl DataCollector {
 
 /// Struct for indicator
 #[derive(Default, Debug)]
-pub struct Indicator {
+pub struct TechnicalIndicator {
     metadata: HashMap<String, Value>,
     data: DataType,
 }
 
-impl Indicator {
+impl TechnicalIndicator {
     /// Return meta data in hash form with key as `String` and values as
     /// `serde_json::value::Value`
     #[must_use]
@@ -83,9 +83,9 @@ impl Indicator {
     }
 }
 
-/// Struct for helping indicator struct
+/// Struct for helping `TechnicalIndicator` struct
 #[derive(Deserialize)]
-pub(crate) struct IndicatorHelper {
+pub(crate) struct TechnicalIndicatorHelper {
     #[serde(rename = "Error Message")]
     error_message: Option<String>,
     #[serde(rename = "Information")]
@@ -98,21 +98,21 @@ pub(crate) struct IndicatorHelper {
     data: Option<DataType>,
 }
 
-impl IndicatorHelper {
-    pub(crate) fn convert(self) -> Result<Indicator> {
-        let mut indicator = Indicator::default();
+impl TechnicalIndicatorHelper {
+    pub(crate) fn convert(self) -> Result<TechnicalIndicator> {
         detect_common_helper_error(self.information, self.error_message, self.note)?;
         if self.metadata.is_none() || self.data.is_none() {
             return Err(Error::EmptyResponse);
         }
-        indicator.metadata = self.metadata.unwrap();
-        indicator.data = self.data.unwrap();
-        Ok(indicator)
+        Ok(TechnicalIndicator {
+            metadata: self.metadata.unwrap(),
+            data: self.data.unwrap(),
+        })
     }
 }
 
-/// Builder to help create `Indicator`
-pub struct IndicatorBuilder<'a> {
+/// Builder to help create `TechnicalIndicator`
+pub struct TechnicalIndicatorBuilder<'a> {
     api_client: &'a ApiClient<'a>,
     function: &'a str,
     symbol: &'a str,
@@ -122,8 +122,8 @@ pub struct IndicatorBuilder<'a> {
     extra_params: HashMap<String, String>,
 }
 
-impl<'a> IndicatorBuilder<'a> {
-    /// Create new `IndicatorBuilder` form `APIClient`
+impl<'a> TechnicalIndicatorBuilder<'a> {
+    /// Create new `TechnicalIndicatorBuilder` form `APIClient`
     #[must_use]
     pub fn new(
         api_client: &'a ApiClient,
@@ -202,9 +202,9 @@ impl<'a> IndicatorBuilder<'a> {
     /// # Errors
     /// Raise error if data obtained cannot be properly converted to struct or
     /// API returns any 4 possible known errors
-    pub async fn json(&self) -> Result<Indicator> {
+    pub async fn json(&self) -> Result<TechnicalIndicator> {
         let url = self.create_url();
-        let indicator_helper: IndicatorHelper = self.api_client.get_json(&url).await?;
+        let indicator_helper: TechnicalIndicatorHelper = self.api_client.get_json(&url).await?;
         indicator_helper.convert()
     }
 }

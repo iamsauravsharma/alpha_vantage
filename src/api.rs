@@ -4,6 +4,7 @@ use crate::client::HttpClient;
 use crate::crypto::{CryptoBuilder, CryptoFunction};
 use crate::custom::CustomBuilder;
 use crate::earning::EarningBuilder;
+use crate::economic_indicator::EconomicIndicatorBuilder;
 use crate::error::{Error, Result};
 use crate::exchange::ExchangeBuilder;
 use crate::forex::{ForexBuilder, ForexFunction};
@@ -11,7 +12,7 @@ use crate::quote::QuoteBuilder;
 use crate::search::SearchBuilder;
 use crate::sector::SectorBuilder;
 use crate::stock_time::{StockFunction, TimeSeriesBuilder};
-use crate::technical_indicator::{IndicatorBuilder, TechnicalIndicatorInterval};
+use crate::technical_indicator::{TechnicalIndicatorBuilder, TechnicalIndicatorInterval};
 
 const BASE_URL: &str = "https://www.alphavantage.co/";
 const RAPID_API_BASE_URL: &str = "https://alpha-vantage.p.rapidapi.com/query";
@@ -158,6 +159,26 @@ impl<'a> ApiClient<'a> {
     #[must_use]
     pub fn earning(&'a self, symbol: &'a str) -> EarningBuilder<'a> {
         EarningBuilder::new(self, symbol)
+    }
+
+    /// Method for economic indicator builder
+    ///
+    /// # Example
+    /// ```
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
+    ///     let economic = api
+    ///         .economic_indicator("REAL_GDP_PER_CAPITA")
+    ///         .json()
+    ///         .await
+    ///         .unwrap();
+    ///     assert_eq!(economic.interval(), "quarterly");
+    /// }
+    /// ```
+    #[must_use]
+    pub fn economic_indicator(&'a self, function: &'a str) -> EconomicIndicatorBuilder<'a> {
+        EconomicIndicatorBuilder::new(self, function)
     }
 
     /// Method for creating `ExchangeBuilder` for exchanging currency value from
@@ -310,8 +331,8 @@ impl<'a> ApiClient<'a> {
         function: &'a str,
         symbol: &'a str,
         interval: TechnicalIndicatorInterval,
-    ) -> IndicatorBuilder<'a> {
-        IndicatorBuilder::new(self, function, symbol, interval)
+    ) -> TechnicalIndicatorBuilder<'a> {
+        TechnicalIndicatorBuilder::new(self, function, symbol, interval)
     }
 }
 
