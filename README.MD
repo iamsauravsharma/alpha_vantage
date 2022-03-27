@@ -13,6 +13,7 @@ Rust Client library built for accessing [Alphavantage][alphavantage_link] API.
 - [X] Crypto Currency
 - [X] Custom function
 - [X] Earning
+- [X] Economic Indicator
 - [X] Exchange Rate
 - [X] Forex
 - [X] Quote Endpoint
