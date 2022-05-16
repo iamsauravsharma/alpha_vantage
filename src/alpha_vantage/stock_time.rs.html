@@ -3,7 +3,9 @@
         </a><h2 class="location"></h2>
     </nav>
     <nav class="sidebar"><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../alpha_vantage/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../alpha_vantage/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><div id="settings-menu" tabindex="-1">
+                                <a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div>
+                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -585,6 +587,7 @@
 <span id="580">580</span>
 <span id="581">581</span>
 <span id="582">582</span>
+<span id="583">583</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Module for stock time series</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! This suite of APIs provide realtime and historical global equity data in 4</span>
@@ -599,6 +602,7 @@
 
 <span class="kw">use</span> <span class="ident">std::cmp</span>;
 <span class="kw">use</span> <span class="ident">std::collections::HashMap</span>;
+<span class="kw">use</span> <span class="ident">std::fmt::Write</span>;
 <span class="kw">use</span> <span class="ident">std::str::FromStr</span>;
 
 <span class="kw">use</span> <span class="ident">serde::Deserialize</span>;
@@ -1077,7 +1081,7 @@
         <span class="self">self</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">create_url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">String</span> {
+    <span class="kw">fn</span> <span class="ident">create_url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">function</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">function</span> {
             <span class="ident">StockFunction::IntraDay</span> =&gt; <span class="string">&quot;TIME_SERIES_INTRADAY&quot;</span>,
             <span class="ident">StockFunction::Daily</span> =&gt; <span class="string">&quot;TIME_SERIES_DAILY&quot;</span>,
@@ -1098,7 +1102,7 @@
                 <span class="ident">TimeSeriesInterval::ThirtyMin</span> =&gt; <span class="string">&quot;30min&quot;</span>,
                 <span class="ident">TimeSeriesInterval::SixtyMin</span> =&gt; <span class="string">&quot;60min&quot;</span>,
             };
-            <span class="ident">url</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;&amp;interval={}&quot;</span>, <span class="ident">interval</span>));
+            <span class="macro">write!</span>(<span class="ident">url</span>, <span class="string">&quot;&amp;interval={}&quot;</span>, <span class="ident">interval</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Error::CreateUrl</span>)<span class="question-mark">?</span>;
         };
 
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">stock_time_output_size</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">output_size</span> {
@@ -1106,7 +1110,7 @@
                 <span class="ident">OutputSize::Full</span> =&gt; <span class="string">&quot;full&quot;</span>,
                 <span class="ident">OutputSize::Compact</span> =&gt; <span class="string">&quot;compact&quot;</span>,
             };
-            <span class="ident">url</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;&amp;outputsize={}&quot;</span>, <span class="ident">size</span>));
+            <span class="macro">write!</span>(<span class="ident">url</span>, <span class="string">&quot;&amp;outputsize={}&quot;</span>, <span class="ident">size</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Error::CreateUrl</span>)<span class="question-mark">?</span>;
         }
 
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">adjusted</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">adjusted</span> {
@@ -1117,7 +1121,7 @@
             }
         };
 
-        <span class="ident">url</span>
+        <span class="prelude-val">Ok</span>(<span class="ident">url</span>)
     }
 
     <span class="doccomment">/// Returns JSON data struct</span>
@@ -1126,7 +1130,7 @@
     <span class="doccomment">/// Raise error if data obtained cannot be properly converted to struct or</span>
     <span class="doccomment">/// API returns any 4 possible known errors</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">json</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TimeSeries</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">url</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">create_url</span>();
+        <span class="kw">let</span> <span class="ident">url</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">create_url</span>()<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">stock_time_helper</span>: <span class="ident">TimeSeriesHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">api_client</span>.<span class="ident">get_json</span>(<span class="kw-2">&amp;</span><span class="ident">url</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="ident">stock_time_helper</span>.<span class="ident">convert</span>()
     }
@@ -1168,5 +1172,5 @@
     <span class="ident">MonthlyAdjusted</span>,
 }
 </code></pre></div>
-</section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (1f7fb6413 2022-04-10)" ></div>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.63.0-nightly (42e1761c7 2022-05-15)" ></div>
 </body></html>
