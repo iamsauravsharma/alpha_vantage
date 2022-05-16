@@ -10,6 +10,7 @@
 
 use std::cmp;
 use std::collections::HashMap;
+use std::fmt::Write;
 
 use serde::Deserialize;
 
@@ -423,7 +424,7 @@ impl<'a> ForexBuilder<'a> {
         self
     }
 
-    fn create_url(&self) -> String {
+    fn create_url(&self) -> Result<String> {
         let function = match self.function {
             ForexFunction::IntraDay => "FX_INTRADAY",
             ForexFunction::Daily => "FX_DAILY",
@@ -444,7 +445,7 @@ impl<'a> ForexBuilder<'a> {
                 TimeSeriesInterval::ThirtyMin => "30min",
                 TimeSeriesInterval::SixtyMin => "60min",
             };
-            url.push_str(&format!("&interval={}", interval));
+            write!(url, "&interval={}", interval).map_err(|_| Error::CreateUrl)?;
         };
 
         if let Some(forex_output_size) = &self.output_size {
@@ -452,10 +453,10 @@ impl<'a> ForexBuilder<'a> {
                 OutputSize::Full => "full",
                 OutputSize::Compact => "compact",
             };
-            url.push_str(&format!("&outputsize={}", size));
+            write!(url, "&outputsize={}", size).map_err(|_| Error::CreateUrl)?;
         }
 
-        url
+        Ok(url)
     }
 
     /// Returns JSON data struct
@@ -464,7 +465,7 @@ impl<'a> ForexBuilder<'a> {
     /// Raise error if data obtained cannot be properly converted to struct or
     /// API returns any 4 possible known errors
     pub async fn json(&self) -> Result<Forex> {
-        let url = self.create_url();
+        let url = self.create_url()?;
         let forex_helper: ForexHelper = self.api_client.get_json(&url).await?;
         forex_helper.convert()
     }

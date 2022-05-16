@@ -10,6 +10,7 @@
 //! [technical_indicator]: https://www.alphavantage.co/documentation/#technical-indicators
 
 use std::collections::HashMap;
+use std::fmt::Write;
 
 use serde::Deserialize;
 use serde_json::value::Value;
@@ -165,7 +166,7 @@ impl<'a> TechnicalIndicatorBuilder<'a> {
         self
     }
 
-    fn create_url(&self) -> String {
+    fn create_url(&self) -> Result<String> {
         let interval_val = match self.interval {
             TechnicalIndicatorInterval::OneMin => "1min",
             TechnicalIndicatorInterval::FiveMin => "5min",
@@ -183,18 +184,18 @@ impl<'a> TechnicalIndicatorBuilder<'a> {
         );
 
         if let Some(time_period) = &self.time_period {
-            created_link.push_str(&format!("&time_period={}", &time_period));
+            write!(created_link, "&time_period={}", &time_period).map_err(|_| Error::CreateUrl)?;
         }
 
         if let Some(series_type) = &self.series_type {
-            created_link.push_str(&format!("&series_type={}", &series_type));
+            write!(created_link, "&series_type={}", &series_type).map_err(|_| Error::CreateUrl)?;
         }
 
         for (param, value) in &self.extra_params {
-            created_link.push_str(&format!("&{}={}", &param, &value));
+            write!(created_link, "&{}={}", &param, &value).map_err(|_| Error::CreateUrl)?;
         }
 
-        created_link
+        Ok(created_link)
     }
 
     /// Returns JSON data struct
@@ -203,7 +204,7 @@ impl<'a> TechnicalIndicatorBuilder<'a> {
     /// Raise error if data obtained cannot be properly converted to struct or
     /// API returns any 4 possible known errors
     pub async fn json(&self) -> Result<TechnicalIndicator> {
-        let url = self.create_url();
+        let url = self.create_url()?;
         let indicator_helper: TechnicalIndicatorHelper = self.api_client.get_json(&url).await?;
         indicator_helper.convert()
     }

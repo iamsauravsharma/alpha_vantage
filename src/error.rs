@@ -42,6 +42,10 @@ pub enum Error {
     /// Error which is raised if client fails to decode it into struct
     #[error("Failed to decode string into struct")]
     DecodeJsonToStruct,
+
+    /// Error which is raised if url is failed to get created
+    #[error("Failed to create url")]
+    CreateUrl,
 }
 
 pub(crate) fn detect_common_helper_error(

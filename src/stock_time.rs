@@ -12,6 +12,7 @@
 
 use std::cmp;
 use std::collections::HashMap;
+use std::fmt::Write;
 use std::str::FromStr;
 
 use serde::Deserialize;
@@ -490,7 +491,7 @@ impl<'a> TimeSeriesBuilder<'a> {
         self
     }
 
-    fn create_url(&self) -> String {
+    fn create_url(&self) -> Result<String> {
         let function = match self.function {
             StockFunction::IntraDay => "TIME_SERIES_INTRADAY",
             StockFunction::Daily => "TIME_SERIES_DAILY",
@@ -511,7 +512,7 @@ impl<'a> TimeSeriesBuilder<'a> {
                 TimeSeriesInterval::ThirtyMin => "30min",
                 TimeSeriesInterval::SixtyMin => "60min",
             };
-            url.push_str(&format!("&interval={}", interval));
+            write!(url, "&interval={}", interval).map_err(|_| Error::CreateUrl)?;
         };
 
         if let Some(stock_time_output_size) = &self.output_size {
@@ -519,7 +520,7 @@ impl<'a> TimeSeriesBuilder<'a> {
                 OutputSize::Full => "full",
                 OutputSize::Compact => "compact",
             };
-            url.push_str(&format!("&outputsize={}", size));
+            write!(url, "&outputsize={}", size).map_err(|_| Error::CreateUrl)?;
         }
 
         if let Some(adjusted) = self.adjusted {
@@ -530,7 +531,7 @@ impl<'a> TimeSeriesBuilder<'a> {
             }
         };
 
-        url
+        Ok(url)
     }
 
     /// Returns JSON data struct
@@ -539,7 +540,7 @@ impl<'a> TimeSeriesBuilder<'a> {
     /// Raise error if data obtained cannot be properly converted to struct or
     /// API returns any 4 possible known errors
     pub async fn json(&self) -> Result<TimeSeries> {
-        let url = self.create_url();
+        let url = self.create_url()?;
         let stock_time_helper: TimeSeriesHelper = self.api_client.get_json(&url).await?;
         stock_time_helper.convert()
     }
