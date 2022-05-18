@@ -3,7 +3,7 @@
 #![deny(clippy::all)]
 #![warn(clippy::pedantic)]
 #![allow(clippy::module_name_repetitions)]
-#![cfg_attr(docsrs, feature(doc_cfg))]
+#![cfg_attr(docsrs, feature(doc_auto_cfg))]
 
 //! Rust Client/Wrapper built for [Alphavantage][alpha_vantage_link] API.
 //!
