@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["CustomBuilder","Builder to create new Custom Struct"]]});
