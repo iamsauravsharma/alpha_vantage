@@ -41,6 +41,7 @@ pub struct CustomBuilder<'a> {
 
 impl<'a> CustomBuilder<'a> {
     /// Create new `CustomBuilder` from `APIClient`
+    #[must_use]
     pub fn new(api_client: &'a ApiClient, function: &'a str) -> Self {
         Self {
             api_client,
@@ -49,6 +50,7 @@ impl<'a> CustomBuilder<'a> {
         }
     }
 
+    /// Add extra parameter to url
     pub fn extra_params(&mut self, key: &'a str, value: &'a str) -> &mut Self {
         self.extras.push((key, value));
         self

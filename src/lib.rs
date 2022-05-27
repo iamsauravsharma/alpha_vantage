@@ -20,7 +20,7 @@ pub mod client;
 pub mod crypto;
 
 /// Module for custom url call
-pub(crate) mod custom;
+pub mod custom;
 
 mod deserialize;
 
