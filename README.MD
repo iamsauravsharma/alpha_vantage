@@ -47,6 +47,8 @@ let rate = exchange.rate();
 println!("{}",rate);
 ```
 
+See docs for detailed example of other functionality
+
 [license_badge]: https://img.shields.io/github/license/iamsauravsharma/alpha_vantage.svg?style=for-the-badge
 [license_link]: LICENSE
 
