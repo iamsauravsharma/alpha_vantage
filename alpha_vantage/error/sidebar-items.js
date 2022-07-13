@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["Error","Main error/failure enum"]],"type":[["Result","Result type for alpha vantage crate"]]});
+window.SIDEBAR_ITEMS = {"enum":[["Error","Main error/failure enum"]],"type":[["Result","Result type for alpha vantage crate"]]};

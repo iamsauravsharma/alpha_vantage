@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["CustomBuilder","Builder to create new Custom Struct"]]});
+window.SIDEBAR_ITEMS = {"struct":[["CustomBuilder","Builder to create new Custom Struct"]]};

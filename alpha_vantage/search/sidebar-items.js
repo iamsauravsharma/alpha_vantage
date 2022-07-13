@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["DataValue","Struct which stores matches data for search keyword"],["Search","struct for storing search method data"],["SearchBuilder","Builder to create new `Search`"]]});
+window.SIDEBAR_ITEMS = {"struct":[["DataValue","Struct which stores matches data for search keyword"],["Search","struct for storing search method data"],["SearchBuilder","Builder to create new `Search`"]]};
