@@ -53,12 +53,7 @@ pub trait VecData {
 impl VecData for Vec<Data> {
     #[must_use]
     fn find(&self, date: &str) -> Option<&Data> {
-        for data in self {
-            if data.date == date {
-                return Some(data);
-            }
-        }
-        None
+        self.iter().find(|&entry| entry.date == date)
     }
 
     #[must_use]

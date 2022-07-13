@@ -344,12 +344,7 @@ pub trait VecEntry {
 impl VecEntry for Vec<Entry> {
     #[must_use]
     fn find(&self, time: &str) -> Option<&Entry> {
-        for entry in self {
-            if entry.time == time {
-                return Some(entry);
-            }
-        }
-        None
+        self.iter().find(|&entry| entry.time == time)
     }
 
     #[must_use]
