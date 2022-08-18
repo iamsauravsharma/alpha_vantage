@@ -1,10 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/stock_time.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>stock_time.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../alpha_vantage/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1">
-                                <a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div>
-                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/stock_time.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>stock_time.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../alpha_vantage/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -582,584 +576,583 @@
 <span id="576">576</span>
 <span id="577">577</span>
 <span id="578">578</span>
-</pre><pre class="rust"><code><span class="doccomment">//! Module for stock time series</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! This suite of APIs provide realtime and historical global equity data in 4</span>
-<span class="doccomment">//! different temporal resolutions: (1) daily, (2) weekly, (3) monthly, and (4)</span>
-<span class="doccomment">//! intraday. Daily, weekly, and monthly time series contain 20+ years of</span>
-<span class="doccomment">//! historical data</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! You can read about [Stock Time][stock_time] API and what it returns</span>
-<span class="doccomment">//! on alphavantage documentation</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! [stock_time]: https://www.alphavantage.co/documentation/#time-series-data</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Module for stock time series
+//!
+//! This suite of APIs provide realtime and historical global equity data in 4
+//! different temporal resolutions: (1) daily, (2) weekly, (3) monthly, and (4)
+//! intraday. Daily, weekly, and monthly time series contain 20+ years of
+//! historical data
+//!
+//! You can read about [Stock Time][stock_time] API and what it returns
+//! on alphavantage documentation
+//!
+//! [stock_time]: https://www.alphavantage.co/documentation/#time-series-data
 
-<span class="kw">use</span> <span class="ident">std::cmp</span>;
-<span class="kw">use</span> <span class="ident">std::collections::HashMap</span>;
-<span class="kw">use</span> <span class="ident">std::fmt::Write</span>;
-<span class="kw">use</span> <span class="ident">std::str::FromStr</span>;
+</span><span class="kw">use </span>std::cmp;
+<span class="kw">use </span>std::collections::HashMap;
+<span class="kw">use </span>std::fmt::Write;
+<span class="kw">use </span>std::str::FromStr;
 
-<span class="kw">use</span> <span class="ident">serde::Deserialize</span>;
+<span class="kw">use </span>serde::Deserialize;
 
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::api</span>::{<span class="ident">ApiClient</span>, <span class="ident">OutputSize</span>, <span class="ident">TimeSeriesInterval</span>};
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::deserialize::from_str</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::error</span>::{<span class="ident">detect_common_helper_error</span>, <span class="ident">Error</span>, <span class="prelude-ty">Result</span>};
+<span class="kw">use </span><span class="kw">crate</span>::api::{ApiClient, OutputSize, TimeSeriesInterval};
+<span class="kw">use </span><span class="kw">crate</span>::deserialize::from_str;
+<span class="kw">use </span><span class="kw">crate</span>::error::{detect_common_helper_error, Error, <span class="prelude-ty">Result</span>};
 
-<span class="doccomment">/// Struct for storing Meta Data value</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Default</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">MetaData</span> {
-    <span class="ident">information</span>: <span class="ident">String</span>,
-    <span class="ident">symbol</span>: <span class="ident">String</span>,
-    <span class="ident">last_refreshed</span>: <span class="ident">String</span>,
-    <span class="ident">interval</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">output_size</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">time_zone</span>: <span class="ident">String</span>,
+<span class="doccomment">/// Struct for storing Meta Data value
+</span><span class="attribute">#[derive(Debug, Clone, Default)]</span>
+<span class="kw">pub struct </span>MetaData {
+    information: String,
+    symbol: String,
+    last_refreshed: String,
+    interval: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    output_size: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    time_zone: String,
 }
 
-<span class="doccomment">/// Struct for Entry value</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Entry</span> {
-    <span class="ident">time</span>: <span class="ident">String</span>,
-    <span class="ident">open</span>: <span class="ident">f64</span>,
-    <span class="ident">high</span>: <span class="ident">f64</span>,
-    <span class="ident">low</span>: <span class="ident">f64</span>,
-    <span class="ident">close</span>: <span class="ident">f64</span>,
-    <span class="ident">adjusted_close</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
-    <span class="ident">volume</span>: <span class="ident">u64</span>,
-    <span class="ident">dividend_amount</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
-    <span class="ident">split_coefficient</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
+<span class="doccomment">/// Struct for Entry value
+</span><span class="attribute">#[derive(Default, Debug, Clone)]</span>
+<span class="kw">pub struct </span>Entry {
+    time: String,
+    open: f64,
+    high: f64,
+    low: f64,
+    close: f64,
+    adjusted_close: <span class="prelude-ty">Option</span>&lt;f64&gt;,
+    volume: u64,
+    dividend_amount: <span class="prelude-ty">Option</span>&lt;f64&gt;,
+    split_coefficient: <span class="prelude-ty">Option</span>&lt;f64&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">Entry</span> {
-    <span class="doccomment">/// Get time</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">time</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">time</span>
+<span class="kw">impl </span>Entry {
+    <span class="doccomment">/// Get time
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>time(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.time
     }
 
-    <span class="doccomment">/// Return open</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">open</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">f64</span> {
-        <span class="self">self</span>.<span class="ident">open</span>
+    <span class="doccomment">/// Return open
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>open(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+        <span class="self">self</span>.open
     }
 
-    <span class="doccomment">/// Return high</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">high</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">f64</span> {
-        <span class="self">self</span>.<span class="ident">high</span>
+    <span class="doccomment">/// Return high
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>high(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+        <span class="self">self</span>.high
     }
 
-    <span class="doccomment">/// Return low</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">low</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">f64</span> {
-        <span class="self">self</span>.<span class="ident">low</span>
+    <span class="doccomment">/// Return low
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>low(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+        <span class="self">self</span>.low
     }
 
-    <span class="doccomment">/// Return close</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">close</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">f64</span> {
-        <span class="self">self</span>.<span class="ident">close</span>
+    <span class="doccomment">/// Return close
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>close(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+        <span class="self">self</span>.close
     }
 
-    <span class="doccomment">/// Return adjusted</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">adjusted</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">adjusted_close</span>
+    <span class="doccomment">/// Return adjusted
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>adjusted(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;f64&gt; {
+        <span class="self">self</span>.adjusted_close
     }
 
-    <span class="doccomment">/// Return volume</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">volume</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">u64</span> {
-        <span class="self">self</span>.<span class="ident">volume</span>
+    <span class="doccomment">/// Return volume
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>volume(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; u64 {
+        <span class="self">self</span>.volume
     }
 
-    <span class="doccomment">/// Return dividend</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dividend</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">dividend_amount</span>
+    <span class="doccomment">/// Return dividend
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>dividend(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;f64&gt; {
+        <span class="self">self</span>.dividend_amount
     }
 
-    <span class="doccomment">/// Return split dividend</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">split</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">split_coefficient</span>
+    <span class="doccomment">/// Return split dividend
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>split(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;f64&gt; {
+        <span class="self">self</span>.split_coefficient
     }
 }
 
-<span class="doccomment">/// Struct for storing time series data</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TimeSeries</span> {
-    <span class="ident">meta_data</span>: <span class="ident">MetaData</span>,
-    <span class="ident">entry</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&gt;</span>,
+<span class="doccomment">/// Struct for storing time series data
+</span><span class="attribute">#[derive(Debug, Default)]</span>
+<span class="kw">pub struct </span>TimeSeries {
+    meta_data: MetaData,
+    entry: Vec&lt;Entry&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">TimeSeries</span> {
-    <span class="doccomment">/// Return information present in meta data</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// #[tokio::main]</span>
-    <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
-    <span class="doccomment">///     let stock_time = api</span>
-    <span class="doccomment">///         .stock_time(alpha_vantage::stock_time::StockFunction::IntraDay, &quot;MSFT&quot;)</span>
-    <span class="doccomment">///         .interval(alpha_vantage::api::TimeSeriesInterval::FiveMin)</span>
-    <span class="doccomment">///         .output_size(alpha_vantage::api::OutputSize::Full)</span>
-    <span class="doccomment">///         .json()</span>
-    <span class="doccomment">///         .await</span>
-    <span class="doccomment">///         .unwrap();</span>
-    <span class="doccomment">///     let information = stock_time.information();</span>
-    <span class="doccomment">///     assert_eq!(</span>
-    <span class="doccomment">///         information,</span>
-    <span class="doccomment">///         &quot;Intraday (5min) open, high, low, close prices and volume&quot;</span>
-    <span class="doccomment">///     );</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">/// ```</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">information</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="self">self</span>.<span class="ident">return_meta_string</span>(<span class="string">&quot;information&quot;</span>)
+<span class="kw">impl </span>TimeSeries {
+    <span class="doccomment">/// Return information present in meta data
+    ///
+    /// ```
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());
+    ///     let stock_time = api
+    ///         .stock_time(alpha_vantage::stock_time::StockFunction::IntraDay, &quot;MSFT&quot;)
+    ///         .interval(alpha_vantage::api::TimeSeriesInterval::FiveMin)
+    ///         .output_size(alpha_vantage::api::OutputSize::Full)
+    ///         .json()
+    ///         .await
+    ///         .unwrap();
+    ///     let information = stock_time.information();
+    ///     assert_eq!(
+    ///         information,
+    ///         &quot;Intraday (5min) open, high, low, close prices and volume&quot;
+    ///     );
+    /// }
+    /// ```
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>information(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="self">self</span>.return_meta_string(<span class="string">&quot;information&quot;</span>)
     }
 
-    <span class="doccomment">/// Return symbol for which time series function is called</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// #[tokio::main]</span>
-    <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
-    <span class="doccomment">///     let stock_time = api</span>
-    <span class="doccomment">///         .stock_time(alpha_vantage::stock_time::StockFunction::IntraDay, &quot;MSFT&quot;)</span>
-    <span class="doccomment">///         .interval(alpha_vantage::api::TimeSeriesInterval::FiveMin)</span>
-    <span class="doccomment">///         .output_size(alpha_vantage::api::OutputSize::Full)</span>
-    <span class="doccomment">///         .json()</span>
-    <span class="doccomment">///         .await</span>
-    <span class="doccomment">///         .unwrap();</span>
-    <span class="doccomment">///     let symbol = stock_time.symbol();</span>
-    <span class="doccomment">///     assert_eq!(symbol, &quot;MSFT&quot;);</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">/// ```</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">symbol</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="self">self</span>.<span class="ident">return_meta_string</span>(<span class="string">&quot;symbol&quot;</span>)
+    <span class="doccomment">/// Return symbol for which time series function is called
+    ///
+    /// ```
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());
+    ///     let stock_time = api
+    ///         .stock_time(alpha_vantage::stock_time::StockFunction::IntraDay, &quot;MSFT&quot;)
+    ///         .interval(alpha_vantage::api::TimeSeriesInterval::FiveMin)
+    ///         .output_size(alpha_vantage::api::OutputSize::Full)
+    ///         .json()
+    ///         .await
+    ///         .unwrap();
+    ///     let symbol = stock_time.symbol();
+    ///     assert_eq!(symbol, &quot;MSFT&quot;);
+    /// }
+    /// ```
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>symbol(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="self">self</span>.return_meta_string(<span class="string">&quot;symbol&quot;</span>)
     }
 
-    <span class="doccomment">/// Return last refreshed time</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">last_refreshed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="self">self</span>.<span class="ident">return_meta_string</span>(<span class="string">&quot;last refreshed&quot;</span>)
+    <span class="doccomment">/// Return last refreshed time
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>last_refreshed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="self">self</span>.return_meta_string(<span class="string">&quot;last refreshed&quot;</span>)
     }
 
-    <span class="doccomment">/// Return time zone of all data time</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">time_zone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="self">self</span>.<span class="ident">return_meta_string</span>(<span class="string">&quot;time zone&quot;</span>)
+    <span class="doccomment">/// Return time zone of all data time
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>time_zone(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="self">self</span>.return_meta_string(<span class="string">&quot;time zone&quot;</span>)
     }
 
-    <span class="doccomment">/// Time series interval between two consecutive data</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// #[tokio::main]</span>
-    <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
-    <span class="doccomment">///     let stock_time = api</span>
-    <span class="doccomment">///         .stock_time(alpha_vantage::stock_time::StockFunction::IntraDay, &quot;MSFT&quot;)</span>
-    <span class="doccomment">///         .interval(alpha_vantage::api::TimeSeriesInterval::FiveMin)</span>
-    <span class="doccomment">///         .output_size(alpha_vantage::api::OutputSize::Full)</span>
-    <span class="doccomment">///         .json()</span>
-    <span class="doccomment">///         .await</span>
-    <span class="doccomment">///         .unwrap();</span>
-    <span class="doccomment">///     let interval = stock_time.interval();</span>
-    <span class="doccomment">///     assert_eq!(interval.unwrap(), &quot;5min&quot;);</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">/// ```</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interval</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">operate_option_meta_value</span>(<span class="string">&quot;interval&quot;</span>)
+    <span class="doccomment">/// Time series interval between two consecutive data
+    ///
+    /// ```
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());
+    ///     let stock_time = api
+    ///         .stock_time(alpha_vantage::stock_time::StockFunction::IntraDay, &quot;MSFT&quot;)
+    ///         .interval(alpha_vantage::api::TimeSeriesInterval::FiveMin)
+    ///         .output_size(alpha_vantage::api::OutputSize::Full)
+    ///         .json()
+    ///         .await
+    ///         .unwrap();
+    ///     let interval = stock_time.interval();
+    ///     assert_eq!(interval.unwrap(), &quot;5min&quot;);
+    /// }
+    /// ```
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>interval(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
+        <span class="self">self</span>.operate_option_meta_value(<span class="string">&quot;interval&quot;</span>)
     }
 
-    <span class="doccomment">/// Output Size of intraday which can be either Full or compact</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// #[tokio::main]</span>
-    <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
-    <span class="doccomment">///     let stock_time = api</span>
-    <span class="doccomment">///         .stock_time(alpha_vantage::stock_time::StockFunction::IntraDay, &quot;MSFT&quot;)</span>
-    <span class="doccomment">///         .interval(alpha_vantage::api::TimeSeriesInterval::FiveMin)</span>
-    <span class="doccomment">///         .output_size(alpha_vantage::api::OutputSize::Full)</span>
-    <span class="doccomment">///         .json()</span>
-    <span class="doccomment">///         .await</span>
-    <span class="doccomment">///         .unwrap();</span>
-    <span class="doccomment">///     let output_size = stock_time.output_size();</span>
-    <span class="doccomment">///     assert_eq!(output_size.unwrap(), &quot;Full size&quot;);</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">/// ```</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">output_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">operate_option_meta_value</span>(<span class="string">&quot;output size&quot;</span>)
+    <span class="doccomment">/// Output Size of intraday which can be either Full or compact
+    ///
+    /// ```
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());
+    ///     let stock_time = api
+    ///         .stock_time(alpha_vantage::stock_time::StockFunction::IntraDay, &quot;MSFT&quot;)
+    ///         .interval(alpha_vantage::api::TimeSeriesInterval::FiveMin)
+    ///         .output_size(alpha_vantage::api::OutputSize::Full)
+    ///         .json()
+    ///         .await
+    ///         .unwrap();
+    ///     let output_size = stock_time.output_size();
+    ///     assert_eq!(output_size.unwrap(), &quot;Full size&quot;);
+    /// }
+    /// ```
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>output_size(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
+        <span class="self">self</span>.operate_option_meta_value(<span class="string">&quot;output size&quot;</span>)
     }
 
-    <span class="doccomment">/// Return Entry</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">entry</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&gt;</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">entry</span>
+    <span class="doccomment">/// Return Entry
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>entry(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Vec&lt;Entry&gt; {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.entry
     }
 
-    <span class="doccomment">/// Return a meta data value as a form of String</span>
-    <span class="kw">fn</span> <span class="ident">return_meta_string</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">which_val</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="kw">match</span> <span class="ident">which_val</span> {
-            <span class="string">&quot;information&quot;</span> =&gt; <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">information</span>,
-            <span class="string">&quot;symbol&quot;</span> =&gt; <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">symbol</span>,
-            <span class="string">&quot;time zone&quot;</span> =&gt; <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">time_zone</span>,
-            <span class="string">&quot;last refreshed&quot;</span> =&gt; <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">last_refreshed</span>,
-            <span class="kw">_</span> =&gt; <span class="string">&quot;&quot;</span>,
+    <span class="doccomment">/// Return a meta data value as a form of String
+    </span><span class="kw">fn </span>return_meta_string(<span class="kw-2">&amp;</span><span class="self">self</span>, which_val: <span class="kw-2">&amp;</span>str) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="kw">match </span>which_val {
+            <span class="string">&quot;information&quot; </span>=&gt; <span class="kw-2">&amp;</span><span class="self">self</span>.meta_data.information,
+            <span class="string">&quot;symbol&quot; </span>=&gt; <span class="kw-2">&amp;</span><span class="self">self</span>.meta_data.symbol,
+            <span class="string">&quot;time zone&quot; </span>=&gt; <span class="kw-2">&amp;</span><span class="self">self</span>.meta_data.time_zone,
+            <span class="string">&quot;last refreshed&quot; </span>=&gt; <span class="kw-2">&amp;</span><span class="self">self</span>.meta_data.last_refreshed,
+            <span class="kw">_ </span>=&gt; <span class="string">&quot;&quot;</span>,
         }
     }
 
-    <span class="doccomment">/// Return Option metadata value as a Result form of String</span>
-    <span class="kw">fn</span> <span class="ident">operate_option_meta_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">which_val</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">which_val</span> {
-            <span class="string">&quot;interval&quot;</span> =&gt; <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">interval</span>,
-            <span class="string">&quot;output size&quot;</span> =&gt; <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">output_size</span>,
-            <span class="kw">_</span> =&gt; <span class="kw-2">&amp;</span><span class="prelude-val">None</span>,
+    <span class="doccomment">/// Return Option metadata value as a Result form of String
+    </span><span class="kw">fn </span>operate_option_meta_value(<span class="kw-2">&amp;</span><span class="self">self</span>, which_val: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
+        <span class="kw">let </span>value = <span class="kw">match </span>which_val {
+            <span class="string">&quot;interval&quot; </span>=&gt; <span class="kw-2">&amp;</span><span class="self">self</span>.meta_data.interval,
+            <span class="string">&quot;output size&quot; </span>=&gt; <span class="kw-2">&amp;</span><span class="self">self</span>.meta_data.output_size,
+            <span class="kw">_ </span>=&gt; <span class="kw-2">&amp;</span><span class="prelude-val">None</span>,
         };
-        <span class="ident">value</span>.<span class="ident">as_deref</span>()
+        value.as_deref()
     }
 }
 
-<span class="doccomment">/// Helper struct to store non adjusted data</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Deserialize</span>)]</span>
-<span class="kw">struct</span> <span class="ident">EntryHelper</span> {
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;1. open&quot;</span>, <span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;from_str&quot;</span>)]</span>
-    <span class="ident">open</span>: <span class="ident">f64</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;2. high&quot;</span>, <span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;from_str&quot;</span>)]</span>
-    <span class="ident">high</span>: <span class="ident">f64</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;3. low&quot;</span>, <span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;from_str&quot;</span>)]</span>
-    <span class="ident">low</span>: <span class="ident">f64</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;4. close&quot;</span>, <span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;from_str&quot;</span>)]</span>
-    <span class="ident">close</span>: <span class="ident">f64</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;5. volume&quot;</span>, <span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;from_str&quot;</span>)]</span>
-    <span class="ident">volume</span>: <span class="ident">u64</span>,
+<span class="doccomment">/// Helper struct to store non adjusted data
+</span><span class="attribute">#[derive(Clone, Deserialize)]</span>
+<span class="kw">struct </span>EntryHelper {
+    <span class="attribute">#[serde(rename = <span class="string">&quot;1. open&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]</span>
+    open: f64,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;2. high&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]</span>
+    high: f64,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;3. low&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]</span>
+    low: f64,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;4. close&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]</span>
+    close: f64,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;5. volume&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]</span>
+    volume: u64,
 }
 
-<span class="doccomment">/// Helper struct to store adjusted data</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Deserialize</span>, <span class="ident">Clone</span>)]</span>
-<span class="kw">struct</span> <span class="ident">AdjustedHelper</span> {
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;1. open&quot;</span>, <span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;from_str&quot;</span>)]</span>
-    <span class="ident">open</span>: <span class="ident">f64</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;2. high&quot;</span>, <span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;from_str&quot;</span>)]</span>
-    <span class="ident">high</span>: <span class="ident">f64</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;3. low&quot;</span>, <span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;from_str&quot;</span>)]</span>
-    <span class="ident">low</span>: <span class="ident">f64</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;4. close&quot;</span>, <span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;from_str&quot;</span>)]</span>
-    <span class="ident">close</span>: <span class="ident">f64</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;5. adjusted close&quot;</span>)]</span>
-    <span class="ident">adjusted_close</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;6. volume&quot;</span>, <span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;from_str&quot;</span>)]</span>
-    <span class="ident">volume</span>: <span class="ident">u64</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;7. dividend amount&quot;</span>)]</span>
-    <span class="ident">dividend_amount</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;8. split coefficient&quot;</span>)]</span>
-    <span class="ident">split_coefficient</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+<span class="doccomment">/// Helper struct to store adjusted data
+</span><span class="attribute">#[derive(Deserialize, Clone)]</span>
+<span class="kw">struct </span>AdjustedHelper {
+    <span class="attribute">#[serde(rename = <span class="string">&quot;1. open&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]</span>
+    open: f64,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;2. high&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]</span>
+    high: f64,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;3. low&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]</span>
+    low: f64,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;4. close&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]</span>
+    close: f64,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;5. adjusted close&quot;</span>)]</span>
+    adjusted_close: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;6. volume&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]</span>
+    volume: u64,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;7. dividend amount&quot;</span>)]</span>
+    dividend_amount: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;8. split coefficient&quot;</span>)]</span>
+    split_coefficient: <span class="prelude-ty">Option</span>&lt;String&gt;,
 }
 
-<span class="doccomment">/// helper struct for `TimeSeries` which deserialize JSON</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Deserialize</span>)]</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">TimeSeriesHelper</span> {
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Error Message&quot;</span>)]</span>
-    <span class="ident">error_message</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Information&quot;</span>)]</span>
-    <span class="ident">information</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Note&quot;</span>)]</span>
-    <span class="ident">note</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Meta Data&quot;</span>)]</span>
-    <span class="ident">meta_data</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">flatten</span>)]</span>
-    <span class="ident">time_series</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">EntryHelper</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">flatten</span>)]</span>
-    <span class="ident">adjusted_series</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">AdjustedHelper</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+<span class="doccomment">/// helper struct for `TimeSeries` which deserialize JSON
+</span><span class="attribute">#[derive(Deserialize)]</span>
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>TimeSeriesHelper {
+    <span class="attribute">#[serde(rename = <span class="string">&quot;Error Message&quot;</span>)]</span>
+    error_message: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;Information&quot;</span>)]</span>
+    information: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;Note&quot;</span>)]</span>
+    note: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;Meta Data&quot;</span>)]</span>
+    meta_data: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, String&gt;&gt;,
+    <span class="attribute">#[serde(flatten)]</span>
+    time_series: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, HashMap&lt;String, EntryHelper&gt;&gt;&gt;,
+    <span class="attribute">#[serde(flatten)]</span>
+    adjusted_series: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, HashMap&lt;String, AdjustedHelper&gt;&gt;&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">TimeSeriesHelper</span> {
-    <span class="doccomment">/// Convert `TimeSeriesHelper` to `TimeSeries`</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">convert</span>(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TimeSeries</span><span class="op">&gt;</span> {
-        <span class="ident">detect_common_helper_error</span>(<span class="self">self</span>.<span class="ident">information</span>, <span class="self">self</span>.<span class="ident">error_message</span>, <span class="self">self</span>.<span class="ident">note</span>)<span class="question-mark">?</span>;
+<span class="kw">impl </span>TimeSeriesHelper {
+    <span class="doccomment">/// Convert `TimeSeriesHelper` to `TimeSeries`
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>convert(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;TimeSeries&gt; {
+        detect_common_helper_error(<span class="self">self</span>.information, <span class="self">self</span>.error_message, <span class="self">self</span>.note)<span class="question-mark">?</span>;
 
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">is_none</span>()
-            <span class="op">|</span><span class="op">|</span> (<span class="self">self</span>.<span class="ident">time_series</span>.<span class="ident">is_none</span>() <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">adjusted_series</span>.<span class="ident">is_none</span>())
+        <span class="kw">if </span><span class="self">self</span>.meta_data.is_none()
+            || (<span class="self">self</span>.time_series.is_none() &amp;&amp; <span class="self">self</span>.adjusted_series.is_none())
         {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::EmptyResponse</span>);
+            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::EmptyResponse);
         }
 
-        <span class="kw">let</span> <span class="ident">meta_data</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">information</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">meta_data</span>[<span class="string">&quot;1. Information&quot;</span>];
-        <span class="kw">let</span> <span class="ident">symbol</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">meta_data</span>[<span class="string">&quot;2. Symbol&quot;</span>];
-        <span class="kw">let</span> <span class="ident">last_refreshed</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">meta_data</span>[<span class="string">&quot;3. Last Refreshed&quot;</span>];
-        <span class="kw">let</span> <span class="ident">interval</span> <span class="op">=</span> <span class="ident">meta_data</span>.<span class="ident">get</span>(<span class="string">&quot;4. Interval&quot;</span>);
+        <span class="kw">let </span>meta_data = <span class="self">self</span>.meta_data.unwrap();
+        <span class="kw">let </span>information = <span class="kw-2">&amp;</span>meta_data[<span class="string">&quot;1. Information&quot;</span>];
+        <span class="kw">let </span>symbol = <span class="kw-2">&amp;</span>meta_data[<span class="string">&quot;2. Symbol&quot;</span>];
+        <span class="kw">let </span>last_refreshed = <span class="kw-2">&amp;</span>meta_data[<span class="string">&quot;3. Last Refreshed&quot;</span>];
+        <span class="kw">let </span>interval = meta_data.get(<span class="string">&quot;4. Interval&quot;</span>);
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">output_size</span> <span class="op">=</span> <span class="ident">meta_data</span>.<span class="ident">get</span>(<span class="string">&quot;4. Output Size&quot;</span>);
-        <span class="kw">if</span> <span class="ident">output_size</span>.<span class="ident">is_none</span>() {
-            <span class="ident">output_size</span> <span class="op">=</span> <span class="ident">meta_data</span>.<span class="ident">get</span>(<span class="string">&quot;5. Output Size&quot;</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>output_size = meta_data.get(<span class="string">&quot;4. Output Size&quot;</span>);
+        <span class="kw">if </span>output_size.is_none() {
+            output_size = meta_data.get(<span class="string">&quot;5. Output Size&quot;</span>);
         }
 
-        <span class="kw">let</span> <span class="ident">time_zone</span> <span class="op">=</span> <span class="ident">meta_data</span>.<span class="ident">get</span>(<span class="string">&quot;4. Time Zone&quot;</span>).<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> {
-            <span class="ident">meta_data</span>.<span class="ident">get</span>(<span class="string">&quot;5. Time Zone&quot;</span>).<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="op">|</span> {
-                <span class="ident">meta_data</span>
-                    .<span class="ident">get</span>(<span class="string">&quot;6. Time Zone&quot;</span>)
-                    .<span class="ident">expect</span>(<span class="string">&quot;time zone value is None&quot;</span>)
+        <span class="kw">let </span>time_zone = meta_data.get(<span class="string">&quot;4. Time Zone&quot;</span>).unwrap_or_else(|| {
+            meta_data.get(<span class="string">&quot;5. Time Zone&quot;</span>).unwrap_or_else(|| {
+                meta_data
+                    .get(<span class="string">&quot;6. Time Zone&quot;</span>)
+                    .expect(<span class="string">&quot;time zone value is None&quot;</span>)
             })
         });
 
-        <span class="kw">let</span> <span class="ident">meta_data</span> <span class="op">=</span> <span class="ident">MetaData</span> {
-            <span class="ident">information</span>: <span class="ident">information</span>.<span class="ident">to_string</span>(),
-            <span class="ident">symbol</span>: <span class="ident">symbol</span>.<span class="ident">to_string</span>(),
-            <span class="ident">last_refreshed</span>: <span class="ident">last_refreshed</span>.<span class="ident">to_string</span>(),
-            <span class="ident">interval</span>: <span class="ident">interval</span>.<span class="ident">map</span>(<span class="ident">ToString::to_string</span>),
-            <span class="ident">output_size</span>: <span class="ident">output_size</span>.<span class="ident">map</span>(<span class="ident">ToString::to_string</span>),
-            <span class="ident">time_zone</span>: <span class="ident">time_zone</span>.<span class="ident">to_string</span>(),
+        <span class="kw">let </span>meta_data = MetaData {
+            information: information.to_string(),
+            symbol: symbol.to_string(),
+            last_refreshed: last_refreshed.to_string(),
+            interval: interval.map(ToString::to_string),
+            output_size: output_size.map(ToString::to_string),
+            time_zone: time_zone.to_string(),
         };
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">entry_value</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
+        <span class="kw">let </span><span class="kw-2">mut </span>entry_value: Vec&lt;Entry&gt; = Vec::new();
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">time_series</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">time_series</span> {
-            <span class="kw">for</span> <span class="ident">hash</span> <span class="kw">in</span> <span class="ident">time_series</span>.<span class="ident">values</span>() {
-                <span class="kw">for</span> <span class="ident">val</span> <span class="kw">in</span> <span class="ident">hash</span>.<span class="ident">keys</span>() {
-                    <span class="kw">let</span> <span class="ident">entry_helper</span> <span class="op">=</span> <span class="ident">hash</span>
-                        .<span class="ident">get</span>(<span class="ident">val</span>)
-                        .<span class="ident">expect</span>(<span class="string">&quot;failed to get value from Stock time hashmap&quot;</span>);
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(time_series) = <span class="self">self</span>.time_series {
+            <span class="kw">for </span>hash <span class="kw">in </span>time_series.values() {
+                <span class="kw">for </span>val <span class="kw">in </span>hash.keys() {
+                    <span class="kw">let </span>entry_helper = hash
+                        .get(val)
+                        .expect(<span class="string">&quot;failed to get value from Stock time hashmap&quot;</span>);
 
-                    <span class="ident">entry_value</span>.<span class="ident">push</span>(<span class="ident">Entry</span> {
-                        <span class="ident">time</span>: <span class="ident">val</span>.<span class="ident">to_string</span>(),
-                        <span class="ident">open</span>: <span class="ident">entry_helper</span>.<span class="ident">open</span>,
-                        <span class="ident">high</span>: <span class="ident">entry_helper</span>.<span class="ident">high</span>,
-                        <span class="ident">low</span>: <span class="ident">entry_helper</span>.<span class="ident">low</span>,
-                        <span class="ident">close</span>: <span class="ident">entry_helper</span>.<span class="ident">close</span>,
-                        <span class="ident">volume</span>: <span class="ident">entry_helper</span>.<span class="ident">volume</span>,
-                        ..<span class="ident">Entry::default</span>()
+                    entry_value.push(Entry {
+                        time: val.to_string(),
+                        open: entry_helper.open,
+                        high: entry_helper.high,
+                        low: entry_helper.low,
+                        close: entry_helper.close,
+                        volume: entry_helper.volume,
+                        ..Entry::default()
                     });
                 }
             }
         }
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">adjusted_series</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">adjusted_series</span> {
-            <span class="kw">for</span> <span class="ident">hash</span> <span class="kw">in</span> <span class="ident">adjusted_series</span>.<span class="ident">values</span>() {
-                <span class="kw">for</span> <span class="ident">val</span> <span class="kw">in</span> <span class="ident">hash</span>.<span class="ident">keys</span>() {
-                    <span class="kw">let</span> <span class="ident">entry_helper</span> <span class="op">=</span> <span class="ident">hash</span>
-                        .<span class="ident">get</span>(<span class="ident">val</span>)
-                        .<span class="ident">expect</span>(<span class="string">&quot;failed to get value from adjusted series&quot;</span>);
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(adjusted_series) = <span class="self">self</span>.adjusted_series {
+            <span class="kw">for </span>hash <span class="kw">in </span>adjusted_series.values() {
+                <span class="kw">for </span>val <span class="kw">in </span>hash.keys() {
+                    <span class="kw">let </span>entry_helper = hash
+                        .get(val)
+                        .expect(<span class="string">&quot;failed to get value from adjusted series&quot;</span>);
 
-                    <span class="ident">entry_value</span>.<span class="ident">push</span>(<span class="ident">Entry</span> {
-                        <span class="ident">time</span>: <span class="ident">val</span>.<span class="ident">to_string</span>(),
-                        <span class="ident">open</span>: <span class="ident">entry_helper</span>.<span class="ident">open</span>,
-                        <span class="ident">high</span>: <span class="ident">entry_helper</span>.<span class="ident">high</span>,
-                        <span class="ident">low</span>: <span class="ident">entry_helper</span>.<span class="ident">low</span>,
-                        <span class="ident">close</span>: <span class="ident">entry_helper</span>.<span class="ident">close</span>,
-                        <span class="ident">volume</span>: <span class="ident">entry_helper</span>.<span class="ident">volume</span>,
-                        <span class="ident">adjusted_close</span>: <span class="ident">option_from_str</span>(<span class="kw-2">&amp;</span><span class="ident">entry_helper</span>.<span class="ident">adjusted_close</span>),
-                        <span class="ident">split_coefficient</span>: <span class="ident">option_from_str</span>(<span class="kw-2">&amp;</span><span class="ident">entry_helper</span>.<span class="ident">split_coefficient</span>),
-                        <span class="ident">dividend_amount</span>: <span class="ident">option_from_str</span>(<span class="kw-2">&amp;</span><span class="ident">entry_helper</span>.<span class="ident">dividend_amount</span>),
+                    entry_value.push(Entry {
+                        time: val.to_string(),
+                        open: entry_helper.open,
+                        high: entry_helper.high,
+                        low: entry_helper.low,
+                        close: entry_helper.close,
+                        volume: entry_helper.volume,
+                        adjusted_close: option_from_str(<span class="kw-2">&amp;</span>entry_helper.adjusted_close),
+                        split_coefficient: option_from_str(<span class="kw-2">&amp;</span>entry_helper.split_coefficient),
+                        dividend_amount: option_from_str(<span class="kw-2">&amp;</span>entry_helper.dividend_amount),
                     });
                 }
             }
         }
 
-        <span class="prelude-val">Ok</span>(<span class="ident">TimeSeries</span> {
-            <span class="ident">entry</span>: <span class="ident">entry_value</span>,
-            <span class="ident">meta_data</span>,
+        <span class="prelude-val">Ok</span>(TimeSeries {
+            entry: entry_value,
+            meta_data,
         })
     }
 }
 
-<span class="doccomment">/// trait which helps for performing some common operation on Vec&lt;Entry&gt;</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">VecEntry</span> {
-    <span class="doccomment">/// Find a entry with a given time as a input return none if no entry found</span>
-    <span class="kw">fn</span> <span class="ident">find</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">time</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Entry</span><span class="op">&gt;</span>;
-    <span class="doccomment">/// Return a entry which is of latest time period</span>
-    <span class="kw">fn</span> <span class="ident">latest</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Entry</span>;
-    <span class="doccomment">/// Return a top n latest Entry</span>
-    <span class="doccomment">/// # Errors</span>
-    <span class="doccomment">/// If n is greater than no of entry</span>
-    <span class="kw">fn</span> <span class="ident">latest_n</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">n</span>: <span class="ident">usize</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Entry</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+<span class="doccomment">/// trait which helps for performing some common operation on Vec&lt;Entry&gt;
+</span><span class="kw">pub trait </span>VecEntry {
+    <span class="doccomment">/// Find a entry with a given time as a input return none if no entry found
+    </span><span class="kw">fn </span>find(<span class="kw-2">&amp;</span><span class="self">self</span>, time: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Entry&gt;;
+    <span class="doccomment">/// Return a entry which is of latest time period
+    </span><span class="kw">fn </span>latest(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Entry;
+    <span class="doccomment">/// Return a top n latest Entry
+    /// # Errors
+    /// If n is greater than no of entry
+    </span><span class="kw">fn </span>latest_n(<span class="kw-2">&amp;</span><span class="self">self</span>, n: usize) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;<span class="kw-2">&amp;</span>Entry&gt;&gt;;
 }
 
-<span class="kw">impl</span> <span class="ident">VecEntry</span> <span class="kw">for</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&gt;</span> {
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">fn</span> <span class="ident">find</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">time</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Entry</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">iter</span>().<span class="ident">find</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">entry</span><span class="op">|</span> <span class="ident">entry</span>.<span class="ident">time</span> <span class="op">==</span> <span class="ident">time</span>)
+<span class="kw">impl </span>VecEntry <span class="kw">for </span>Vec&lt;Entry&gt; {
+    <span class="attribute">#[must_use]</span>
+    <span class="kw">fn </span>find(<span class="kw-2">&amp;</span><span class="self">self</span>, time: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Entry&gt; {
+        <span class="self">self</span>.iter().find(|<span class="kw-2">&amp;</span>entry| entry.time == time)
     }
 
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">fn</span> <span class="ident">latest</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Entry</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">latest</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">Entry::default</span>();
-        <span class="kw">for</span> <span class="ident">entry</span> <span class="kw">in</span> <span class="self">self</span> {
-            <span class="kw">if</span> <span class="ident">latest</span>.<span class="ident">time</span> <span class="op">&lt;</span> <span class="ident">entry</span>.<span class="ident">time</span> {
-                <span class="ident">latest</span> <span class="op">=</span> <span class="ident">entry</span>;
+    <span class="attribute">#[must_use]</span>
+    <span class="kw">fn </span>latest(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Entry {
+        <span class="kw">let </span><span class="kw-2">mut </span>latest = <span class="kw-2">&amp;</span>Entry::default();
+        <span class="kw">for </span>entry <span class="kw">in </span><span class="self">self </span>{
+            <span class="kw">if </span>latest.time &lt; entry.time {
+                latest = entry;
             }
         }
-        <span class="ident">latest</span>.<span class="ident">clone</span>()
+        latest.clone()
     }
 
-    <span class="kw">fn</span> <span class="ident">latest_n</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">n</span>: <span class="ident">usize</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Entry</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">time_list</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">entry</span><span class="op">|</span> <span class="kw-2">&amp;</span><span class="ident">entry</span>.<span class="ident">time</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>();
-        <span class="ident">time_list</span>.<span class="ident">sort_by_key</span>(<span class="op">|</span><span class="ident">w</span><span class="op">|</span> <span class="ident">cmp::Reverse</span>(<span class="kw-2">*</span><span class="ident">w</span>));
+    <span class="kw">fn </span>latest_n(<span class="kw-2">&amp;</span><span class="self">self</span>, n: usize) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;<span class="kw-2">&amp;</span>Entry&gt;&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>time_list = <span class="self">self</span>.iter().map(|entry| <span class="kw-2">&amp;</span>entry.time).collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;();
+        time_list.sort_by_key(|w| cmp::Reverse(<span class="kw-2">*</span>w));
 
-        <span class="kw">if</span> <span class="ident">n</span> <span class="op">&gt;</span> <span class="ident">time_list</span>.<span class="ident">len</span>() {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::DesiredNumberOfEntryNotPresent</span>(<span class="ident">time_list</span>.<span class="ident">len</span>()));
+        <span class="kw">if </span>n &gt; time_list.len() {
+            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::DesiredNumberOfEntryNotPresent(time_list.len()));
         }
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">full_list</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Entry</span><span class="op">&gt;</span><span class="ident">::new</span>();
+        <span class="kw">let </span><span class="kw-2">mut </span>full_list = Vec::&lt;<span class="kw-2">&amp;</span>Entry&gt;::new();
 
-        <span class="kw">for</span> <span class="ident">time</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">time_list</span>[<span class="number">0</span>..<span class="ident">n</span>] {
-            <span class="ident">full_list</span>.<span class="ident">push</span>(<span class="self">self</span>.<span class="ident">find</span>(<span class="ident">time</span>).<span class="ident">unwrap</span>());
+        <span class="kw">for </span>time <span class="kw">in </span><span class="kw-2">&amp;</span>time_list[<span class="number">0</span>..n] {
+            full_list.push(<span class="self">self</span>.find(time).unwrap());
         }
 
-        <span class="prelude-val">Ok</span>(<span class="ident">full_list</span>)
+        <span class="prelude-val">Ok</span>(full_list)
     }
 }
 
-<span class="comment">// convert string to optional T</span>
-<span class="kw">fn</span> <span class="ident">option_from_str</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">val</span>: <span class="kw-2">&amp;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
-<span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">FromStr</span>,
-    <span class="ident">T::Err</span>: <span class="ident">std::error::Error</span>,
+<span class="comment">// convert string to optional T
+</span><span class="kw">fn </span>option_from_str&lt;T&gt;(val: <span class="kw-2">&amp;</span><span class="prelude-ty">Option</span>&lt;String&gt;) -&gt; <span class="prelude-ty">Option</span>&lt;T&gt;
+<span class="kw">where
+    </span>T: FromStr,
+    T::Err: std::error::Error,
 {
-    <span class="ident">val</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">T::from_str</span>(<span class="ident">s</span>).<span class="ident">unwrap</span>())
+    val.as_ref().map(|s| T::from_str(s).unwrap())
 }
 
-<span class="doccomment">/// Builder to create new `TimeSeries`</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TimeSeriesBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="ident">api_client</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ApiClient</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
-    <span class="ident">function</span>: <span class="ident">StockFunction</span>,
-    <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
-    <span class="ident">interval</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">TimeSeriesInterval</span><span class="op">&gt;</span>,
-    <span class="ident">output_size</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">OutputSize</span><span class="op">&gt;</span>,
-    <span class="ident">adjusted</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>,
+<span class="doccomment">/// Builder to create new `TimeSeries`
+</span><span class="kw">pub struct </span>TimeSeriesBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
+    api_client: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>ApiClient&lt;<span class="lifetime">&#39;a</span>&gt;,
+    function: StockFunction,
+    symbol: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
+    interval: <span class="prelude-ty">Option</span>&lt;TimeSeriesInterval&gt;,
+    output_size: <span class="prelude-ty">Option</span>&lt;OutputSize&gt;,
+    adjusted: <span class="prelude-ty">Option</span>&lt;bool&gt;,
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TimeSeriesBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Create new `TimeSeriesBuilder` form `APIClient`</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">api_client</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ApiClient</span>, <span class="ident">function</span>: <span class="ident">StockFunction</span>, <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">Self</span> {
-            <span class="ident">api_client</span>,
-            <span class="ident">function</span>,
-            <span class="ident">symbol</span>,
-            <span class="ident">interval</span>: <span class="prelude-val">None</span>,
-            <span class="ident">output_size</span>: <span class="prelude-val">None</span>,
-            <span class="ident">adjusted</span>: <span class="prelude-val">None</span>,
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; TimeSeriesBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// Create new `TimeSeriesBuilder` form `APIClient`
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>new(api_client: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>ApiClient, function: StockFunction, symbol: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            api_client,
+            function,
+            symbol,
+            interval: <span class="prelude-val">None</span>,
+            output_size: <span class="prelude-val">None</span>,
+            adjusted: <span class="prelude-val">None</span>,
         }
     }
 
-    <span class="doccomment">/// Define time series interval for intraday stock time series</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interval</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">interval</span>: <span class="ident">TimeSeriesInterval</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">interval</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">interval</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Define time series interval for intraday stock time series
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>interval(<span class="kw-2">mut </span><span class="self">self</span>, interval: TimeSeriesInterval) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.interval = <span class="prelude-val">Some</span>(interval);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Define output size for intraday or daily stock time series</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">output_size</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">output_size</span>: <span class="ident">OutputSize</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">output_size</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">output_size</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Define output size for intraday or daily stock time series
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>output_size(<span class="kw-2">mut </span><span class="self">self</span>, output_size: OutputSize) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.output_size = <span class="prelude-val">Some</span>(output_size);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Define if output time series is adjusted by historical split and</span>
-    <span class="doccomment">/// dividend events</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">adjusted</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">adjusted</span>: <span class="ident">bool</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">adjusted</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">adjusted</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Define if output time series is adjusted by historical split and
+    /// dividend events
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>adjusted(<span class="kw-2">mut </span><span class="self">self</span>, adjusted: bool) -&gt; <span class="self">Self </span>{
+        <span class="self">self</span>.adjusted = <span class="prelude-val">Some</span>(adjusted);
+        <span class="self">self
+    </span>}
 
-    <span class="kw">fn</span> <span class="ident">create_url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">function</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">function</span> {
-            <span class="ident">StockFunction::IntraDay</span> =&gt; <span class="string">&quot;TIME_SERIES_INTRADAY&quot;</span>,
-            <span class="ident">StockFunction::Daily</span> =&gt; <span class="string">&quot;TIME_SERIES_DAILY&quot;</span>,
-            <span class="ident">StockFunction::DailyAdjusted</span> =&gt; <span class="string">&quot;TIME_SERIES_DAILY_ADJUSTED&quot;</span>,
-            <span class="ident">StockFunction::Weekly</span> =&gt; <span class="string">&quot;TIME_SERIES_WEEKLY&quot;</span>,
-            <span class="ident">StockFunction::WeeklyAdjusted</span> =&gt; <span class="string">&quot;TIME_SERIES_WEEKLY_ADJUSTED&quot;</span>,
-            <span class="ident">StockFunction::Monthly</span> =&gt; <span class="string">&quot;TIME_SERIES_MONTHLY&quot;</span>,
-            <span class="ident">StockFunction::MonthlyAdjusted</span> =&gt; <span class="string">&quot;TIME_SERIES_MONTHLY_ADJUSTED&quot;</span>,
+    <span class="kw">fn </span>create_url(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;String&gt; {
+        <span class="kw">let </span>function = <span class="kw">match </span><span class="self">self</span>.function {
+            StockFunction::IntraDay =&gt; <span class="string">&quot;TIME_SERIES_INTRADAY&quot;</span>,
+            StockFunction::Daily =&gt; <span class="string">&quot;TIME_SERIES_DAILY&quot;</span>,
+            StockFunction::DailyAdjusted =&gt; <span class="string">&quot;TIME_SERIES_DAILY_ADJUSTED&quot;</span>,
+            StockFunction::Weekly =&gt; <span class="string">&quot;TIME_SERIES_WEEKLY&quot;</span>,
+            StockFunction::WeeklyAdjusted =&gt; <span class="string">&quot;TIME_SERIES_WEEKLY_ADJUSTED&quot;</span>,
+            StockFunction::Monthly =&gt; <span class="string">&quot;TIME_SERIES_MONTHLY&quot;</span>,
+            StockFunction::MonthlyAdjusted =&gt; <span class="string">&quot;TIME_SERIES_MONTHLY_ADJUSTED&quot;</span>,
         };
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">url</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">&quot;query?function={}&amp;symbol={}&quot;</span>, <span class="ident">function</span>, <span class="self">self</span>.<span class="ident">symbol</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>url = <span class="macro">format!</span>(<span class="string">&quot;query?function={}&amp;symbol={}&quot;</span>, function, <span class="self">self</span>.symbol);
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">stock_time_interval</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">interval</span> {
-            <span class="kw">let</span> <span class="ident">interval</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">stock_time_interval</span> {
-                <span class="ident">TimeSeriesInterval::OneMin</span> =&gt; <span class="string">&quot;1min&quot;</span>,
-                <span class="ident">TimeSeriesInterval::FiveMin</span> =&gt; <span class="string">&quot;5min&quot;</span>,
-                <span class="ident">TimeSeriesInterval::FifteenMin</span> =&gt; <span class="string">&quot;15min&quot;</span>,
-                <span class="ident">TimeSeriesInterval::ThirtyMin</span> =&gt; <span class="string">&quot;30min&quot;</span>,
-                <span class="ident">TimeSeriesInterval::SixtyMin</span> =&gt; <span class="string">&quot;60min&quot;</span>,
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(stock_time_interval) = <span class="kw-2">&amp;</span><span class="self">self</span>.interval {
+            <span class="kw">let </span>interval = <span class="kw">match </span>stock_time_interval {
+                TimeSeriesInterval::OneMin =&gt; <span class="string">&quot;1min&quot;</span>,
+                TimeSeriesInterval::FiveMin =&gt; <span class="string">&quot;5min&quot;</span>,
+                TimeSeriesInterval::FifteenMin =&gt; <span class="string">&quot;15min&quot;</span>,
+                TimeSeriesInterval::ThirtyMin =&gt; <span class="string">&quot;30min&quot;</span>,
+                TimeSeriesInterval::SixtyMin =&gt; <span class="string">&quot;60min&quot;</span>,
             };
-            <span class="macro">write!</span>(<span class="ident">url</span>, <span class="string">&quot;&amp;interval={}&quot;</span>, <span class="ident">interval</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Error::CreateUrl</span>)<span class="question-mark">?</span>;
+            <span class="macro">write!</span>(url, <span class="string">&quot;&amp;interval={}&quot;</span>, interval).map_err(|<span class="kw">_</span>| Error::CreateUrl)<span class="question-mark">?</span>;
         };
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">stock_time_output_size</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">output_size</span> {
-            <span class="kw">let</span> <span class="ident">size</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">stock_time_output_size</span> {
-                <span class="ident">OutputSize::Full</span> =&gt; <span class="string">&quot;full&quot;</span>,
-                <span class="ident">OutputSize::Compact</span> =&gt; <span class="string">&quot;compact&quot;</span>,
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(stock_time_output_size) = <span class="kw-2">&amp;</span><span class="self">self</span>.output_size {
+            <span class="kw">let </span>size = <span class="kw">match </span>stock_time_output_size {
+                OutputSize::Full =&gt; <span class="string">&quot;full&quot;</span>,
+                OutputSize::Compact =&gt; <span class="string">&quot;compact&quot;</span>,
             };
-            <span class="macro">write!</span>(<span class="ident">url</span>, <span class="string">&quot;&amp;outputsize={}&quot;</span>, <span class="ident">size</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Error::CreateUrl</span>)<span class="question-mark">?</span>;
+            <span class="macro">write!</span>(url, <span class="string">&quot;&amp;outputsize={}&quot;</span>, size).map_err(|<span class="kw">_</span>| Error::CreateUrl)<span class="question-mark">?</span>;
         }
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">adjusted</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">adjusted</span> {
-            <span class="kw">if</span> <span class="ident">adjusted</span> {
-                <span class="ident">url</span>.<span class="ident">push_str</span>(<span class="string">&quot;&amp;adjusted=true&quot;</span>);
-            } <span class="kw">else</span> {
-                <span class="ident">url</span>.<span class="ident">push_str</span>(<span class="string">&quot;&amp;adjusted=false&quot;</span>);
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(adjusted) = <span class="self">self</span>.adjusted {
+            <span class="kw">if </span>adjusted {
+                url.push_str(<span class="string">&quot;&amp;adjusted=true&quot;</span>);
+            } <span class="kw">else </span>{
+                url.push_str(<span class="string">&quot;&amp;adjusted=false&quot;</span>);
             }
         };
 
-        <span class="prelude-val">Ok</span>(<span class="ident">url</span>)
+        <span class="prelude-val">Ok</span>(url)
     }
 
-    <span class="doccomment">/// Returns JSON data struct</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Errors</span>
-    <span class="doccomment">/// Raise error if data obtained cannot be properly converted to struct or</span>
-    <span class="doccomment">/// API returns any 4 possible known errors</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">json</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TimeSeries</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">url</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">create_url</span>()<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">stock_time_helper</span>: <span class="ident">TimeSeriesHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">api_client</span>.<span class="ident">get_json</span>(<span class="kw-2">&amp;</span><span class="ident">url</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="ident">stock_time_helper</span>.<span class="ident">convert</span>()
+    <span class="doccomment">/// Returns JSON data struct
+    ///
+    /// # Errors
+    /// Raise error if data obtained cannot be properly converted to struct or
+    /// API returns any 4 possible known errors
+    </span><span class="kw">pub async fn </span>json(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;TimeSeries&gt; {
+        <span class="kw">let </span>url = <span class="self">self</span>.create_url()<span class="question-mark">?</span>;
+        <span class="kw">let </span>stock_time_helper: TimeSeriesHelper = <span class="self">self</span>.api_client.get_json(<span class="kw-2">&amp;</span>url).<span class="kw">await</span><span class="question-mark">?</span>;
+        stock_time_helper.convert()
     }
 }
 
-<span class="doccomment">/// Enum for declaring function for stock time series by defining which type of</span>
-<span class="doccomment">/// series of stock to be returned</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">StockFunction</span> {
-    <span class="doccomment">/// returns intraday time series (timestamp, open, high, low, close, volume)</span>
-    <span class="doccomment">/// of the equity specified</span>
-    <span class="ident">IntraDay</span>,
-    <span class="doccomment">/// returns daily time series (date, daily open, daily high, daily low,</span>
-    <span class="doccomment">/// daily close, daily volume) of the global equity specified, covering 20+</span>
-    <span class="doccomment">/// years of historical data</span>
-    <span class="ident">Daily</span>,
-    <span class="doccomment">/// returns daily time series (date, daily open, daily high, daily low,</span>
-    <span class="doccomment">/// daily close, daily volume, daily adjusted close, and split/dividend</span>
-    <span class="doccomment">/// events) of the global equity specified, covering 20+ years of historical</span>
-    <span class="doccomment">/// data.</span>
-    <span class="ident">DailyAdjusted</span>,
-    <span class="doccomment">/// returns weekly time series (last trading day of each week, weekly open,</span>
-    <span class="doccomment">/// weekly high, weekly low, weekly close, weekly volume) of the global</span>
-    <span class="doccomment">/// equity specified, covering 20+ years of historical data.</span>
-    <span class="ident">Weekly</span>,
-    <span class="doccomment">/// returns weekly adjusted time series (last trading day of each week,</span>
-    <span class="doccomment">/// weekly open, weekly high, weekly low, weekly close, weekly adjusted</span>
-    <span class="doccomment">/// close, weekly volume, weekly dividend) of the global equity specified,</span>
-    <span class="doccomment">/// covering 20+ years of historical data.</span>
-    <span class="ident">WeeklyAdjusted</span>,
-    <span class="doccomment">/// returns monthly time series (last trading day of each month, monthly</span>
-    <span class="doccomment">/// open, monthly high, monthly low, monthly close, monthly volume) of</span>
-    <span class="doccomment">/// the global equity specified, covering 20+ years of historical data.</span>
-    <span class="ident">Monthly</span>,
-    <span class="doccomment">/// returns monthly adjusted time series (last trading day of each month,</span>
-    <span class="doccomment">/// monthly open, monthly high, monthly low, monthly close, monthly adjusted</span>
-    <span class="doccomment">/// close, monthly volume, monthly dividend) of the equity specified,</span>
-    <span class="doccomment">/// covering 20+ years of historical data.</span>
-    <span class="ident">MonthlyAdjusted</span>,
+<span class="doccomment">/// Enum for declaring function for stock time series by defining which type of
+/// series of stock to be returned
+</span><span class="attribute">#[derive(Clone)]</span>
+<span class="kw">pub enum </span>StockFunction {
+    <span class="doccomment">/// returns intraday time series (timestamp, open, high, low, close, volume)
+    /// of the equity specified
+    </span>IntraDay,
+    <span class="doccomment">/// returns daily time series (date, daily open, daily high, daily low,
+    /// daily close, daily volume) of the global equity specified, covering 20+
+    /// years of historical data
+    </span>Daily,
+    <span class="doccomment">/// returns daily time series (date, daily open, daily high, daily low,
+    /// daily close, daily volume, daily adjusted close, and split/dividend
+    /// events) of the global equity specified, covering 20+ years of historical
+    /// data.
+    </span>DailyAdjusted,
+    <span class="doccomment">/// returns weekly time series (last trading day of each week, weekly open,
+    /// weekly high, weekly low, weekly close, weekly volume) of the global
+    /// equity specified, covering 20+ years of historical data.
+    </span>Weekly,
+    <span class="doccomment">/// returns weekly adjusted time series (last trading day of each week,
+    /// weekly open, weekly high, weekly low, weekly close, weekly adjusted
+    /// close, weekly volume, weekly dividend) of the global equity specified,
+    /// covering 20+ years of historical data.
+    </span>WeeklyAdjusted,
+    <span class="doccomment">/// returns monthly time series (last trading day of each month, monthly
+    /// open, monthly high, monthly low, monthly close, monthly volume) of
+    /// the global equity specified, covering 20+ years of historical data.
+    </span>Monthly,
+    <span class="doccomment">/// returns monthly adjusted time series (last trading day of each month,
+    /// monthly open, monthly high, monthly low, monthly close, monthly adjusted
+    /// close, monthly volume, monthly dividend) of the equity specified,
+    /// covering 20+ years of historical data.
+    </span>MonthlyAdjusted,
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0-nightly (1c7b36d4d 2022-07-12)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (9c20b2a8c 2022-08-17)" ></div></body></html>

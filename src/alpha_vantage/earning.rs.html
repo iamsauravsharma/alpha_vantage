@@ -1,10 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/earning.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>earning.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../alpha_vantage/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1">
-                                <a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div>
-                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/earning.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>earning.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../alpha_vantage/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -198,200 +192,199 @@
 <span id="192">192</span>
 <span id="193">193</span>
 <span id="194">194</span>
-</pre><pre class="rust"><code><span class="doccomment">//! Module for return earning per share for a company</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! This API returns the annual and quarterly earnings (EPS) for the company of</span>
-<span class="doccomment">//! interest. Quarterly data also includes analyst estimates and surprise</span>
-<span class="doccomment">//! metrics.</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Module for return earning per share for a company
+//!
+//! This API returns the annual and quarterly earnings (EPS) for the company of
+//! interest. Quarterly data also includes analyst estimates and surprise
+//! metrics.
 
-<span class="kw">use</span> <span class="ident">serde::Deserialize</span>;
+</span><span class="kw">use </span>serde::Deserialize;
 
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::api::ApiClient</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::deserialize</span>::{<span class="ident">from_none_str</span>, <span class="ident">from_str</span>};
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::error</span>::{<span class="ident">detect_common_helper_error</span>, <span class="ident">Error</span>, <span class="prelude-ty">Result</span>};
+<span class="kw">use </span><span class="kw">crate</span>::api::ApiClient;
+<span class="kw">use </span><span class="kw">crate</span>::deserialize::{from_none_str, from_str};
+<span class="kw">use </span><span class="kw">crate</span>::error::{detect_common_helper_error, Error, <span class="prelude-ty">Result</span>};
 
-<span class="doccomment">/// Struct to store information of annual earning</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Deserialize</span>, <span class="ident">Clone</span>, <span class="ident">Default</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Annual</span> {
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;fiscalDateEnding&quot;</span>)]</span>
-    <span class="ident">fiscal_date_ending</span>: <span class="ident">String</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;reportedEPS&quot;</span>, <span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;from_str&quot;</span>)]</span>
-    <span class="ident">reported_eps</span>: <span class="ident">f64</span>,
+<span class="doccomment">/// Struct to store information of annual earning
+</span><span class="attribute">#[derive(Debug, Deserialize, Clone, Default)]</span>
+<span class="kw">pub struct </span>Annual {
+    <span class="attribute">#[serde(rename = <span class="string">&quot;fiscalDateEnding&quot;</span>)]</span>
+    fiscal_date_ending: String,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;reportedEPS&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]</span>
+    reported_eps: f64,
 }
 
-<span class="kw">impl</span> <span class="ident">Annual</span> {
-    <span class="doccomment">/// Return annual earning fiscal date ending</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fiscal_date_ending</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">fiscal_date_ending</span>
+<span class="kw">impl </span>Annual {
+    <span class="doccomment">/// Return annual earning fiscal date ending
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>fiscal_date_ending(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.fiscal_date_ending
     }
 
-    <span class="doccomment">/// Return reported eps for annual earning</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reported_eps</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">f64</span> {
-        <span class="self">self</span>.<span class="ident">reported_eps</span>
-    }
-}
-
-<span class="doccomment">/// Struct to store information of quarterly earning</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Deserialize</span>, <span class="ident">Clone</span>, <span class="ident">Default</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Quarterly</span> {
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;fiscalDateEnding&quot;</span>)]</span>
-    <span class="ident">fiscal_date_ending</span>: <span class="ident">String</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;reportedDate&quot;</span>)]</span>
-    <span class="ident">reported_date</span>: <span class="ident">String</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;reportedEPS&quot;</span>, <span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;from_none_str&quot;</span>)]</span>
-    <span class="ident">reported_eps</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;estimatedEPS&quot;</span>, <span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;from_str&quot;</span>)]</span>
-    <span class="ident">estimated_eps</span>: <span class="ident">f64</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;surprise&quot;</span>, <span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;from_none_str&quot;</span>)]</span>
-    <span class="ident">surprise</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;surprisePercentage&quot;</span>, <span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;from_none_str&quot;</span>)]</span>
-    <span class="ident">surprise_percentage</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>,
-}
-
-<span class="kw">impl</span> <span class="ident">Quarterly</span> {
-    <span class="doccomment">/// Return fiscal date ending quarterly earning</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fiscal_date_ending</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">fiscal_date_ending</span>
-    }
-
-    <span class="doccomment">/// Return reported date for quarterly earning</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reported_date</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">reported_date</span>
-    }
-
-    <span class="doccomment">/// Return reported eps of symbol for quarter. Return None if api return</span>
-    <span class="doccomment">/// none</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reported_eps</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">reported_eps</span>
-    }
-
-    <span class="doccomment">/// Return Estimated eps of symbol for quarter</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">estimated_eps</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">f64</span> {
-        <span class="self">self</span>.<span class="ident">estimated_eps</span>
-    }
-
-    <span class="doccomment">/// Return value of surprise. return None if api return none</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">surprise</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">surprise</span>
-    }
-
-    <span class="doccomment">/// Return surprise percentage for symbol quarterly earning. Return None if</span>
-    <span class="doccomment">/// api return None</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">surprise_percentage</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">surprise_percentage</span>
+    <span class="doccomment">/// Return reported eps for annual earning
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>reported_eps(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+        <span class="self">self</span>.reported_eps
     }
 }
 
-<span class="doccomment">/// Struct to store earning for symbol</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Earning</span> {
-    <span class="ident">symbol</span>: <span class="ident">String</span>,
-    <span class="ident">annual_earning</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Annual</span><span class="op">&gt;</span>,
-    <span class="ident">quarterly_earning</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Quarterly</span><span class="op">&gt;</span>,
+<span class="doccomment">/// Struct to store information of quarterly earning
+</span><span class="attribute">#[derive(Debug, Deserialize, Clone, Default)]</span>
+<span class="kw">pub struct </span>Quarterly {
+    <span class="attribute">#[serde(rename = <span class="string">&quot;fiscalDateEnding&quot;</span>)]</span>
+    fiscal_date_ending: String,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;reportedDate&quot;</span>)]</span>
+    reported_date: String,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;reportedEPS&quot;</span>, deserialize_with = <span class="string">&quot;from_none_str&quot;</span>)]</span>
+    reported_eps: <span class="prelude-ty">Option</span>&lt;f64&gt;,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;estimatedEPS&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]</span>
+    estimated_eps: f64,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;surprise&quot;</span>, deserialize_with = <span class="string">&quot;from_none_str&quot;</span>)]</span>
+    surprise: <span class="prelude-ty">Option</span>&lt;f64&gt;,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;surprisePercentage&quot;</span>, deserialize_with = <span class="string">&quot;from_none_str&quot;</span>)]</span>
+    surprise_percentage: <span class="prelude-ty">Option</span>&lt;f64&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">Earning</span> {
-    <span class="doccomment">/// Return symbol of company</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Example</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// #[tokio::main]</span>
-    <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
-    <span class="doccomment">///     let earning = api.earning(&quot;IBM&quot;).json().await.unwrap();</span>
-    <span class="doccomment">///     let symbol = earning.symbol();</span>
-    <span class="doccomment">///     assert_eq!(symbol, &quot;IBM&quot;);</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">/// ```</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">symbol</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">symbol</span>
+<span class="kw">impl </span>Quarterly {
+    <span class="doccomment">/// Return fiscal date ending quarterly earning
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>fiscal_date_ending(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.fiscal_date_ending
     }
 
-    <span class="doccomment">/// Return Annual earning list for symbol</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">annual_earning</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Annual</span><span class="op">&gt;</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">annual_earning</span>
+    <span class="doccomment">/// Return reported date for quarterly earning
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>reported_date(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.reported_date
     }
 
-    <span class="doccomment">/// Return quarterly earning for symbol</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">quarterly_earning</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Quarterly</span><span class="op">&gt;</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">quarterly_earning</span>
+    <span class="doccomment">/// Return reported eps of symbol for quarter. Return None if api return
+    /// none
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>reported_eps(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;f64&gt; {
+        <span class="self">self</span>.reported_eps
+    }
+
+    <span class="doccomment">/// Return Estimated eps of symbol for quarter
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>estimated_eps(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+        <span class="self">self</span>.estimated_eps
+    }
+
+    <span class="doccomment">/// Return value of surprise. return None if api return none
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>surprise(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;f64&gt; {
+        <span class="self">self</span>.surprise
+    }
+
+    <span class="doccomment">/// Return surprise percentage for symbol quarterly earning. Return None if
+    /// api return None
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>surprise_percentage(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;f64&gt; {
+        <span class="self">self</span>.surprise_percentage
     }
 }
 
-<span class="doccomment">/// Struct used for creating earning</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Deserialize</span>)]</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">EarningHelper</span> {
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Information&quot;</span>)]</span>
-    <span class="ident">information</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Error Message&quot;</span>)]</span>
-    <span class="ident">error_message</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Note&quot;</span>)]</span>
-    <span class="ident">note</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;symbol&quot;</span>)]</span>
-    <span class="ident">symbol</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;annualEarnings&quot;</span>)]</span>
-    <span class="ident">annual_earning</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Annual</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;quarterlyEarnings&quot;</span>)]</span>
-    <span class="ident">quarterly_earning</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Quarterly</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+<span class="doccomment">/// Struct to store earning for symbol
+</span><span class="attribute">#[derive(Debug, Default)]</span>
+<span class="kw">pub struct </span>Earning {
+    symbol: String,
+    annual_earning: Vec&lt;Annual&gt;,
+    quarterly_earning: Vec&lt;Quarterly&gt;,
 }
-<span class="kw">impl</span> <span class="ident">EarningHelper</span> {
-    <span class="doccomment">/// Function which convert `EarningHelper` to</span>
-    <span class="doccomment">/// `Earning`</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">convert</span>(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Earning</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">earning</span> <span class="op">=</span> <span class="ident">Earning::default</span>();
-        <span class="ident">detect_common_helper_error</span>(<span class="self">self</span>.<span class="ident">information</span>, <span class="self">self</span>.<span class="ident">error_message</span>, <span class="self">self</span>.<span class="ident">note</span>)<span class="question-mark">?</span>;
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">symbol</span>.<span class="ident">is_none</span>()
-            <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">annual_earning</span>.<span class="ident">is_none</span>()
-            <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">quarterly_earning</span>.<span class="ident">is_none</span>()
+
+<span class="kw">impl </span>Earning {
+    <span class="doccomment">/// Return symbol of company
+    ///
+    /// # Example
+    /// ```
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());
+    ///     let earning = api.earning(&quot;IBM&quot;).json().await.unwrap();
+    ///     let symbol = earning.symbol();
+    ///     assert_eq!(symbol, &quot;IBM&quot;);
+    /// }
+    /// ```
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>symbol(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.symbol
+    }
+
+    <span class="doccomment">/// Return Annual earning list for symbol
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>annual_earning(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Vec&lt;Annual&gt; {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.annual_earning
+    }
+
+    <span class="doccomment">/// Return quarterly earning for symbol
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>quarterly_earning(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Vec&lt;Quarterly&gt; {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.quarterly_earning
+    }
+}
+
+<span class="doccomment">/// Struct used for creating earning
+</span><span class="attribute">#[derive(Debug, Deserialize)]</span>
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>EarningHelper {
+    <span class="attribute">#[serde(rename = <span class="string">&quot;Information&quot;</span>)]</span>
+    information: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;Error Message&quot;</span>)]</span>
+    error_message: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;Note&quot;</span>)]</span>
+    note: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;symbol&quot;</span>)]</span>
+    symbol: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;annualEarnings&quot;</span>)]</span>
+    annual_earning: <span class="prelude-ty">Option</span>&lt;Vec&lt;Annual&gt;&gt;,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;quarterlyEarnings&quot;</span>)]</span>
+    quarterly_earning: <span class="prelude-ty">Option</span>&lt;Vec&lt;Quarterly&gt;&gt;,
+}
+<span class="kw">impl </span>EarningHelper {
+    <span class="doccomment">/// Function which convert `EarningHelper` to
+    /// `Earning`
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>convert(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Earning&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>earning = Earning::default();
+        detect_common_helper_error(<span class="self">self</span>.information, <span class="self">self</span>.error_message, <span class="self">self</span>.note)<span class="question-mark">?</span>;
+        <span class="kw">if </span><span class="self">self</span>.symbol.is_none()
+            || <span class="self">self</span>.annual_earning.is_none()
+            || <span class="self">self</span>.quarterly_earning.is_none()
         {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::EmptyResponse</span>);
+            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::EmptyResponse);
         }
-        <span class="ident">earning</span>.<span class="ident">symbol</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">symbol</span>.<span class="ident">unwrap</span>();
-        <span class="ident">earning</span>.<span class="ident">annual_earning</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">annual_earning</span>.<span class="ident">unwrap</span>();
-        <span class="ident">earning</span>.<span class="ident">quarterly_earning</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">quarterly_earning</span>.<span class="ident">unwrap</span>();
-        <span class="prelude-val">Ok</span>(<span class="ident">earning</span>)
+        earning.symbol = <span class="self">self</span>.symbol.unwrap();
+        earning.annual_earning = <span class="self">self</span>.annual_earning.unwrap();
+        earning.quarterly_earning = <span class="self">self</span>.quarterly_earning.unwrap();
+        <span class="prelude-val">Ok</span>(earning)
     }
 }
 
-<span class="doccomment">/// Builder to help create Earning</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">EarningBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="ident">api_client</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ApiClient</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
-    <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
+<span class="doccomment">/// Builder to help create Earning
+</span><span class="kw">pub struct </span>EarningBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
+    api_client: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>ApiClient&lt;<span class="lifetime">&#39;a</span>&gt;,
+    symbol: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">EarningBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Create new Earning Builder with help of `APIClient`</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">api_client</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ApiClient</span>, <span class="ident">symbol</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">Self</span> { <span class="ident">api_client</span>, <span class="ident">symbol</span> }
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; EarningBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// Create new Earning Builder with help of `APIClient`
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>new(api_client: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>ApiClient, symbol: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{ api_client, symbol }
     }
 
-    <span class="kw">fn</span> <span class="ident">create_url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">String</span> {
-        <span class="macro">format!</span>(<span class="string">&quot;query?function=EARNINGS&amp;symbol={}&quot;</span>, <span class="self">self</span>.<span class="ident">symbol</span>)
+    <span class="kw">fn </span>create_url(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+        <span class="macro">format!</span>(<span class="string">&quot;query?function=EARNINGS&amp;symbol={}&quot;</span>, <span class="self">self</span>.symbol)
     }
 
-    <span class="doccomment">/// Returns JSON data struct</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Errors</span>
-    <span class="doccomment">/// Raise error if data obtained cannot be properly converted to struct or</span>
-    <span class="doccomment">/// API returns any 4 possible known errors</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">json</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Earning</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">url</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">create_url</span>();
-        <span class="kw">let</span> <span class="ident">earning_helper</span>: <span class="ident">EarningHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">api_client</span>.<span class="ident">get_json</span>(<span class="kw-2">&amp;</span><span class="ident">url</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="ident">earning_helper</span>.<span class="ident">convert</span>()
+    <span class="doccomment">/// Returns JSON data struct
+    ///
+    /// # Errors
+    /// Raise error if data obtained cannot be properly converted to struct or
+    /// API returns any 4 possible known errors
+    </span><span class="kw">pub async fn </span>json(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Earning&gt; {
+        <span class="kw">let </span>url = <span class="self">self</span>.create_url();
+        <span class="kw">let </span>earning_helper: EarningHelper = <span class="self">self</span>.api_client.get_json(<span class="kw-2">&amp;</span>url).<span class="kw">await</span><span class="question-mark">?</span>;
+        earning_helper.convert()
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0-nightly (1c7b36d4d 2022-07-12)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (9c20b2a8c 2022-08-17)" ></div></body></html>

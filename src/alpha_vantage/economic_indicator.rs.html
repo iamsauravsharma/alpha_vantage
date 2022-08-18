@@ -1,10 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/economic_indicator.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>economic_indicator.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../alpha_vantage/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1">
-                                <a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div>
-                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/economic_indicator.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>economic_indicator.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../alpha_vantage/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -258,260 +252,259 @@
 <span id="252">252</span>
 <span id="253">253</span>
 <span id="254">254</span>
-</pre><pre class="rust"><code><span class="doccomment">//! Module for Economic Indicator</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! APIs under this section provide key US economic indicators frequently used</span>
-<span class="doccomment">//! for investment strategy formulation and application development.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! You can read about [Economic Indicator][economic_indicator] API and what</span>
-<span class="doccomment">//! it returns on alphavantage documentation</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! [economic_indicator]: https://www.alphavantage.co/documentation/#economic-indicators</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Module for Economic Indicator
+//!
+//! APIs under this section provide key US economic indicators frequently used
+//! for investment strategy formulation and application development.
+//!
+//! You can read about [Economic Indicator][economic_indicator] API and what
+//! it returns on alphavantage documentation
+//!
+//! [economic_indicator]: https://www.alphavantage.co/documentation/#economic-indicators
 
-<span class="kw">use</span> <span class="ident">std::cmp</span>;
+</span><span class="kw">use </span>std::cmp;
 
-<span class="kw">use</span> <span class="ident">serde::Deserialize</span>;
+<span class="kw">use </span>serde::Deserialize;
 
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::api::ApiClient</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::deserialize::from_str</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::error</span>::{<span class="ident">detect_common_helper_error</span>, <span class="ident">Error</span>, <span class="prelude-ty">Result</span>};
+<span class="kw">use </span><span class="kw">crate</span>::api::ApiClient;
+<span class="kw">use </span><span class="kw">crate</span>::deserialize::from_str;
+<span class="kw">use </span><span class="kw">crate</span>::error::{detect_common_helper_error, Error, <span class="prelude-ty">Result</span>};
 
-<span class="doccomment">/// Struct for storing a data values</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Debug</span>, <span class="ident">Deserialize</span>, <span class="ident">Clone</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Data</span> {
-    <span class="ident">date</span>: <span class="ident">String</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;from_str&quot;</span>)]</span>
-    <span class="ident">value</span>: <span class="ident">f64</span>,
+<span class="doccomment">/// Struct for storing a data values
+</span><span class="attribute">#[derive(Default, Debug, Deserialize, Clone)]</span>
+<span class="kw">pub struct </span>Data {
+    date: String,
+    <span class="attribute">#[serde(deserialize_with = <span class="string">&quot;from_str&quot;</span>)]</span>
+    value: f64,
 }
 
-<span class="kw">impl</span> <span class="ident">Data</span> {
-    <span class="doccomment">/// Return date</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">date</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">date</span>
+<span class="kw">impl </span>Data {
+    <span class="doccomment">/// Return date
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>date(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.date
     }
 
-    <span class="doccomment">/// Return value for Data</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">f64</span> {
-        <span class="self">self</span>.<span class="ident">value</span>
+    <span class="doccomment">/// Return value for Data
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+        <span class="self">self</span>.value
     }
 }
 
-<span class="doccomment">/// trait which helps for performing some common operation on Vec&lt;Data&gt;</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">VecData</span> {
-    <span class="doccomment">/// Find a data with a given date as a input return none if no data found</span>
-    <span class="kw">fn</span> <span class="ident">find</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">date</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Data</span><span class="op">&gt;</span>;
-    <span class="doccomment">/// Return a data which is of latest date period</span>
-    <span class="kw">fn</span> <span class="ident">latest</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Data</span>;
-    <span class="doccomment">/// Return a top n latest data</span>
-    <span class="doccomment">/// # Errors</span>
-    <span class="doccomment">/// If n is greater than no of data</span>
-    <span class="kw">fn</span> <span class="ident">latest_n</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">n</span>: <span class="ident">usize</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Data</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+<span class="doccomment">/// trait which helps for performing some common operation on Vec&lt;Data&gt;
+</span><span class="kw">pub trait </span>VecData {
+    <span class="doccomment">/// Find a data with a given date as a input return none if no data found
+    </span><span class="kw">fn </span>find(<span class="kw-2">&amp;</span><span class="self">self</span>, date: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Data&gt;;
+    <span class="doccomment">/// Return a data which is of latest date period
+    </span><span class="kw">fn </span>latest(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Data;
+    <span class="doccomment">/// Return a top n latest data
+    /// # Errors
+    /// If n is greater than no of data
+    </span><span class="kw">fn </span>latest_n(<span class="kw-2">&amp;</span><span class="self">self</span>, n: usize) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;<span class="kw-2">&amp;</span>Data&gt;&gt;;
 }
 
-<span class="kw">impl</span> <span class="ident">VecData</span> <span class="kw">for</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Data</span><span class="op">&gt;</span> {
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">fn</span> <span class="ident">find</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">date</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Data</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">iter</span>().<span class="ident">find</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">entry</span><span class="op">|</span> <span class="ident">entry</span>.<span class="ident">date</span> <span class="op">==</span> <span class="ident">date</span>)
+<span class="kw">impl </span>VecData <span class="kw">for </span>Vec&lt;Data&gt; {
+    <span class="attribute">#[must_use]</span>
+    <span class="kw">fn </span>find(<span class="kw-2">&amp;</span><span class="self">self</span>, date: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Data&gt; {
+        <span class="self">self</span>.iter().find(|<span class="kw-2">&amp;</span>entry| entry.date == date)
     }
 
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">fn</span> <span class="ident">latest</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Data</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">latest</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">Data::default</span>();
-        <span class="kw">for</span> <span class="ident">data</span> <span class="kw">in</span> <span class="self">self</span> {
-            <span class="kw">if</span> <span class="ident">latest</span>.<span class="ident">date</span> <span class="op">&lt;</span> <span class="ident">data</span>.<span class="ident">date</span> {
-                <span class="ident">latest</span> <span class="op">=</span> <span class="ident">data</span>;
+    <span class="attribute">#[must_use]</span>
+    <span class="kw">fn </span>latest(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Data {
+        <span class="kw">let </span><span class="kw-2">mut </span>latest = <span class="kw-2">&amp;</span>Data::default();
+        <span class="kw">for </span>data <span class="kw">in </span><span class="self">self </span>{
+            <span class="kw">if </span>latest.date &lt; data.date {
+                latest = data;
             }
         }
-        <span class="ident">latest</span>.<span class="ident">clone</span>()
+        latest.clone()
     }
 
-    <span class="kw">fn</span> <span class="ident">latest_n</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">n</span>: <span class="ident">usize</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Data</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">date_list</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">data</span><span class="op">|</span> <span class="kw-2">&amp;</span><span class="ident">data</span>.<span class="ident">date</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>();
-        <span class="ident">date_list</span>.<span class="ident">sort_by_key</span>(<span class="op">|</span><span class="ident">w</span><span class="op">|</span> <span class="ident">cmp::Reverse</span>(<span class="kw-2">*</span><span class="ident">w</span>));
+    <span class="kw">fn </span>latest_n(<span class="kw-2">&amp;</span><span class="self">self</span>, n: usize) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;<span class="kw-2">&amp;</span>Data&gt;&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>date_list = <span class="self">self</span>.iter().map(|data| <span class="kw-2">&amp;</span>data.date).collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;();
+        date_list.sort_by_key(|w| cmp::Reverse(<span class="kw-2">*</span>w));
 
-        <span class="kw">if</span> <span class="ident">n</span> <span class="op">&gt;</span> <span class="ident">date_list</span>.<span class="ident">len</span>() {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::DesiredNumberOfDataNotPresent</span>(<span class="ident">date_list</span>.<span class="ident">len</span>()));
+        <span class="kw">if </span>n &gt; date_list.len() {
+            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::DesiredNumberOfDataNotPresent(date_list.len()));
         }
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">full_list</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Data</span><span class="op">&gt;</span><span class="ident">::new</span>();
+        <span class="kw">let </span><span class="kw-2">mut </span>full_list = Vec::&lt;<span class="kw-2">&amp;</span>Data&gt;::new();
 
-        <span class="kw">for</span> <span class="ident">date</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="ident">date_list</span>[<span class="number">0</span>..<span class="ident">n</span>] {
-            <span class="ident">full_list</span>.<span class="ident">push</span>(<span class="self">self</span>.<span class="ident">find</span>(<span class="ident">date</span>).<span class="ident">unwrap</span>());
+        <span class="kw">for </span>date <span class="kw">in </span><span class="kw-2">&amp;</span>date_list[<span class="number">0</span>..n] {
+            full_list.push(<span class="self">self</span>.find(date).unwrap());
         }
 
-        <span class="prelude-val">Ok</span>(<span class="ident">full_list</span>)
+        <span class="prelude-val">Ok</span>(full_list)
     }
 }
 
-<span class="doccomment">/// Struct for indicator</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">EconomicIndicator</span> {
-    <span class="ident">name</span>: <span class="ident">String</span>,
-    <span class="ident">interval</span>: <span class="ident">String</span>,
-    <span class="ident">unit</span>: <span class="ident">String</span>,
-    <span class="ident">data</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Data</span><span class="op">&gt;</span>,
+<span class="doccomment">/// Struct for indicator
+</span><span class="attribute">#[derive(Default, Debug)]</span>
+<span class="kw">pub struct </span>EconomicIndicator {
+    name: String,
+    interval: String,
+    unit: String,
+    data: Vec&lt;Data&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">EconomicIndicator</span> {
-    <span class="doccomment">/// Return name of economic indicator</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">name</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">String</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">name</span>
+<span class="kw">impl </span>EconomicIndicator {
+    <span class="doccomment">/// Return name of economic indicator
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>String {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.name
     }
 
-    <span class="doccomment">/// Return interval of economic indicator</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interval</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">String</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">interval</span>
+    <span class="doccomment">/// Return interval of economic indicator
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>interval(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>String {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.interval
     }
 
-    <span class="doccomment">/// Return unit of economic indicator</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unit</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">String</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">unit</span>
+    <span class="doccomment">/// Return unit of economic indicator
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>unit(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>String {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.unit
     }
 
-    <span class="doccomment">/// Return data as a vector</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">data</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Data</span><span class="op">&gt;</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">data</span>
+    <span class="doccomment">/// Return data as a vector
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>data(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Vec&lt;Data&gt; {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.data
     }
 }
 
-<span class="doccomment">/// Struct for helping indicator struct</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Deserialize</span>)]</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">EconomicIndicatorHelper</span> {
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Error Message&quot;</span>)]</span>
-    <span class="ident">error_message</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Information&quot;</span>)]</span>
-    <span class="ident">information</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Note&quot;</span>)]</span>
-    <span class="ident">note</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">interval</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">unit</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="ident">data</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Data</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+<span class="doccomment">/// Struct for helping indicator struct
+</span><span class="attribute">#[derive(Deserialize)]</span>
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>EconomicIndicatorHelper {
+    <span class="attribute">#[serde(rename = <span class="string">&quot;Error Message&quot;</span>)]</span>
+    error_message: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;Information&quot;</span>)]</span>
+    information: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;Note&quot;</span>)]</span>
+    note: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    name: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    interval: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    unit: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    data: <span class="prelude-ty">Option</span>&lt;Vec&lt;Data&gt;&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">EconomicIndicatorHelper</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">convert</span>(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">EconomicIndicator</span><span class="op">&gt;</span> {
-        <span class="ident">detect_common_helper_error</span>(<span class="self">self</span>.<span class="ident">information</span>, <span class="self">self</span>.<span class="ident">error_message</span>, <span class="self">self</span>.<span class="ident">note</span>)<span class="question-mark">?</span>;
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">name</span>.<span class="ident">is_none</span>()
-            <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">interval</span>.<span class="ident">is_none</span>()
-            <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">unit</span>.<span class="ident">is_none</span>()
-            <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">is_none</span>()
+<span class="kw">impl </span>EconomicIndicatorHelper {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>convert(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;EconomicIndicator&gt; {
+        detect_common_helper_error(<span class="self">self</span>.information, <span class="self">self</span>.error_message, <span class="self">self</span>.note)<span class="question-mark">?</span>;
+        <span class="kw">if </span><span class="self">self</span>.name.is_none()
+            || <span class="self">self</span>.interval.is_none()
+            || <span class="self">self</span>.unit.is_none()
+            || <span class="self">self</span>.data.is_none()
         {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::EmptyResponse</span>);
+            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::EmptyResponse);
         }
-        <span class="prelude-val">Ok</span>(<span class="ident">EconomicIndicator</span> {
-            <span class="ident">name</span>: <span class="self">self</span>.<span class="ident">name</span>.<span class="ident">unwrap</span>(),
-            <span class="ident">interval</span>: <span class="self">self</span>.<span class="ident">interval</span>.<span class="ident">unwrap</span>(),
-            <span class="ident">unit</span>: <span class="self">self</span>.<span class="ident">unit</span>.<span class="ident">unwrap</span>(),
-            <span class="ident">data</span>: <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">unwrap</span>(),
+        <span class="prelude-val">Ok</span>(EconomicIndicator {
+            name: <span class="self">self</span>.name.unwrap(),
+            interval: <span class="self">self</span>.interval.unwrap(),
+            unit: <span class="self">self</span>.unit.unwrap(),
+            data: <span class="self">self</span>.data.unwrap(),
         })
     }
 }
 
-<span class="doccomment">/// Builder to help create `EconomicIndicator`</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">EconomicIndicatorBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="ident">api_client</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ApiClient</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
-    <span class="ident">function</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
-    <span class="ident">interval</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">EconomicIndicatorInterval</span><span class="op">&gt;</span>,
-    <span class="ident">maturity</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">EconomicIndicatorMaturity</span><span class="op">&gt;</span>,
+<span class="doccomment">/// Builder to help create `EconomicIndicator`
+</span><span class="kw">pub struct </span>EconomicIndicatorBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
+    api_client: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>ApiClient&lt;<span class="lifetime">&#39;a</span>&gt;,
+    function: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
+    interval: <span class="prelude-ty">Option</span>&lt;EconomicIndicatorInterval&gt;,
+    maturity: <span class="prelude-ty">Option</span>&lt;EconomicIndicatorMaturity&gt;,
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">EconomicIndicatorBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Create new `EconomicIndicatorBuilder` form `APIClient`</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">api_client</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ApiClient</span>, <span class="ident">function</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">Self</span> {
-            <span class="ident">api_client</span>,
-            <span class="ident">function</span>,
-            <span class="ident">interval</span>: <span class="prelude-val">None</span>,
-            <span class="ident">maturity</span>: <span class="prelude-val">None</span>,
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; EconomicIndicatorBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// Create new `EconomicIndicatorBuilder` form `APIClient`
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>new(api_client: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>ApiClient, function: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{
+            api_client,
+            function,
+            interval: <span class="prelude-val">None</span>,
+            maturity: <span class="prelude-val">None</span>,
         }
     }
 
-    <span class="doccomment">/// Set interval for API</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interval</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">interval</span>: <span class="ident">EconomicIndicatorInterval</span>) -&gt; <span class="kw-2">&amp;mut</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">interval</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">interval</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Set interval for API
+    </span><span class="kw">pub fn </span>interval(<span class="kw-2">&amp;mut </span><span class="self">self</span>, interval: EconomicIndicatorInterval) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
+        <span class="self">self</span>.interval = <span class="prelude-val">Some</span>(interval);
+        <span class="self">self
+    </span>}
 
-    <span class="doccomment">/// Set maturity for API</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">maturity</span>(<span class="kw-2">&amp;mut</span> <span class="self">self</span>, <span class="ident">maturity</span>: <span class="ident">EconomicIndicatorMaturity</span>) -&gt; <span class="kw-2">&amp;mut</span> <span class="self">Self</span> {
-        <span class="self">self</span>.<span class="ident">maturity</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">maturity</span>);
-        <span class="self">self</span>
-    }
+    <span class="doccomment">/// Set maturity for API
+    </span><span class="kw">pub fn </span>maturity(<span class="kw-2">&amp;mut </span><span class="self">self</span>, maturity: EconomicIndicatorMaturity) -&gt; <span class="kw-2">&amp;mut </span><span class="self">Self </span>{
+        <span class="self">self</span>.maturity = <span class="prelude-val">Some</span>(maturity);
+        <span class="self">self
+    </span>}
 
-    <span class="kw">fn</span> <span class="ident">create_url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">String</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">created_link</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">&quot;query?function={}&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">function</span>);
+    <span class="kw">fn </span>create_url(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; String {
+        <span class="kw">let </span><span class="kw-2">mut </span>created_link = <span class="macro">format!</span>(<span class="string">&quot;query?function={}&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.function);
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">interval</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">interval</span> {
-            <span class="kw">match</span> <span class="ident">interval</span> {
-                <span class="ident">EconomicIndicatorInterval::Daily</span> =&gt; <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="string">&quot;&amp;interval=daily&quot;</span>),
-                <span class="ident">EconomicIndicatorInterval::Weekly</span> =&gt; <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="string">&quot;&amp;interval=weekly&quot;</span>),
-                <span class="ident">EconomicIndicatorInterval::Monthly</span> =&gt; <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="string">&quot;&amp;interval=monthly&quot;</span>),
-                <span class="ident">EconomicIndicatorInterval::Quarterly</span> =&gt; {
-                    <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="string">&quot;&amp;interval=quarterly&quot;</span>);
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(interval) = <span class="kw-2">&amp;</span><span class="self">self</span>.interval {
+            <span class="kw">match </span>interval {
+                EconomicIndicatorInterval::Daily =&gt; created_link.push_str(<span class="string">&quot;&amp;interval=daily&quot;</span>),
+                EconomicIndicatorInterval::Weekly =&gt; created_link.push_str(<span class="string">&quot;&amp;interval=weekly&quot;</span>),
+                EconomicIndicatorInterval::Monthly =&gt; created_link.push_str(<span class="string">&quot;&amp;interval=monthly&quot;</span>),
+                EconomicIndicatorInterval::Quarterly =&gt; {
+                    created_link.push_str(<span class="string">&quot;&amp;interval=quarterly&quot;</span>);
                 }
-                <span class="ident">EconomicIndicatorInterval::Annually</span> =&gt; <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="string">&quot;&amp;interval=annually&quot;</span>),
+                EconomicIndicatorInterval::Annually =&gt; created_link.push_str(<span class="string">&quot;&amp;interval=annually&quot;</span>),
             }
         }
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">maturity</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">maturity</span> {
-            <span class="kw">match</span> <span class="ident">maturity</span> {
-                <span class="ident">EconomicIndicatorMaturity::ThreeMonth</span> =&gt; <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="string">&quot;&amp;maturity=3month&quot;</span>),
-                <span class="ident">EconomicIndicatorMaturity::FiveYear</span> =&gt; <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="string">&quot;&amp;maturity=5year&quot;</span>),
-                <span class="ident">EconomicIndicatorMaturity::TenYear</span> =&gt; <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="string">&quot;&amp;maturity=10year&quot;</span>),
-                <span class="ident">EconomicIndicatorMaturity::ThirtyYear</span> =&gt; <span class="ident">created_link</span>.<span class="ident">push_str</span>(<span class="string">&quot;&amp;maturity=30year&quot;</span>),
+        <span class="kw">if let </span><span class="prelude-val">Some</span>(maturity) = <span class="kw-2">&amp;</span><span class="self">self</span>.maturity {
+            <span class="kw">match </span>maturity {
+                EconomicIndicatorMaturity::ThreeMonth =&gt; created_link.push_str(<span class="string">&quot;&amp;maturity=3month&quot;</span>),
+                EconomicIndicatorMaturity::FiveYear =&gt; created_link.push_str(<span class="string">&quot;&amp;maturity=5year&quot;</span>),
+                EconomicIndicatorMaturity::TenYear =&gt; created_link.push_str(<span class="string">&quot;&amp;maturity=10year&quot;</span>),
+                EconomicIndicatorMaturity::ThirtyYear =&gt; created_link.push_str(<span class="string">&quot;&amp;maturity=30year&quot;</span>),
             }
         }
 
-        <span class="ident">created_link</span>
+        created_link
     }
 
-    <span class="doccomment">/// Returns JSON data struct</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Errors</span>
-    <span class="doccomment">/// Raise error if data obtained cannot be properly converted to struct or</span>
-    <span class="doccomment">/// API returns any 4 possible known errors</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">json</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">EconomicIndicator</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">url</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">create_url</span>();
-        <span class="kw">let</span> <span class="ident">indicator_helper</span>: <span class="ident">EconomicIndicatorHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">api_client</span>.<span class="ident">get_json</span>(<span class="kw-2">&amp;</span><span class="ident">url</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="ident">indicator_helper</span>.<span class="ident">convert</span>()
+    <span class="doccomment">/// Returns JSON data struct
+    ///
+    /// # Errors
+    /// Raise error if data obtained cannot be properly converted to struct or
+    /// API returns any 4 possible known errors
+    </span><span class="kw">pub async fn </span>json(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;EconomicIndicator&gt; {
+        <span class="kw">let </span>url = <span class="self">self</span>.create_url();
+        <span class="kw">let </span>indicator_helper: EconomicIndicatorHelper = <span class="self">self</span>.api_client.get_json(<span class="kw-2">&amp;</span>url).<span class="kw">await</span><span class="question-mark">?</span>;
+        indicator_helper.convert()
     }
 }
 
-<span class="doccomment">/// Enum for declaring interval for economic indicator</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">EconomicIndicatorInterval</span> {
-    <span class="doccomment">/// daily interval</span>
-    <span class="ident">Daily</span>,
-    <span class="doccomment">/// weekly interval</span>
-    <span class="ident">Weekly</span>,
-    <span class="doccomment">/// monthly interval</span>
-    <span class="ident">Monthly</span>,
-    <span class="doccomment">/// quarterly interval</span>
-    <span class="ident">Quarterly</span>,
-    <span class="doccomment">/// annually interval</span>
-    <span class="ident">Annually</span>,
+<span class="doccomment">/// Enum for declaring interval for economic indicator
+</span><span class="attribute">#[derive(Clone)]</span>
+<span class="kw">pub enum </span>EconomicIndicatorInterval {
+    <span class="doccomment">/// daily interval
+    </span>Daily,
+    <span class="doccomment">/// weekly interval
+    </span>Weekly,
+    <span class="doccomment">/// monthly interval
+    </span>Monthly,
+    <span class="doccomment">/// quarterly interval
+    </span>Quarterly,
+    <span class="doccomment">/// annually interval
+    </span>Annually,
 }
 
-<span class="doccomment">/// Enum for declaring maturity for economic indicator</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">EconomicIndicatorMaturity</span> {
-    <span class="doccomment">/// 3 month maturity</span>
-    <span class="ident">ThreeMonth</span>,
-    <span class="doccomment">/// 5 year maturity</span>
-    <span class="ident">FiveYear</span>,
-    <span class="doccomment">/// 10 year maturity</span>
-    <span class="ident">TenYear</span>,
-    <span class="doccomment">/// 30 year maturity</span>
-    <span class="ident">ThirtyYear</span>,
+<span class="doccomment">/// Enum for declaring maturity for economic indicator
+</span><span class="attribute">#[derive(Clone)]</span>
+<span class="kw">pub enum </span>EconomicIndicatorMaturity {
+    <span class="doccomment">/// 3 month maturity
+    </span>ThreeMonth,
+    <span class="doccomment">/// 5 year maturity
+    </span>FiveYear,
+    <span class="doccomment">/// 10 year maturity
+    </span>TenYear,
+    <span class="doccomment">/// 30 year maturity
+    </span>ThirtyYear,
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0-nightly (1c7b36d4d 2022-07-12)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (9c20b2a8c 2022-08-17)" ></div></body></html>

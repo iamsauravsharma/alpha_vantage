@@ -1,10 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/sector.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>sector.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a><h2 class="location"></h2>
-    </nav>
-    <nav class="sidebar"><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div>
-        </a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../alpha_vantage/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1">
-                                <a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div>
-                        </div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/sector.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>sector.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../alpha_vantage/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -270,272 +264,271 @@
 <span id="264">264</span>
 <span id="265">265</span>
 <span id="266">266</span>
-</pre><pre class="rust"><code><span class="doccomment">//! Module for sector</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! This API returns the realtime and historical sector performances calculated</span>
-<span class="doccomment">//! from S&amp;P500 incumbents.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! You can read about [Sector][sector] API and what it returns</span>
-<span class="doccomment">//! on alphavantage documentation</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! [sector]: https://www.alphavantage.co/documentation/#sector</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Module for sector
+//!
+//! This API returns the realtime and historical sector performances calculated
+//! from S&amp;P500 incumbents.
+//!
+//! You can read about [Sector][sector] API and what it returns
+//! on alphavantage documentation
+//!
+//! [sector]: https://www.alphavantage.co/documentation/#sector
 
-<span class="kw">use</span> <span class="ident">std::collections::HashMap</span>;
+</span><span class="kw">use </span>std::collections::HashMap;
 
-<span class="kw">use</span> <span class="ident">serde::Deserialize</span>;
+<span class="kw">use </span>serde::Deserialize;
 
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::api::ApiClient</span>;
-<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::error</span>::{<span class="ident">detect_common_helper_error</span>, <span class="ident">Error</span>, <span class="prelude-ty">Result</span>};
+<span class="kw">use </span><span class="kw">crate</span>::api::ApiClient;
+<span class="kw">use </span><span class="kw">crate</span>::error::{detect_common_helper_error, Error, <span class="prelude-ty">Result</span>};
 
-<span class="doccomment">/// Stores Metadata</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Deserialize</span>, <span class="ident">Clone</span>, <span class="ident">Default</span>)]</span>
-<span class="kw">struct</span> <span class="ident">MetaData</span> {
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Information&quot;</span>)]</span>
-    <span class="ident">information</span>: <span class="ident">String</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Last Refreshed&quot;</span>)]</span>
-    <span class="ident">last_refreshed</span>: <span class="ident">String</span>,
+<span class="doccomment">/// Stores Metadata
+</span><span class="attribute">#[derive(Deserialize, Clone, Default)]</span>
+<span class="kw">struct </span>MetaData {
+    <span class="attribute">#[serde(rename = <span class="string">&quot;Information&quot;</span>)]</span>
+    information: String,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;Last Refreshed&quot;</span>)]</span>
+    last_refreshed: String,
 }
 
-<span class="doccomment">/// Store Sector data</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Clone</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Data</span> {
-    <span class="ident">rank</span>: <span class="ident">String</span>,
-    <span class="ident">utilities</span>: <span class="ident">f64</span>,
-    <span class="ident">health_care</span>: <span class="ident">f64</span>,
-    <span class="ident">information_technology</span>: <span class="ident">f64</span>,
-    <span class="ident">industrials</span>: <span class="ident">f64</span>,
-    <span class="ident">real_estate</span>: <span class="ident">f64</span>,
-    <span class="ident">consumer_staples</span>: <span class="ident">f64</span>,
-    <span class="ident">consumer_discretionary</span>: <span class="ident">f64</span>,
-    <span class="ident">financials</span>: <span class="ident">f64</span>,
-    <span class="ident">communication_services</span>: <span class="ident">f64</span>,
-    <span class="ident">materials</span>: <span class="ident">f64</span>,
-    <span class="ident">energy</span>: <span class="ident">f64</span>,
+<span class="doccomment">/// Store Sector data
+</span><span class="attribute">#[derive(Default, Clone)]</span>
+<span class="kw">pub struct </span>Data {
+    rank: String,
+    utilities: f64,
+    health_care: f64,
+    information_technology: f64,
+    industrials: f64,
+    real_estate: f64,
+    consumer_staples: f64,
+    consumer_discretionary: f64,
+    financials: f64,
+    communication_services: f64,
+    materials: f64,
+    energy: f64,
 }
 
-<span class="kw">impl</span> <span class="ident">Data</span> {
-    <span class="doccomment">/// Return rank</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rank</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">rank</span>
+<span class="kw">impl </span>Data {
+    <span class="doccomment">/// Return rank
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>rank(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.rank
     }
 
-    <span class="doccomment">/// Return utilities score</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">utilities</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">f64</span> {
-        <span class="self">self</span>.<span class="ident">utilities</span>
+    <span class="doccomment">/// Return utilities score
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>utilities(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+        <span class="self">self</span>.utilities
     }
 
-    <span class="doccomment">/// Return health care score</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">health_care</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">f64</span> {
-        <span class="self">self</span>.<span class="ident">health_care</span>
+    <span class="doccomment">/// Return health care score
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>health_care(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+        <span class="self">self</span>.health_care
     }
 
-    <span class="doccomment">/// Return information technology score</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">information_technology</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">f64</span> {
-        <span class="self">self</span>.<span class="ident">information_technology</span>
+    <span class="doccomment">/// Return information technology score
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>information_technology(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+        <span class="self">self</span>.information_technology
     }
 
-    <span class="doccomment">/// Return industrials scores</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">industrials</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">f64</span> {
-        <span class="self">self</span>.<span class="ident">industrials</span>
+    <span class="doccomment">/// Return industrials scores
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>industrials(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+        <span class="self">self</span>.industrials
     }
 
-    <span class="doccomment">/// Return real estate value</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">real_estate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">f64</span> {
-        <span class="self">self</span>.<span class="ident">real_estate</span>
+    <span class="doccomment">/// Return real estate value
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>real_estate(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+        <span class="self">self</span>.real_estate
     }
 
-    <span class="doccomment">/// Return consumer staples value</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">consumer_staples</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">f64</span> {
-        <span class="self">self</span>.<span class="ident">consumer_staples</span>
+    <span class="doccomment">/// Return consumer staples value
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>consumer_staples(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+        <span class="self">self</span>.consumer_staples
     }
 
-    <span class="doccomment">/// Return consumer discretionary score</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">consumer_discretionary</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">f64</span> {
-        <span class="self">self</span>.<span class="ident">consumer_discretionary</span>
+    <span class="doccomment">/// Return consumer discretionary score
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>consumer_discretionary(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+        <span class="self">self</span>.consumer_discretionary
     }
 
-    <span class="doccomment">/// Return financials score</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">financials</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">f64</span> {
-        <span class="self">self</span>.<span class="ident">financials</span>
+    <span class="doccomment">/// Return financials score
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>financials(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+        <span class="self">self</span>.financials
     }
 
-    <span class="doccomment">/// Gives value of communication services</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">communication_services</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">f64</span> {
-        <span class="self">self</span>.<span class="ident">communication_services</span>
+    <span class="doccomment">/// Gives value of communication services
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>communication_services(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+        <span class="self">self</span>.communication_services
     }
 
-    <span class="doccomment">/// Gives materials value</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">materials</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">f64</span> {
-        <span class="self">self</span>.<span class="ident">materials</span>
+    <span class="doccomment">/// Gives materials value
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>materials(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+        <span class="self">self</span>.materials
     }
 
-    <span class="doccomment">/// Gives out energy data</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">energy</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">f64</span> {
-        <span class="self">self</span>.<span class="ident">energy</span>
+    <span class="doccomment">/// Gives out energy data
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>energy(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+        <span class="self">self</span>.energy
     }
 }
 
-<span class="doccomment">/// Stores sector data</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Sector</span> {
-    <span class="ident">meta_data</span>: <span class="ident">MetaData</span>,
-    <span class="ident">data</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Data</span><span class="op">&gt;</span>,
+<span class="doccomment">/// Stores sector data
+</span><span class="attribute">#[derive(Default)]</span>
+<span class="kw">pub struct </span>Sector {
+    meta_data: MetaData,
+    data: Vec&lt;Data&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">Sector</span> {
-    <span class="doccomment">/// Return sector information</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// #[tokio::main]</span>
-    <span class="doccomment">/// async fn main() {</span>
-    <span class="doccomment">///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());</span>
-    <span class="doccomment">///     let sector = api.sector().json().await.unwrap();</span>
-    <span class="doccomment">///     let information = sector.information();</span>
-    <span class="doccomment">///     assert_eq!(information, &quot;US Sector Performance (realtime &amp; historical)&quot;);</span>
-    <span class="doccomment">/// }</span>
-    <span class="doccomment">/// ```</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">information</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="self">self</span>.<span class="ident">return_meta_data_val</span>(<span class="string">&quot;information&quot;</span>)
+<span class="kw">impl </span>Sector {
+    <span class="doccomment">/// Return sector information
+    ///
+    /// ```
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());
+    ///     let sector = api.sector().json().await.unwrap();
+    ///     let information = sector.information();
+    ///     assert_eq!(information, &quot;US Sector Performance (realtime &amp; historical)&quot;);
+    /// }
+    /// ```
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>information(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="self">self</span>.return_meta_data_val(<span class="string">&quot;information&quot;</span>)
     }
 
-    <span class="doccomment">/// Return last refreshed time</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">last_refreshed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="self">self</span>.<span class="ident">return_meta_data_val</span>(<span class="string">&quot;last refreshed&quot;</span>)
+    <span class="doccomment">/// Return last refreshed time
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>last_refreshed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="self">self</span>.return_meta_data_val(<span class="string">&quot;last refreshed&quot;</span>)
     }
 
-    <span class="doccomment">/// Return vector of data</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">data</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Data</span><span class="op">&gt;</span> {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">data</span>
+    <span class="doccomment">/// Return vector of data
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>data(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Vec&lt;Data&gt; {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.data
     }
 
-    <span class="doccomment">/// Return metadata value</span>
-    <span class="kw">fn</span> <span class="ident">return_meta_data_val</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
-        <span class="kw">match</span> <span class="ident">name</span> {
-            <span class="string">&quot;information&quot;</span> =&gt; <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">information</span>,
-            <span class="string">&quot;last refreshed&quot;</span> =&gt; <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">last_refreshed</span>,
-            <span class="kw">_</span> =&gt; <span class="string">&quot;&quot;</span>,
+    <span class="doccomment">/// Return metadata value
+    </span><span class="kw">fn </span>return_meta_data_val(<span class="kw-2">&amp;</span><span class="self">self</span>, name: <span class="kw-2">&amp;</span>str) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="kw">match </span>name {
+            <span class="string">&quot;information&quot; </span>=&gt; <span class="kw-2">&amp;</span><span class="self">self</span>.meta_data.information,
+            <span class="string">&quot;last refreshed&quot; </span>=&gt; <span class="kw-2">&amp;</span><span class="self">self</span>.meta_data.last_refreshed,
+            <span class="kw">_ </span>=&gt; <span class="string">&quot;&quot;</span>,
         }
     }
 }
 
-<span class="doccomment">/// struct for helping out sector</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Deserialize</span>)]</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">SectorHelper</span> {
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Information&quot;</span>)]</span>
-    <span class="ident">information</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Error Message&quot;</span>)]</span>
-    <span class="ident">error_message</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Note&quot;</span>)]</span>
-    <span class="ident">note</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;Meta Data&quot;</span>)]</span>
-    <span class="ident">meta_data</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">MetaData</span><span class="op">&gt;</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">flatten</span>)]</span>
-    <span class="ident">data</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+<span class="doccomment">/// struct for helping out sector
+</span><span class="attribute">#[derive(Deserialize)]</span>
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>SectorHelper {
+    <span class="attribute">#[serde(rename = <span class="string">&quot;Information&quot;</span>)]</span>
+    information: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;Error Message&quot;</span>)]</span>
+    error_message: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;Note&quot;</span>)]</span>
+    note: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;Meta Data&quot;</span>)]</span>
+    meta_data: <span class="prelude-ty">Option</span>&lt;MetaData&gt;,
+    <span class="attribute">#[serde(flatten)]</span>
+    data: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, HashMap&lt;String, String&gt;&gt;&gt;,
 }
 
-<span class="kw">impl</span> <span class="ident">SectorHelper</span> {
-    <span class="doccomment">/// Convert `SectorHelper` to `Sector`</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">convert</span>(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Sector</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sector</span> <span class="op">=</span> <span class="ident">Sector::default</span>();
-        <span class="ident">detect_common_helper_error</span>(<span class="self">self</span>.<span class="ident">information</span>, <span class="self">self</span>.<span class="ident">error_message</span>, <span class="self">self</span>.<span class="ident">note</span>)<span class="question-mark">?</span>;
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">is_none</span>() <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">is_none</span>() {
-            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::EmptyResponse</span>);
+<span class="kw">impl </span>SectorHelper {
+    <span class="doccomment">/// Convert `SectorHelper` to `Sector`
+    </span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn </span>convert(<span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Sector&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>sector = Sector::default();
+        detect_common_helper_error(<span class="self">self</span>.information, <span class="self">self</span>.error_message, <span class="self">self</span>.note)<span class="question-mark">?</span>;
+        <span class="kw">if </span><span class="self">self</span>.meta_data.is_none() || <span class="self">self</span>.data.is_none() {
+            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::EmptyResponse);
         }
-        <span class="ident">sector</span>.<span class="ident">meta_data</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">meta_data</span>.<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">final_data</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
-        <span class="kw">for</span> (<span class="ident">key</span>, <span class="ident">val</span>) <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">data</span>.<span class="ident">unwrap</span>() {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">Data::default</span>();
-            <span class="kw">match</span> <span class="ident">key</span>.<span class="ident">as_str</span>() {
-                <span class="string">&quot;Rank A: Real-Time Performance&quot;</span> =&gt; <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;real-time&quot;</span>.<span class="ident">to_string</span>(),
-                <span class="string">&quot;Rank B: 1 Day Performance&quot;</span> =&gt; <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;1-day&quot;</span>.<span class="ident">to_string</span>(),
-                <span class="string">&quot;Rank C: 5 Day Performance&quot;</span> =&gt; <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;5-day&quot;</span>.<span class="ident">to_string</span>(),
-                <span class="string">&quot;Rank D: 1 Month Performance&quot;</span> =&gt; <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;1-month&quot;</span>.<span class="ident">to_string</span>(),
-                <span class="string">&quot;Rank E: 3 Month Performance&quot;</span> =&gt; <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;3-month&quot;</span>.<span class="ident">to_string</span>(),
-                <span class="string">&quot;Rank F: Year-to-Date (YTD) Performance&quot;</span> =&gt; <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;year-to-date&quot;</span>.<span class="ident">to_string</span>(),
-                <span class="string">&quot;Rank G: 1 Year Performance&quot;</span> =&gt; <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;1-year&quot;</span>.<span class="ident">to_string</span>(),
-                <span class="string">&quot;Rank H: 3 Year Performance&quot;</span> =&gt; <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;3-year&quot;</span>.<span class="ident">to_string</span>(),
-                <span class="string">&quot;Rank I: 5 Year Performance&quot;</span> =&gt; <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;5-year&quot;</span>.<span class="ident">to_string</span>(),
-                <span class="string">&quot;Rank J: 10 Year Performance&quot;</span> =&gt; <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;10-year&quot;</span>.<span class="ident">to_string</span>(),
-                <span class="kw">_</span> =&gt; <span class="ident">data</span>.<span class="ident">rank</span> <span class="op">=</span> <span class="string">&quot;&quot;</span>.<span class="ident">to_string</span>(),
+        sector.meta_data = <span class="self">self</span>.meta_data.unwrap();
+        <span class="kw">let </span><span class="kw-2">mut </span>final_data = Vec::new();
+        <span class="kw">for </span>(key, val) <span class="kw">in </span><span class="kw-2">&amp;</span><span class="self">self</span>.data.unwrap() {
+            <span class="kw">let </span><span class="kw-2">mut </span>data = Data::default();
+            <span class="kw">match </span>key.as_str() {
+                <span class="string">&quot;Rank A: Real-Time Performance&quot; </span>=&gt; data.rank = <span class="string">&quot;real-time&quot;</span>.to_string(),
+                <span class="string">&quot;Rank B: 1 Day Performance&quot; </span>=&gt; data.rank = <span class="string">&quot;1-day&quot;</span>.to_string(),
+                <span class="string">&quot;Rank C: 5 Day Performance&quot; </span>=&gt; data.rank = <span class="string">&quot;5-day&quot;</span>.to_string(),
+                <span class="string">&quot;Rank D: 1 Month Performance&quot; </span>=&gt; data.rank = <span class="string">&quot;1-month&quot;</span>.to_string(),
+                <span class="string">&quot;Rank E: 3 Month Performance&quot; </span>=&gt; data.rank = <span class="string">&quot;3-month&quot;</span>.to_string(),
+                <span class="string">&quot;Rank F: Year-to-Date (YTD) Performance&quot; </span>=&gt; data.rank = <span class="string">&quot;year-to-date&quot;</span>.to_string(),
+                <span class="string">&quot;Rank G: 1 Year Performance&quot; </span>=&gt; data.rank = <span class="string">&quot;1-year&quot;</span>.to_string(),
+                <span class="string">&quot;Rank H: 3 Year Performance&quot; </span>=&gt; data.rank = <span class="string">&quot;3-year&quot;</span>.to_string(),
+                <span class="string">&quot;Rank I: 5 Year Performance&quot; </span>=&gt; data.rank = <span class="string">&quot;5-year&quot;</span>.to_string(),
+                <span class="string">&quot;Rank J: 10 Year Performance&quot; </span>=&gt; data.rank = <span class="string">&quot;10-year&quot;</span>.to_string(),
+                <span class="kw">_ </span>=&gt; data.rank = <span class="string">&quot;&quot;</span>.to_string(),
             }
-            <span class="kw">for</span> (<span class="ident">key</span>, <span class="ident">val</span>) <span class="kw">in</span> <span class="ident">val</span>.<span class="ident">iter</span>() {
-                <span class="kw">match</span> <span class="ident">key</span>.<span class="ident">as_str</span>() {
-                    <span class="string">&quot;Utilities&quot;</span> =&gt; <span class="ident">data</span>.<span class="ident">utilities</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
-                    <span class="string">&quot;Health Care&quot;</span> =&gt; <span class="ident">data</span>.<span class="ident">health_care</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
-                    <span class="string">&quot;Information Technology&quot;</span> =&gt; {
-                        <span class="ident">data</span>.<span class="ident">information_technology</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>);
+            <span class="kw">for </span>(key, val) <span class="kw">in </span>val.iter() {
+                <span class="kw">match </span>key.as_str() {
+                    <span class="string">&quot;Utilities&quot; </span>=&gt; data.utilities = convert_str_percent_f64(val),
+                    <span class="string">&quot;Health Care&quot; </span>=&gt; data.health_care = convert_str_percent_f64(val),
+                    <span class="string">&quot;Information Technology&quot; </span>=&gt; {
+                        data.information_technology = convert_str_percent_f64(val);
                     }
-                    <span class="string">&quot;Industrials&quot;</span> =&gt; <span class="ident">data</span>.<span class="ident">industrials</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
-                    <span class="string">&quot;Real Estate&quot;</span> =&gt; <span class="ident">data</span>.<span class="ident">real_estate</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
-                    <span class="string">&quot;Consumer Staples&quot;</span> =&gt; <span class="ident">data</span>.<span class="ident">consumer_staples</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
-                    <span class="string">&quot;Consumer Discretionary&quot;</span> =&gt; {
-                        <span class="ident">data</span>.<span class="ident">consumer_discretionary</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>);
+                    <span class="string">&quot;Industrials&quot; </span>=&gt; data.industrials = convert_str_percent_f64(val),
+                    <span class="string">&quot;Real Estate&quot; </span>=&gt; data.real_estate = convert_str_percent_f64(val),
+                    <span class="string">&quot;Consumer Staples&quot; </span>=&gt; data.consumer_staples = convert_str_percent_f64(val),
+                    <span class="string">&quot;Consumer Discretionary&quot; </span>=&gt; {
+                        data.consumer_discretionary = convert_str_percent_f64(val);
                     }
-                    <span class="string">&quot;Financials&quot;</span> =&gt; <span class="ident">data</span>.<span class="ident">financials</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
-                    <span class="string">&quot;Communication Services&quot;</span> =&gt; {
-                        <span class="ident">data</span>.<span class="ident">communication_services</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>);
+                    <span class="string">&quot;Financials&quot; </span>=&gt; data.financials = convert_str_percent_f64(val),
+                    <span class="string">&quot;Communication Services&quot; </span>=&gt; {
+                        data.communication_services = convert_str_percent_f64(val);
                     }
-                    <span class="string">&quot;Materials&quot;</span> =&gt; <span class="ident">data</span>.<span class="ident">materials</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
-                    <span class="string">&quot;Energy&quot;</span> =&gt; <span class="ident">data</span>.<span class="ident">energy</span> <span class="op">=</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>),
-                    <span class="kw">_</span> =&gt; {}
+                    <span class="string">&quot;Materials&quot; </span>=&gt; data.materials = convert_str_percent_f64(val),
+                    <span class="string">&quot;Energy&quot; </span>=&gt; data.energy = convert_str_percent_f64(val),
+                    <span class="kw">_ </span>=&gt; {}
                 }
             }
-            <span class="ident">final_data</span>.<span class="ident">push</span>(<span class="ident">data</span>);
+            final_data.push(data);
         }
-        <span class="ident">sector</span>.<span class="ident">data</span> <span class="op">=</span> <span class="ident">final_data</span>;
-        <span class="prelude-val">Ok</span>(<span class="ident">sector</span>)
+        sector.data = final_data;
+        <span class="prelude-val">Ok</span>(sector)
     }
 }
 
-<span class="comment">// convert str which has percent form to f64 val</span>
-<span class="kw">fn</span> <span class="ident">convert_str_percent_f64</span>(<span class="ident">val</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">f64</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">val</span>.<span class="ident">to_owned</span>();
-    <span class="ident">s</span>.<span class="ident">pop</span>();
-    <span class="ident">s</span>.<span class="ident">trim</span>().<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>()
+<span class="comment">// convert str which has percent form to f64 val
+</span><span class="kw">fn </span>convert_str_percent_f64(val: <span class="kw-2">&amp;</span>str) -&gt; f64 {
+    <span class="kw">let </span><span class="kw-2">mut </span>s = val.to_owned();
+    s.pop();
+    s.trim().parse::&lt;f64&gt;().unwrap()
 }
 
-<span class="doccomment">/// Builder to create new Sector</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SectorBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="ident">api_client</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ApiClient</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
+<span class="doccomment">/// Builder to create new Sector
+</span><span class="kw">pub struct </span>SectorBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
+    api_client: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>ApiClient&lt;<span class="lifetime">&#39;a</span>&gt;,
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">SectorBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Create new sector builder from `APIClient`</span>
-    <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">api_client</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ApiClient</span>) -&gt; <span class="self">Self</span> {
-        <span class="self">Self</span> { <span class="ident">api_client</span> }
+<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; SectorBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
+    <span class="doccomment">/// Create new sector builder from `APIClient`
+    </span><span class="attribute">#[must_use]</span>
+    <span class="kw">pub fn </span>new(api_client: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>ApiClient) -&gt; <span class="self">Self </span>{
+        <span class="self">Self </span>{ api_client }
     }
 
-    <span class="kw">fn</span> <span class="ident">create_url</span>() -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span> {
-        <span class="string">&quot;query?function=SECTOR&quot;</span>
-    }
+    <span class="kw">fn </span>create_url() -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str {
+        <span class="string">&quot;query?function=SECTOR&quot;
+    </span>}
 
-    <span class="doccomment">/// Returns JSON data struct</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Errors</span>
-    <span class="doccomment">/// Raise error if data obtained cannot be properly converted to struct or</span>
-    <span class="doccomment">/// API returns any 4 possible known errors</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">json</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Sector</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">url</span> <span class="op">=</span> <span class="ident"><span class="self">Self</span>::create_url</span>();
-        <span class="kw">let</span> <span class="ident">sector_helper</span>: <span class="ident">SectorHelper</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">api_client</span>.<span class="ident">get_json</span>(<span class="ident">url</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="ident">sector_helper</span>.<span class="ident">convert</span>()
+    <span class="doccomment">/// Returns JSON data struct
+    ///
+    /// # Errors
+    /// Raise error if data obtained cannot be properly converted to struct or
+    /// API returns any 4 possible known errors
+    </span><span class="kw">pub async fn </span>json(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span>&lt;Sector&gt; {
+        <span class="kw">let </span>url = <span class="self">Self</span>::create_url();
+        <span class="kw">let </span>sector_helper: SectorHelper = <span class="self">self</span>.api_client.get_json(url).<span class="kw">await</span><span class="question-mark">?</span>;
+        sector_helper.convert()
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.64.0-nightly (1c7b36d4d 2022-07-12)" ></div>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (9c20b2a8c 2022-08-17)" ></div></body></html>
