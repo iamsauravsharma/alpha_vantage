@@ -306,6 +306,7 @@ impl CryptoHelper {
         }
 
         let mut vec_entry = Vec::new();
+        // Can use unwrap here is none condition is checked already
         for value in self.entry.unwrap().values() {
             for key in value.keys() {
                 let entry_helper = value
