@@ -26,13 +26,13 @@ pub enum Provider {
 }
 
 /// Struct for initializing client which contains different method for API call
-pub struct ApiClient<'a> {
-    api: &'a str,
+pub struct ApiClient {
+    api: String,
     client: Box<dyn HttpClient + Send + Sync>,
     provider: Provider,
 }
 
-impl<'a> ApiClient<'a> {
+impl ApiClient {
     /// Method for initializing `ApiClient` struct using  user
     /// provided client and alphavantage.co provider
     ///
@@ -41,12 +41,12 @@ impl<'a> ApiClient<'a> {
     /// let api = ApiClient::set_api("some_key", reqwest::Client::new());
     /// ```
     #[must_use]
-    pub fn set_api<T>(api: &'a str, client: T) -> Self
+    pub fn set_api<T>(api: &str, client: T) -> Self
     where
         T: HttpClient + 'static + Send + Sync,
     {
         Self {
-            api,
+            api: api.to_owned(),
             client: Box::new(client),
             provider: Provider::AlphaVantage,
         }
@@ -60,12 +60,12 @@ impl<'a> ApiClient<'a> {
     /// let api = ApiClient::set_api("some_key", reqwest::Client::new());
     /// ```
     #[must_use]
-    pub fn set_rapid_api<T>(api: &'a str, client: T) -> Self
+    pub fn set_rapid_api<T>(api: &str, client: T) -> Self
     where
         T: HttpClient + 'static + Send + Sync,
     {
         Self {
-            api,
+            api: api.to_owned(),
             client: Box::new(client),
             provider: Provider::RapidAPI,
         }
@@ -80,7 +80,7 @@ impl<'a> ApiClient<'a> {
     /// ```
     #[must_use]
     pub fn get_api_key(&self) -> &str {
-        self.api
+        &self.api
     }
 
     // Get json from api endpoint and create struct
@@ -101,7 +101,7 @@ impl<'a> ApiClient<'a> {
                 self.client
                     .get_rapid_api_provider_output(
                         &format!("{}{}", RAPID_API_BASE_URL, path),
-                        self.api,
+                        &self.api,
                     )
                     .await
             }
@@ -129,7 +129,7 @@ impl<'a> ApiClient<'a> {
     /// }
     /// ```
     #[must_use]
-    pub fn crypto(
+    pub fn crypto<'a>(
         &'a self,
         function: CryptoFunction,
         symbol: &'a str,
@@ -141,7 +141,7 @@ impl<'a> ApiClient<'a> {
     /// Method for calling custom function not implemented currently in library
     /// using `CustomBuilder`
     #[must_use]
-    pub fn custom(&'a self, function: &'a str) -> CustomBuilder<'a> {
+    pub fn custom<'a>(&'a self, function: &'a str) -> CustomBuilder<'a> {
         CustomBuilder::new(self, function)
     }
 
@@ -157,7 +157,7 @@ impl<'a> ApiClient<'a> {
     /// }
     /// ```
     #[must_use]
-    pub fn earning(&'a self, symbol: &'a str) -> EarningBuilder<'a> {
+    pub fn earning<'a>(&'a self, symbol: &'a str) -> EarningBuilder<'a> {
         EarningBuilder::new(self, symbol)
     }
 
@@ -177,7 +177,7 @@ impl<'a> ApiClient<'a> {
     /// }
     /// ```
     #[must_use]
-    pub fn economic_indicator(&'a self, function: &'a str) -> EconomicIndicatorBuilder<'a> {
+    pub fn economic_indicator<'a>(&'a self, function: &'a str) -> EconomicIndicatorBuilder<'a> {
         EconomicIndicatorBuilder::new(self, function)
     }
 
@@ -197,7 +197,11 @@ impl<'a> ApiClient<'a> {
     /// }
     /// ```
     #[must_use]
-    pub fn exchange(&'a self, from_currency: &'a str, to_currency: &'a str) -> ExchangeBuilder<'a> {
+    pub fn exchange<'a>(
+        &'a self,
+        from_currency: &'a str,
+        to_currency: &'a str,
+    ) -> ExchangeBuilder<'a> {
         ExchangeBuilder::new(self, from_currency, to_currency)
     }
 
@@ -219,7 +223,7 @@ impl<'a> ApiClient<'a> {
     /// }
     /// ```
     #[must_use]
-    pub fn forex(
+    pub fn forex<'a>(
         &'a self,
         function: ForexFunction,
         from_symbol: &'a str,
@@ -240,7 +244,7 @@ impl<'a> ApiClient<'a> {
     /// }
     /// ```
     #[must_use]
-    pub fn quote(&'a self, symbol: &'a str) -> QuoteBuilder<'a> {
+    pub fn quote<'a>(&'a self, symbol: &'a str) -> QuoteBuilder<'a> {
         QuoteBuilder::new(self, symbol)
     }
 
@@ -262,7 +266,7 @@ impl<'a> ApiClient<'a> {
     /// }
     /// ```
     #[must_use]
-    pub fn search(&'a self, keywords: &'a str) -> SearchBuilder<'a> {
+    pub fn search<'a>(&'a self, keywords: &'a str) -> SearchBuilder<'a> {
         SearchBuilder::new(self, keywords)
     }
 
@@ -280,7 +284,7 @@ impl<'a> ApiClient<'a> {
     /// }
     /// ```
     #[must_use]
-    pub fn sector(&'a self) -> SectorBuilder<'a> {
+    pub fn sector(&self) -> SectorBuilder<'_> {
         SectorBuilder::new(self)
     }
 
@@ -301,7 +305,11 @@ impl<'a> ApiClient<'a> {
     /// }
     /// ```
     #[must_use]
-    pub fn stock_time(&'a self, function: StockFunction, symbol: &'a str) -> TimeSeriesBuilder<'a> {
+    pub fn stock_time<'a>(
+        &'a self,
+        function: StockFunction,
+        symbol: &'a str,
+    ) -> TimeSeriesBuilder<'a> {
         TimeSeriesBuilder::new(self, function, symbol)
     }
 
@@ -326,7 +334,7 @@ impl<'a> ApiClient<'a> {
     /// }
     /// ```
     #[must_use]
-    pub fn technical_indicator(
+    pub fn technical_indicator<'a>(
         &'a self,
         function: &'a str,
         symbol: &'a str,

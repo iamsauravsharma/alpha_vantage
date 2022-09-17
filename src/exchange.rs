@@ -166,7 +166,7 @@ impl ExchangeHelper {
 
 /// Builder to create `Exchange`
 pub struct ExchangeBuilder<'a> {
-    api_client: &'a ApiClient<'a>,
+    api_client: &'a ApiClient,
     from_currency: &'a str,
     to_currency: &'a str,
 }
