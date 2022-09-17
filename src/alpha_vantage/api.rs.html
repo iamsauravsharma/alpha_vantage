@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/api.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>api.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../alpha_vantage/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/api.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>api.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../alpha_vantage/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -361,6 +361,14 @@
 <span id="361">361</span>
 <span id="362">362</span>
 <span id="363">363</span>
+<span id="364">364</span>
+<span id="365">365</span>
+<span id="366">366</span>
+<span id="367">367</span>
+<span id="368">368</span>
+<span id="369">369</span>
+<span id="370">370</span>
+<span id="371">371</span>
 </pre><pre class="rust"><code><span class="kw">use </span>serde::de::DeserializeOwned;
 
 <span class="kw">use </span><span class="kw">crate</span>::client::HttpClient;
@@ -389,13 +397,13 @@
 }
 
 <span class="doccomment">/// Struct for initializing client which contains different method for API call
-</span><span class="kw">pub struct </span>ApiClient&lt;<span class="lifetime">&#39;a</span>&gt; {
-    api: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
+</span><span class="kw">pub struct </span>ApiClient {
+    api: String,
     client: Box&lt;<span class="kw">dyn </span>HttpClient + Send + Sync&gt;,
     provider: Provider,
 }
 
-<span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; ApiClient&lt;<span class="lifetime">&#39;a</span>&gt; {
+<span class="kw">impl </span>ApiClient {
     <span class="doccomment">/// Method for initializing `ApiClient` struct using  user
     /// provided client and alphavantage.co provider
     ///
@@ -403,13 +411,13 @@
     /// use alpha_vantage::api::ApiClient;
     /// let api = ApiClient::set_api(&quot;some_key&quot;, reqwest::Client::new());
     /// ```
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>set_api&lt;T&gt;(api: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str, client: T) -&gt; <span class="self">Self
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>set_api&lt;T&gt;(api: <span class="kw-2">&amp;</span>str, client: T) -&gt; <span class="self">Self
     </span><span class="kw">where
         </span>T: HttpClient + <span class="lifetime">&#39;static </span>+ Send + Sync,
     {
         <span class="self">Self </span>{
-            api,
+            api: api.to_owned(),
             client: Box::new(client),
             provider: Provider::AlphaVantage,
         }
@@ -422,13 +430,13 @@
     /// use alpha_vantage::api::ApiClient;
     /// let api = ApiClient::set_api(&quot;some_key&quot;, reqwest::Client::new());
     /// ```
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>set_rapid_api&lt;T&gt;(api: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str, client: T) -&gt; <span class="self">Self
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>set_rapid_api&lt;T&gt;(api: <span class="kw-2">&amp;</span>str, client: T) -&gt; <span class="self">Self
     </span><span class="kw">where
         </span>T: HttpClient + <span class="lifetime">&#39;static </span>+ Send + Sync,
     {
         <span class="self">Self </span>{
-            api,
+            api: api.to_owned(),
             client: Box::new(client),
             provider: Provider::RapidAPI,
         }
@@ -441,9 +449,9 @@
     /// let api = alpha_vantage::api::ApiClient::set_api(&quot;some_key&quot;, reqwest::Client::new());
     /// assert_eq!(api.get_api_key(), &quot;some_key&quot;);
     /// ```
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>get_api_key(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
-        <span class="self">self</span>.api
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>get_api_key(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.api
     }
 
     <span class="comment">// Get json from api endpoint and create struct
@@ -464,7 +472,7 @@
                 <span class="self">self</span>.client
                     .get_rapid_api_provider_output(
                         <span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{}{}&quot;</span>, RAPID_API_BASE_URL, path),
-                        <span class="self">self</span>.api,
+                        <span class="kw-2">&amp;</span><span class="self">self</span>.api,
                     )
                     .<span class="kw">await
             </span>}
@@ -491,8 +499,8 @@
     ///     assert_eq!(crypto.market_name(), &quot;Chinese Yuan&quot;);
     /// }
     /// ```
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>crypto(
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>crypto&lt;<span class="lifetime">&#39;a</span>&gt;(
         <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>,
         function: CryptoFunction,
         symbol: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
@@ -503,8 +511,8 @@
 
     <span class="doccomment">/// Method for calling custom function not implemented currently in library
     /// using `CustomBuilder`
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>custom(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>, function: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str) -&gt; CustomBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>custom&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>, function: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str) -&gt; CustomBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
         CustomBuilder::new(<span class="self">self</span>, function)
     }
 
@@ -519,8 +527,8 @@
     ///     assert_eq!(symbol, &quot;IBM&quot;);
     /// }
     /// ```
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>earning(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>, symbol: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str) -&gt; EarningBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>earning&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>, symbol: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str) -&gt; EarningBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
         EarningBuilder::new(<span class="self">self</span>, symbol)
     }
 
@@ -539,8 +547,8 @@
     ///     assert_eq!(economic.interval(), &quot;quarterly&quot;);
     /// }
     /// ```
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>economic_indicator(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>, function: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str) -&gt; EconomicIndicatorBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>economic_indicator&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>, function: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str) -&gt; EconomicIndicatorBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
         EconomicIndicatorBuilder::new(<span class="self">self</span>, function)
     }
 
@@ -559,8 +567,12 @@
     ///     assert_eq!(exchange.code_to(), &quot;CNY&quot;);
     /// }
     /// ```
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>exchange(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>, from_currency: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str, to_currency: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str) -&gt; ExchangeBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>exchange&lt;<span class="lifetime">&#39;a</span>&gt;(
+        <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>,
+        from_currency: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
+        to_currency: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
+    ) -&gt; ExchangeBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
         ExchangeBuilder::new(<span class="self">self</span>, from_currency, to_currency)
     }
 
@@ -581,8 +593,8 @@
     ///     assert!(forex.interval().is_none());
     /// }
     /// ```
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>forex(
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>forex&lt;<span class="lifetime">&#39;a</span>&gt;(
         <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>,
         function: ForexFunction,
         from_symbol: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
@@ -602,8 +614,8 @@
     ///     assert_eq!(symbol, &quot;MSFT&quot;);
     /// }
     /// ```
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>quote(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>, symbol: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str) -&gt; QuoteBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>quote&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>, symbol: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str) -&gt; QuoteBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
         QuoteBuilder::new(<span class="self">self</span>, symbol)
     }
 
@@ -624,8 +636,8 @@
     ///     assert_eq!(first_search_result.match_score(), 1.0);
     /// }
     /// ```
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>search(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>, keywords: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str) -&gt; SearchBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>search&lt;<span class="lifetime">&#39;a</span>&gt;(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>, keywords: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str) -&gt; SearchBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
         SearchBuilder::new(<span class="self">self</span>, keywords)
     }
 
@@ -642,8 +654,8 @@
     ///     );
     /// }
     /// ```
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>sector(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>) -&gt; SectorBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>sector(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; SectorBuilder&lt;<span class="lifetime">&#39;_</span>&gt; {
         SectorBuilder::new(<span class="self">self</span>)
     }
 
@@ -663,8 +675,12 @@
     ///     assert!(stock.interval().is_none());
     /// }
     /// ```
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>stock_time(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>, function: StockFunction, symbol: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str) -&gt; TimeSeriesBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>stock_time&lt;<span class="lifetime">&#39;a</span>&gt;(
+        <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>,
+        function: StockFunction,
+        symbol: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
+    ) -&gt; TimeSeriesBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
         TimeSeriesBuilder::new(<span class="self">self</span>, function, symbol)
     }
 
@@ -688,8 +704,8 @@
     ///     assert!(technical.is_ok());
     /// }
     /// ```
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>technical_indicator(
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>technical_indicator&lt;<span class="lifetime">&#39;a</span>&gt;(
         <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span><span class="self">self</span>,
         function: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
         symbol: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
@@ -700,8 +716,8 @@
 }
 
 <span class="doccomment">/// Enum for declaring output size of API call
-</span><span class="attribute">#[derive(Clone)]</span>
-<span class="kw">pub enum </span>OutputSize {
+</span><span class="attribute">#[derive(Clone)]
+</span><span class="kw">pub enum </span>OutputSize {
     <span class="doccomment">/// Return latest top 100 points recommended if no historical data is
     /// required and decreases api json sizes
     </span>Compact,
@@ -711,8 +727,8 @@
 }
 
 <span class="doccomment">/// Enum for declaring interval for intraday time series
-</span><span class="attribute">#[derive(Clone)]</span>
-<span class="kw">pub enum </span>TimeSeriesInterval {
+</span><span class="attribute">#[derive(Clone)]
+</span><span class="kw">pub enum </span>TimeSeriesInterval {
     <span class="doccomment">/// 1 min interval
     </span>OneMin,
     <span class="doccomment">/// 5 min interval
@@ -725,4 +741,4 @@
     </span>SixtyMin,
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (9c20b2a8c 2022-08-17)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (95a992a68 2022-09-16)" ></div></body></html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/crypto.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>crypto.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../alpha_vantage/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/crypto.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>crypto.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../alpha_vantage/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -486,27 +486,27 @@
 <span class="kw">use </span><span class="kw">crate</span>::error::{detect_common_helper_error, Error, <span class="prelude-ty">Result</span>};
 
 <span class="doccomment">/// Store Meta Data Information
-</span><span class="attribute">#[derive(Deserialize, Clone, Default)]</span>
-<span class="kw">struct </span>MetaData {
-    <span class="attribute">#[serde(rename = <span class="string">&quot;1. Information&quot;</span>)]</span>
-    information: String,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;2. Digital Currency Code&quot;</span>)]</span>
-    digital_code: String,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;3. Digital Currency Name&quot;</span>)]</span>
-    digital_name: String,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;4. Market Code&quot;</span>)]</span>
-    market_code: String,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;5. Market Name&quot;</span>)]</span>
-    market_name: String,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;6. Last Refreshed&quot;</span>)]</span>
-    last_refreshed: String,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;7. Time Zone&quot;</span>)]</span>
-    time_zone: String,
+</span><span class="attribute">#[derive(Deserialize, Clone, Default)]
+</span><span class="kw">struct </span>MetaData {
+    <span class="attribute">#[serde(rename = <span class="string">&quot;1. Information&quot;</span>)]
+    </span>information: String,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;2. Digital Currency Code&quot;</span>)]
+    </span>digital_code: String,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;3. Digital Currency Name&quot;</span>)]
+    </span>digital_name: String,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;4. Market Code&quot;</span>)]
+    </span>market_code: String,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;5. Market Name&quot;</span>)]
+    </span>market_name: String,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;6. Last Refreshed&quot;</span>)]
+    </span>last_refreshed: String,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;7. Time Zone&quot;</span>)]
+    </span>time_zone: String,
 }
 
 <span class="doccomment">/// Struct which stores Crypto data
-</span><span class="attribute">#[derive(Default, Debug, Clone)]</span>
-<span class="kw">pub struct </span>Entry {
+</span><span class="attribute">#[derive(Default, Debug, Clone)]
+</span><span class="kw">pub struct </span>Entry {
     time: String,
     market_open: f64,
     usd_open: f64,
@@ -522,75 +522,75 @@
 
 <span class="kw">impl </span>Entry {
     <span class="doccomment">/// Return time
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>time(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>time(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="kw-2">&amp;</span><span class="self">self</span>.time
     }
 
     <span class="doccomment">/// Return market open value
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>market_open(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>market_open(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
         <span class="self">self</span>.market_open
     }
 
     <span class="doccomment">/// Return usd open value
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>usd_open(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>usd_open(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
         <span class="self">self</span>.usd_open
     }
 
     <span class="doccomment">/// Return market high value
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>market_high(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>market_high(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
         <span class="self">self</span>.market_high
     }
 
     <span class="doccomment">/// Return usd high value
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>usd_high(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>usd_high(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
         <span class="self">self</span>.usd_high
     }
 
     <span class="doccomment">/// Return market low value
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>market_low(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>market_low(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
         <span class="self">self</span>.market_low
     }
 
     <span class="doccomment">/// Return usd low value
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>usd_low(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>usd_low(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
         <span class="self">self</span>.usd_low
     }
 
     <span class="doccomment">/// Return market close value
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>market_close(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>market_close(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
         <span class="self">self</span>.market_close
     }
 
     <span class="doccomment">/// Return usd close value
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>usd_close(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>usd_close(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
         <span class="self">self</span>.usd_close
     }
 
     <span class="doccomment">/// Return volume
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>volume(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>volume(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
         <span class="self">self</span>.volume
     }
 
     <span class="doccomment">/// Return market cap
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>market_cap(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>market_cap(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
         <span class="self">self</span>.market_cap
     }
 }
 
 <span class="doccomment">/// Struct which holds Crypto currency information
-</span><span class="attribute">#[derive(Default)]</span>
-<span class="kw">pub struct </span>Crypto {
+</span><span class="attribute">#[derive(Default)]
+</span><span class="kw">pub struct </span>Crypto {
     meta_data: MetaData,
     entry: Vec&lt;Entry&gt;,
 }
@@ -611,8 +611,8 @@
     ///     assert_eq!(information, &quot;Daily Prices and Volumes for Digital Currency&quot;);
     /// }
     /// ```
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>information(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>information(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="self">self</span>.return_meta_string(<span class="string">&quot;information&quot;</span>)
     }
 
@@ -631,8 +631,8 @@
     ///     assert_eq!(digital_code, &quot;BTC&quot;);
     /// }
     /// ```
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>digital_code(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>digital_code(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="self">self</span>.return_meta_string(<span class="string">&quot;digital code&quot;</span>)
     }
 
@@ -651,8 +651,8 @@
     ///     assert_eq!(digital_name, &quot;Bitcoin&quot;);
     /// }
     /// ```
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>digital_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>digital_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="self">self</span>.return_meta_string(<span class="string">&quot;digital name&quot;</span>)
     }
 
@@ -671,8 +671,8 @@
     ///     assert_eq!(market_code, &quot;CNY&quot;);
     /// }
     /// ```
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>market_code(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>market_code(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="self">self</span>.return_meta_string(<span class="string">&quot;market code&quot;</span>)
     }
 
@@ -691,26 +691,26 @@
     ///     assert_eq!(market_name, &quot;Chinese Yuan&quot;);
     /// }
     /// ```
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>market_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>market_name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="self">self</span>.return_meta_string(<span class="string">&quot;market name&quot;</span>)
     }
 
     <span class="doccomment">/// Return last refreshed time
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>last_refreshed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>last_refreshed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="self">self</span>.return_meta_string(<span class="string">&quot;last refreshed&quot;</span>)
     }
 
     <span class="doccomment">/// Return time zone of all data time
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>time_zone(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>time_zone(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="self">self</span>.return_meta_string(<span class="string">&quot;time zone&quot;</span>)
     }
 
     <span class="doccomment">/// Return a entry
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>entry(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Vec&lt;Entry&gt; {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>entry(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Vec&lt;Entry&gt; {
         <span class="kw-2">&amp;</span><span class="self">self</span>.entry
     }
 
@@ -730,37 +730,37 @@
 }
 
 <span class="doccomment">/// Struct to help out for creation of struct Entry
-</span><span class="attribute">#[derive(Deserialize, Clone)]</span>
-<span class="kw">struct </span>EntryHelper {
-    <span class="attribute">#[serde(rename = <span class="string">&quot;1b. open (USD)&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]</span>
-    open_usd: f64,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;2b. high (USD)&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]</span>
-    high_usd: f64,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;3b. low (USD)&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]</span>
-    low_usd: f64,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;4b. close (USD)&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]</span>
-    close_usd: f64,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;5. volume&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]</span>
-    volume: f64,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;6. market cap (USD)&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]</span>
-    market_cap: f64,
-    <span class="attribute">#[serde(flatten)]</span>
-    market_data: HashMap&lt;String, String&gt;,
+</span><span class="attribute">#[derive(Deserialize, Clone)]
+</span><span class="kw">struct </span>EntryHelper {
+    <span class="attribute">#[serde(rename = <span class="string">&quot;1b. open (USD)&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]
+    </span>open_usd: f64,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;2b. high (USD)&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]
+    </span>high_usd: f64,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;3b. low (USD)&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]
+    </span>low_usd: f64,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;4b. close (USD)&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]
+    </span>close_usd: f64,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;5. volume&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]
+    </span>volume: f64,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;6. market cap (USD)&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]
+    </span>market_cap: f64,
+    <span class="attribute">#[serde(flatten)]
+    </span>market_data: HashMap&lt;String, String&gt;,
 }
 
 <span class="doccomment">/// Struct to help out for creation of struct Crypto
-</span><span class="attribute">#[derive(Deserialize)]</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>CryptoHelper {
-    <span class="attribute">#[serde(rename = <span class="string">&quot;Information&quot;</span>)]</span>
-    information: <span class="prelude-ty">Option</span>&lt;String&gt;,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;Error Message&quot;</span>)]</span>
-    error_message: <span class="prelude-ty">Option</span>&lt;String&gt;,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;Note&quot;</span>)]</span>
-    note: <span class="prelude-ty">Option</span>&lt;String&gt;,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;Meta Data&quot;</span>)]</span>
-    meta_data: <span class="prelude-ty">Option</span>&lt;MetaData&gt;,
-    <span class="attribute">#[serde(flatten)]</span>
-    entry: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, HashMap&lt;String, EntryHelper&gt;&gt;&gt;,
+</span><span class="attribute">#[derive(Deserialize)]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>CryptoHelper {
+    <span class="attribute">#[serde(rename = <span class="string">&quot;Information&quot;</span>)]
+    </span>information: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;Error Message&quot;</span>)]
+    </span>error_message: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;Note&quot;</span>)]
+    </span>note: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;Meta Data&quot;</span>)]
+    </span>meta_data: <span class="prelude-ty">Option</span>&lt;MetaData&gt;,
+    <span class="attribute">#[serde(flatten)]
+    </span>entry: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, HashMap&lt;String, EntryHelper&gt;&gt;&gt;,
 }
 
 <span class="kw">impl </span>CryptoHelper {
@@ -828,13 +828,13 @@
 }
 
 <span class="kw">impl </span>VecEntry <span class="kw">for </span>Vec&lt;Entry&gt; {
-    <span class="attribute">#[must_use]</span>
-    <span class="kw">fn </span>find(<span class="kw-2">&amp;</span><span class="self">self</span>, time: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Entry&gt; {
+    <span class="attribute">#[must_use]
+    </span><span class="kw">fn </span>find(<span class="kw-2">&amp;</span><span class="self">self</span>, time: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Entry&gt; {
         <span class="self">self</span>.iter().find(|<span class="kw-2">&amp;</span>entry| entry.time == time)
     }
 
-    <span class="attribute">#[must_use]</span>
-    <span class="kw">fn </span>latest(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Entry {
+    <span class="attribute">#[must_use]
+    </span><span class="kw">fn </span>latest(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Entry {
         <span class="kw">let </span><span class="kw-2">mut </span>latest = <span class="kw-2">&amp;</span>Entry::default();
         <span class="kw">for </span>entry <span class="kw">in </span><span class="self">self </span>{
             <span class="kw">if </span>latest.time &lt; entry.time {
@@ -864,7 +864,7 @@
 
 <span class="doccomment">/// Builder to help create `Crypto`
 </span><span class="kw">pub struct </span>CryptoBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
-    api_client: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>ApiClient&lt;<span class="lifetime">&#39;a</span>&gt;,
+    api_client: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>ApiClient,
     function: CryptoFunction,
     symbol: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
     market: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
@@ -872,8 +872,8 @@
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; CryptoBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
     <span class="doccomment">/// Create new `CryptoBuilder` with help of `APIClient`
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>new(
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>new(
         api_client: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>ApiClient,
         function: CryptoFunction,
         symbol: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
@@ -914,8 +914,8 @@
 
 <span class="doccomment">/// Enum for declaring function for crypto series by defining which type of
 /// crypto series to be returned
-</span><span class="attribute">#[derive(Clone)]</span>
-<span class="kw">pub enum </span>CryptoFunction {
+</span><span class="attribute">#[derive(Clone)]
+</span><span class="kw">pub enum </span>CryptoFunction {
     <span class="doccomment">/// returns the daily historical time series for a digital currency (e.g.,
     /// BTC) traded on a specific market (e.g., CNY/Chinese Yuan), refreshed
     /// daily at midnight (UTC). Prices and volumes are quoted in both the
@@ -933,4 +933,4 @@
     </span>Monthly,
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (9c20b2a8c 2022-08-17)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (95a992a68 2022-09-16)" ></div></body></html>

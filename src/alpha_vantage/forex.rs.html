@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/forex.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>forex.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../alpha_vantage/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/forex.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>forex.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../alpha_vantage/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -504,8 +504,8 @@
 <span class="kw">use </span><span class="kw">crate</span>::error::{detect_common_helper_error, Error, <span class="prelude-ty">Result</span>};
 
 <span class="doccomment">/// Struct used to store metadata value
-</span><span class="attribute">#[derive(Debug, Clone, Default)]</span>
-<span class="kw">struct </span>MetaData {
+</span><span class="attribute">#[derive(Debug, Clone, Default)]
+</span><span class="kw">struct </span>MetaData {
     information: String,
     from_symbol: String,
     to_symbol: String,
@@ -516,8 +516,8 @@
 }
 
 <span class="doccomment">/// Struct to store Entry value
-</span><span class="attribute">#[derive(Default, Debug, Clone)]</span>
-<span class="kw">pub struct </span>Entry {
+</span><span class="attribute">#[derive(Default, Debug, Clone)]
+</span><span class="kw">pub struct </span>Entry {
     time: String,
     open: f64,
     high: f64,
@@ -527,39 +527,39 @@
 
 <span class="kw">impl </span>Entry {
     <span class="doccomment">/// Return time for entry
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>time(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>time(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="kw-2">&amp;</span><span class="self">self</span>.time
     }
 
     <span class="doccomment">/// Return open value
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>open(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>open(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
         <span class="self">self</span>.open
     }
 
     <span class="doccomment">/// Return high value
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>high(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>high(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
         <span class="self">self</span>.high
     }
 
     <span class="doccomment">/// Return low value
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>low(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>low(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
         <span class="self">self</span>.low
     }
 
     <span class="doccomment">/// Return close value
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>close(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>close(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
         <span class="self">self</span>.close
     }
 }
 
 <span class="doccomment">/// Struct to store Forex data after forex API call
-</span><span class="attribute">#[derive(Debug, Default)]</span>
-<span class="kw">pub struct </span>Forex {
+</span><span class="attribute">#[derive(Debug, Default)]
+</span><span class="kw">pub struct </span>Forex {
     meta_data: MetaData,
     forex: Vec&lt;Entry&gt;,
 }
@@ -582,8 +582,8 @@
     ///     assert_eq!(information, &quot;FX Intraday (5min) Time Series&quot;);
     /// }
     /// ```
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>information(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>information(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="self">self</span>.return_meta_string(<span class="string">&quot;information&quot;</span>)
     }
 
@@ -604,8 +604,8 @@
     ///     assert_eq!(symbol_from, &quot;EUR&quot;);
     /// }
     /// ```
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>symbol_from(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>symbol_from(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="self">self</span>.return_meta_string(<span class="string">&quot;from symbol&quot;</span>)
     }
 
@@ -626,20 +626,20 @@
     ///     assert_eq!(symbol_to, &quot;USD&quot;);
     /// }
     /// ```
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>symbol_to(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>symbol_to(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="self">self</span>.return_meta_string(<span class="string">&quot;to symbol&quot;</span>)
     }
 
     <span class="doccomment">/// Return last refreshed time
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>last_refreshed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>last_refreshed(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="self">self</span>.return_meta_string(<span class="string">&quot;last refreshed&quot;</span>)
     }
 
     <span class="doccomment">/// Return time zone of all data time
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>time_zone(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>time_zone(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="self">self</span>.return_meta_string(<span class="string">&quot;time zone&quot;</span>)
     }
 
@@ -660,8 +660,8 @@
     ///     assert_eq!(interval.unwrap(), &quot;5min&quot;);
     /// }
     /// ```
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>interval(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>interval(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.operate_option_meta_value(<span class="string">&quot;interval&quot;</span>)
     }
 
@@ -682,14 +682,14 @@
     ///     assert_eq!(output_size.unwrap(), &quot;Full size&quot;);
     /// }
     /// ```
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>output_size(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>output_size(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>str&gt; {
         <span class="self">self</span>.operate_option_meta_value(<span class="string">&quot;output size&quot;</span>)
     }
 
     <span class="doccomment">/// Method return Entry
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>entry(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Vec&lt;Entry&gt; {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>entry(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Vec&lt;Entry&gt; {
         <span class="kw-2">&amp;</span><span class="self">self</span>.forex
     }
 
@@ -717,31 +717,31 @@
 }
 
 <span class="doccomment">/// Entry Helper
-</span><span class="attribute">#[derive(Clone, Debug, Deserialize)]</span>
-<span class="kw">struct </span>EntryHelper {
-    <span class="attribute">#[serde(rename = <span class="string">&quot;1. open&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]</span>
-    open: f64,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;2. high&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]</span>
-    high: f64,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;3. low&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]</span>
-    low: f64,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;4. close&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]</span>
-    close: f64,
+</span><span class="attribute">#[derive(Clone, Debug, Deserialize)]
+</span><span class="kw">struct </span>EntryHelper {
+    <span class="attribute">#[serde(rename = <span class="string">&quot;1. open&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]
+    </span>open: f64,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;2. high&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]
+    </span>high: f64,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;3. low&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]
+    </span>low: f64,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;4. close&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]
+    </span>close: f64,
 }
 
 <span class="doccomment">/// struct which helps for collecting forex data from website
-</span><span class="attribute">#[derive(Debug, Deserialize)]</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>ForexHelper {
-    <span class="attribute">#[serde(rename = <span class="string">&quot;Error Message&quot;</span>)]</span>
-    error_message: <span class="prelude-ty">Option</span>&lt;String&gt;,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;Information&quot;</span>)]</span>
-    information: <span class="prelude-ty">Option</span>&lt;String&gt;,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;Note&quot;</span>)]</span>
-    note: <span class="prelude-ty">Option</span>&lt;String&gt;,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;Meta Data&quot;</span>)]</span>
-    meta_data: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, String&gt;&gt;,
-    <span class="attribute">#[serde(flatten)]</span>
-    forex: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, HashMap&lt;String, EntryHelper&gt;&gt;&gt;,
+</span><span class="attribute">#[derive(Debug, Deserialize)]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>ForexHelper {
+    <span class="attribute">#[serde(rename = <span class="string">&quot;Error Message&quot;</span>)]
+    </span>error_message: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;Information&quot;</span>)]
+    </span>information: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;Note&quot;</span>)]
+    </span>note: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;Meta Data&quot;</span>)]
+    </span>meta_data: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, String&gt;&gt;,
+    <span class="attribute">#[serde(flatten)]
+    </span>forex: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, HashMap&lt;String, EntryHelper&gt;&gt;&gt;,
 }
 
 <span class="kw">impl </span>ForexHelper {
@@ -827,13 +827,13 @@
 }
 
 <span class="kw">impl </span>VecEntry <span class="kw">for </span>Vec&lt;Entry&gt; {
-    <span class="attribute">#[must_use]</span>
-    <span class="kw">fn </span>find(<span class="kw-2">&amp;</span><span class="self">self</span>, time: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Entry&gt; {
+    <span class="attribute">#[must_use]
+    </span><span class="kw">fn </span>find(<span class="kw-2">&amp;</span><span class="self">self</span>, time: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Entry&gt; {
         <span class="self">self</span>.iter().find(|<span class="kw-2">&amp;</span>entry| entry.time == time)
     }
 
-    <span class="attribute">#[must_use]</span>
-    <span class="kw">fn </span>latest(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Entry {
+    <span class="attribute">#[must_use]
+    </span><span class="kw">fn </span>latest(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Entry {
         <span class="kw">let </span><span class="kw-2">mut </span>latest = <span class="kw-2">&amp;</span>Entry::default();
         <span class="kw">for </span>entry <span class="kw">in </span><span class="self">self </span>{
             <span class="kw">if </span>latest.time &lt; entry.time {
@@ -863,7 +863,7 @@
 
 <span class="doccomment">/// Builder to create `Forex`
 </span><span class="kw">pub struct </span>ForexBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
-    api_client: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>ApiClient&lt;<span class="lifetime">&#39;a</span>&gt;,
+    api_client: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>ApiClient,
     function: ForexFunction,
     from_symbol: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
     to_symbol: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
@@ -873,8 +873,8 @@
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; ForexBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
     <span class="doccomment">/// Create new `ForexBuilder` from `APIClient`
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>new(
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>new(
         api_client: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>ApiClient,
         function: ForexFunction,
         from_symbol: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
@@ -891,15 +891,15 @@
     }
 
     <span class="doccomment">/// Define time series interval for forex
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>interval(<span class="kw-2">mut </span><span class="self">self</span>, interval: TimeSeriesInterval) -&gt; <span class="self">Self </span>{
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>interval(<span class="kw-2">mut </span><span class="self">self</span>, interval: TimeSeriesInterval) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.interval = <span class="prelude-val">Some</span>(interval);
         <span class="self">self
     </span>}
 
     <span class="doccomment">/// Define output size for intraday or daily forex
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>output_size(<span class="kw-2">mut </span><span class="self">self</span>, output_size: OutputSize) -&gt; <span class="self">Self </span>{
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>output_size(<span class="kw-2">mut </span><span class="self">self</span>, output_size: OutputSize) -&gt; <span class="self">Self </span>{
         <span class="self">self</span>.output_size = <span class="prelude-val">Some</span>(output_size);
         <span class="self">self
     </span>}
@@ -953,8 +953,8 @@
 
 <span class="doccomment">/// Enum for declaring function for forex function by defining which type of
 /// forex series to be returned
-</span><span class="attribute">#[derive(Clone)]</span>
-<span class="kw">pub enum </span>ForexFunction {
+</span><span class="attribute">#[derive(Clone)]
+</span><span class="kw">pub enum </span>ForexFunction {
     <span class="doccomment">/// returns intraday time series (timestamp, open, high, low, close) of the
     /// FX currency pair specified, updated realtime
     </span>IntraDay,
@@ -969,4 +969,4 @@
     </span>Monthly,
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (9c20b2a8c 2022-08-17)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (95a992a68 2022-09-16)" ></div></body></html>

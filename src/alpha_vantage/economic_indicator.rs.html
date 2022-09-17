@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/economic_indicator.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>economic_indicator.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../alpha_vantage/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/economic_indicator.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>economic_indicator.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../alpha_vantage/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -271,23 +271,23 @@
 <span class="kw">use </span><span class="kw">crate</span>::error::{detect_common_helper_error, Error, <span class="prelude-ty">Result</span>};
 
 <span class="doccomment">/// Struct for storing a data values
-</span><span class="attribute">#[derive(Default, Debug, Deserialize, Clone)]</span>
-<span class="kw">pub struct </span>Data {
+</span><span class="attribute">#[derive(Default, Debug, Deserialize, Clone)]
+</span><span class="kw">pub struct </span>Data {
     date: String,
-    <span class="attribute">#[serde(deserialize_with = <span class="string">&quot;from_str&quot;</span>)]</span>
-    value: f64,
+    <span class="attribute">#[serde(deserialize_with = <span class="string">&quot;from_str&quot;</span>)]
+    </span>value: f64,
 }
 
 <span class="kw">impl </span>Data {
     <span class="doccomment">/// Return date
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>date(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>date(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="kw-2">&amp;</span><span class="self">self</span>.date
     }
 
     <span class="doccomment">/// Return value for Data
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>value(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
         <span class="self">self</span>.value
     }
 }
@@ -305,13 +305,13 @@
 }
 
 <span class="kw">impl </span>VecData <span class="kw">for </span>Vec&lt;Data&gt; {
-    <span class="attribute">#[must_use]</span>
-    <span class="kw">fn </span>find(<span class="kw-2">&amp;</span><span class="self">self</span>, date: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Data&gt; {
+    <span class="attribute">#[must_use]
+    </span><span class="kw">fn </span>find(<span class="kw-2">&amp;</span><span class="self">self</span>, date: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Data&gt; {
         <span class="self">self</span>.iter().find(|<span class="kw-2">&amp;</span>entry| entry.date == date)
     }
 
-    <span class="attribute">#[must_use]</span>
-    <span class="kw">fn </span>latest(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Data {
+    <span class="attribute">#[must_use]
+    </span><span class="kw">fn </span>latest(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Data {
         <span class="kw">let </span><span class="kw-2">mut </span>latest = <span class="kw-2">&amp;</span>Data::default();
         <span class="kw">for </span>data <span class="kw">in </span><span class="self">self </span>{
             <span class="kw">if </span>latest.date &lt; data.date {
@@ -340,8 +340,8 @@
 }
 
 <span class="doccomment">/// Struct for indicator
-</span><span class="attribute">#[derive(Default, Debug)]</span>
-<span class="kw">pub struct </span>EconomicIndicator {
+</span><span class="attribute">#[derive(Default, Debug)]
+</span><span class="kw">pub struct </span>EconomicIndicator {
     name: String,
     interval: String,
     unit: String,
@@ -350,39 +350,39 @@
 
 <span class="kw">impl </span>EconomicIndicator {
     <span class="doccomment">/// Return name of economic indicator
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>String {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>String {
         <span class="kw-2">&amp;</span><span class="self">self</span>.name
     }
 
     <span class="doccomment">/// Return interval of economic indicator
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>interval(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>String {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>interval(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>String {
         <span class="kw-2">&amp;</span><span class="self">self</span>.interval
     }
 
     <span class="doccomment">/// Return unit of economic indicator
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>unit(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>String {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>unit(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>String {
         <span class="kw-2">&amp;</span><span class="self">self</span>.unit
     }
 
     <span class="doccomment">/// Return data as a vector
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>data(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Vec&lt;Data&gt; {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>data(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Vec&lt;Data&gt; {
         <span class="kw-2">&amp;</span><span class="self">self</span>.data
     }
 }
 
 <span class="doccomment">/// Struct for helping indicator struct
-</span><span class="attribute">#[derive(Deserialize)]</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>EconomicIndicatorHelper {
-    <span class="attribute">#[serde(rename = <span class="string">&quot;Error Message&quot;</span>)]</span>
-    error_message: <span class="prelude-ty">Option</span>&lt;String&gt;,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;Information&quot;</span>)]</span>
-    information: <span class="prelude-ty">Option</span>&lt;String&gt;,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;Note&quot;</span>)]</span>
-    note: <span class="prelude-ty">Option</span>&lt;String&gt;,
+</span><span class="attribute">#[derive(Deserialize)]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>EconomicIndicatorHelper {
+    <span class="attribute">#[serde(rename = <span class="string">&quot;Error Message&quot;</span>)]
+    </span>error_message: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;Information&quot;</span>)]
+    </span>information: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;Note&quot;</span>)]
+    </span>note: <span class="prelude-ty">Option</span>&lt;String&gt;,
     name: <span class="prelude-ty">Option</span>&lt;String&gt;,
     interval: <span class="prelude-ty">Option</span>&lt;String&gt;,
     unit: <span class="prelude-ty">Option</span>&lt;String&gt;,
@@ -410,7 +410,7 @@
 
 <span class="doccomment">/// Builder to help create `EconomicIndicator`
 </span><span class="kw">pub struct </span>EconomicIndicatorBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
-    api_client: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>ApiClient&lt;<span class="lifetime">&#39;a</span>&gt;,
+    api_client: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>ApiClient,
     function: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
     interval: <span class="prelude-ty">Option</span>&lt;EconomicIndicatorInterval&gt;,
     maturity: <span class="prelude-ty">Option</span>&lt;EconomicIndicatorMaturity&gt;,
@@ -418,8 +418,8 @@
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; EconomicIndicatorBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
     <span class="doccomment">/// Create new `EconomicIndicatorBuilder` form `APIClient`
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>new(api_client: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>ApiClient, function: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str) -&gt; <span class="self">Self </span>{
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>new(api_client: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>ApiClient, function: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             api_client,
             function,
@@ -480,8 +480,8 @@
 }
 
 <span class="doccomment">/// Enum for declaring interval for economic indicator
-</span><span class="attribute">#[derive(Clone)]</span>
-<span class="kw">pub enum </span>EconomicIndicatorInterval {
+</span><span class="attribute">#[derive(Clone)]
+</span><span class="kw">pub enum </span>EconomicIndicatorInterval {
     <span class="doccomment">/// daily interval
     </span>Daily,
     <span class="doccomment">/// weekly interval
@@ -495,8 +495,8 @@
 }
 
 <span class="doccomment">/// Enum for declaring maturity for economic indicator
-</span><span class="attribute">#[derive(Clone)]</span>
-<span class="kw">pub enum </span>EconomicIndicatorMaturity {
+</span><span class="attribute">#[derive(Clone)]
+</span><span class="kw">pub enum </span>EconomicIndicatorMaturity {
     <span class="doccomment">/// 3 month maturity
     </span>ThreeMonth,
     <span class="doccomment">/// 5 year maturity
@@ -507,4 +507,4 @@
     </span>ThirtyYear,
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (9c20b2a8c 2022-08-17)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (95a992a68 2022-09-16)" ></div></body></html>

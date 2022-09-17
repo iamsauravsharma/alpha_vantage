@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/search.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>search.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../../dark.css" disabled><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../alpha_vantage/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/search.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>search.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../alpha_vantage/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../alpha_vantage/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
 <span id="2">2</span>
 <span id="3">3</span>
 <span id="4">4</span>
@@ -252,26 +252,26 @@
 <span class="kw">use </span><span class="kw">crate</span>::error::{detect_common_helper_error, Error, <span class="prelude-ty">Result</span>};
 
 <span class="doccomment">/// Struct which stores matches data for search keyword
-</span><span class="attribute">#[derive(Debug, Clone, Deserialize, Default)]</span>
-<span class="kw">pub struct </span>DataValue {
-    <span class="attribute">#[serde(rename = <span class="string">&quot;1. symbol&quot;</span>)]</span>
-    symbol: String,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;2. name&quot;</span>)]</span>
-    name: String,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;3. type&quot;</span>)]</span>
-    stock_type: String,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;4. region&quot;</span>)]</span>
-    region: String,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;5. marketOpen&quot;</span>)]</span>
-    market_open: String,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;6. marketClose&quot;</span>)]</span>
-    market_close: String,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;7. timezone&quot;</span>)]</span>
-    time_zone: String,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;8. currency&quot;</span>)]</span>
-    currency: String,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;9. matchScore&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]</span>
-    match_score: f64,
+</span><span class="attribute">#[derive(Debug, Clone, Deserialize, Default)]
+</span><span class="kw">pub struct </span>DataValue {
+    <span class="attribute">#[serde(rename = <span class="string">&quot;1. symbol&quot;</span>)]
+    </span>symbol: String,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;2. name&quot;</span>)]
+    </span>name: String,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;3. type&quot;</span>)]
+    </span>stock_type: String,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;4. region&quot;</span>)]
+    </span>region: String,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;5. marketOpen&quot;</span>)]
+    </span>market_open: String,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;6. marketClose&quot;</span>)]
+    </span>market_close: String,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;7. timezone&quot;</span>)]
+    </span>time_zone: String,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;8. currency&quot;</span>)]
+    </span>currency: String,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;9. matchScore&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]
+    </span>match_score: f64,
 }
 
 <span class="kw">impl </span>DataValue {
@@ -286,8 +286,8 @@
     ///     assert_eq!(symbol, &quot;BA&quot;);
     /// }
     /// ```
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>symbol(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>symbol(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="kw-2">&amp;</span><span class="self">self</span>.symbol
     }
 
@@ -302,8 +302,8 @@
     ///     assert_eq!(name, &quot;Boeing Company&quot;);
     /// }
     /// ```
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>name(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="kw-2">&amp;</span><span class="self">self</span>.name
     }
 
@@ -317,8 +317,8 @@
     ///     let stock_type = search.result()[0].stock_type();
     ///     assert_eq!(stock_type, &quot;Equity&quot;);
     /// }
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>stock_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>stock_type(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="kw-2">&amp;</span><span class="self">self</span>.stock_type
     }
 
@@ -332,8 +332,8 @@
     ///     let region = search.result()[0].region();
     ///     assert_eq!(region, &quot;United States&quot;);
     /// }
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>region(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>region(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="kw-2">&amp;</span><span class="self">self</span>.region
     }
 
@@ -347,8 +347,8 @@
     ///     let market_open = search.result()[0].market_open();
     ///     assert_eq!(market_open, &quot;09:30&quot;);
     /// }
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>market_open(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>market_open(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="kw-2">&amp;</span><span class="self">self</span>.market_open
     }
 
@@ -362,14 +362,14 @@
     ///     let market_close = search.result()[0].market_close();
     ///     assert_eq!(market_close, &quot;16:00&quot;);
     /// }
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>market_close(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>market_close(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="kw-2">&amp;</span><span class="self">self</span>.market_close
     }
 
     <span class="doccomment">/// Return time zone of symbol
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>time_zone(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>time_zone(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="kw-2">&amp;</span><span class="self">self</span>.time_zone
     }
 
@@ -383,8 +383,8 @@
     ///     let currency = search.result()[0].currency();
     ///     assert_eq!(currency, &quot;USD&quot;);
     /// }
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>currency(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>currency(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="kw-2">&amp;</span><span class="self">self</span>.currency
     }
 
@@ -398,35 +398,35 @@
     ///     let match_score = search.result()[0].match_score();
     ///     assert_eq!(match_score, 1.0);
     /// }
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>match_score(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>match_score(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; f64 {
         <span class="self">self</span>.match_score
     }
 }
 
 <span class="doccomment">/// struct for storing search method data
-</span><span class="attribute">#[derive(Default)]</span>
-<span class="kw">pub struct </span>Search {
+</span><span class="attribute">#[derive(Default)]
+</span><span class="kw">pub struct </span>Search {
     matches: Vec&lt;DataValue&gt;,
 }
 
 <span class="kw">impl </span>Search {
     <span class="doccomment">/// Return result of search
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>result(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Vec&lt;DataValue&gt; {
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>result(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Vec&lt;DataValue&gt; {
         <span class="kw-2">&amp;</span><span class="self">self</span>.matches
     }
 }
 
 <span class="doccomment">/// struct for helping creation of search struct
-</span><span class="attribute">#[derive(Debug, Deserialize)]</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>SearchHelper {
-    <span class="attribute">#[serde(rename = <span class="string">&quot;Information&quot;</span>)]</span>
-    information: <span class="prelude-ty">Option</span>&lt;String&gt;,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;Note&quot;</span>)]</span>
-    note: <span class="prelude-ty">Option</span>&lt;String&gt;,
-    <span class="attribute">#[serde(rename = <span class="string">&quot;bestMatches&quot;</span>)]</span>
-    matches: <span class="prelude-ty">Option</span>&lt;Vec&lt;DataValue&gt;&gt;,
+</span><span class="attribute">#[derive(Debug, Deserialize)]
+</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct </span>SearchHelper {
+    <span class="attribute">#[serde(rename = <span class="string">&quot;Information&quot;</span>)]
+    </span>information: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;Note&quot;</span>)]
+    </span>note: <span class="prelude-ty">Option</span>&lt;String&gt;,
+    <span class="attribute">#[serde(rename = <span class="string">&quot;bestMatches&quot;</span>)]
+    </span>matches: <span class="prelude-ty">Option</span>&lt;Vec&lt;DataValue&gt;&gt;,
 }
 
 <span class="kw">impl </span>SearchHelper {
@@ -443,14 +443,14 @@
 
 <span class="doccomment">/// Builder to create new `Search`
 </span><span class="kw">pub struct </span>SearchBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
-    api_client: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>ApiClient&lt;<span class="lifetime">&#39;a</span>&gt;,
+    api_client: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>ApiClient,
     keywords: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str,
 }
 
 <span class="kw">impl</span>&lt;<span class="lifetime">&#39;a</span>&gt; SearchBuilder&lt;<span class="lifetime">&#39;a</span>&gt; {
     <span class="doccomment">/// Create new `SearchBuilder` from `APIClient`
-    </span><span class="attribute">#[must_use]</span>
-    <span class="kw">pub fn </span>new(api_client: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>ApiClient, keywords: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str) -&gt; <span class="self">Self </span>{
+    </span><span class="attribute">#[must_use]
+    </span><span class="kw">pub fn </span>new(api_client: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>ApiClient, keywords: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a </span>str) -&gt; <span class="self">Self </span>{
         <span class="self">Self </span>{
             api_client,
             keywords,
@@ -473,4 +473,4 @@
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (9c20b2a8c 2022-08-17)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (95a992a68 2022-09-16)" ></div></body></html>
