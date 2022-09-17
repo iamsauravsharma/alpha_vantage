@@ -199,7 +199,7 @@ impl SectorHelper {
                 "Rank H: 3 Year Performance" => data.rank = "3-year".to_string(),
                 "Rank I: 5 Year Performance" => data.rank = "5-year".to_string(),
                 "Rank J: 10 Year Performance" => data.rank = "10-year".to_string(),
-                _ => data.rank = "".to_string(),
+                _ => data.rank = String::new(),
             }
             for (key, val) in val.iter() {
                 match key.as_str() {
@@ -239,7 +239,7 @@ fn convert_str_percent_f64(val: &str) -> f64 {
 
 /// Builder to create new Sector
 pub struct SectorBuilder<'a> {
-    api_client: &'a ApiClient<'a>,
+    api_client: &'a ApiClient,
 }
 
 impl<'a> SectorBuilder<'a> {

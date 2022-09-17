@@ -156,7 +156,7 @@ impl EconomicIndicatorHelper {
 
 /// Builder to help create `EconomicIndicator`
 pub struct EconomicIndicatorBuilder<'a> {
-    api_client: &'a ApiClient<'a>,
+    api_client: &'a ApiClient,
     function: &'a str,
     interval: Option<EconomicIndicatorInterval>,
     maturity: Option<EconomicIndicatorMaturity>,

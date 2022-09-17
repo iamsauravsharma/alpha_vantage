@@ -166,7 +166,7 @@ impl EarningHelper {
 
 /// Builder to help create Earning
 pub struct EarningBuilder<'a> {
-    api_client: &'a ApiClient<'a>,
+    api_client: &'a ApiClient,
     symbol: &'a str,
 }
 

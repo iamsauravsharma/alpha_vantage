@@ -442,7 +442,7 @@ where
 
 /// Builder to create new `TimeSeries`
 pub struct TimeSeriesBuilder<'a> {
-    api_client: &'a ApiClient<'a>,
+    api_client: &'a ApiClient,
     function: StockFunction,
     symbol: &'a str,
     interval: Option<TimeSeriesInterval>,

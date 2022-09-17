@@ -397,7 +397,7 @@ impl VecEntry for Vec<Entry> {
 
 /// Builder to help create `Crypto`
 pub struct CryptoBuilder<'a> {
-    api_client: &'a ApiClient<'a>,
+    api_client: &'a ApiClient,
     function: CryptoFunction,
     symbol: &'a str,
     market: &'a str,
