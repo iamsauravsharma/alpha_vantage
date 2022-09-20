@@ -256,13 +256,13 @@ impl ApiClient {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let search = api.search("BA").json().await.unwrap();
-    ///     let first_search_result = &search.result()[0];
-    ///     assert_eq!(first_search_result.symbol(), "BA");
-    ///     assert_eq!(first_search_result.name(), "Boeing Company");
-    ///     assert_eq!(first_search_result.stock_type(), "Equity");
-    ///     assert_eq!(first_search_result.region(), "United States");
-    ///     assert_eq!(first_search_result.currency(), "USD");
-    ///     assert_eq!(first_search_result.match_score(), 1.0);
+    ///     let first_search_match = &search.matches()[0];
+    ///     assert_eq!(first_search_match.symbol(), "BA");
+    ///     assert_eq!(first_search_match.name(), "Boeing Company");
+    ///     assert_eq!(first_search_match.stock_type(), "Equity");
+    ///     assert_eq!(first_search_match.region(), "United States");
+    ///     assert_eq!(first_search_match.currency(), "USD");
+    ///     assert_eq!(first_search_match.match_score(), 1.0);
     /// }
     /// ```
     #[must_use]

@@ -15,6 +15,7 @@ use serde::Deserialize;
 use crate::api::ApiClient;
 use crate::deserialize::from_str;
 use crate::error::{detect_common_helper_error, Error, Result};
+use crate::vec_trait::FindData;
 
 /// Struct for storing a data values
 #[derive(Default, Debug, Deserialize, Clone)]
@@ -38,26 +39,14 @@ impl Data {
     }
 }
 
-/// trait which helps for performing some common operation on Vec<Data>
-pub trait VecData {
-    /// Find a data with a given date as a input return none if no data found
-    fn find(&self, date: &str) -> Option<&Data>;
-    /// Return a data which is of latest date period
-    fn latest(&self) -> Data;
-    /// Return a top n latest data
-    /// # Errors
-    /// If n is greater than no of data
-    fn latest_n(&self, n: usize) -> Result<Vec<&Data>>;
-}
-
-impl VecData for Vec<Data> {
+impl FindData for Vec<Data> {
     #[must_use]
-    fn find(&self, date: &str) -> Option<&Data> {
-        self.iter().find(|&entry| entry.date == date)
+    fn find(&self, time: &str) -> Option<&<Self as IntoIterator>::Item> {
+        self.iter().find(|&data| data.date == time)
     }
 
     #[must_use]
-    fn latest(&self) -> Data {
+    fn latest(&self) -> <Self as IntoIterator>::Item {
         let mut latest = &Data::default();
         for data in self {
             if latest.date < data.date {
@@ -67,7 +56,7 @@ impl VecData for Vec<Data> {
         latest.clone()
     }
 
-    fn latest_n(&self, n: usize) -> Result<Vec<&Data>> {
+    fn latest_n(&self, n: usize) -> Result<Vec<&<Self as IntoIterator>::Item>> {
         let mut date_list = self.iter().map(|data| &data.date).collect::<Vec<_>>();
         date_list.sort_by_key(|w| cmp::Reverse(*w));
 

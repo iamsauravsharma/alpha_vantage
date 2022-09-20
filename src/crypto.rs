@@ -17,6 +17,7 @@ use serde::Deserialize;
 use crate::api::ApiClient;
 use crate::deserialize::from_str;
 use crate::error::{detect_common_helper_error, Error, Result};
+use crate::vec_trait::FindData;
 
 /// Store Meta Data Information
 #[derive(Deserialize, Clone, Default)]
@@ -39,7 +40,7 @@ struct MetaData {
 
 /// Struct which stores Crypto data
 #[derive(Default, Debug, Clone)]
-pub struct Entry {
+pub struct Data {
     time: String,
     market_open: f64,
     usd_open: f64,
@@ -53,7 +54,7 @@ pub struct Entry {
     market_cap: f64,
 }
 
-impl Entry {
+impl Data {
     /// Return time
     #[must_use]
     pub fn time(&self) -> &str {
@@ -125,7 +126,7 @@ impl Entry {
 #[derive(Default)]
 pub struct Crypto {
     meta_data: MetaData,
-    entry: Vec<Entry>,
+    data: Vec<Data>,
 }
 
 impl Crypto {
@@ -241,10 +242,10 @@ impl Crypto {
         self.return_meta_string("time zone")
     }
 
-    /// Return a entry
+    /// Return a data
     #[must_use]
-    pub fn entry(&self) -> &Vec<Entry> {
-        &self.entry
+    pub fn data(&self) -> &Vec<Data> {
+        &self.data
     }
 
     /// Return meta string
@@ -262,9 +263,9 @@ impl Crypto {
     }
 }
 
-/// Struct to help out for creation of struct Entry
+/// Struct to help out for creation of struct Data
 #[derive(Deserialize, Clone)]
-struct EntryHelper {
+struct DataHelper {
     #[serde(rename = "1b. open (USD)", deserialize_with = "from_str")]
     open_usd: f64,
     #[serde(rename = "2b. high (USD)", deserialize_with = "from_str")]
@@ -293,7 +294,7 @@ pub(crate) struct CryptoHelper {
     #[serde(rename = "Meta Data")]
     meta_data: Option<MetaData>,
     #[serde(flatten)]
-    entry: Option<HashMap<String, HashMap<String, EntryHelper>>>,
+    data: Option<HashMap<String, HashMap<String, DataHelper>>>,
 }
 
 impl CryptoHelper {
@@ -301,91 +302,77 @@ impl CryptoHelper {
     pub(crate) fn convert(self) -> Result<Crypto> {
         detect_common_helper_error(self.information, self.error_message, self.note)?;
 
-        if self.meta_data.is_none() || self.entry.is_none() {
+        if self.meta_data.is_none() || self.data.is_none() {
             return Err(Error::EmptyResponse);
         }
 
-        let mut vec_entry = Vec::new();
+        let mut vec_data = Vec::new();
         // Can use unwrap here is none condition is checked already
-        for value in self.entry.unwrap().values() {
+        for value in self.data.unwrap().values() {
             for key in value.keys() {
-                let entry_helper = value
+                let data_helper = value
                     .get(key)
                     .expect("failed to get value from Crypto hashmap");
 
-                let mut entry = Entry {
+                let mut data = Data {
                     time: key.to_string(),
-                    usd_open: entry_helper.open_usd,
-                    usd_high: entry_helper.high_usd,
-                    usd_low: entry_helper.low_usd,
-                    usd_close: entry_helper.close_usd,
-                    market_cap: entry_helper.market_cap,
-                    volume: entry_helper.volume,
-                    ..Entry::default()
+                    usd_open: data_helper.open_usd,
+                    usd_high: data_helper.high_usd,
+                    usd_low: data_helper.low_usd,
+                    usd_close: data_helper.close_usd,
+                    market_cap: data_helper.market_cap,
+                    volume: data_helper.volume,
+                    ..Data::default()
                 };
 
-                for key in entry_helper.market_data.keys() {
-                    let value = &entry_helper.market_data[key];
+                for key in data_helper.market_data.keys() {
+                    let value = &data_helper.market_data[key];
                     let f64_value = f64::from_str(value).unwrap();
                     if key.contains("1a") {
-                        entry.market_open = f64_value;
+                        data.market_open = f64_value;
                     } else if key.contains("2a") {
-                        entry.market_high = f64_value;
+                        data.market_high = f64_value;
                     } else if key.contains("3a") {
-                        entry.market_low = f64_value;
+                        data.market_low = f64_value;
                     } else if key.contains("4a") {
-                        entry.market_close = f64_value;
+                        data.market_close = f64_value;
                     }
                 }
-                vec_entry.push(entry);
+                vec_data.push(data);
             }
         }
 
         Ok(Crypto {
-            entry: vec_entry,
+            data: vec_data,
             meta_data: self.meta_data.unwrap(),
         })
     }
 }
 
-/// trait which helps for performing some common operation on Vec<Entry>
-pub trait VecEntry {
-    /// Find a entry with a given time as a input return none if no entry found
-    fn find(&self, time: &str) -> Option<&Entry>;
-    /// Return a entry which is of latest time period
-    fn latest(&self) -> Entry;
-    /// Return a top n latest Entry
-    /// # Errors
-    /// If n is greater than no of entry
-    fn latest_n(&self, n: usize) -> Result<Vec<&Entry>>;
-}
-
-impl VecEntry for Vec<Entry> {
-    #[must_use]
-    fn find(&self, time: &str) -> Option<&Entry> {
-        self.iter().find(|&entry| entry.time == time)
+impl FindData for Vec<Data> {
+    fn find(&self, time: &str) -> Option<&<Self as IntoIterator>::Item> {
+        self.iter().find(|&data| data.time == time)
     }
 
-    #[must_use]
-    fn latest(&self) -> Entry {
-        let mut latest = &Entry::default();
-        for entry in self {
-            if latest.time < entry.time {
-                latest = entry;
+    fn latest(&self) -> <Self as IntoIterator>::Item {
+        let mut latest = &Data::default();
+        for data in self {
+            if latest.time < data.time {
+                latest = data;
             }
         }
         latest.clone()
     }
 
-    fn latest_n(&self, n: usize) -> Result<Vec<&Entry>> {
-        let mut time_list = self.iter().map(|entry| &entry.time).collect::<Vec<_>>();
+    fn latest_n(&self, n: usize) -> Result<Vec<&<Self as IntoIterator>::Item>> {
+        let mut time_list = self.iter().map(|data| &data.time).collect::<Vec<_>>();
         time_list.sort_by_key(|w| cmp::Reverse(*w));
 
         if n > time_list.len() {
-            return Err(Error::DesiredNumberOfEntryNotPresent(time_list.len()));
+            return Err(Error::DesiredNumberOfDataNotPresent(time_list.len()));
         }
 
-        let mut full_list = Vec::<&Entry>::new();
+        let mut full_list = Vec::<&Data>::new();
 
         for time in &time_list[0..n] {
             full_list.push(self.find(time).unwrap());

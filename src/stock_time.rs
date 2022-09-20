@@ -20,6 +20,7 @@ use serde::Deserialize;
 use crate::api::{ApiClient, OutputSize, TimeSeriesInterval};
 use crate::deserialize::from_str;
 use crate::error::{detect_common_helper_error, Error, Result};
+use crate::vec_trait::FindData;
 
 /// Struct for storing Meta Data value
 #[derive(Debug, Clone, Default)]
@@ -32,9 +33,9 @@ pub struct MetaData {
     time_zone: String,
 }
 
-/// Struct for Entry value
+/// Struct for Data value
 #[derive(Default, Debug, Clone)]
-pub struct Entry {
+pub struct Data {
     time: String,
     open: f64,
     high: f64,
@@ -46,7 +47,7 @@ pub struct Entry {
     split_coefficient: Option<f64>,
 }
 
-impl Entry {
+impl Data {
     /// Get time
     #[must_use]
     pub fn time(&self) -> &str {
@@ -106,7 +107,7 @@ impl Entry {
 #[derive(Debug, Default)]
 pub struct TimeSeries {
     meta_data: MetaData,
-    entry: Vec<Entry>,
+    data: Vec<Data>,
 }
 
 impl TimeSeries {
@@ -213,10 +214,10 @@ impl TimeSeries {
         self.operate_option_meta_value("output size")
     }
 
-    /// Return Entry
+    /// Return Data
     #[must_use]
-    pub fn entry(&self) -> &Vec<Entry> {
-        &self.entry
+    pub fn data(&self) -> &Vec<Data> {
+        &self.data
     }
 
     /// Return a meta data value as a form of String
@@ -243,7 +244,7 @@ impl TimeSeries {
 
 /// Helper struct to store non adjusted data
 #[derive(Clone, Deserialize)]
-struct EntryHelper {
+struct DataHelper {
     #[serde(rename = "1. open", deserialize_with = "from_str")]
     open: f64,
     #[serde(rename = "2. high", deserialize_with = "from_str")]
@@ -289,7 +290,7 @@ pub(crate) struct TimeSeriesHelper {
     #[serde(rename = "Meta Data")]
     meta_data: Option<HashMap<String, String>>,
     #[serde(flatten)]
-    time_series: Option<HashMap<String, HashMap<String, EntryHelper>>>,
+    time_series: Option<HashMap<String, HashMap<String, DataHelper>>>,
     #[serde(flatten)]
     adjusted_series: Option<HashMap<String, HashMap<String, AdjustedHelper>>>,
 }
@@ -333,23 +334,23 @@ impl TimeSeriesHelper {
             time_zone: time_zone.to_string(),
         };
 
-        let mut entry_value: Vec<Entry> = Vec::new();
+        let mut data_value: Vec<Data> = Vec::new();
 
         if let Some(time_series) = self.time_series {
             for hash in time_series.values() {
                 for val in hash.keys() {
-                    let entry_helper = hash
+                    let data_helper = hash
                         .get(val)
                         .expect("failed to get value from Stock time hashmap");
 
-                    entry_value.push(Entry {
+                    data_value.push(Data {
                         time: val.to_string(),
-                        open: entry_helper.open,
-                        high: entry_helper.high,
-                        low: entry_helper.low,
-                        close: entry_helper.close,
-                        volume: entry_helper.volume,
-                        ..Entry::default()
+                        open: data_helper.open,
+                        high: data_helper.high,
+                        low: data_helper.low,
+                        close: data_helper.close,
+                        volume: data_helper.volume,
+                        ..Data::default()
                     });
                 }
             }
@@ -358,70 +359,58 @@ impl TimeSeriesHelper {
         if let Some(adjusted_series) = self.adjusted_series {
             for hash in adjusted_series.values() {
                 for val in hash.keys() {
-                    let entry_helper = hash
+                    let data_helper = hash
                         .get(val)
                         .expect("failed to get value from adjusted series");
 
-                    entry_value.push(Entry {
+                    data_value.push(Data {
                         time: val.to_string(),
-                        open: entry_helper.open,
-                        high: entry_helper.high,
-                        low: entry_helper.low,
-                        close: entry_helper.close,
-                        volume: entry_helper.volume,
-                        adjusted_close: option_from_str(&entry_helper.adjusted_close),
-                        split_coefficient: option_from_str(&entry_helper.split_coefficient),
-                        dividend_amount: option_from_str(&entry_helper.dividend_amount),
+                        open: data_helper.open,
+                        high: data_helper.high,
+                        low: data_helper.low,
+                        close: data_helper.close,
+                        volume: data_helper.volume,
+                        adjusted_close: option_from_str(&data_helper.adjusted_close),
+                        split_coefficient: option_from_str(&data_helper.split_coefficient),
+                        dividend_amount: option_from_str(&data_helper.dividend_amount),
                     });
                 }
             }
         }
 
         Ok(TimeSeries {
-            entry: entry_value,
+            data: data_value,
             meta_data,
         })
     }
 }
 
-/// trait which helps for performing some common operation on Vec<Entry>
-pub trait VecEntry {
-    /// Find a entry with a given time as a input return none if no entry found
-    fn find(&self, time: &str) -> Option<&Entry>;
-    /// Return a entry which is of latest time period
-    fn latest(&self) -> Entry;
-    /// Return a top n latest Entry
-    /// # Errors
-    /// If n is greater than no of entry
-    fn latest_n(&self, n: usize) -> Result<Vec<&Entry>>;
-}
-
-impl VecEntry for Vec<Entry> {
+impl FindData for Vec<Data> {
     #[must_use]
-    fn find(&self, time: &str) -> Option<&Entry> {
-        self.iter().find(|&entry| entry.time == time)
+    fn find(&self, time: &str) -> Option<&<Self as IntoIterator>::Item> {
+        self.iter().find(|&data| data.time == time)
     }
 
     #[must_use]
-    fn latest(&self) -> Entry {
-        let mut latest = &Entry::default();
-        for entry in self {
-            if latest.time < entry.time {
-                latest = entry;
+    fn latest(&self) -> <Self as IntoIterator>::Item {
+        let mut latest = &Data::default();
+        for data in self {
+            if latest.time < data.time {
+                latest = data;
             }
         }
         latest.clone()
     }
 
-    fn latest_n(&self, n: usize) -> Result<Vec<&Entry>> {
-        let mut time_list = self.iter().map(|entry| &entry.time).collect::<Vec<_>>();
+    fn latest_n(&self, n: usize) -> Result<Vec<&<Self as IntoIterator>::Item>> {
+        let mut time_list = self.iter().map(|data| &data.time).collect::<Vec<_>>();
         time_list.sort_by_key(|w| cmp::Reverse(*w));
 
         if n > time_list.len() {
-            return Err(Error::DesiredNumberOfEntryNotPresent(time_list.len()));
+            return Err(Error::DesiredNumberOfDataNotPresent(time_list.len()));
         }
 
-        let mut full_list = Vec::<&Entry>::new();
+        let mut full_list = Vec::<&Data>::new();
 
         for time in &time_list[0..n] {
             full_list.push(self.find(time).unwrap());

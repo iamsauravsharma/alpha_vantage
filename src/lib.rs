@@ -44,6 +44,8 @@ pub mod stock_time;
 
 pub mod technical_indicator;
 
+pub mod vec_trait;
+
 pub use self::api::ApiClient;
 use self::client::HttpClient;
 

@@ -22,11 +22,7 @@ pub enum Error {
     #[error("note: {0}")]
     AlphaVantageNote(String),
 
-    /// Error which is raised when desired number of entry is not present
-    #[error("desired number of latest entry not found try using less than {0} as n")]
-    DesiredNumberOfEntryNotPresent(usize),
-
-    /// Error which is raised when desired number of entry is not present
+    /// Error which is raised when desired number of data is not present
     #[error("desired number of latest data not found try using less than {0} as n")]
     DesiredNumberOfDataNotPresent(usize),
 

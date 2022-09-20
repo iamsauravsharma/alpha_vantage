@@ -16,7 +16,7 @@ use crate::error::{detect_common_helper_error, Error, Result};
 
 /// Struct which stores matches data for search keyword
 #[derive(Debug, Clone, Deserialize, Default)]
-pub struct DataValue {
+pub struct Match {
     #[serde(rename = "1. symbol")]
     symbol: String,
     #[serde(rename = "2. name")]
@@ -37,7 +37,7 @@ pub struct DataValue {
     match_score: f64,
 }
 
-impl DataValue {
+impl Match {
     /// Return symbol
     ///
     /// ```
@@ -45,7 +45,7 @@ impl DataValue {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let search = api.search("BA").json().await.unwrap();
-    ///     let symbol = search.result()[0].symbol();
+    ///     let symbol = search.matches()[0].symbol();
     ///     assert_eq!(symbol, "BA");
     /// }
     /// ```
@@ -61,7 +61,7 @@ impl DataValue {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let search = api.search("BA").json().await.unwrap();
-    ///     let name = search.result()[0].name();
+    ///     let name = search.matches()[0].name();
     ///     assert_eq!(name, "Boeing Company");
     /// }
     /// ```
@@ -77,7 +77,7 @@ impl DataValue {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let search = api.search("BA").json().await.unwrap();
-    ///     let stock_type = search.result()[0].stock_type();
+    ///     let stock_type = search.matches()[0].stock_type();
     ///     assert_eq!(stock_type, "Equity");
     /// }
     #[must_use]
@@ -85,14 +85,14 @@ impl DataValue {
         &self.stock_type
     }
 
-    /// Return region of search entry
+    /// Return region of search data
     ///
     /// ```
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let search = api.search("BA").json().await.unwrap();
-    ///     let region = search.result()[0].region();
+    ///     let region = search.matches()[0].region();
     ///     assert_eq!(region, "United States");
     /// }
     #[must_use]
@@ -107,7 +107,7 @@ impl DataValue {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let search = api.search("BA").json().await.unwrap();
-    ///     let market_open = search.result()[0].market_open();
+    ///     let market_open = search.matches()[0].market_open();
     ///     assert_eq!(market_open, "09:30");
     /// }
     #[must_use]
@@ -122,7 +122,7 @@ impl DataValue {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let search = api.search("BA").json().await.unwrap();
-    ///     let market_close = search.result()[0].market_close();
+    ///     let market_close = search.matches()[0].market_close();
     ///     assert_eq!(market_close, "16:00");
     /// }
     #[must_use]
@@ -143,7 +143,7 @@ impl DataValue {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let search = api.search("BA").json().await.unwrap();
-    ///     let currency = search.result()[0].currency();
+    ///     let currency = search.matches()[0].currency();
     ///     assert_eq!(currency, "USD");
     /// }
     #[must_use]
@@ -158,7 +158,7 @@ impl DataValue {
     /// async fn main() {
     ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
     ///     let search = api.search("BA").json().await.unwrap();
-    ///     let match_score = search.result()[0].match_score();
+    ///     let match_score = search.matches()[0].match_score();
     ///     assert_eq!(match_score, 1.0);
     /// }
     #[must_use]
@@ -170,13 +170,13 @@ impl DataValue {
 /// struct for storing search method data
 #[derive(Default)]
 pub struct Search {
-    matches: Vec<DataValue>,
+    matches: Vec<Match>,
 }
 
 impl Search {
     /// Return result of search
     #[must_use]
-    pub fn result(&self) -> &Vec<DataValue> {
+    pub fn matches(&self) -> &Vec<Match> {
         &self.matches
     }
 }
@@ -189,7 +189,7 @@ pub(crate) struct SearchHelper {
     #[serde(rename = "Note")]
     note: Option<String>,
     #[serde(rename = "bestMatches")]
-    matches: Option<Vec<DataValue>>,
+    matches: Option<Vec<Match>>,
 }
 
 impl SearchHelper {

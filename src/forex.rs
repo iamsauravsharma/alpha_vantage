@@ -17,6 +17,7 @@ use serde::Deserialize;
 use crate::api::{ApiClient, OutputSize, TimeSeriesInterval};
 use crate::deserialize::from_str;
 use crate::error::{detect_common_helper_error, Error, Result};
+use crate::vec_trait::FindData;
 
 /// Struct used to store metadata value
 #[derive(Debug, Clone, Default)]
@@ -30,9 +31,9 @@ struct MetaData {
     time_zone: String,
 }
 
-/// Struct to store Entry value
+/// Struct to store Data value
 #[derive(Default, Debug, Clone)]
-pub struct Entry {
+pub struct Data {
     time: String,
     open: f64,
     high: f64,
@@ -40,8 +41,8 @@ pub struct Entry {
     close: f64,
 }
 
-impl Entry {
-    /// Return time for entry
+impl Data {
+    /// Return time for data
     #[must_use]
     pub fn time(&self) -> &str {
         &self.time
@@ -76,7 +77,7 @@ impl Entry {
 #[derive(Debug, Default)]
 pub struct Forex {
     meta_data: MetaData,
-    forex: Vec<Entry>,
+    data: Vec<Data>,
 }
 
 impl Forex {
@@ -202,10 +203,10 @@ impl Forex {
         self.operate_option_meta_value("output size")
     }
 
-    /// Method return Entry
+    /// Method return Data
     #[must_use]
-    pub fn entry(&self) -> &Vec<Entry> {
-        &self.forex
+    pub fn data(&self) -> &Vec<Data> {
+        &self.data
     }
 
     /// Return a meta data field
@@ -231,9 +232,9 @@ impl Forex {
     }
 }
 
-/// Entry Helper
+/// Data Helper
 #[derive(Clone, Debug, Deserialize)]
-struct EntryHelper {
+struct DataHelper {
     #[serde(rename = "1. open", deserialize_with = "from_str")]
     open: f64,
     #[serde(rename = "2. high", deserialize_with = "from_str")]
@@ -256,7 +257,7 @@ pub(crate) struct ForexHelper {
     #[serde(rename = "Meta Data")]
     meta_data: Option<HashMap<String, String>>,
     #[serde(flatten)]
-    forex: Option<HashMap<String, HashMap<String, EntryHelper>>>,
+    forex: Option<HashMap<String, HashMap<String, DataHelper>>>,
 }
 
 impl ForexHelper {
@@ -305,68 +306,56 @@ impl ForexHelper {
             output_size: output_size_value.map(ToString::to_string),
             time_zone: time_zone_value.to_string(),
         };
-        let mut forex_entries: Vec<Entry> = Vec::new();
+        let mut data_entries: Vec<Data> = Vec::new();
         for hash in self.forex.unwrap().values() {
             for val in hash.keys() {
-                let entry_helper = hash
+                let data_helper = hash
                     .get(val)
                     .expect("failed to get value from Forex hashmap");
 
-                forex_entries.push(Entry {
+                data_entries.push(Data {
                     time: val.to_string(),
-                    open: entry_helper.open,
-                    high: entry_helper.high,
-                    low: entry_helper.low,
-                    close: entry_helper.close,
+                    open: data_helper.open,
+                    high: data_helper.high,
+                    low: data_helper.low,
+                    close: data_helper.close,
                 });
             }
         }
 
         Ok(Forex {
-            forex: forex_entries,
+            data: data_entries,
             meta_data,
         })
     }
 }
 
-/// trait which helps for performing some common operation on Vec<Entry>
-pub trait VecEntry {
-    /// Find a entry with a given time as a input return none if no entry found
-    fn find(&self, time: &str) -> Option<&Entry>;
-    /// Return a entry which is of latest time period
-    fn latest(&self) -> Entry;
-    /// Return a top n latest Entry
-    /// # Errors
-    /// If n is greater than no of entry
-    fn latest_n(&self, n: usize) -> Result<Vec<&Entry>>;
-}
-
-impl VecEntry for Vec<Entry> {
+impl FindData for Vec<Data> {
     #[must_use]
-    fn find(&self, time: &str) -> Option<&Entry> {
-        self.iter().find(|&entry| entry.time == time)
+    fn find(&self, time: &str) -> Option<&<Self as IntoIterator>::Item> {
+        self.iter().find(|&data| data.time == time)
     }
 
     #[must_use]
-    fn latest(&self) -> Entry {
-        let mut latest = &Entry::default();
-        for entry in self {
-            if latest.time < entry.time {
-                latest = entry;
+    fn latest(&self) -> <Self as IntoIterator>::Item {
+        let mut latest = &Data::default();
+        for data in self {
+            if latest.time < data.time {
+                latest = data;
             }
         }
         latest.clone()
     }
 
-    fn latest_n(&self, n: usize) -> Result<Vec<&Entry>> {
-        let mut time_list = self.iter().map(|entry| &entry.time).collect::<Vec<_>>();
+    fn latest_n(&self, n: usize) -> Result<Vec<&<Self as IntoIterator>::Item>> {
+        let mut time_list = self.iter().map(|data| &data.time).collect::<Vec<_>>();
         time_list.sort_by_key(|w| cmp::Reverse(*w));
 
         if n > time_list.len() {
-            return Err(Error::DesiredNumberOfEntryNotPresent(time_list.len()));
+            return Err(Error::DesiredNumberOfDataNotPresent(time_list.len()));
         }
 
-        let mut full_list = Vec::<&Entry>::new();
+        let mut full_list = Vec::<&Data>::new();
 
         for time in &time_list[0..n] {
             full_list.push(self.find(time).unwrap());
