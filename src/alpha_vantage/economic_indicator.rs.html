@@ -241,17 +241,6 @@
 <span id="241">241</span>
 <span id="242">242</span>
 <span id="243">243</span>
-<span id="244">244</span>
-<span id="245">245</span>
-<span id="246">246</span>
-<span id="247">247</span>
-<span id="248">248</span>
-<span id="249">249</span>
-<span id="250">250</span>
-<span id="251">251</span>
-<span id="252">252</span>
-<span id="253">253</span>
-<span id="254">254</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Module for Economic Indicator
 //!
 //! APIs under this section provide key US economic indicators frequently used
@@ -269,6 +258,7 @@
 <span class="kw">use </span><span class="kw">crate</span>::api::ApiClient;
 <span class="kw">use </span><span class="kw">crate</span>::deserialize::from_str;
 <span class="kw">use </span><span class="kw">crate</span>::error::{detect_common_helper_error, Error, <span class="prelude-ty">Result</span>};
+<span class="kw">use </span><span class="kw">crate</span>::vec_trait::FindData;
 
 <span class="doccomment">/// Struct for storing a data values
 </span><span class="attribute">#[derive(Default, Debug, Deserialize, Clone)]
@@ -292,26 +282,14 @@
     }
 }
 
-<span class="doccomment">/// trait which helps for performing some common operation on Vec&lt;Data&gt;
-</span><span class="kw">pub trait </span>VecData {
-    <span class="doccomment">/// Find a data with a given date as a input return none if no data found
-    </span><span class="kw">fn </span>find(<span class="kw-2">&amp;</span><span class="self">self</span>, date: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Data&gt;;
-    <span class="doccomment">/// Return a data which is of latest date period
-    </span><span class="kw">fn </span>latest(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Data;
-    <span class="doccomment">/// Return a top n latest data
-    /// # Errors
-    /// If n is greater than no of data
-    </span><span class="kw">fn </span>latest_n(<span class="kw-2">&amp;</span><span class="self">self</span>, n: usize) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;<span class="kw-2">&amp;</span>Data&gt;&gt;;
-}
-
-<span class="kw">impl </span>VecData <span class="kw">for </span>Vec&lt;Data&gt; {
+<span class="kw">impl </span>FindData <span class="kw">for </span>Vec&lt;Data&gt; {
     <span class="attribute">#[must_use]
-    </span><span class="kw">fn </span>find(<span class="kw-2">&amp;</span><span class="self">self</span>, date: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Data&gt; {
-        <span class="self">self</span>.iter().find(|<span class="kw-2">&amp;</span>entry| entry.date == date)
+    </span><span class="kw">fn </span>find(<span class="kw-2">&amp;</span><span class="self">self</span>, time: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>&lt;<span class="self">Self </span><span class="kw">as </span>IntoIterator&gt;::Item&gt; {
+        <span class="self">self</span>.iter().find(|<span class="kw-2">&amp;</span>data| data.date == time)
     }
 
     <span class="attribute">#[must_use]
-    </span><span class="kw">fn </span>latest(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Data {
+    </span><span class="kw">fn </span>latest(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; &lt;<span class="self">Self </span><span class="kw">as </span>IntoIterator&gt;::Item {
         <span class="kw">let </span><span class="kw-2">mut </span>latest = <span class="kw-2">&amp;</span>Data::default();
         <span class="kw">for </span>data <span class="kw">in </span><span class="self">self </span>{
             <span class="kw">if </span>latest.date &lt; data.date {
@@ -321,7 +299,7 @@
         latest.clone()
     }
 
-    <span class="kw">fn </span>latest_n(<span class="kw-2">&amp;</span><span class="self">self</span>, n: usize) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;<span class="kw-2">&amp;</span>Data&gt;&gt; {
+    <span class="kw">fn </span>latest_n(<span class="kw-2">&amp;</span><span class="self">self</span>, n: usize) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;<span class="kw-2">&amp;</span>&lt;<span class="self">Self </span><span class="kw">as </span>IntoIterator&gt;::Item&gt;&gt; {
         <span class="kw">let </span><span class="kw-2">mut </span>date_list = <span class="self">self</span>.iter().map(|data| <span class="kw-2">&amp;</span>data.date).collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;();
         date_list.sort_by_key(|w| cmp::Reverse(<span class="kw-2">*</span>w));
 
@@ -507,4 +485,4 @@
     </span>ThirtyYear,
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (95a992a68 2022-09-16)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (2019147c5 2022-09-19)" ></div></body></html>

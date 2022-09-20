@@ -565,17 +565,6 @@
 <span id="565">565</span>
 <span id="566">566</span>
 <span id="567">567</span>
-<span id="568">568</span>
-<span id="569">569</span>
-<span id="570">570</span>
-<span id="571">571</span>
-<span id="572">572</span>
-<span id="573">573</span>
-<span id="574">574</span>
-<span id="575">575</span>
-<span id="576">576</span>
-<span id="577">577</span>
-<span id="578">578</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Module for stock time series
 //!
 //! This suite of APIs provide realtime and historical global equity data in 4
@@ -598,6 +587,7 @@
 <span class="kw">use </span><span class="kw">crate</span>::api::{ApiClient, OutputSize, TimeSeriesInterval};
 <span class="kw">use </span><span class="kw">crate</span>::deserialize::from_str;
 <span class="kw">use </span><span class="kw">crate</span>::error::{detect_common_helper_error, Error, <span class="prelude-ty">Result</span>};
+<span class="kw">use </span><span class="kw">crate</span>::vec_trait::FindData;
 
 <span class="doccomment">/// Struct for storing Meta Data value
 </span><span class="attribute">#[derive(Debug, Clone, Default)]
@@ -610,9 +600,9 @@
     time_zone: String,
 }
 
-<span class="doccomment">/// Struct for Entry value
+<span class="doccomment">/// Struct for Data value
 </span><span class="attribute">#[derive(Default, Debug, Clone)]
-</span><span class="kw">pub struct </span>Entry {
+</span><span class="kw">pub struct </span>Data {
     time: String,
     open: f64,
     high: f64,
@@ -624,7 +614,7 @@
     split_coefficient: <span class="prelude-ty">Option</span>&lt;f64&gt;,
 }
 
-<span class="kw">impl </span>Entry {
+<span class="kw">impl </span>Data {
     <span class="doccomment">/// Get time
     </span><span class="attribute">#[must_use]
     </span><span class="kw">pub fn </span>time(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
@@ -684,7 +674,7 @@
 </span><span class="attribute">#[derive(Debug, Default)]
 </span><span class="kw">pub struct </span>TimeSeries {
     meta_data: MetaData,
-    entry: Vec&lt;Entry&gt;,
+    data: Vec&lt;Data&gt;,
 }
 
 <span class="kw">impl </span>TimeSeries {
@@ -791,10 +781,10 @@
         <span class="self">self</span>.operate_option_meta_value(<span class="string">&quot;output size&quot;</span>)
     }
 
-    <span class="doccomment">/// Return Entry
+    <span class="doccomment">/// Return Data
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>entry(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Vec&lt;Entry&gt; {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.entry
+    </span><span class="kw">pub fn </span>data(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Vec&lt;Data&gt; {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.data
     }
 
     <span class="doccomment">/// Return a meta data value as a form of String
@@ -821,7 +811,7 @@
 
 <span class="doccomment">/// Helper struct to store non adjusted data
 </span><span class="attribute">#[derive(Clone, Deserialize)]
-</span><span class="kw">struct </span>EntryHelper {
+</span><span class="kw">struct </span>DataHelper {
     <span class="attribute">#[serde(rename = <span class="string">&quot;1. open&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]
     </span>open: f64,
     <span class="attribute">#[serde(rename = <span class="string">&quot;2. high&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]
@@ -867,7 +857,7 @@
     <span class="attribute">#[serde(rename = <span class="string">&quot;Meta Data&quot;</span>)]
     </span>meta_data: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, String&gt;&gt;,
     <span class="attribute">#[serde(flatten)]
-    </span>time_series: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, HashMap&lt;String, EntryHelper&gt;&gt;&gt;,
+    </span>time_series: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, HashMap&lt;String, DataHelper&gt;&gt;&gt;,
     <span class="attribute">#[serde(flatten)]
     </span>adjusted_series: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, HashMap&lt;String, AdjustedHelper&gt;&gt;&gt;,
 }
@@ -911,23 +901,23 @@
             time_zone: time_zone.to_string(),
         };
 
-        <span class="kw">let </span><span class="kw-2">mut </span>entry_value: Vec&lt;Entry&gt; = Vec::new();
+        <span class="kw">let </span><span class="kw-2">mut </span>data_value: Vec&lt;Data&gt; = Vec::new();
 
         <span class="kw">if let </span><span class="prelude-val">Some</span>(time_series) = <span class="self">self</span>.time_series {
             <span class="kw">for </span>hash <span class="kw">in </span>time_series.values() {
                 <span class="kw">for </span>val <span class="kw">in </span>hash.keys() {
-                    <span class="kw">let </span>entry_helper = hash
+                    <span class="kw">let </span>data_helper = hash
                         .get(val)
                         .expect(<span class="string">&quot;failed to get value from Stock time hashmap&quot;</span>);
 
-                    entry_value.push(Entry {
+                    data_value.push(Data {
                         time: val.to_string(),
-                        open: entry_helper.open,
-                        high: entry_helper.high,
-                        low: entry_helper.low,
-                        close: entry_helper.close,
-                        volume: entry_helper.volume,
-                        ..Entry::default()
+                        open: data_helper.open,
+                        high: data_helper.high,
+                        low: data_helper.low,
+                        close: data_helper.close,
+                        volume: data_helper.volume,
+                        ..Data::default()
                     });
                 }
             }
@@ -936,70 +926,58 @@
         <span class="kw">if let </span><span class="prelude-val">Some</span>(adjusted_series) = <span class="self">self</span>.adjusted_series {
             <span class="kw">for </span>hash <span class="kw">in </span>adjusted_series.values() {
                 <span class="kw">for </span>val <span class="kw">in </span>hash.keys() {
-                    <span class="kw">let </span>entry_helper = hash
+                    <span class="kw">let </span>data_helper = hash
                         .get(val)
                         .expect(<span class="string">&quot;failed to get value from adjusted series&quot;</span>);
 
-                    entry_value.push(Entry {
+                    data_value.push(Data {
                         time: val.to_string(),
-                        open: entry_helper.open,
-                        high: entry_helper.high,
-                        low: entry_helper.low,
-                        close: entry_helper.close,
-                        volume: entry_helper.volume,
-                        adjusted_close: option_from_str(<span class="kw-2">&amp;</span>entry_helper.adjusted_close),
-                        split_coefficient: option_from_str(<span class="kw-2">&amp;</span>entry_helper.split_coefficient),
-                        dividend_amount: option_from_str(<span class="kw-2">&amp;</span>entry_helper.dividend_amount),
+                        open: data_helper.open,
+                        high: data_helper.high,
+                        low: data_helper.low,
+                        close: data_helper.close,
+                        volume: data_helper.volume,
+                        adjusted_close: option_from_str(<span class="kw-2">&amp;</span>data_helper.adjusted_close),
+                        split_coefficient: option_from_str(<span class="kw-2">&amp;</span>data_helper.split_coefficient),
+                        dividend_amount: option_from_str(<span class="kw-2">&amp;</span>data_helper.dividend_amount),
                     });
                 }
             }
         }
 
         <span class="prelude-val">Ok</span>(TimeSeries {
-            entry: entry_value,
+            data: data_value,
             meta_data,
         })
     }
 }
 
-<span class="doccomment">/// trait which helps for performing some common operation on Vec&lt;Entry&gt;
-</span><span class="kw">pub trait </span>VecEntry {
-    <span class="doccomment">/// Find a entry with a given time as a input return none if no entry found
-    </span><span class="kw">fn </span>find(<span class="kw-2">&amp;</span><span class="self">self</span>, time: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Entry&gt;;
-    <span class="doccomment">/// Return a entry which is of latest time period
-    </span><span class="kw">fn </span>latest(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Entry;
-    <span class="doccomment">/// Return a top n latest Entry
-    /// # Errors
-    /// If n is greater than no of entry
-    </span><span class="kw">fn </span>latest_n(<span class="kw-2">&amp;</span><span class="self">self</span>, n: usize) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;<span class="kw-2">&amp;</span>Entry&gt;&gt;;
-}
-
-<span class="kw">impl </span>VecEntry <span class="kw">for </span>Vec&lt;Entry&gt; {
+<span class="kw">impl </span>FindData <span class="kw">for </span>Vec&lt;Data&gt; {
     <span class="attribute">#[must_use]
-    </span><span class="kw">fn </span>find(<span class="kw-2">&amp;</span><span class="self">self</span>, time: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Entry&gt; {
-        <span class="self">self</span>.iter().find(|<span class="kw-2">&amp;</span>entry| entry.time == time)
+    </span><span class="kw">fn </span>find(<span class="kw-2">&amp;</span><span class="self">self</span>, time: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>&lt;<span class="self">Self </span><span class="kw">as </span>IntoIterator&gt;::Item&gt; {
+        <span class="self">self</span>.iter().find(|<span class="kw-2">&amp;</span>data| data.time == time)
     }
 
     <span class="attribute">#[must_use]
-    </span><span class="kw">fn </span>latest(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Entry {
-        <span class="kw">let </span><span class="kw-2">mut </span>latest = <span class="kw-2">&amp;</span>Entry::default();
-        <span class="kw">for </span>entry <span class="kw">in </span><span class="self">self </span>{
-            <span class="kw">if </span>latest.time &lt; entry.time {
-                latest = entry;
+    </span><span class="kw">fn </span>latest(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; &lt;<span class="self">Self </span><span class="kw">as </span>IntoIterator&gt;::Item {
+        <span class="kw">let </span><span class="kw-2">mut </span>latest = <span class="kw-2">&amp;</span>Data::default();
+        <span class="kw">for </span>data <span class="kw">in </span><span class="self">self </span>{
+            <span class="kw">if </span>latest.time &lt; data.time {
+                latest = data;
             }
         }
         latest.clone()
     }
 
-    <span class="kw">fn </span>latest_n(<span class="kw-2">&amp;</span><span class="self">self</span>, n: usize) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;<span class="kw-2">&amp;</span>Entry&gt;&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>time_list = <span class="self">self</span>.iter().map(|entry| <span class="kw-2">&amp;</span>entry.time).collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;();
+    <span class="kw">fn </span>latest_n(<span class="kw-2">&amp;</span><span class="self">self</span>, n: usize) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;<span class="kw-2">&amp;</span>&lt;<span class="self">Self </span><span class="kw">as </span>IntoIterator&gt;::Item&gt;&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>time_list = <span class="self">self</span>.iter().map(|data| <span class="kw-2">&amp;</span>data.time).collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;();
         time_list.sort_by_key(|w| cmp::Reverse(<span class="kw-2">*</span>w));
 
         <span class="kw">if </span>n &gt; time_list.len() {
-            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::DesiredNumberOfEntryNotPresent(time_list.len()));
+            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::DesiredNumberOfDataNotPresent(time_list.len()));
         }
 
-        <span class="kw">let </span><span class="kw-2">mut </span>full_list = Vec::&lt;<span class="kw-2">&amp;</span>Entry&gt;::new();
+        <span class="kw">let </span><span class="kw-2">mut </span>full_list = Vec::&lt;<span class="kw-2">&amp;</span>Data&gt;::new();
 
         <span class="kw">for </span>time <span class="kw">in </span><span class="kw-2">&amp;</span>time_list[<span class="number">0</span>..n] {
             full_list.push(<span class="self">self</span>.find(time).unwrap());
@@ -1155,4 +1133,4 @@
     </span>MonthlyAdjusted,
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (95a992a68 2022-09-16)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (2019147c5 2022-09-19)" ></div></body></html>

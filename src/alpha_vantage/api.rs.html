@@ -627,13 +627,13 @@
     /// async fn main() {
     ///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());
     ///     let search = api.search(&quot;BA&quot;).json().await.unwrap();
-    ///     let first_search_result = &amp;search.result()[0];
-    ///     assert_eq!(first_search_result.symbol(), &quot;BA&quot;);
-    ///     assert_eq!(first_search_result.name(), &quot;Boeing Company&quot;);
-    ///     assert_eq!(first_search_result.stock_type(), &quot;Equity&quot;);
-    ///     assert_eq!(first_search_result.region(), &quot;United States&quot;);
-    ///     assert_eq!(first_search_result.currency(), &quot;USD&quot;);
-    ///     assert_eq!(first_search_result.match_score(), 1.0);
+    ///     let first_search_match = &amp;search.matches()[0];
+    ///     assert_eq!(first_search_match.symbol(), &quot;BA&quot;);
+    ///     assert_eq!(first_search_match.name(), &quot;Boeing Company&quot;);
+    ///     assert_eq!(first_search_match.stock_type(), &quot;Equity&quot;);
+    ///     assert_eq!(first_search_match.region(), &quot;United States&quot;);
+    ///     assert_eq!(first_search_match.currency(), &quot;USD&quot;);
+    ///     assert_eq!(first_search_match.match_score(), 1.0);
     /// }
     /// ```
     </span><span class="attribute">#[must_use]
@@ -741,4 +741,4 @@
     </span>SixtyMin,
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (95a992a68 2022-09-16)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (2019147c5 2022-09-19)" ></div></body></html>

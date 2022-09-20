@@ -472,17 +472,6 @@
 <span id="472">472</span>
 <span id="473">473</span>
 <span id="474">474</span>
-<span id="475">475</span>
-<span id="476">476</span>
-<span id="477">477</span>
-<span id="478">478</span>
-<span id="479">479</span>
-<span id="480">480</span>
-<span id="481">481</span>
-<span id="482">482</span>
-<span id="483">483</span>
-<span id="484">484</span>
-<span id="485">485</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Module for Forex realtime and historical data
 //!
 //! APIs under this section provide a wide range of data feed for realtime and
@@ -502,6 +491,7 @@
 <span class="kw">use </span><span class="kw">crate</span>::api::{ApiClient, OutputSize, TimeSeriesInterval};
 <span class="kw">use </span><span class="kw">crate</span>::deserialize::from_str;
 <span class="kw">use </span><span class="kw">crate</span>::error::{detect_common_helper_error, Error, <span class="prelude-ty">Result</span>};
+<span class="kw">use </span><span class="kw">crate</span>::vec_trait::FindData;
 
 <span class="doccomment">/// Struct used to store metadata value
 </span><span class="attribute">#[derive(Debug, Clone, Default)]
@@ -515,9 +505,9 @@
     time_zone: String,
 }
 
-<span class="doccomment">/// Struct to store Entry value
+<span class="doccomment">/// Struct to store Data value
 </span><span class="attribute">#[derive(Default, Debug, Clone)]
-</span><span class="kw">pub struct </span>Entry {
+</span><span class="kw">pub struct </span>Data {
     time: String,
     open: f64,
     high: f64,
@@ -525,8 +515,8 @@
     close: f64,
 }
 
-<span class="kw">impl </span>Entry {
-    <span class="doccomment">/// Return time for entry
+<span class="kw">impl </span>Data {
+    <span class="doccomment">/// Return time for data
     </span><span class="attribute">#[must_use]
     </span><span class="kw">pub fn </span>time(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>str {
         <span class="kw-2">&amp;</span><span class="self">self</span>.time
@@ -561,7 +551,7 @@
 </span><span class="attribute">#[derive(Debug, Default)]
 </span><span class="kw">pub struct </span>Forex {
     meta_data: MetaData,
-    forex: Vec&lt;Entry&gt;,
+    data: Vec&lt;Data&gt;,
 }
 
 <span class="kw">impl </span>Forex {
@@ -687,10 +677,10 @@
         <span class="self">self</span>.operate_option_meta_value(<span class="string">&quot;output size&quot;</span>)
     }
 
-    <span class="doccomment">/// Method return Entry
+    <span class="doccomment">/// Method return Data
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>entry(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Vec&lt;Entry&gt; {
-        <span class="kw-2">&amp;</span><span class="self">self</span>.forex
+    </span><span class="kw">pub fn </span>data(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Vec&lt;Data&gt; {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.data
     }
 
     <span class="doccomment">/// Return a meta data field
@@ -716,9 +706,9 @@
     }
 }
 
-<span class="doccomment">/// Entry Helper
+<span class="doccomment">/// Data Helper
 </span><span class="attribute">#[derive(Clone, Debug, Deserialize)]
-</span><span class="kw">struct </span>EntryHelper {
+</span><span class="kw">struct </span>DataHelper {
     <span class="attribute">#[serde(rename = <span class="string">&quot;1. open&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]
     </span>open: f64,
     <span class="attribute">#[serde(rename = <span class="string">&quot;2. high&quot;</span>, deserialize_with = <span class="string">&quot;from_str&quot;</span>)]
@@ -741,7 +731,7 @@
     <span class="attribute">#[serde(rename = <span class="string">&quot;Meta Data&quot;</span>)]
     </span>meta_data: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, String&gt;&gt;,
     <span class="attribute">#[serde(flatten)]
-    </span>forex: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, HashMap&lt;String, EntryHelper&gt;&gt;&gt;,
+    </span>forex: <span class="prelude-ty">Option</span>&lt;HashMap&lt;String, HashMap&lt;String, DataHelper&gt;&gt;&gt;,
 }
 
 <span class="kw">impl </span>ForexHelper {
@@ -790,68 +780,56 @@
             output_size: output_size_value.map(ToString::to_string),
             time_zone: time_zone_value.to_string(),
         };
-        <span class="kw">let </span><span class="kw-2">mut </span>forex_entries: Vec&lt;Entry&gt; = Vec::new();
+        <span class="kw">let </span><span class="kw-2">mut </span>data_entries: Vec&lt;Data&gt; = Vec::new();
         <span class="kw">for </span>hash <span class="kw">in </span><span class="self">self</span>.forex.unwrap().values() {
             <span class="kw">for </span>val <span class="kw">in </span>hash.keys() {
-                <span class="kw">let </span>entry_helper = hash
+                <span class="kw">let </span>data_helper = hash
                     .get(val)
                     .expect(<span class="string">&quot;failed to get value from Forex hashmap&quot;</span>);
 
-                forex_entries.push(Entry {
+                data_entries.push(Data {
                     time: val.to_string(),
-                    open: entry_helper.open,
-                    high: entry_helper.high,
-                    low: entry_helper.low,
-                    close: entry_helper.close,
+                    open: data_helper.open,
+                    high: data_helper.high,
+                    low: data_helper.low,
+                    close: data_helper.close,
                 });
             }
         }
 
         <span class="prelude-val">Ok</span>(Forex {
-            forex: forex_entries,
+            data: data_entries,
             meta_data,
         })
     }
 }
 
-<span class="doccomment">/// trait which helps for performing some common operation on Vec&lt;Entry&gt;
-</span><span class="kw">pub trait </span>VecEntry {
-    <span class="doccomment">/// Find a entry with a given time as a input return none if no entry found
-    </span><span class="kw">fn </span>find(<span class="kw-2">&amp;</span><span class="self">self</span>, time: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Entry&gt;;
-    <span class="doccomment">/// Return a entry which is of latest time period
-    </span><span class="kw">fn </span>latest(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Entry;
-    <span class="doccomment">/// Return a top n latest Entry
-    /// # Errors
-    /// If n is greater than no of entry
-    </span><span class="kw">fn </span>latest_n(<span class="kw-2">&amp;</span><span class="self">self</span>, n: usize) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;<span class="kw-2">&amp;</span>Entry&gt;&gt;;
-}
-
-<span class="kw">impl </span>VecEntry <span class="kw">for </span>Vec&lt;Entry&gt; {
+<span class="kw">impl </span>FindData <span class="kw">for </span>Vec&lt;Data&gt; {
     <span class="attribute">#[must_use]
-    </span><span class="kw">fn </span>find(<span class="kw-2">&amp;</span><span class="self">self</span>, time: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>Entry&gt; {
-        <span class="self">self</span>.iter().find(|<span class="kw-2">&amp;</span>entry| entry.time == time)
+    </span><span class="kw">fn </span>find(<span class="kw-2">&amp;</span><span class="self">self</span>, time: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Option</span>&lt;<span class="kw-2">&amp;</span>&lt;<span class="self">Self </span><span class="kw">as </span>IntoIterator&gt;::Item&gt; {
+        <span class="self">self</span>.iter().find(|<span class="kw-2">&amp;</span>data| data.time == time)
     }
 
     <span class="attribute">#[must_use]
-    </span><span class="kw">fn </span>latest(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; Entry {
-        <span class="kw">let </span><span class="kw-2">mut </span>latest = <span class="kw-2">&amp;</span>Entry::default();
-        <span class="kw">for </span>entry <span class="kw">in </span><span class="self">self </span>{
-            <span class="kw">if </span>latest.time &lt; entry.time {
-                latest = entry;
+    </span><span class="kw">fn </span>latest(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; &lt;<span class="self">Self </span><span class="kw">as </span>IntoIterator&gt;::Item {
+        <span class="kw">let </span><span class="kw-2">mut </span>latest = <span class="kw-2">&amp;</span>Data::default();
+        <span class="kw">for </span>data <span class="kw">in </span><span class="self">self </span>{
+            <span class="kw">if </span>latest.time &lt; data.time {
+                latest = data;
             }
         }
         latest.clone()
     }
 
-    <span class="kw">fn </span>latest_n(<span class="kw-2">&amp;</span><span class="self">self</span>, n: usize) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;<span class="kw-2">&amp;</span>Entry&gt;&gt; {
-        <span class="kw">let </span><span class="kw-2">mut </span>time_list = <span class="self">self</span>.iter().map(|entry| <span class="kw-2">&amp;</span>entry.time).collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;();
+    <span class="kw">fn </span>latest_n(<span class="kw-2">&amp;</span><span class="self">self</span>, n: usize) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;<span class="kw-2">&amp;</span>&lt;<span class="self">Self </span><span class="kw">as </span>IntoIterator&gt;::Item&gt;&gt; {
+        <span class="kw">let </span><span class="kw-2">mut </span>time_list = <span class="self">self</span>.iter().map(|data| <span class="kw-2">&amp;</span>data.time).collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;();
         time_list.sort_by_key(|w| cmp::Reverse(<span class="kw-2">*</span>w));
 
         <span class="kw">if </span>n &gt; time_list.len() {
-            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::DesiredNumberOfEntryNotPresent(time_list.len()));
+            <span class="kw">return </span><span class="prelude-val">Err</span>(Error::DesiredNumberOfDataNotPresent(time_list.len()));
         }
 
-        <span class="kw">let </span><span class="kw-2">mut </span>full_list = Vec::&lt;<span class="kw-2">&amp;</span>Entry&gt;::new();
+        <span class="kw">let </span><span class="kw-2">mut </span>full_list = Vec::&lt;<span class="kw-2">&amp;</span>Data&gt;::new();
 
         <span class="kw">for </span>time <span class="kw">in </span><span class="kw-2">&amp;</span>time_list[<span class="number">0</span>..n] {
             full_list.push(<span class="self">self</span>.find(time).unwrap());
@@ -969,4 +947,4 @@
     </span>Monthly,
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (95a992a68 2022-09-16)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (2019147c5 2022-09-19)" ></div></body></html>

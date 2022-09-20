@@ -253,7 +253,7 @@
 
 <span class="doccomment">/// Struct which stores matches data for search keyword
 </span><span class="attribute">#[derive(Debug, Clone, Deserialize, Default)]
-</span><span class="kw">pub struct </span>DataValue {
+</span><span class="kw">pub struct </span>Match {
     <span class="attribute">#[serde(rename = <span class="string">&quot;1. symbol&quot;</span>)]
     </span>symbol: String,
     <span class="attribute">#[serde(rename = <span class="string">&quot;2. name&quot;</span>)]
@@ -274,7 +274,7 @@
     </span>match_score: f64,
 }
 
-<span class="kw">impl </span>DataValue {
+<span class="kw">impl </span>Match {
     <span class="doccomment">/// Return symbol
     ///
     /// ```
@@ -282,7 +282,7 @@
     /// async fn main() {
     ///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());
     ///     let search = api.search(&quot;BA&quot;).json().await.unwrap();
-    ///     let symbol = search.result()[0].symbol();
+    ///     let symbol = search.matches()[0].symbol();
     ///     assert_eq!(symbol, &quot;BA&quot;);
     /// }
     /// ```
@@ -298,7 +298,7 @@
     /// async fn main() {
     ///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());
     ///     let search = api.search(&quot;BA&quot;).json().await.unwrap();
-    ///     let name = search.result()[0].name();
+    ///     let name = search.matches()[0].name();
     ///     assert_eq!(name, &quot;Boeing Company&quot;);
     /// }
     /// ```
@@ -314,7 +314,7 @@
     /// async fn main() {
     ///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());
     ///     let search = api.search(&quot;BA&quot;).json().await.unwrap();
-    ///     let stock_type = search.result()[0].stock_type();
+    ///     let stock_type = search.matches()[0].stock_type();
     ///     assert_eq!(stock_type, &quot;Equity&quot;);
     /// }
     </span><span class="attribute">#[must_use]
@@ -322,14 +322,14 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>.stock_type
     }
 
-    <span class="doccomment">/// Return region of search entry
+    <span class="doccomment">/// Return region of search data
     ///
     /// ```
     /// #[tokio::main]
     /// async fn main() {
     ///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());
     ///     let search = api.search(&quot;BA&quot;).json().await.unwrap();
-    ///     let region = search.result()[0].region();
+    ///     let region = search.matches()[0].region();
     ///     assert_eq!(region, &quot;United States&quot;);
     /// }
     </span><span class="attribute">#[must_use]
@@ -344,7 +344,7 @@
     /// async fn main() {
     ///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());
     ///     let search = api.search(&quot;BA&quot;).json().await.unwrap();
-    ///     let market_open = search.result()[0].market_open();
+    ///     let market_open = search.matches()[0].market_open();
     ///     assert_eq!(market_open, &quot;09:30&quot;);
     /// }
     </span><span class="attribute">#[must_use]
@@ -359,7 +359,7 @@
     /// async fn main() {
     ///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());
     ///     let search = api.search(&quot;BA&quot;).json().await.unwrap();
-    ///     let market_close = search.result()[0].market_close();
+    ///     let market_close = search.matches()[0].market_close();
     ///     assert_eq!(market_close, &quot;16:00&quot;);
     /// }
     </span><span class="attribute">#[must_use]
@@ -380,7 +380,7 @@
     /// async fn main() {
     ///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());
     ///     let search = api.search(&quot;BA&quot;).json().await.unwrap();
-    ///     let currency = search.result()[0].currency();
+    ///     let currency = search.matches()[0].currency();
     ///     assert_eq!(currency, &quot;USD&quot;);
     /// }
     </span><span class="attribute">#[must_use]
@@ -395,7 +395,7 @@
     /// async fn main() {
     ///     let api = alpha_vantage::set_api(&quot;demo&quot;, reqwest::Client::new());
     ///     let search = api.search(&quot;BA&quot;).json().await.unwrap();
-    ///     let match_score = search.result()[0].match_score();
+    ///     let match_score = search.matches()[0].match_score();
     ///     assert_eq!(match_score, 1.0);
     /// }
     </span><span class="attribute">#[must_use]
@@ -407,13 +407,13 @@
 <span class="doccomment">/// struct for storing search method data
 </span><span class="attribute">#[derive(Default)]
 </span><span class="kw">pub struct </span>Search {
-    matches: Vec&lt;DataValue&gt;,
+    matches: Vec&lt;Match&gt;,
 }
 
 <span class="kw">impl </span>Search {
     <span class="doccomment">/// Return result of search
     </span><span class="attribute">#[must_use]
-    </span><span class="kw">pub fn </span>result(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Vec&lt;DataValue&gt; {
+    </span><span class="kw">pub fn </span>matches(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>Vec&lt;Match&gt; {
         <span class="kw-2">&amp;</span><span class="self">self</span>.matches
     }
 }
@@ -426,7 +426,7 @@
     <span class="attribute">#[serde(rename = <span class="string">&quot;Note&quot;</span>)]
     </span>note: <span class="prelude-ty">Option</span>&lt;String&gt;,
     <span class="attribute">#[serde(rename = <span class="string">&quot;bestMatches&quot;</span>)]
-    </span>matches: <span class="prelude-ty">Option</span>&lt;Vec&lt;DataValue&gt;&gt;,
+    </span>matches: <span class="prelude-ty">Option</span>&lt;Vec&lt;Match&gt;&gt;,
 }
 
 <span class="kw">impl </span>SearchHelper {
@@ -473,4 +473,4 @@
     }
 }
 </code></pre></div>
-</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (95a992a68 2022-09-16)" ></div></body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="alpha_vantage" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.66.0-nightly (2019147c5 2022-09-19)" ></div></body></html>
