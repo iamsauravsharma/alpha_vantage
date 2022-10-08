@@ -415,8 +415,8 @@ impl<'a> CryptoBuilder<'a> {
         };
 
         format!(
-            "query?function={}&symbol={}&market={}",
-            &function_name, &self.symbol, &self.market
+            "query?function={function_name}&symbol={}&market={}",
+            &self.symbol, &self.market
         )
     }
 

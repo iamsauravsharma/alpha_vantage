@@ -486,7 +486,7 @@ impl<'a> TimeSeriesBuilder<'a> {
             StockFunction::MonthlyAdjusted => "TIME_SERIES_MONTHLY_ADJUSTED",
         };
 
-        let mut url = format!("query?function={}&symbol={}", function, self.symbol);
+        let mut url = format!("query?function={function}&symbol={}", self.symbol);
 
         if let Some(stock_time_interval) = &self.interval {
             let interval = match stock_time_interval {
@@ -496,7 +496,7 @@ impl<'a> TimeSeriesBuilder<'a> {
                 TimeSeriesInterval::ThirtyMin => "30min",
                 TimeSeriesInterval::SixtyMin => "60min",
             };
-            write!(url, "&interval={}", interval).map_err(|_| Error::CreateUrl)?;
+            write!(url, "&interval={interval}").map_err(|_| Error::CreateUrl)?;
         };
 
         if let Some(stock_time_output_size) = &self.output_size {
@@ -504,7 +504,7 @@ impl<'a> TimeSeriesBuilder<'a> {
                 OutputSize::Full => "full",
                 OutputSize::Compact => "compact",
             };
-            write!(url, "&outputsize={}", size).map_err(|_| Error::CreateUrl)?;
+            write!(url, "&outputsize={size}").map_err(|_| Error::CreateUrl)?;
         }
 
         if let Some(adjusted) = self.adjusted {

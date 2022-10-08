@@ -59,7 +59,7 @@ impl<'a> CustomBuilder<'a> {
     fn create_url(&self) -> String {
         let mut path = format!("query?function={}", self.function);
         for (key, value) in &self.extras {
-            path.push_str(format!("&{}={}", key, value).as_str());
+            path.push_str(format!("&{key}={value}").as_str());
         }
 
         path

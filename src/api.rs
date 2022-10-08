@@ -92,15 +92,15 @@ impl ApiClient {
             Provider::AlphaVantage => {
                 self.client
                     .get_alpha_vantage_provider_output(&format!(
-                        "{}{}&apikey={}",
-                        BASE_URL, path, self.api
+                        "{BASE_URL}{path}&apikey={}",
+                        self.api
                     ))
                     .await
             }
             Provider::RapidAPI => {
                 self.client
                     .get_rapid_api_provider_output(
-                        &format!("{}{}", RAPID_API_BASE_URL, path),
+                        &format!("{RAPID_API_BASE_URL}{path}"),
                         &self.api,
                     )
                     .await
