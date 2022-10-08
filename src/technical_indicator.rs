@@ -179,20 +179,20 @@ impl<'a> TechnicalIndicatorBuilder<'a> {
         };
 
         let mut created_link = format!(
-            "query?function={}&symbol={}&interval={}",
-            &self.function, &self.symbol, &interval_val
+            "query?function={}&symbol={}&interval={interval_val}",
+            &self.function, &self.symbol
         );
 
         if let Some(time_period) = &self.time_period {
-            write!(created_link, "&time_period={}", &time_period).map_err(|_| Error::CreateUrl)?;
+            write!(created_link, "&time_period={time_period}").map_err(|_| Error::CreateUrl)?;
         }
 
         if let Some(series_type) = &self.series_type {
-            write!(created_link, "&series_type={}", &series_type).map_err(|_| Error::CreateUrl)?;
+            write!(created_link, "&series_type={series_type}").map_err(|_| Error::CreateUrl)?;
         }
 
         for (param, value) in &self.extra_params {
-            write!(created_link, "&{}={}", &param, &value).map_err(|_| Error::CreateUrl)?;
+            write!(created_link, "&{param}={value}").map_err(|_| Error::CreateUrl)?;
         }
 
         Ok(created_link)
