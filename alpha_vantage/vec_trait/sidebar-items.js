@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["FindData","trait which helps for performing some common operation on Vec which have given period"]]};
+window.SIDEBAR_ITEMS = {"trait":[["FindData","trait which helps for performing some common operation on `Vec<Data>` which have given period"]]};
