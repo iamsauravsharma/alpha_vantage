@@ -1,8 +1,8 @@
-//! Module which contains some common trait implementation for Vec<Data>
+//! Module which contains some common trait implementation for `Vec<Data>`
 
 use crate::error::Result;
 
-/// trait which helps for performing some common operation on Vec<Data> which
+/// trait which helps for performing some common operation on `Vec<Data>` which
 /// have given period
 pub trait FindData: IntoIterator {
     /// Find a data with a given time as a input return none if no data found
