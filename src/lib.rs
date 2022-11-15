@@ -55,8 +55,9 @@ use self::client::HttpClient;
 /// let api = alpha_vantage::set_api("some_key", reqwest::Client::new());
 /// ```
 #[must_use]
-pub fn set_api<T>(api: &str, client: T) -> ApiClient
+pub fn set_api<S, T>(api: S, client: T) -> ApiClient
 where
+    S: Into<String>,
     T: HttpClient + 'static + Send + Sync,
 {
     ApiClient::set_api(api, client)
@@ -68,8 +69,9 @@ where
 /// let api = alpha_vantage::set_rapid_api("some_key", reqwest::Client::new());
 /// ```
 #[must_use]
-pub fn set_rapid_api<T>(api: &str, client: T) -> ApiClient
+pub fn set_rapid_api<S, T>(api: S, client: T) -> ApiClient
 where
+    S: Into<String>,
     T: HttpClient + 'static + Send + Sync,
 {
     ApiClient::set_rapid_api(api, client)

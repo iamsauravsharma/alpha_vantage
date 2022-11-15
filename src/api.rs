@@ -41,12 +41,13 @@ impl ApiClient {
     /// let api = ApiClient::set_api("some_key", reqwest::Client::new());
     /// ```
     #[must_use]
-    pub fn set_api<T>(api: &str, client: T) -> Self
+    pub fn set_api<S, T>(api: S, client: T) -> Self
     where
+        S: Into<String>,
         T: HttpClient + 'static + Send + Sync,
     {
         Self {
-            api: api.to_owned(),
+            api: api.into(),
             client: Box::new(client),
             provider: Provider::AlphaVantage,
         }
@@ -60,12 +61,13 @@ impl ApiClient {
     /// let api = ApiClient::set_api("some_key", reqwest::Client::new());
     /// ```
     #[must_use]
-    pub fn set_rapid_api<T>(api: &str, client: T) -> Self
+    pub fn set_rapid_api<S, T>(api: S, client: T) -> Self
     where
+        S: Into<String>,
         T: HttpClient + 'static + Send + Sync,
     {
         Self {
-            api: api.to_owned(),
+            api: api.into(),
             client: Box::new(client),
             provider: Provider::RapidAPI,
         }
