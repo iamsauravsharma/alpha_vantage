@@ -152,6 +152,8 @@ pub struct EconomicIndicatorBuilder<'a> {
 }
 
 impl<'a> EconomicIndicatorBuilder<'a> {
+    crate::json_data_struct!(EconomicIndicator, EconomicIndicatorHelper);
+
     /// Create new `EconomicIndicatorBuilder` form `APIClient`
     #[must_use]
     pub fn new(api_client: &'a ApiClient, function: &'a str) -> Self {
@@ -200,17 +202,6 @@ impl<'a> EconomicIndicatorBuilder<'a> {
         }
 
         created_link
-    }
-
-    /// Returns JSON data struct
-    ///
-    /// # Errors
-    /// Raise error if data obtained cannot be properly converted to struct or
-    /// API returns any 4 possible known errors
-    pub async fn json(&self) -> Result<EconomicIndicator> {
-        let url = self.create_url();
-        let indicator_helper: EconomicIndicatorHelper = self.api_client.get_json(&url).await?;
-        indicator_helper.convert()
     }
 }
 

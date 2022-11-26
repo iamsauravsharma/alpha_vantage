@@ -76,3 +76,21 @@ where
 {
     ApiClient::set_rapid_api(api, client)
 }
+
+/// Create json data struct
+macro_rules! json_data_struct {
+    ($output:ident, $helper:ident) => {
+        /// Returns JSON data
+        ///
+        /// # Errors
+        /// Raise error if data obtained cannot be properly converted to struct or
+        /// API returns any 4 possible known errors
+        pub async fn json(&self) -> Result<$output> {
+            let url = self.create_url();
+            let helper: $helper = self.api_client.get_json(&url).await?;
+            helper.convert()
+        }
+    };
+}
+
+pub(crate) use json_data_struct;

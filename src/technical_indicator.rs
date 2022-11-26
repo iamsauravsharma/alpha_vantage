@@ -10,7 +10,6 @@
 //! [technical_indicator]: https://www.alphavantage.co/documentation/#technical-indicators
 
 use std::collections::HashMap;
-use std::fmt::Write;
 
 use serde::Deserialize;
 use serde_json::value::Value;
@@ -124,6 +123,8 @@ pub struct TechnicalIndicatorBuilder<'a> {
 }
 
 impl<'a> TechnicalIndicatorBuilder<'a> {
+    crate::json_data_struct!(TechnicalIndicator, TechnicalIndicatorHelper);
+
     /// Create new `TechnicalIndicatorBuilder` form `APIClient`
     #[must_use]
     pub fn new(
@@ -166,7 +167,7 @@ impl<'a> TechnicalIndicatorBuilder<'a> {
         self
     }
 
-    fn create_url(&self) -> Result<String> {
+    fn create_url(&self) -> String {
         let interval_val = match self.interval {
             TechnicalIndicatorInterval::OneMin => "1min",
             TechnicalIndicatorInterval::FiveMin => "5min",
@@ -184,29 +185,18 @@ impl<'a> TechnicalIndicatorBuilder<'a> {
         );
 
         if let Some(time_period) = &self.time_period {
-            write!(created_link, "&time_period={time_period}").map_err(|_| Error::CreateUrl)?;
+            created_link.push_str(&format!("&time_period={time_period}"));
         }
 
         if let Some(series_type) = &self.series_type {
-            write!(created_link, "&series_type={series_type}").map_err(|_| Error::CreateUrl)?;
+            created_link.push_str(&format!("&series_type={series_type}"));
         }
 
         for (param, value) in &self.extra_params {
-            write!(created_link, "&{param}={value}").map_err(|_| Error::CreateUrl)?;
+            created_link.push_str(&format!("&{param}={value}"));
         }
 
-        Ok(created_link)
-    }
-
-    /// Returns JSON data struct
-    ///
-    /// # Errors
-    /// Raise error if data obtained cannot be properly converted to struct or
-    /// API returns any 4 possible known errors
-    pub async fn json(&self) -> Result<TechnicalIndicator> {
-        let url = self.create_url()?;
-        let indicator_helper: TechnicalIndicatorHelper = self.api_client.get_json(&url).await?;
-        indicator_helper.convert()
+        created_link
     }
 }
 

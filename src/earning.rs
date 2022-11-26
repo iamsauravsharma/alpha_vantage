@@ -171,6 +171,8 @@ pub struct EarningBuilder<'a> {
 }
 
 impl<'a> EarningBuilder<'a> {
+    crate::json_data_struct!(Earning, EarningHelper);
+
     /// Create new Earning Builder with help of `APIClient`
     #[must_use]
     pub fn new(api_client: &'a ApiClient, symbol: &'a str) -> Self {
@@ -179,16 +181,5 @@ impl<'a> EarningBuilder<'a> {
 
     fn create_url(&self) -> String {
         format!("query?function=EARNINGS&symbol={}", self.symbol)
-    }
-
-    /// Returns JSON data struct
-    ///
-    /// # Errors
-    /// Raise error if data obtained cannot be properly converted to struct or
-    /// API returns any 4 possible known errors
-    pub async fn json(&self) -> Result<Earning> {
-        let url = self.create_url();
-        let earning_helper: EarningHelper = self.api_client.get_json(&url).await?;
-        earning_helper.convert()
     }
 }

@@ -391,6 +391,8 @@ pub struct CryptoBuilder<'a> {
 }
 
 impl<'a> CryptoBuilder<'a> {
+    crate::json_data_struct!(Crypto, CryptoHelper);
+
     /// Create new `CryptoBuilder` with help of `APIClient`
     #[must_use]
     pub fn new(
@@ -418,17 +420,6 @@ impl<'a> CryptoBuilder<'a> {
             "query?function={function_name}&symbol={}&market={}",
             &self.symbol, &self.market
         )
-    }
-
-    /// Returns JSON data struct
-    ///
-    /// # Errors
-    /// Raise error if data obtained cannot be properly converted to struct or
-    /// API returns any 4 possible known errors
-    pub async fn json(&self) -> Result<Crypto> {
-        let url = self.create_url();
-        let crypto_helper: CryptoHelper = self.api_client.get_json(&url).await?;
-        crypto_helper.convert()
     }
 }
 

@@ -12,7 +12,6 @@
 
 use std::cmp;
 use std::collections::HashMap;
-use std::fmt::Write;
 use std::str::FromStr;
 
 use serde::Deserialize;
@@ -440,6 +439,8 @@ pub struct TimeSeriesBuilder<'a> {
 }
 
 impl<'a> TimeSeriesBuilder<'a> {
+    crate::json_data_struct!(TimeSeries, TimeSeriesHelper);
+
     /// Create new `TimeSeriesBuilder` form `APIClient`
     #[must_use]
     pub fn new(api_client: &'a ApiClient, function: StockFunction, symbol: &'a str) -> Self {
@@ -475,7 +476,7 @@ impl<'a> TimeSeriesBuilder<'a> {
         self
     }
 
-    fn create_url(&self) -> Result<String> {
+    fn create_url(&self) -> String {
         let function = match self.function {
             StockFunction::IntraDay => "TIME_SERIES_INTRADAY",
             StockFunction::Daily => "TIME_SERIES_DAILY",
@@ -496,7 +497,7 @@ impl<'a> TimeSeriesBuilder<'a> {
                 TimeSeriesInterval::ThirtyMin => "30min",
                 TimeSeriesInterval::SixtyMin => "60min",
             };
-            write!(url, "&interval={interval}").map_err(|_| Error::CreateUrl)?;
+            url.push_str(&format!("&interval={interval}"));
         };
 
         if let Some(stock_time_output_size) = &self.output_size {
@@ -504,7 +505,7 @@ impl<'a> TimeSeriesBuilder<'a> {
                 OutputSize::Full => "full",
                 OutputSize::Compact => "compact",
             };
-            write!(url, "&outputsize={size}").map_err(|_| Error::CreateUrl)?;
+            url.push_str(&format!("&outputsize={size}"));
         }
 
         if let Some(adjusted) = self.adjusted {
@@ -515,18 +516,7 @@ impl<'a> TimeSeriesBuilder<'a> {
             }
         };
 
-        Ok(url)
-    }
-
-    /// Returns JSON data struct
-    ///
-    /// # Errors
-    /// Raise error if data obtained cannot be properly converted to struct or
-    /// API returns any 4 possible known errors
-    pub async fn json(&self) -> Result<TimeSeries> {
-        let url = self.create_url()?;
-        let stock_time_helper: TimeSeriesHelper = self.api_client.get_json(&url).await?;
-        stock_time_helper.convert()
+        url
     }
 }
 

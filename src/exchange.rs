@@ -172,6 +172,8 @@ pub struct ExchangeBuilder<'a> {
 }
 
 impl<'a> ExchangeBuilder<'a> {
+    crate::json_data_struct!(Exchange, ExchangeHelper);
+
     /// Create new `ExchangeBuilder` from `APIClient`
     #[must_use]
     pub fn new(api_client: &'a ApiClient, from_currency: &'a str, to_currency: &'a str) -> Self {
@@ -187,16 +189,5 @@ impl<'a> ExchangeBuilder<'a> {
             "query?function=CURRENCY_EXCHANGE_RATE&from_currency={}&to_currency={}",
             self.from_currency, self.to_currency
         )
-    }
-
-    /// Returns JSON data struct
-    ///
-    /// # Errors
-    /// Raise error if data obtained cannot be properly converted to struct or
-    /// API returns any 4 possible known errors
-    pub async fn json(&self) -> Result<Exchange> {
-        let url = self.create_url();
-        let exchange_helper: ExchangeHelper = self.api_client.get_json(&url).await?;
-        exchange_helper.convert()
     }
 }

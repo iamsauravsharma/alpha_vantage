@@ -211,6 +211,8 @@ pub struct SearchBuilder<'a> {
 }
 
 impl<'a> SearchBuilder<'a> {
+    crate::json_data_struct!(Search, SearchHelper);
+
     /// Create new `SearchBuilder` from `APIClient`
     #[must_use]
     pub fn new(api_client: &'a ApiClient, keywords: &'a str) -> Self {
@@ -222,16 +224,5 @@ impl<'a> SearchBuilder<'a> {
 
     fn create_url(&self) -> String {
         format!("query?function=SYMBOL_SEARCH&keywords={}", self.keywords)
-    }
-
-    /// Returns JSON data struct
-    ///
-    /// # Errors
-    /// Raise error if data obtained cannot be properly converted to struct or
-    /// API returns any 4 possible known errors
-    pub async fn json(&self) -> Result<Search> {
-        let url = self.create_url();
-        let search_helper: SearchHelper = self.api_client.get_json(&url).await?;
-        search_helper.convert()
     }
 }
