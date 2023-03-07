@@ -6,7 +6,6 @@ on:
       - master
 
 jobs:
-
   deploy_page:
     name: Deploy Github page
     runs-on: ubuntu-latest
@@ -22,7 +21,7 @@ jobs:
       - name: Create .env file
         uses: iamsauravsharma/create-dotenv@v1.2.2
         with:
-          env-prefix: 'MAKE_'
+          env-prefix: "MAKE_"
       - name: Generate documentation
         run: |
           cargo make rustdoc --env-file=.env
