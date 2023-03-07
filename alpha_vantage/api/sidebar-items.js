@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":[["OutputSize","Enum for declaring output size of API call"],["Provider","Provider for alpha vantage API"],["TimeSeriesInterval","Enum for declaring interval for intraday time series"]],"struct":[["ApiClient","Struct for initializing client which contains different method for API call"]]};
+window.SIDEBAR_ITEMS = {"enum":["OutputSize","Provider","TimeSeriesInterval"],"struct":["ApiClient"]};

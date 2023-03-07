@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":[["StockFunction","Enum for declaring function for stock time series by defining which type of series of stock to be returned"]],"struct":[["Data","Struct for Data value"],["MetaData","Struct for storing Meta Data value"],["TimeSeries","Struct for storing time series data"],["TimeSeriesBuilder","Builder to create new `TimeSeries`"]]};
+window.SIDEBAR_ITEMS = {"enum":["StockFunction"],"struct":["Data","MetaData","TimeSeries","TimeSeriesBuilder"]};

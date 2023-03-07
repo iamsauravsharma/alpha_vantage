@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":[["Exchange","Struct used for exchanging currency"],["ExchangeBuilder","Builder to create `Exchange`"]]};
+window.SIDEBAR_ITEMS = {"struct":["Exchange","ExchangeBuilder"]};

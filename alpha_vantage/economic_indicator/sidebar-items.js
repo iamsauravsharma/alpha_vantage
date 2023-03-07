@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":[["EconomicIndicatorInterval","Enum for declaring interval for economic indicator"],["EconomicIndicatorMaturity","Enum for declaring maturity for economic indicator"]],"struct":[["Data","Struct for storing a data values"],["EconomicIndicator","Struct for indicator"],["EconomicIndicatorBuilder","Builder to help create `EconomicIndicator`"]]};
+window.SIDEBAR_ITEMS = {"enum":["EconomicIndicatorInterval","EconomicIndicatorMaturity"],"struct":["Data","EconomicIndicator","EconomicIndicatorBuilder"]};

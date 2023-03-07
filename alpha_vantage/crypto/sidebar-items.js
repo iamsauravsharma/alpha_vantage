@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":[["CryptoFunction","Enum for declaring function for crypto series by defining which type of crypto series to be returned"]],"struct":[["Crypto","Struct which holds Crypto currency information"],["CryptoBuilder","Builder to help create `Crypto`"],["Data","Struct which stores Crypto data"]]};
+window.SIDEBAR_ITEMS = {"enum":["CryptoFunction"],"struct":["Crypto","CryptoBuilder","Data"]};

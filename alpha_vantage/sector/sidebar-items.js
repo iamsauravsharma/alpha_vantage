@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":[["Data","Store Sector data"],["Sector","Stores sector data"],["SectorBuilder","Builder to create new Sector"]]};
+window.SIDEBAR_ITEMS = {"struct":["Data","Sector","SectorBuilder"]};

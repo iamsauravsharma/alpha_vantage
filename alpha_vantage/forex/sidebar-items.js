@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":[["ForexFunction","Enum for declaring function for forex function by defining which type of forex series to be returned"]],"struct":[["Data","Struct to store Data value"],["Forex","Struct to store Forex data after forex API call"],["ForexBuilder","Builder to create `Forex`"]]};
+window.SIDEBAR_ITEMS = {"enum":["ForexFunction"],"struct":["Data","Forex","ForexBuilder"]};
