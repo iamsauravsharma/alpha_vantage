@@ -193,7 +193,7 @@ pub(crate) struct SearchHelper {
 }
 
 impl SearchHelper {
-    pub(crate) fn convert(self) -> Result<Search> {
+    fn convert(self) -> Result<Search> {
         let mut search = Search::default();
         detect_common_helper_error(self.information, None, self.note)?;
         if self.matches.is_none() {

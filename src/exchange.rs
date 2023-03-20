@@ -153,7 +153,7 @@ pub(crate) struct ExchangeHelper {
 }
 
 impl ExchangeHelper {
-    pub(crate) fn convert(self) -> Result<Exchange> {
+    fn convert(self) -> Result<Exchange> {
         let mut exchange = Exchange::default();
         detect_common_helper_error(self.information, self.error_message, self.note)?;
         if self.real_time.is_none() {

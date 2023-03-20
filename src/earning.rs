@@ -148,7 +148,7 @@ pub(crate) struct EarningHelper {
 impl EarningHelper {
     /// Function which convert `EarningHelper` to
     /// `Earning`
-    pub(crate) fn convert(self) -> Result<Earning> {
+    fn convert(self) -> Result<Earning> {
         let mut earning = Earning::default();
         detect_common_helper_error(self.information, self.error_message, self.note)?;
         if self.symbol.is_none()

@@ -296,7 +296,7 @@ pub(crate) struct TimeSeriesHelper {
 
 impl TimeSeriesHelper {
     /// Convert `TimeSeriesHelper` to `TimeSeries`
-    pub(crate) fn convert(self) -> Result<TimeSeries> {
+    fn convert(self) -> Result<TimeSeries> {
         detect_common_helper_error(self.information, self.error_message, self.note)?;
 
         if self.meta_data.is_none()

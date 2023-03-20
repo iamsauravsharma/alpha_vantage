@@ -99,7 +99,7 @@ pub(crate) struct TechnicalIndicatorHelper {
 }
 
 impl TechnicalIndicatorHelper {
-    pub(crate) fn convert(self) -> Result<TechnicalIndicator> {
+    fn convert(self) -> Result<TechnicalIndicator> {
         detect_common_helper_error(self.information, self.error_message, self.note)?;
         if self.metadata.is_none() || self.data.is_none() {
             return Err(Error::EmptyResponse);

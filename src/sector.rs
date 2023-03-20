@@ -178,7 +178,7 @@ pub(crate) struct SectorHelper {
 
 impl SectorHelper {
     /// Convert `SectorHelper` to `Sector`
-    pub(crate) fn convert(self) -> Result<Sector> {
+    fn convert(self) -> Result<Sector> {
         let mut sector = Sector::default();
         detect_common_helper_error(self.information, self.error_message, self.note)?;
         if self.meta_data.is_none() || self.data.is_none() {

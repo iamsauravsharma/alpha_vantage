@@ -125,7 +125,7 @@ pub(crate) struct EconomicIndicatorHelper {
 }
 
 impl EconomicIndicatorHelper {
-    pub(crate) fn convert(self) -> Result<EconomicIndicator> {
+    fn convert(self) -> Result<EconomicIndicator> {
         detect_common_helper_error(self.information, self.error_message, self.note)?;
         if self.name.is_none()
             || self.interval.is_none()

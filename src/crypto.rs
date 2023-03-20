@@ -299,7 +299,7 @@ pub(crate) struct CryptoHelper {
 
 impl CryptoHelper {
     /// Function which convert `CryptoHelper` to `Crypto`
-    pub(crate) fn convert(self) -> Result<Crypto> {
+    fn convert(self) -> Result<Crypto> {
         detect_common_helper_error(self.information, self.error_message, self.note)?;
 
         if self.meta_data.is_none() || self.data.is_none() {

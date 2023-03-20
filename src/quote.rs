@@ -131,7 +131,7 @@ pub(crate) struct QuoteHelper {
 }
 
 impl QuoteHelper {
-    pub(crate) fn convert(self) -> Result<Quote> {
+    fn convert(self) -> Result<Quote> {
         let mut quote = Quote::default();
         detect_common_helper_error(self.information, self.error_message, self.note)?;
         if self.global_quote.is_none() {

@@ -21,7 +21,7 @@ pub(crate) struct CustomHelper {
 }
 
 impl CustomHelper {
-    pub(crate) fn convert<T>(self) -> Result<T>
+    fn convert<T>(self) -> Result<T>
     where
         T: DeserializeOwned,
     {

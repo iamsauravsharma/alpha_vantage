@@ -261,7 +261,7 @@ pub(crate) struct ForexHelper {
 
 impl ForexHelper {
     /// convert `ForexHelper` to `Forex`
-    pub(crate) fn convert(self) -> Result<Forex> {
+    fn convert(self) -> Result<Forex> {
         detect_common_helper_error(self.information, self.error_message, self.note)?;
 
         if self.meta_data.is_none() || self.forex.is_none() {
