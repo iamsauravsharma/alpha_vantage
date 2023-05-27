@@ -283,7 +283,7 @@ impl ForexHelper {
             meta_data.get("6. Time Zone").unwrap_or_else(|| {
                 meta_data
                     .get("7. Time Zone")
-                    .expect("Time zone contains None value")
+                    .expect("time zone contains None value")
             })
         });
 
@@ -299,7 +299,7 @@ impl ForexHelper {
             from_symbol: from_symbol.to_string(),
             to_symbol: to_symbol.to_string(),
             last_refreshed: last_refreshed
-                .expect("Last refreshed value contains None")
+                .expect("last refreshed value contains None")
                 .to_string(),
             interval: interval.map(ToString::to_string),
             output_size: output_size_value.map(ToString::to_string),

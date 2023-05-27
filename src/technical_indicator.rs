@@ -73,7 +73,7 @@ impl TechnicalIndicator {
                     let value_f64 = value
                         .trim()
                         .parse::<f64>()
-                        .expect("Cannot convert string to f64");
+                        .expect("cannot convert string to f64");
                     data_collector.values.insert(key.to_string(), value_f64);
                 }
                 vector.push(data_collector);

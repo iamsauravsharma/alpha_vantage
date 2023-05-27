@@ -312,7 +312,7 @@ impl CryptoHelper {
             for key in value.keys() {
                 let data_helper = value
                     .get(key)
-                    .expect("failed to get value from Crypto hashmap");
+                    .expect("failed to get value from crypto hashmap");
 
                 let mut data = Data {
                     time: key.to_string(),

@@ -340,7 +340,7 @@ impl TimeSeriesHelper {
                 for val in hash.keys() {
                     let data_helper = hash
                         .get(val)
-                        .expect("failed to get value from Stock time hashmap");
+                        .expect("failed to get value from stock time hashmap");
 
                     data_value.push(Data {
                         time: val.to_string(),
