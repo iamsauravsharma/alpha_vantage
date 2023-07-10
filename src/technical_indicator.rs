@@ -56,8 +56,10 @@ impl TechnicalIndicator {
     }
 
     /// Return data as a vector
-    #[must_use]
-    pub fn data(&self) -> Vec<DataCollector> {
+    ///
+    /// # Errors
+    /// When alpha vantage contains data in other format
+    pub fn data(&self) -> Result<Vec<DataCollector>> {
         let mut vector = Vec::new();
         for hash in self.data.values() {
             for time in hash.keys() {
@@ -65,21 +67,19 @@ impl TechnicalIndicator {
                     time: time.to_string(),
                     ..DataCollector::default()
                 };
-                let hash_values = hash
-                    .get(time)
-                    .expect("cannot get time key value from hash map");
+                let hash_values = hash.get(time).ok_or(Error::AlphaVantageInvalidData)?;
 
                 for (key, value) in hash_values {
                     let value_f64 = value
                         .trim()
                         .parse::<f64>()
-                        .expect("cannot convert string to f64");
+                        .map_err(|_| Error::AlphaVantageInvalidData)?;
                     data_collector.values.insert(key.to_string(), value_f64);
                 }
                 vector.push(data_collector);
             }
         }
-        vector
+        Ok(vector)
     }
 }
 

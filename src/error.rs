@@ -22,6 +22,10 @@ pub enum Error {
     #[error("note: {0}")]
     AlphaVantageNote(String),
 
+    /// Error which is raised if alpha vantage server returns some invalid data
+    #[error("alpha vantage returns invalid data")]
+    AlphaVantageInvalidData,
+
     /// Error which is raised when desired number of data is not present
     #[error("desired number of latest data not found try using less than {0} as n")]
     DesiredNumberOfDataNotPresent(usize),

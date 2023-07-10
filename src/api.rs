@@ -10,7 +10,6 @@ use crate::exchange::ExchangeBuilder;
 use crate::forex::{ForexBuilder, ForexFunction};
 use crate::quote::QuoteBuilder;
 use crate::search::SearchBuilder;
-use crate::sector::SectorBuilder;
 use crate::stock_time::{StockFunction, TimeSeriesBuilder};
 use crate::technical_indicator::{TechnicalIndicatorBuilder, TechnicalIndicatorInterval};
 
@@ -270,24 +269,6 @@ impl ApiClient {
     #[must_use]
     pub fn search<'a>(&'a self, keywords: &'a str) -> SearchBuilder<'a> {
         SearchBuilder::new(self, keywords)
-    }
-
-    /// Method for creating `SectorBuilder`
-    /// # Example
-    /// ```
-    /// #[tokio::main]
-    /// async fn main() {
-    ///     let api = alpha_vantage::set_api("demo", reqwest::Client::new());
-    ///     let sector = api.sector().json().await.unwrap();
-    ///     assert_eq!(
-    ///         sector.information(),
-    ///         "US Sector Performance (realtime & historical)"
-    ///     );
-    /// }
-    /// ```
-    #[must_use]
-    pub fn sector(&self) -> SectorBuilder<'_> {
-        SectorBuilder::new(self)
     }
 
     /// Method for creating Stock time Builder from `APIClient`

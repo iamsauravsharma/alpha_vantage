@@ -38,8 +38,6 @@ pub mod quote;
 
 pub mod search;
 
-pub mod sector;
-
 pub mod stock_time;
 
 pub mod technical_indicator;
