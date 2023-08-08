@@ -1,6 +1,3 @@
-[env.FEATURES_FLAG]
-value = ""
-condition = { env_not_set = ["FEATURES_FLAG"] }
 
 [tasks.clean]
 description = "Clean target directory"
@@ -10,7 +7,7 @@ args = ["clean"]
 [tasks.build]
 description = "Run cargo build"
 command = "cargo"
-args = ["build", "--workspace", "@@split(FEATURES_FLAG, )"]
+args = ["build", "--workspace"]
 
 [tasks.fmt]
 condition = { channels = ["nightly"] }
@@ -22,29 +19,22 @@ args = ["fmt", "--", "--check"]
 condition = { channels = ["nightly"] }
 description = "Check if clippy return any warnings or error"
 command = "cargo"
-args = [
-    "clippy",
-    "--workspace",
-    "@@split(FEATURES_FLAG, )",
-    "--",
-    "-D",
-    "warnings",
-]
+args = ["clippy", "--workspace", "--", "-D", "warnings"]
 
 [tasks.test]
 description = "Run test"
 command = "cargo"
-args = ["test", "--workspace", "@@split(FEATURES_FLAG, )"]
+args = ["test", "--workspace"]
 
 [tasks.doc]
 description = "Run rustdoc"
 command = "cargo"
-args = ["doc", "--workspace", "--no-deps", "@@split(FEATURES_FLAG, )"]
+args = ["doc", "--workspace", "--no-deps"]
 
 [tasks.rustdoc]
 description = "Run rustdoc"
 command = "cargo"
-args = ["rustdoc", "@@split(FEATURES_FLAG, )", "--", "--cfg", "docsrs"]
+args = ["rustdoc", "--", "--cfg", "docsrs"]
 
 [tasks.local]
 dependencies = ["fmt", "build", "clippy", "doc", "test"]
