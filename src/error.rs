@@ -5,6 +5,7 @@ use thiserror::Error;
 pub type Result<T> = std::result::Result<T, Error>;
 
 #[derive(Error, Debug)]
+#[non_exhaustive]
 /// Main error/failure enum
 pub enum Error {
     /// Error which is raised if information is returned by API instead of data
